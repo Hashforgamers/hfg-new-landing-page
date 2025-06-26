@@ -4,3 +4,33 @@ body {
   background-image: url('/hero-bg-bg.png');
 }
 
+
+.clip-corner {
+    /* Rectangle with top left and bottom right corners cut */
+    clip-path: polygon(
+      10px 0,  /* top left cut */
+      100% 0,
+      100% calc(100% - 40px), /* bottom right cut */
+      calc(100% - 40px) 100%,
+      0 100%,
+      0 40px
+    );
+}
+
+
+.clip-corner {
+    clip-path: polygon(
+        40px 0,
+        100% 0,
+        100% calc(100% - 40px),
+        calc(100% - 40px) 100%,
+        0 100%,
+        0 40px
+    );
+}
+
+.clip-button {
+  clip-path: polygon(10px 0%, 100% 0%, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0% 100%, 0% 10px);
+}
+
+

@@ -10,7 +10,9 @@ import Waitlist from "./components/Waitlist";
 import Features from "./components/Features";
 import WhatIsHash from "./components/WhatIsHash";
 import HowItWorks from "./components/HowItWorks";
-
+import CafePricing from "./components/CafePricing";
+import JoinCommunity from './components/JoinCommunity';
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -21,7 +23,10 @@ function App() {
       <Features />
      <WhatIsHash />
       <HowItWorks />
-      {/* Add more components as needed */}
+      <CafePricing />
+      <JoinCommunity />
+      <Footer />
+     
     </div>
   );
 }

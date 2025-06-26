@@ -31,10 +31,11 @@ const Features = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="text-4xl font-extrabold text-center lg:text-left"
+            className="text-4xl font-extrabold text-center lg:text-left font-bebas uppercase tracking-wide"
           >
             FEATURES
           </motion.h2>
+
           <motion.p
             initial={{ opacity: 0, y: -10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -52,11 +53,7 @@ const Features = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: idx * 0.2 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-r from-[#1d2a1f] to-[#0f1c14] border border-lime-600 text-white p-5 relative"
-              style={{
-                clipPath:
-                  "polygon(10% 0%, 100% 0%, 100% 90%, 90% 100%, 0% 100%, 0% 10%)",
-              }}
+              className="bg-gradient-to-r from-[#1d2a1f] to-[#0f1c14] border border-lime-600 text-white p-5 relative clip-corner"
             >
               <h3 className="text-lg font-semibold mb-1">{feature.title}</h3>
               <p className="text-gray-400 text-sm">{feature.description}</p>

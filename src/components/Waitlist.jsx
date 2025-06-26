@@ -29,7 +29,6 @@ const Waitlist = () => {
   return (
     <section className="relative bg-[#000000] text-white py-20 px-6 overflow-hidden">
 
-      {/* ✅ Animated background overlay */}
       <motion.div
         className="absolute inset-0 z-0 bg-[url('/bg-lines.png')] bg-cover bg-center opacity-5 pointer-events-none"
         animate={{

@@ -36,17 +36,16 @@ const Hero = () => {
           >
             ⭕ Live Soon
           </motion.p>
-
-          <motion.h1
-            className="text-5xl font-extrabold leading-tight mb-4"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            CONQUER THE THRONE.
-            <br />
-            RULE THE GAME
-          </motion.h1>
+<motion.h1
+  className="text-6xl font-bebas uppercase tracking-[0.1em] leading-tight mb-4"
+  initial={{ opacity: 0, y: 30 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.3 }}
+>
+  CONQUER THE THRONE.
+  <br />
+  RULE THE GAME
+</motion.h1>
 
           <motion.p
             className="text-gray-400 mb-6"
