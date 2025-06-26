@@ -7,9 +7,12 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        bebas: ['"Bebas Neue"', 'sans-serif'],
+       noodle: ["'BigNoodleTitling'", "sans-serif"],
+      },
+      letterSpacing: {
+    tighter2: "-0.06em", 
+    },
       },
     },
-  },
   plugins: [],
 }

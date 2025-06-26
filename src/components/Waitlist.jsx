@@ -1,34 +1,33 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Gift, Crown, Lock, Zap } from "lucide-react";
 
 const features = [
   {
+    emoji: "⚡",
     title: "EARLY ACCESS TO THE APP",
     description: "Be the first to book arenas and dominate leaderboards.",
-    icon: <Zap className="text-green-400 w-5 h-5" />,
   },
   {
+    emoji: "🎁",
     title: "EXCLUSIVE HASHDROP REWARDS",
     description: "Get limited-edition merch, coins, and tournament invites.",
-    icon: <Gift className="text-green-400 w-5 h-5" />,
   },
   {
+    emoji: "👑",
     title: "FOUNDING MEMBER BADGE",
     description: "Your tag will carry legacy. Forever.",
-    icon: <Crown className="text-green-400 w-5 h-5" />,
   },
   {
+    emoji: "🔒",
     title: "PRIVATE DISCORD ACCESS",
     description: "Strategize with top gamers and influencers before launch.",
-    icon: <Lock className="text-green-400 w-5 h-5" />,
   },
 ];
 
 const Waitlist = () => {
   return (
-    <section className="relative bg-[#000000] text-white py-20 px-6 overflow-hidden">
-
+    <section className="relative bg-[#000000] text-white py-20 px-6 overflow-hidden font-noodle">
+      {/* 🔁 Background Lines */}
       <motion.div
         className="absolute inset-0 z-0 bg-[url('/bg-lines.png')] bg-cover bg-center opacity-5 pointer-events-none"
         animate={{
@@ -41,12 +40,16 @@ const Waitlist = () => {
         }}
       />
 
-      {/* ✅ Main content */}
+      {/* ✅ Main Content */}
       <div className="relative z-10 max-w-6xl mx-auto text-center">
-        <h2 className="text-4xl font-extrabold mb-2">WHY JOIN THE WAITLIST?</h2>
-        <p className="text-gray-400 mb-12">Power Comes to Those Who Wait.</p>
+        <h2 className="text-4xl mb-2 tracking-tighter">
+          WHY JOIN THE WAITLIST?
+        </h2>
+        <p className="text-gray-400 mb-12 leading-relaxed">
+          Power Comes to Those Who Wait.
+        </p>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-y-2 gap-x-8">
           {features.map((feature, idx) => (
             <motion.div
               key={idx}
@@ -60,13 +63,15 @@ const Waitlist = () => {
                   "polygon(10% 0, 0% 40%, 0 100%, 90% 100%, 100% 50%, 100% 0)",
               }}
             >
-              <div className="flex items-center gap-3 mb-3">
-                {feature.icon}
-                <h3 className="text-white font-bold text-lg">
+              <div className="flex flex-col items-start gap-1 mb-2 pl-6 md:pl-8">
+                <span className="text-2xl">{feature.emoji}</span>
+                <h3 className="text-white text-lg tracking-tighter">
                   {feature.title}
                 </h3>
               </div>
-              <p className="text-gray-400 text-sm">{feature.description}</p>
+              <p className="text-gray-400 text-base leading-relaxed pl-6 md:pl-8">
+                {feature.description}
+              </p>
             </motion.div>
           ))}
         </div>

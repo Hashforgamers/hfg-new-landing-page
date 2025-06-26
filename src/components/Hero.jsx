@@ -5,7 +5,7 @@ import heroBg from "../assets/hero-bg.png"; // ✅ Imported PNG background
 const Hero = () => {
   return (
     <section
-      className="relative overflow-hidden text-white py-16"
+      className="relative overflow-hidden text-white py-16 font-noodle"
       style={{
         backgroundImage: `url(${heroBg})`,
         backgroundSize: "cover",
@@ -15,8 +15,6 @@ const Hero = () => {
     >
       {/* Optional dark overlay */}
       <div className="absolute inset-0 bg-black/30 z-0 pointer-events-none" />
-
-
 
       {/* Outer Container */}
       <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-6 md:px-12 gap-12">
@@ -36,19 +34,20 @@ const Hero = () => {
           >
             ⭕ Live Soon
           </motion.p>
-<motion.h1
-  className="text-6xl font-bebas uppercase tracking-[0.1em] leading-tight mb-4"
-  initial={{ opacity: 0, y: 30 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.3 }}
->
-  CONQUER THE THRONE.
-  <br />
-  RULE THE GAME
-</motion.h1>
+
+          <motion.h1
+            className="text-6xl uppercase tracking-tighter leading-tight mb-4"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            CONQUER THE THRONE.
+            <br />
+            RULE THE GAME
+          </motion.h1>
 
           <motion.p
-            className="text-gray-400 mb-6"
+            className="text-gray-400 mb-6 leading-relaxed text-base"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
@@ -65,7 +64,7 @@ const Hero = () => {
             transition={{ delay: 0.5 }}
           >
             <button
-              className="bg-green-500 hover:bg-green-600 text-black font-semibold py-2 px-5 shadow-lg"
+              className="bg-green-500 hover:bg-green-600 text-black py-2 px-5 shadow-lg tracking-tighter text-base"
               style={{
                 clipPath:
                   "polygon(10% 0, 0% 50%, 0 100%, 90% 100%, 100% 50%, 100% 0)",
@@ -74,7 +73,7 @@ const Hero = () => {
               Pre Register Now
             </button>
             <button
-              className="border border-gray-500 hover:border-white py-2 px-5"
+              className="border border-gray-500 hover:border-white py-2 px-5 tracking-tighter text-base"
               style={{
                 clipPath:
                   "polygon(10% 0, 0% 50%, 0 100%, 90% 100%, 100% 50%, 100% 0)",
@@ -92,33 +91,35 @@ const Hero = () => {
             transition={{ delay: 0.6 }}
           >
             <div>
-              <p className="text-2xl font-bold">20+</p>
-              <p className="text-sm text-white">Gaming Stations</p>
+              <p className="text-2xl">20+</p>
+              <p className="text-sm text-white leading-relaxed">Gaming Stations</p>
             </div>
             <div>
-              <p className="text-2xl font-bold">5k+</p>
-              <p className="text-sm text-white">Active Gamers</p>
+              <p className="text-2xl">5k+</p>
+              <p className="text-sm text-white leading-relaxed">Active Gamers</p>
             </div>
             <div>
-              <p className="text-2xl font-bold">24x7</p>
-              <p className="text-sm text-white">Available</p>
+              <p className="text-2xl">24x7</p>
+              <p className="text-sm text-white leading-relaxed">Available</p>
             </div>
           </motion.div>
         </motion.div>
 
         {/* Right Content - Image */}
-        <motion.div
-          className="w-full md:w-[400px] lg:w-[450px]"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-        >
-          <img
-            src="/character.png"
-            alt="Gaming Character"
-            className="w-full h-auto object-contain"
-          />
-        </motion.div>
+       {/* Right Content - Image */}
+<motion.div
+  className="w-full md:w-[500px] lg:w-[600px]"
+  initial={{ opacity: 0, scale: 0.9 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 0.8, delay: 0.7 }}
+>
+  <img
+    src="/character.png"
+    alt="Gaming Character"
+    className="w-full h-auto object-contain"
+  />
+</motion.div>
+
       </div>
     </section>
   );
