@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import bgImage from "../assets/BgImage.png"; // ✅ Ensure correct path
+import bgImage from "../assets/BgImage.png";
 
 const JoinCommunity = () => {
   return (
@@ -10,17 +10,17 @@ const JoinCommunity = () => {
         backgroundImage: `url(${bgImage})`,
       }}
     >
-      {/* ✅ Dark overlay */}
-      <div className="absolute inset-0 bg-black/70 z-0 pointer-events-none" />
+      {/* 🔹 Dark + green gradient overlay for matching tone */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black via-[#0a120a]/80 to-[#041e15]/80 z-0 pointer-events-none" />
 
-      {/* ✅ Content with animations */}
+      {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         <motion.h2
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-3xl md:text-5xl font-extrabold font-bebas uppercase"
+          className="text-3xl md:text-5xl font-bebas uppercase"
         >
           Ready to Join the Elite Gaming Community?
         </motion.h2>
@@ -34,16 +34,22 @@ const JoinCommunity = () => {
         >
           Get exclusive access to premium gaming stations, tournaments, and a vibrant community of gamers.
         </motion.p>
+<motion.button
+  initial={{ opacity: 0, scale: 0.95 }}
+  whileInView={{ opacity: 1, scale: 1 }}
+  transition={{ delay: 0.4, duration: 0.6 }}
+  viewport={{ once: true }}
+  className="mt-8 bg-[#3cc74d] hover:bg-[#34b043] text-black px-6 py-3 text-base font-noodle uppercase transition-all duration-300"
+  style={{
+    clipPath: "polygon(20px 0%, 100% 0%, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0% 100%, 0% 20px)",
+    boxShadow: "0 0 0 1px #66ff6a, 0 0 4px #66ff6a, 0 0 6px #66ff6a",
+  }}
+>
+  Pre Register Now
+</motion.button>
 
-        <motion.button
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-          viewport={{ once: true }}
-          className="mt-8 bg-lime-500 hover:bg-lime-600 text-black font-semibold px-6 py-3 rounded-md transition-all duration-300 clip-button"
-        >
-          Pre Register Now →
-        </motion.button>
+
+
       </div>
     </section>
   );

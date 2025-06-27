@@ -29,9 +29,9 @@ const cardVariants = {
 
 const CafePricing = () => {
   return (
-    <section className="bg-[#060606] text-white py-20 px-6">
+    <section className="bg-[#060606] text-white py-20 px-6 font-noodle">
       <div className="text-center mb-14">
-        <h2 className="text-4xl font-extrabold font-bebas tracking-wide uppercase">
+        <h2 className="text-4xl font-bebas tracking-wide uppercase">
           Transparent, Café-Based Pricing
         </h2>
         <p className="text-gray-400 mt-3 max-w-xl mx-auto">
@@ -51,13 +51,13 @@ const CafePricing = () => {
             custom={index}
             variants={cardVariants}
           >
-            <p className={`text-sm font-bold uppercase ${item.labelColor}`}>
+            <p className={`text-lg uppercase mb-2 ${item.labelColor}`}>
               {item.label}
             </p>
-            <h3 className="text-lg font-extrabold uppercase mt-2 mb-3 tracking-wider">
+            <h3 className="text-2xl uppercase tracking-wide mb-4">
               {item.title}
             </h3>
-            <p className="text-gray-300 text-sm leading-relaxed">
+            <p className="text-gray-300 text-base leading-relaxed">
               {item.description}
             </p>
           </motion.div>

@@ -1,24 +1,25 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Zap, Gift, Crown, Lock } from "lucide-react"; // ✅ Lucide icons
 
 const features = [
   {
-    emoji: "⚡",
+    icon: <Zap className="text-green-400 w-6 h-6" />,
     title: "EARLY ACCESS TO THE APP",
     description: "Be the first to book arenas and dominate leaderboards.",
   },
   {
-    emoji: "🎁",
+    icon: <Gift className="text-green-400 w-6 h-6" />,
     title: "EXCLUSIVE HASHDROP REWARDS",
     description: "Get limited-edition merch, coins, and tournament invites.",
   },
   {
-    emoji: "👑",
+    icon: <Crown className="text-green-400 w-6 h-6" />,
     title: "FOUNDING MEMBER BADGE",
     description: "Your tag will carry legacy. Forever.",
   },
   {
-    emoji: "🔒",
+    icon: <Lock className="text-green-400 w-6 h-6" />,
     title: "PRIVATE DISCORD ACCESS",
     description: "Strategize with top gamers and influencers before launch.",
   },
@@ -49,7 +50,7 @@ const Waitlist = () => {
           Power Comes to Those Who Wait.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-y-2 gap-x-8">
+        <div className="grid md:grid-cols-2 gap-x-6 gap-y-6">
           {features.map((feature, idx) => (
             <motion.div
               key={idx}
@@ -63,8 +64,8 @@ const Waitlist = () => {
                   "polygon(10% 0, 0% 40%, 0 100%, 90% 100%, 100% 50%, 100% 0)",
               }}
             >
-              <div className="flex flex-col items-start gap-1 mb-2 pl-6 md:pl-8">
-                <span className="text-2xl">{feature.emoji}</span>
+              <div className="flex flex-col items-start gap-2 mb-2 pl-6 md:pl-8">
+                {feature.icon}
                 <h3 className="text-white text-lg tracking-tighter">
                   {feature.title}
                 </h3>

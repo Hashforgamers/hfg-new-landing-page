@@ -6,31 +6,31 @@ const features = [
   {
     title: "BOOK NEXT-GEN CONSOLES",
     description: "Real-time bookings at your city’s top gaming cafes.",
-    icon: <Gamepad2 className="text-green-400 w-5 h-5" />,
+    icon: <Gamepad2 className="text-green-400 w-6 h-6" />,
   },
   {
     title: "JOIN COMPETITIVE TOURNAMENTS",
     description: "Climb the ranks. Win real rewards. Build your legacy.",
-    icon: <Trophy className="text-green-400 w-5 h-5" />,
+    icon: <Trophy className="text-green-400 w-6 h-6" />,
   },
   {
     title: "SQUAD UP & CONNECT",
     description: "Your crew. Your arena. Your rules.",
-    icon: <Users className="text-green-400 w-5 h-5" />,
+    icon: <Users className="text-green-400 w-6 h-6" />,
   },
   {
     title: "ALL-IN-ONE GAMING APP",
     description: "One tap. Full control of your gaming journey.",
-    icon: <Smartphone className="text-green-400 w-5 h-5" />,
+    icon: <Smartphone className="text-green-400 w-6 h-6" />,
   },
 ];
 
 const WhatIsHash = () => {
   return (
-    <section className="bg-[#000000] text-white py-20 px-6">
+    <section className="bg-[#000000] text-white py-20 px-6 font-noodle">
       <div className="max-w-6xl mx-auto text-center mb-12">
-        <h2 className="text-4xl font-extrabold mb-2 font-custom uppercase">WHAT IS HASH?</h2>
-        <p className="text-gray-400">
+        <h2 className="text-4xl mb-2 uppercase">WHAT IS HASH?</h2>
+        <p className="text-gray-400 text-base">
           Hash is not just an app. It’s your gaming command center.
         </p>
       </div>
@@ -49,13 +49,13 @@ const WhatIsHash = () => {
                 "polygon(8% 0, 100% 0, 100% 85%, 92% 100%, 0 100%, 0 15%)",
             }}
           >
-            <div className="flex items-start gap-3 mb-2">
-              {feature.icon}
-              <h3 className="text-white font-bold text-sm uppercase tracking-wider">
+            <div className="flex flex-col items-start gap-2 mb-3 pl-1">
+              <div>{feature.icon}</div>
+              <h3 className="text-white text-base uppercase tracking-wider">
                 {feature.title}
               </h3>
             </div>
-            <p className="text-gray-400 text-sm pl-8">{feature.description}</p>
+            <p className="text-gray-400 text-sm pl-1">{feature.description}</p>
           </motion.div>
         ))}
       </div>

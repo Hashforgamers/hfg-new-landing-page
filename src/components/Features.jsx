@@ -22,7 +22,7 @@ const features = [
 
 const Features = () => {
   return (
-    <section className="bg-[#000000] text-white py-20 px-6">
+    <section className="bg-[#000000] text-white py-20 px-6 font-noodle">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
         {/* Left Side: Features List */}
         <div className="flex flex-col gap-6 w-full lg:w-[45%]">
@@ -31,7 +31,7 @@ const Features = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="text-4xl font-extrabold text-center lg:text-left font-bebas uppercase tracking-wide"
+            className="text-4xl text-center lg:text-left uppercase tracking-tight"
           >
             FEATURES
           </motion.h2>
@@ -53,10 +53,15 @@ const Features = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: idx * 0.2 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-r from-[#1d2a1f] to-[#0f1c14] border border-lime-600 text-white p-5 relative clip-corner"
+              className="bg-gradient-to-r from-[#1d2a1f] to-[#0f1c14] border border-lime-600 text-white py-5 relative clip-corner"
+              style={{
+                clipPath: "polygon(10% 0, 0% 10%, 0% 100%, 90% 100%, 100% 90%, 100% 0)",
+              }}
             >
-              <h3 className="text-lg font-semibold mb-1">{feature.title}</h3>
-              <p className="text-gray-400 text-sm">{feature.description}</p>
+              <div className="pl-12 pr-5">
+                <h3 className="text-lg mb-1 tracking-tight">{feature.title}</h3>
+                <p className="text-gray-400 text-sm">{feature.description}</p>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -67,31 +72,12 @@ const Features = () => {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="relative w-full lg:w-[55%] p-2"
+          className="w-full lg:w-[55%]"
         >
-          {/* Neon Green Outline Frame */}
-          <div
-            className="absolute inset-0 border border-green-500 pointer-events-none z-0"
-            style={{
-              clipPath:
-                "polygon(5% 0%, 100% 0%, 100% 90%, 95% 100%, 0% 100%, 0% 5%)",
-            }}
-          />
-
-          {/* Neon Dot Corners */}
-          <div className="absolute top-0 left-0 w-2 h-2 bg-green-500 rounded-full"></div>
-          <div className="absolute top-0 right-0 w-2 h-2 bg-green-500 rounded-full"></div>
-          <div className="absolute bottom-0 left-0 w-2 h-2 bg-green-500 rounded-full"></div>
-          <div className="absolute bottom-0 right-0 w-2 h-2 bg-green-500 rounded-full"></div>
-
-          {/* Dotted Grid (Bottom Right) */}
-          <div className="absolute bottom-0 right-0 w-[140px] h-[80px] bg-[radial-gradient(circle,_rgba(0,255,0,0.6)_1px,transparent_1px)] [background-size:12px_12px] opacity-60 z-0"></div>
-
-          {/* UI Image */}
           <img
-            src="../../public/feature-ui.png"
+            src="public/feature-ui.png"
             alt="Feature UI"
-            className="relative z-10 w-full h-auto rounded-lg shadow-xl"
+            className="w-full h-auto rounded-lg shadow-xl"
           />
         </motion.div>
       </div>

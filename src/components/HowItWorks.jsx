@@ -27,9 +27,9 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <section className="bg-[#000000] text-white py-20 px-6">
+    <section className="bg-[#000000] text-white py-20 px-6 font-noodle">
       <div className="max-w-7xl mx-auto text-center mb-16">
-        <h2 className="text-4xl font-extrabold mb-2 font-bebas tracking-wide uppercase">
+        <h2 className="text-4xl font-bebas tracking-wide uppercase mb-2">
           HOW IT WORKS
         </h2>
         <p className="text-gray-400 max-w-xl mx-auto">
@@ -50,9 +50,13 @@ const HowItWorks = () => {
             className="relative bg-[#1a2b1a] border border-lime-500 text-white p-6 flex flex-col md:flex-row gap-6 shadow-md hover:shadow-lime-500/30 transition-all duration-300 clip-corner"
           >
             {/* Text Content */}
-            <div className="flex-1">
-              <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
-              <p className="text-gray-400 text-sm">{step.description}</p>
+            <div className="flex-1 pl-6 md:pl-8">
+              <h3 className="text-2xl font-bebas uppercase tracking-wide mb-4 leading-tight">
+                {step.title}
+              </h3>
+              <p className="text-gray-300 text-base leading-relaxed">
+                {step.description}
+              </p>
             </div>
 
             {/* UI Image */}
