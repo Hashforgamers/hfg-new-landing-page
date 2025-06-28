@@ -46,16 +46,16 @@ const WhatIsHash = () => {
             className="bg-[#0f1c14] p-6 border border-[#1a2a20] rounded-xl relative"
             style={{
               clipPath:
-                "polygon(8% 0, 100% 0, 100% 85%, 92% 100%, 0 100%, 0 15%)",
+                "polygon(10% 0, 0% 40%, 0 100%, 90% 100%, 100% 50%, 100% 0)",
             }}
           >
-            <div className="flex flex-col items-start gap-2 mb-3 pl-1">
+            <div className="flex flex-col items-start gap-2 mb-2 pl-6 md:pl-8">
               <div>{feature.icon}</div>
               <h3 className="text-white text-base uppercase tracking-wider">
                 {feature.title}
               </h3>
             </div>
-            <p className="text-gray-400 text-sm pl-1">{feature.description}</p>
+            <p className="text-gray-400 text-base leading-relaxed pl-6 md:pl-8">{feature.description}</p>
           </motion.div>
         ))}
       </div>

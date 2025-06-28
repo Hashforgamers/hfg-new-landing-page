@@ -42,7 +42,15 @@ const Navbar = () => {
   }, [mobileOpen]);
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-black/20 backdrop-blur-sm h-[60px] flex items-center justify-between px-4 sm:px-6 md:px-8 shadow-md z-50">
+   <nav
+  className="fixed top-0 left-0 w-full h-[60px] flex items-center justify-between px-4 sm:px-6 md:px-8 shadow-md z-50 text-white"
+  style={{
+    backgroundColor: 'rgba(30, 30, 30, 0.65)', // slightly greyish black
+    backdropFilter: 'blur(10px)', // stronger blur
+    WebkitBackdropFilter: 'blur(10px)', // Safari support
+  }}
+>
+
 
       {/* Logo */}
       <div className="flex items-center justify-start h-full">

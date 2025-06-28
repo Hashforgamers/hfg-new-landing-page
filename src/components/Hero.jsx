@@ -26,14 +26,18 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
         >
-          <motion.p
-            className="text-red-500 mb-2 border border-red-500 rounded-border px-3 py-1 w-max text-sm mx-auto md:mx-0"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            ⭕ Live Soon
-          </motion.p>
+        <motion.div
+  className="inline-flex items-center gap-2 px-5 py-[4px] rounded-full border border-red-500 text-red-500 text-sm font-medium shadow-[0_0_0_4px_rgba(255,0,0,0.15)] w-max mx-auto md:mx-0 mb-1"
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.2 }}
+>
+  <span className="text-base">⭕</span>
+  Live Soon
+</motion.div>
+
+
+
 
           <motion.h1
             className="text-6xl uppercase tracking-tighter leading-tight mb-4"
@@ -73,14 +77,16 @@ const Hero = () => {
               Pre Register Now
             </button>
             <button
-              className="border border-gray-500 hover:border-white py-2 px-5 tracking-tighter text-base"
+              className="flex items-center gap-2 px-6 py-2 text-white text-sm font-medium tracking-tight border border-white"
               style={{
-                clipPath:
-                  "polygon(10% 0, 0% 50%, 0 100%, 90% 100%, 100% 50%, 100% 0)",
+                clipPath: 'polygon(10% 0, 0% 50%, 0% 100%, 90% 100%, 100% 50%, 100% 0)',
+                WebkitClipPath: 'polygon(10% 0, 0% 50%, 0% 100%, 90% 100%, 100% 50%, 100% 0)',
+               
               }}
             >
               View Locations
             </button>
+
           </motion.div>
 
           {/* Stats */}
