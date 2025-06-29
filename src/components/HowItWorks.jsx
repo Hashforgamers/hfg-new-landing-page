@@ -47,7 +47,7 @@ const HowItWorks = () => {
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.6, delay: idx * 0.15, ease: "easeOut" }}
             viewport={{ once: true, amount: 0.3 }}
-            className="relative bg-[#1a2b1a] border border-lime-500 text-white p-6 flex flex-col md:flex-row gap-6 shadow-md hover:shadow-lime-500/30 transition-all duration-300 clip-corner"
+            className="relative bg-[#1a2b1a]  text-white p-6 flex flex-col md:flex-row gap-6 shadow-md hover:shadow-lime-500/30 transition-all duration-300 clip-corner"
           >
             {/* Text Content */}
             <div className="flex-1 pl-6 md:pl-8">

@@ -1,6 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import bgImage from "../assets/BgImage.png";
+import preRegisterBtn from "../assets/pre-register-btn2.png";
+
 
 const JoinCommunity = () => {
   return (
@@ -34,19 +36,22 @@ const JoinCommunity = () => {
         >
           Get exclusive access to premium gaming stations, tournaments, and a vibrant community of gamers.
         </motion.p>
-<motion.button
-  initial={{ opacity: 0, scale: 0.95 }}
-  whileInView={{ opacity: 1, scale: 1 }}
-  transition={{ delay: 0.4, duration: 0.6 }}
-  viewport={{ once: true }}
-  className="mt-8 bg-[#3cc74d] hover:bg-[#34b043] text-black px-6 py-3 text-base font-noodle uppercase transition-all duration-300"
-  style={{
-    clipPath: "polygon(20px 0%, 100% 0%, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0% 100%, 0% 20px)",
-    boxShadow: "0 0 0 1px #66ff6a, 0 0 4px #66ff6a, 0 0 6px #66ff6a",
-  }}
->
-  Pre Register Now
-</motion.button>
+<div className="flex justify-center mt-8">
+  <motion.img
+    src={preRegisterBtn}
+    alt="Pre Register Now"
+    className="w-44 sm:w-52 h-auto cursor-pointer hover:opacity-90 transition duration-300"
+    initial={{ opacity: 0, scale: 0.95 }}
+    whileInView={{ opacity: 1, scale: 1 }}
+    transition={{ delay: 0.4, duration: 0.6 }}
+    viewport={{ once: true }}
+    onClick={() => {
+      // Add navigation or scroll logic here
+      console.log("Pre Register clicked");
+    }}
+  />
+</div>
+
 
 
 

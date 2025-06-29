@@ -1,6 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
-import heroBg from "../assets/hero-bg.png"; // ✅ Imported PNG background
+import heroBg from "../assets/hero-bg.png";
+import viewLocationsBtn from "../assets/view-locations-btn.png"; // ✅ Import image
+import preRegisterBtn from "../assets/pre-register-btn.png";
 
 const Hero = () => {
   return (
@@ -13,12 +15,9 @@ const Hero = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      {/* Optional dark overlay */}
       <div className="absolute inset-0 bg-black/30 z-0 pointer-events-none" />
 
-      {/* Outer Container */}
       <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-6 md:px-12 gap-12">
-        
         {/* Left Content */}
         <motion.div
           className="max-w-xl w-full text-center md:text-left"
@@ -26,18 +25,15 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
         >
-        <motion.div
-  className="inline-flex items-center gap-2 px-5 py-[4px] rounded-full border border-red-500 text-red-500 text-sm font-medium shadow-[0_0_0_4px_rgba(255,0,0,0.15)] w-max mx-auto md:mx-0 mb-1"
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.2 }}
->
-  <span className="text-base">⭕</span>
-  Live Soon
-</motion.div>
-
-
-
+          <motion.div
+            className="inline-flex items-center gap-2 px-5 py-[4px] rounded-full border border-red-500 text-red-500 text-sm font-medium shadow-[0_0_0_4px_rgba(255,0,0,0.15)] w-max mx-auto md:mx-0 mb-1"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <span className="text-base">⭕</span>
+            Live Soon
+          </motion.div>
 
           <motion.h1
             className="text-6xl uppercase tracking-tighter leading-tight mb-4"
@@ -61,33 +57,35 @@ const Hero = () => {
           </motion.p>
 
           {/* Buttons */}
-          <motion.div
-            className="flex flex-col sm:flex-row gap-4 mb-10 justify-center md:justify-start"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-          >
-            <button
-              className="bg-green-500 hover:bg-green-600 text-black py-2 px-5 shadow-lg tracking-tighter text-base"
-              style={{
-                clipPath:
-                  "polygon(10% 0, 0% 50%, 0 100%, 90% 100%, 100% 50%, 100% 0)",
-              }}
-            >
-              Pre Register Now
-            </button>
-            <button
-              className="flex items-center gap-2 px-6 py-2 text-white text-sm font-medium tracking-tight border border-white"
-              style={{
-                clipPath: 'polygon(10% 0, 0% 50%, 0% 100%, 90% 100%, 100% 50%, 100% 0)',
-                WebkitClipPath: 'polygon(10% 0, 0% 50%, 0% 100%, 90% 100%, 100% 50%, 100% 0)',
-               
-              }}
-            >
-              View Locations
-            </button>
+         <motion.div
+  className="flex flex-col sm:flex-row gap-4 mb-10 justify-center md:justify-start"
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.5 }}
+>
+  {/* Pre Register Image Button */}
+  <img
+    src={preRegisterBtn}
+    alt="Pre Register Now"
+    className="w-36 sm:w-44 cursor-pointer hover:opacity-90 transition duration-300"
+    onClick={() => {
+      // e.g. navigate("/register");
+    }}
+  />
 
-          </motion.div>
+  {/* View Locations Image Button */}
+ <img
+  src={viewLocationsBtn}
+  alt="View Locations"
+  className="w-36 sm:w-44 h-10 mt-2 cursor-pointer hover:opacity-90 transition duration-300"
+  onClick={() => {
+   // window.scrollTo({ top: 1000, behavior: "smooth" });//
+  }}
+/>
+
+
+
+</motion.div>
 
           {/* Stats */}
           <motion.div
@@ -98,11 +96,15 @@ const Hero = () => {
           >
             <div>
               <p className="text-2xl">20+</p>
-              <p className="text-sm text-white leading-relaxed">Gaming Stations</p>
+              <p className="text-sm text-white leading-relaxed">
+                Gaming Stations
+              </p>
             </div>
             <div>
               <p className="text-2xl">5k+</p>
-              <p className="text-sm text-white leading-relaxed">Active Gamers</p>
+              <p className="text-sm text-white leading-relaxed">
+                Active Gamers
+              </p>
             </div>
             <div>
               <p className="text-2xl">24x7</p>
@@ -111,21 +113,19 @@ const Hero = () => {
           </motion.div>
         </motion.div>
 
-        {/* Right Content - Image */}
-       {/* Right Content - Image */}
-<motion.div
-  className="w-full md:w-[500px] lg:w-[600px]"
-  initial={{ opacity: 0, scale: 0.9 }}
-  animate={{ opacity: 1, scale: 1 }}
-  transition={{ duration: 0.8, delay: 0.7 }}
->
-  <img
-    src="/character.png"
-    alt="Gaming Character"
-    className="w-full h-auto object-contain"
-  />
-</motion.div>
-
+        {/* Right Image */}
+        <motion.div
+          className="w-full md:w-[500px] lg:w-[600px]"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.7 }}
+        >
+          <img
+            src="/character.png"
+            alt="Gaming Character"
+            className="w-full h-auto object-contain"
+          />
+        </motion.div>
       </div>
     </section>
   );
