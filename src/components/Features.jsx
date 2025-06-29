@@ -57,8 +57,9 @@ const Features = () => {
              <img
   src={featureBg}
   alt="Dotted Background"
-  className="absolute -right-20 md:-right-28 lg:-right-32 top-[45%] -translate-y-1/2 w-[420px] z-0 pointer-events-none"
+  className="absolute -right-20 md:-right-28 lg:-right-32 top-[45%] -translate-y-1/2 w-[320px] z-0 pointer-events-none"
 />
+
 
 
               {/* Feature UI image */}
