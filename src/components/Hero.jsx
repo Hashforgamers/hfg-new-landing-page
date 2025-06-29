@@ -116,18 +116,19 @@ const Hero = () => {
         </motion.div>
 
         {/* Right Image */}
-        <motion.div
-          className="w-full md:w-[500px] lg:w-[600px]"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-        >
-          <img
-            src="/character.png"
-            alt="Gaming Character"
-            className="w-full h-auto object-contain"
-          />
-        </motion.div>
+       <motion.div
+  className="w-full md:w-[600px] lg:w-[720px]"
+  initial={{ opacity: 0, scale: 0.9 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 0.8, delay: 0.7 }}
+>
+  <img
+    src="/character.png"
+    alt="Gaming Character"
+    className="w-full h-auto object-contain scale-110"
+  />
+</motion.div>
+
       </div>
     </section>
   );
