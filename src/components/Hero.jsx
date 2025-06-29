@@ -26,14 +26,16 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.1 }}
         >
           <motion.div
-            className="inline-flex items-center gap-2 px-5 py-[4px] rounded-full border border-red-500 text-red-500 text-sm font-medium shadow-[0_0_0_4px_rgba(255,0,0,0.15)] w-max mx-auto md:mx-0 mb-1"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <span className="text-base">⭕</span>
-            Live Soon
-          </motion.div>
+  className="inline-flex items-center gap-1 px-2 py-[1px] rounded-full border border-red-500 text-red-500 text-[10px] font-medium shadow-[0_0_0_2px_rgba(255,0,0,0.15)] w-max mx-auto md:mx-0 mb-1"
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.2 }}
+>
+  <span className="text-[11px]">⭕</span>
+  Live Soon
+</motion.div>
+
+
 
           <motion.h1
             className="text-6xl uppercase tracking-tighter leading-tight mb-4"
