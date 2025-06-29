@@ -54,20 +54,20 @@ const Features = () => {
           >
             <div className="relative w-full max-w-[800px] mt-4 lg:mt-12">
               {/* Background image */}
-             <img
+        <img
   src={featureBg}
   alt="Dotted Background"
-  className="absolute -right-20 md:-right-28 lg:-right-32 top-[45%] -translate-y-1/2 w-[320px] z-0 pointer-events-none"
+  className="absolute right-6 md:right-12 lg:right-20 top-[45%] -translate-y-1/2 w-[320px] z-0 pointer-events-none"
+/>
+
+              {/* Feature UI image */}
+            <img
+  src={featureUI}
+  alt="Feature UI"
+  className="relative z-10 w-[90%] md:w-[85%] h-auto object-contain max-h-[900px] lg:max-h-[1000px] -translate-x-6 md:-translate-x-10 lg:-translate-x-14"
 />
 
 
-
-              {/* Feature UI image */}
-              <img
-                src={featureUI}
-                alt="Feature UI"
-                className="relative z-10 w-full h-auto object-contain max-h-[1000px] lg:max-h-[1100px]"
-              />
             </div>
           </motion.div>
         </div>

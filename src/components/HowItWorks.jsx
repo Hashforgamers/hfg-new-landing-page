@@ -38,7 +38,8 @@ const HowItWorks = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-7xl mx-auto">
+    
+ <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-7xl mx-auto">
         {steps.map((step, idx) => (
           <motion.div
             key={idx}
@@ -47,14 +48,14 @@ const HowItWorks = () => {
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.6, delay: idx * 0.15, ease: "easeOut" }}
             viewport={{ once: true, amount: 0.3 }}
-            className="relative bg-[#1a2b1a]  text-white p-6 flex flex-col md:flex-row gap-6 shadow-md hover:shadow-lime-500/30 transition-all duration-300 clip-corner"
+            className="relative bg-[#1a2b1a] text-white p-4 md:p-5 flex flex-col md:flex-row gap-4 shadow-md hover:shadow-lime-500/30 transition-all duration-300 clip-corner max-w-[440px] mx-auto w-full"
           >
             {/* Text Content */}
-            <div className="flex-1 pl-6 md:pl-8">
-              <h3 className="text-2xl font-bebas uppercase tracking-wide mb-4 leading-tight">
+            <div className="flex-1 pl-4 md:pl-6">
+              <h3 className="text-xl font-bebas uppercase tracking-wide mb-3 leading-tight">
                 {step.title}
               </h3>
-              <p className="text-gray-300 text-base leading-relaxed">
+              <p className="text-gray-300 text-sm leading-normal">
                 {step.description}
               </p>
             </div>
@@ -63,7 +64,7 @@ const HowItWorks = () => {
             <img
               src={paymentImg}
               alt="Payment UI"
-              className="w-full md:w-52 h-auto object-contain self-center"
+              className="w-full md:w-36 h-auto object-contain self-center"
             />
           </motion.div>
         ))}
@@ -72,4 +73,4 @@ const HowItWorks = () => {
   );
 };
 
-export default HowItWorks; 
+export default HowItWorks;
