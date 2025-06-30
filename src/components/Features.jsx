@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import featureUI from "../assets/feature-ui.png";
+import featureUI from "../assets/feature-ui.JPG";
 import featureBg from "../assets/BG Frame.png";
 import featuresBoxes from "../assets/features-boxes.png"; // ⬅️ Combined feature boxes image
 
@@ -61,11 +61,14 @@ const Features = () => {
 />
 
               {/* Feature UI image */}
-            <img
+         <img
   src={featureUI}
   alt="Feature UI"
-  className="relative z-10 w-[90%] md:w-[85%] h-auto object-contain max-h-[900px] lg:max-h-[1000px] -translate-x-6 md:-translate-x-10 lg:-translate-x-14"
+  className="relative z-10 w-[80%] md:w-[70%] h-auto object-contain max-h-[750px] lg:max-h-[850px] translate-x-2 md:translate-x-4 lg:translate-x-6"
 />
+
+
+
 
 
             </div>
