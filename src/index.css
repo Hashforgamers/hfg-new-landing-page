@@ -40,3 +40,7 @@ body {
   font-weight: normal;
   font-style: normal;
 }
+
+html {
+  scroll-behavior: smooth;
+}

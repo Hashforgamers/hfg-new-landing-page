@@ -13,6 +13,9 @@ import HowItWorks from "./components/HowItWorks";
 import CafePricing from "./components/CafePricing";
 import JoinCommunity from './components/JoinCommunity';
 import Footer from "./components/Footer";
+import ListYourCafeModal from "./components/ListYourCafeModal";
+
+
 
 function App() {
   return (
@@ -26,6 +29,8 @@ function App() {
       <CafePricing />
       <JoinCommunity />
       <Footer />
+      <ListYourCafeModal isOpen={false} onClose={() => {}} />
+      
      
     </div>
   );

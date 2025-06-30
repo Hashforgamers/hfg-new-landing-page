@@ -27,7 +27,8 @@ const features = [
 
 const WhatIsHash = () => {
   return (
-    <section className="bg-[#000000] text-white py-20 px-6 font-noodle">
+   <section id="what-is-hash" className="bg-[#000000] text-white py-20 px-6 font-noodle">
+
       <div className="max-w-6xl mx-auto text-center mb-12">
         <h2 className="text-4xl mb-2 uppercase">WHAT IS HASH?</h2>
         <p className="text-gray-400 text-base">

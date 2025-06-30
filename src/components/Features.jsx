@@ -6,7 +6,8 @@ import featuresBoxes from "../assets/features-boxes.png"; // ⬅️ Combined fea
 
 const Features = () => {
   return (
-    <section className="bg-black text-white py-20 px-6 font-noodle">
+    <section id="features" className="bg-black text-white py-20 px-6 font-noodle">
+
       <div className="max-w-7xl mx-auto px-4">
         
         {/* Centered Title and Description */}
@@ -66,11 +67,6 @@ const Features = () => {
   alt="Feature UI"
   className="relative z-10 w-[80%] md:w-[70%] h-auto object-contain max-h-[750px] lg:max-h-[850px] translate-x-2 md:translate-x-4 lg:translate-x-6"
 />
-
-
-
-
-
             </div>
           </motion.div>
         </div>

@@ -7,6 +7,7 @@ import preRegisterBtn from "../assets/pre-register-btn.png";
 const Hero = () => {
   return (
     <section
+      id="hero"
       className="relative overflow-hidden text-white py-16 font-noodle"
       style={{
         backgroundImage: `url(${heroBg})`,
