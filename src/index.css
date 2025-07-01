@@ -44,3 +44,26 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+
+.deep-cut {
+  clip-path: polygon(
+    60px 0%,           /* Top-left cut */
+    100% 0%, 
+    100% calc(100% - 60px), /* Bottom-right cut start */
+    calc(100% - 60px) 100%, /* Bottom-right cut end */
+    0% 100%, 
+    0% 60px            /* Top-left cut return */
+  );
+}
+
+.button-clip {
+  clip-path: polygon(
+    10px 0%, 
+    100% 0%, 
+    100% calc(100% - 10px), 
+    calc(100% - 10px) 100%, 
+    0% 100%, 
+    0% 10px
+  );
+}

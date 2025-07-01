@@ -1,6 +1,6 @@
 # Always use LF for common files
 * text=auto
-
+* text=auto 
 *.js  text eol=lf
 *.jsx text eol=lf
 *.ts  text eol=lf
