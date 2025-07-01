@@ -1,21 +1,17 @@
+// JoinCommunity.jsx
 import React from "react";
 import { motion } from "framer-motion";
 import bgImage from "../assets/BgImage.png";
 import preRegisterBtn from "../assets/pre-register-btn2.png";
 
-
-const JoinCommunity = () => {
+const JoinCommunity = ({ openPreRegister }) => {
   return (
     <section
       className="relative text-white py-24 px-6 bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage: `url(${bgImage})`,
-      }}
+      style={{ backgroundImage: `url(${bgImage})` }}
     >
-      {/* 🔹 Dark + green gradient overlay for matching tone */}
       <div className="absolute inset-0 bg-gradient-to-br from-black via-[#0a120a]/80 to-[#041e15]/80 z-0 pointer-events-none" />
 
-      {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         <motion.h2
           initial={{ opacity: 0, y: 50 }}
@@ -36,25 +32,19 @@ const JoinCommunity = () => {
         >
           Get exclusive access to premium gaming stations, tournaments, and a vibrant community of gamers.
         </motion.p>
-<div className="flex justify-center mt-8">
-  <motion.img
-    src={preRegisterBtn}
-    alt="Pre Register Now"
-    className="w-44 sm:w-52 h-auto cursor-pointer hover:opacity-90 transition duration-300"
-    initial={{ opacity: 0, scale: 0.95 }}
-    whileInView={{ opacity: 1, scale: 1 }}
-    transition={{ delay: 0.4, duration: 0.6 }}
-    viewport={{ once: true }}
-    onClick={() => {
-      // Add navigation or scroll logic here
-      console.log("Pre Register clicked");
-    }}
-  />
-</div>
 
-
-
-
+        <div className="flex justify-center mt-8">
+          <motion.img
+            src={preRegisterBtn}
+            alt="Pre Register Now"
+            className="w-44 sm:w-52 h-auto cursor-pointer hover:opacity-90 transition duration-300"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            viewport={{ once: true }}
+            onClick={openPreRegister} // ✅ TRIGGERS THE MODAL
+          />
+        </div>
       </div>
     </section>
   );

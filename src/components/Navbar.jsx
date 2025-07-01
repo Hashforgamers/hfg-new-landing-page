@@ -6,16 +6,15 @@ const menuItems = [
   { label: 'Features', href: '#features' },
   { label: 'What Is Hash?', href: '#what-is-hash' },
   { label: 'How It Works?', href: '#how-it-works' },
-  { label: 'List Your Cafe With Us', href: '#list-your-cafe' }, // Will trigger modal
+  { label: 'List Your Cafe With Us', href: '#list-your-cafe' }, // Triggers cafe modal
 ];
 
-const Navbar = () => {
+const Navbar = ({ onPreRegisterClick }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const mobileMenuRef = useRef(null);
   const hamburgerRef = useRef(null);
 
-  // Close mobile menu when clicking outside
   useEffect(() => {
     if (!mobileOpen) return;
     function handleClick(e) {
@@ -31,7 +30,6 @@ const Navbar = () => {
     return () => document.removeEventListener('mousedown', handleClick);
   }, [mobileOpen]);
 
-  // Prevent body scroll on mobile menu open
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : 'unset';
     return () => (document.body.style.overflow = 'unset');
@@ -47,7 +45,7 @@ const Navbar = () => {
           WebkitBackdropFilter: 'blur(10px)',
         }}
       >
-        {/* Logo with scroll to #hero */}
+        {/* Logo scroll to #hero */}
         <div
           className="flex items-center justify-start h-full cursor-pointer"
           onClick={() => {
@@ -89,7 +87,9 @@ const Navbar = () => {
 
         {/* Pre Register + Hamburger */}
         <div className="flex items-center gap-3 sm:gap-4">
+          {/* ✅ Pre Register triggers parent modal */}
           <button
+            onClick={onPreRegisterClick}
             className="bg-[#2ea836] text-white font-semibold text-xs sm:text-sm px-4 sm:px-5 py-[6px] sm:py-2 flex items-center justify-center hover:bg-[#24912b] transition-colors duration-200"
             style={{
               clipPath: 'polygon(10% 0, 0% 50%, 0 100%, 90% 100%, 100% 50%, 100% 0)',
@@ -98,7 +98,7 @@ const Navbar = () => {
             Pre Register
           </button>
 
-          {/* Hamburger Menu */}
+          {/* Hamburger */}
           <button
             ref={hamburgerRef}
             className="md:hidden p-2 focus:outline-none focus:ring-2 focus:ring-green-400 rounded-md transition-all duration-200"
@@ -126,7 +126,7 @@ const Navbar = () => {
           className={`fixed top-[60px] right-0 w-full sm:w-[300px] h-[calc(100vh-60px)] bg-black/95 backdrop-blur-md transform transition-transform duration-300 ease-out md:hidden ${mobileOpen ? 'translate-x-0' : 'translate-x-full'}`}
         >
           <div className="flex flex-col items-stretch p-4">
-            {menuItems.map((item, index) => (
+            {menuItems.map((item) => (
               item.label === "List Your Cafe With Us" ? (
                 <button
                   key={item.label}
@@ -142,18 +142,29 @@ const Navbar = () => {
                 <a
                   key={item.label}
                   href={item.href}
-                  className="text-white text-base font-medium py-4 text-left hover:text-green-400 transition-colors duration-200 border-b border-white/10 last:border-none focus:outline-none focus:text-green-400"
                   onClick={() => setMobileOpen(false)}
+                  className="text-white text-base font-medium py-4 text-left hover:text-green-400 transition-colors duration-200 border-b border-white/10 last:border-none focus:outline-none focus:text-green-400"
                 >
                   {item.label}
                 </a>
               )
             ))}
+
+            {/* ✅ Mobile Pre Register Button */}
+            <button
+              onClick={() => {
+                onPreRegisterClick();
+                setMobileOpen(false);
+              }}
+              className="mt-6 text-white text-base font-semibold py-3 text-center bg-[#2ea836] hover:bg-[#24912b] transition rounded-xl"
+            >
+              Pre Register
+            </button>
           </div>
         </div>
       </nav>
 
-      {/* Modal */}
+      {/* Cafe Modal */}
       <ListYourCafeModal isOpen={showModal} onClose={() => setShowModal(false)} />
     </>
   );

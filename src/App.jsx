@@ -11,16 +11,17 @@ import CafePricing from "./components/CafePricing";
 import JoinCommunity from "./components/JoinCommunity";
 import Footer from "./components/Footer";
 import ListYourCafeModal from "./components/ListYourCafeModal";
-import PreRegisterModal from "./components/PreRegisterModal"; // ✅ make sure this path is correct
+import PreRegisterModal from "./components/PreRegisterModal";
 
 function App() {
   const [showPreRegisterModal, setShowPreRegisterModal] = useState(false);
 
   return (
     <div className="bg-black min-h-screen text-white">
-      <Navbar />
+      {/* ✅ Pass to Navbar */}
+      <Navbar onPreRegisterClick={() => setShowPreRegisterModal(true)} />
 
-      {/* 👇 Pass the openModal function to Hero or Waitlist or anywhere */}
+      {/* ✅ Pass to Hero */}
       <Hero openPreRegister={() => setShowPreRegisterModal(true)} />
 
       <Waitlist />
@@ -28,16 +29,19 @@ function App() {
       <WhatIsHash />
       <HowItWorks />
       <CafePricing />
-      <JoinCommunity />
+
+      {/* ✅ Pass to JoinCommunity */}
+      <JoinCommunity openPreRegister={() => setShowPreRegisterModal(true)} />
+
       <Footer />
 
-      {/* ✅ Show PreRegister Modal only when triggered */}
+      {/* ✅ Pre-registration Modal */}
       <PreRegisterModal
         isOpen={showPreRegisterModal}
         onClose={() => setShowPreRegisterModal(false)}
       />
 
-      {/* If you're using this later, keep it hidden for now */}
+      {/* Optional: List Cafe Modal kept hidden */}
       <ListYourCafeModal isOpen={false} onClose={() => {}} />
     </div>
   );
