@@ -30,6 +30,7 @@ function App() {
       <JoinCommunity />
       <Footer />
       <ListYourCafeModal isOpen={false} onClose={() => {}} />
+     
       
      
     </div>

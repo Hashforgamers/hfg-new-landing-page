@@ -67,3 +67,5 @@ html {
     0% 10px
   );
 }
+
+@import "leaflet/dist/leaflet.css";
