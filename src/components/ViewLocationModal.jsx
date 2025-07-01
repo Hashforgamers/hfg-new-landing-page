@@ -71,7 +71,7 @@ export default function ViewLocationModal({ isOpen, onClose }) {
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
-            className="bg-black/80 rounded-2xl w-full max-w-6xl overflow-hidden border border-[#64BD55]/10"
+            className="bg-black/80 rounded-2xl w-full max-w-6xl overflow-hidden border border-[#64BD55]/50 shadow-lg"
           >
             <div className="p-6 flex justify-between items-center border-b border-[#64BD55]/20">
               <h2 className="text-2xl  text-white">Our Gaming Locations</h2>
@@ -105,7 +105,7 @@ export default function ViewLocationModal({ isOpen, onClose }) {
                         {location.features.map((feature, index) => (
                           <span
                             key={index}
-                            className="text-xs px-2 py-1 rounded-full bg-[#64BD55]/10 text-[#44d35ca0]"
+                            className="text-xs px-2 py-1 rounded-full bg-[#64BD55]/20 text-[#44d35ca0]"
                           >
                             {feature}
                           </span>

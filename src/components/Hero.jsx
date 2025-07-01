@@ -4,9 +4,11 @@ import heroBg from "../assets/hero-bg.png";
 import viewLocationsBtn from "../assets/view-locations-btn.png";
 import preRegisterBtn from "../assets/pre-register-btn.png";
 import ViewLocationModal from "./ViewLocationModal";
+import PreRegisterModal from "./PreRegisterModal";
 
 const Hero = () => {
-  const [modalOpen, setModalOpen] = useState(false); // ✅ Modal state
+  const [locationModalOpen, setLocationModalOpen] = useState(false);
+  const [preRegisterOpen, setPreRegisterOpen] = useState(false);
 
   return (
     <section
@@ -67,22 +69,20 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
           >
-            {/* Pre Register Button */}
+            {/* ✅ Pre-register */}
             <img
               src={preRegisterBtn}
               alt="Pre Register Now"
               className="w-36 sm:w-44 cursor-pointer hover:opacity-90 transition duration-300"
-              onClick={() => {
-                // navigate to registration or open form
-              }}
+              onClick={() => setPreRegisterOpen(true)}
             />
 
-            {/* View Locations Button */}
+            {/* ✅ View Locations */}
             <img
               src={viewLocationsBtn}
               alt="View Locations"
               className="w-36 sm:w-44 h-10 mt-2 cursor-pointer hover:opacity-90 transition duration-300"
-              onClick={() => setModalOpen(true)} // ✅ open modal
+              onClick={() => setLocationModalOpen(true)}
             />
           </motion.div>
 
@@ -95,15 +95,11 @@ const Hero = () => {
           >
             <div>
               <p className="text-2xl">20+</p>
-              <p className="text-sm text-white leading-relaxed">
-                Gaming Stations
-              </p>
+              <p className="text-sm text-white leading-relaxed">Gaming Stations</p>
             </div>
             <div>
               <p className="text-2xl">5k+</p>
-              <p className="text-sm text-white leading-relaxed">
-                Active Gamers
-              </p>
+              <p className="text-sm text-white leading-relaxed">Active Gamers</p>
             </div>
             <div>
               <p className="text-2xl">24x7</p>
@@ -112,7 +108,7 @@ const Hero = () => {
           </motion.div>
         </motion.div>
 
-        {/* Right-side Image */}
+        {/* Right-side image */}
         <motion.div
           className="w-full md:w-[600px] lg:w-[720px]"
           initial={{ opacity: 0, scale: 0.9 }}
@@ -127,13 +123,16 @@ const Hero = () => {
         </motion.div>
       </div>
 
-      {/* ✅ Animated Location Modal */}
-      {modalOpen && (
-        <ViewLocationModal
-          isOpen={modalOpen}
-          onClose={() => setModalOpen(false)}
-        />
-      )}
+      {/* ✅ Modals */}
+      <PreRegisterModal
+        isOpen={preRegisterOpen}
+        onClose={() => setPreRegisterOpen(false)}
+      />
+
+      <ViewLocationModal
+        isOpen={locationModalOpen}
+        onClose={() => setLocationModalOpen(false)}
+      />
     </section>
   );
 };

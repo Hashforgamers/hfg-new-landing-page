@@ -69,3 +69,42 @@ html {
 }
 
 @import "leaflet/dist/leaflet.css";
+
+.form-input {
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: #000;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 0.5rem;
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.form-input::placeholder {
+  color: #6b7280; /* Tailwind's gray-500 */
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #64BD55;
+}
+
+.form-btn {
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.form-btn:hover {
+  opacity: 0.8;
+}
