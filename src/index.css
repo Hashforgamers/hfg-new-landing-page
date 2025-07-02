@@ -88,3 +88,25 @@ html {
 .form-btn:hover {
   opacity: 0.8;
 }
+
+/* ===== Custom Green Scrollbar ===== */
+.scrollbar-green {
+  scrollbar-width: thin;
+  scrollbar-color: #64BD55 transparent;
+}
+
+.scrollbar-green::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-green::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-green::-webkit-scrollbar-thumb {
+  background-color: #64BD55;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+

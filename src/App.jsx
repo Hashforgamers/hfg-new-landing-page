@@ -15,14 +15,20 @@ import JoinCommunity from "./components/JoinCommunity";
 import Footer from "./components/Footer";
 import ListYourCafeModal from "./components/ListYourCafeModal";
 import PreRegisterModal from "./components/PreRegisterModal";
+import AboutPopup from "./components/AboutPopup";
+import TermsModal from "./components/TermsModal"; // ✅ Import TermsModal
 
 function App() {
   const [showPreRegisterModal, setShowPreRegisterModal] = useState(false);
+  const [showAboutPopup, setShowAboutPopup] = useState(false);
+  const [showTermsModal, setShowTermsModal] = useState(false); // ✅ State for Terms popup
 
   return (
     <div className="bg-black min-h-screen text-white">
-      {/* Navbar with Pre-register callback */}
+      {/* Navbar */}
       <Navbar onPreRegisterClick={() => setShowPreRegisterModal(true)} />
+
+      {/* Sections */}
       <Hero openPreRegister={() => setShowPreRegisterModal(true)} />
       <Waitlist />
       <Features />
@@ -30,18 +36,32 @@ function App() {
       <HowItWorks />
       <CafePricing />
       <JoinCommunity openPreRegister={() => setShowPreRegisterModal(true)} />
-      <Footer />
 
-      {/* Pre-registration Modal */}
+      {/* Footer with both popups triggers */}
+      <Footer
+        onAboutClick={() => setShowAboutPopup(true)}
+        onTermsClick={() => setShowTermsModal(true)} // ✅ Hooked Terms button
+      />
+
+      {/* Modals */}
       <PreRegisterModal
         isOpen={showPreRegisterModal}
         onClose={() => setShowPreRegisterModal(false)}
       />
 
-      {/* Optional: Hidden List Cafe Modal */}
       <ListYourCafeModal isOpen={false} onClose={() => {}} />
 
-      {/* ✅ Vercel Analytics & Speed Insights (must be at root) */}
+      <AboutPopup
+        isOpen={showAboutPopup}
+        onClose={() => setShowAboutPopup(false)}
+      />
+
+      <TermsModal
+        isOpen={showTermsModal}
+        onClose={() => setShowTermsModal(false)}
+      />
+
+      {/* Vercel Tracking */}
       <Analytics />
       <SpeedInsights />
     </div>
