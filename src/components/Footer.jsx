@@ -12,8 +12,8 @@ const Footer = ({ onAboutClick, onTermsClick }) => {
   ];
 
   return (
-    <footer className="bg-[#000000] text-gray-300 py-12 px-6">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
+    <footer className="bg-[#000000] text-gray-300 py-12 px-6 md:px-12">
+      <div className="max-w-screen-2xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
         {/* Left: Logo & Info */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}

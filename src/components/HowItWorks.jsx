@@ -27,19 +27,23 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-   <section id="how-it-works" className="bg-[#000000] text-white py-20 px-6 font-noodle">
-
-      <div className="max-w-7xl mx-auto text-center mb-16">
-        <h2 className="text-4xl font-bebas tracking-wide uppercase mb-2">
+    <section
+      id="how-it-works"
+      className="bg-[#000000] text-white py-20 px-6 md:px-12 font-noodle"
+    >
+      {/* Title */}
+      <div className="max-w-screen-2xl mx-auto text-center mb-16">
+        <h2 className="text-4xl sm:text-5xl font-bebas tracking-wide uppercase mb-2">
           HOW IT WORKS
         </h2>
-        <p className="text-gray-400 max-w-xl mx-auto">
+        <p className="text-gray-400 max-w-2xl mx-auto text-base sm:text-lg">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6 max-w-6xl mx-auto px-2">
+      {/* Steps */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6 max-w-screen-2xl mx-auto">
         {steps.map((step, idx) => (
           <motion.div
             key={idx}

@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Zap, Gift, Crown, Lock } from "lucide-react"; // ✅ Lucide icons
+import { Zap, Gift, Crown, Lock } from "lucide-react";
 
 const features = [
   {
@@ -27,7 +27,7 @@ const features = [
 
 const Waitlist = () => {
   return (
-    <section className="relative bg-[#000000] text-white py-20 px-6 overflow-hidden font-noodle">
+    <section className="relative bg-[#000000] text-white py-20 px-6 md:px-12 overflow-hidden font-noodle">
       {/* 🔁 Background Lines */}
       <motion.div
         className="absolute inset-0 z-0 bg-[url('/bg-lines.png')] bg-cover bg-center opacity-5 pointer-events-none"
@@ -42,11 +42,11 @@ const Waitlist = () => {
       />
 
       {/* ✅ Main Content */}
-      <div className="relative z-10 max-w-6xl mx-auto text-center">
-        <h2 className="text-4xl mb-2 tracking-tighter">
+      <div className="relative z-10 w-full max-w-screen-2xl mx-auto text-center">
+        <h2 className="text-4xl sm:text-5xl lg:text-6xl mb-2 tracking-tighter">
           WHY JOIN THE WAITLIST?
         </h2>
-        <p className="text-gray-400 mb-12 leading-relaxed">
+        <p className="text-gray-400 mb-12 leading-relaxed text-base sm:text-lg">
           Power Comes to Those Who Wait.
         </p>
 

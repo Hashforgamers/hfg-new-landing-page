@@ -1,4 +1,3 @@
-// JoinCommunity.jsx
 import React from "react";
 import { motion } from "framer-motion";
 import bgImage from "../assets/BgImage.png";
@@ -7,18 +6,20 @@ import preRegisterBtn from "../assets/pre-register-btn2.png";
 const JoinCommunity = ({ openPreRegister }) => {
   return (
     <section
-      className="relative text-white py-24 px-6 bg-cover bg-center bg-no-repeat"
+      className="relative text-white py-24 px-6 md:px-12 bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url(${bgImage})` }}
     >
+      {/* Overlay Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-black via-[#0a120a]/80 to-[#041e15]/80 z-0 pointer-events-none" />
 
-      <div className="relative z-10 max-w-4xl mx-auto text-center">
+      {/* Main Content */}
+      <div className="relative z-10 max-w-screen-2xl mx-auto text-center">
         <motion.h2
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-3xl md:text-5xl font-bebas uppercase"
+          className="text-3xl sm:text-4xl md:text-5xl font-bebas uppercase"
         >
           Ready to Join the Elite Gaming Community?
         </motion.h2>
@@ -28,7 +29,7 @@ const JoinCommunity = ({ openPreRegister }) => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-gray-300 mt-4 max-w-xl mx-auto"
+          className="text-gray-300 mt-4 max-w-xl mx-auto text-base sm:text-lg"
         >
           Get exclusive access to premium gaming stations, tournaments, and a vibrant community of gamers.
         </motion.p>
@@ -42,7 +43,7 @@ const JoinCommunity = ({ openPreRegister }) => {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
             viewport={{ once: true }}
-            onClick={openPreRegister} // ✅ TRIGGERS THE MODAL
+            onClick={openPreRegister}
           />
         </div>
       </div>

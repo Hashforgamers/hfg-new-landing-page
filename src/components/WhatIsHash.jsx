@@ -27,16 +27,18 @@ const features = [
 
 const WhatIsHash = () => {
   return (
-   <section id="what-is-hash" className="bg-[#000000] text-white py-20 px-6 font-noodle">
-
-      <div className="max-w-6xl mx-auto text-center mb-12">
-        <h2 className="text-4xl mb-2 uppercase">WHAT IS HASH?</h2>
-        <p className="text-gray-400 text-base">
+    <section
+      id="what-is-hash"
+      className="bg-[#000000] text-white py-20 px-6 md:px-12 font-noodle"
+    >
+      <div className="max-w-screen-2xl mx-auto text-center mb-12">
+        <h2 className="text-4xl sm:text-5xl mb-2 uppercase">WHAT IS HASH?</h2>
+        <p className="text-gray-400 text-base sm:text-lg">
           Hash is not just an app. It’s your gaming command center.
         </p>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+      <div className="grid md:grid-cols-2 gap-6 max-w-screen-2xl mx-auto">
         {features.map((feature, idx) => (
           <motion.div
             key={idx}
@@ -56,7 +58,9 @@ const WhatIsHash = () => {
                 {feature.title}
               </h3>
             </div>
-            <p className="text-gray-400 text-base leading-relaxed pl-6 md:pl-8">{feature.description}</p>
+            <p className="text-gray-400 text-base leading-relaxed pl-6 md:pl-8">
+              {feature.description}
+            </p>
           </motion.div>
         ))}
       </div>

@@ -29,18 +29,18 @@ const cardVariants = {
 
 const CafePricing = () => {
   return (
-    <section className="bg-[#060606] text-white py-20 px-6 font-noodle">
-      <div className="text-center mb-14">
-        <h2 className="text-4xl font-bebas tracking-wide uppercase">
+    <section className="bg-[#060606] text-white py-20 px-6 md:px-12 font-noodle">
+      <div className="max-w-screen-2xl mx-auto text-center mb-14">
+        <h2 className="text-4xl sm:text-5xl font-bebas tracking-wide uppercase">
           Transparent, Café-Based Pricing
         </h2>
-        <p className="text-gray-400 mt-3 max-w-xl mx-auto">
+        <p className="text-gray-400 mt-3 max-w-2xl mx-auto text-base sm:text-lg">
           We believe in fair play, pricing is set by each gaming café, so you
           pay exactly what’s listed. No hidden fees.
         </p>
       </div>
 
-      <div className="flex flex-col md:flex-row justify-center items-stretch gap-6 max-w-6xl mx-auto">
+      <div className="flex flex-col md:flex-row justify-center items-stretch gap-6 max-w-screen-2xl mx-auto">
         {pricingItems.map((item, index) => (
           <motion.div
             key={index}
