@@ -1,39 +1,17 @@
 @import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
 
+/* Background Image */
 body {
   background-image: url('/hero-bg-bg.png');
 }
 
-
-.clip-corner {
-    /* Rectangle with top left and bottom right corners cut */
-    clip-path: polygon(
-      10px 0,  /* top left cut */
-      100% 0,
-      100% calc(100% - 40px), /* bottom right cut */
-      calc(100% - 40px) 100%,
-      0 100%,
-      0 40px
-    );
+/* Global Smooth Scroll */
+html {
+  scroll-behavior: smooth;
 }
 
-
-.clip-corner {
-    clip-path: polygon(
-        40px 0,
-        100% 0,
-        100% calc(100% - 40px),
-        calc(100% - 40px) 100%,
-        0 100%,
-        0 40px
-    );
-}
-
-.clip-button {
-  clip-path: polygon(10px 0%, 100% 0%, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0% 100%, 0% 10px);
-}
-
-
+/* Font */
 @font-face {
   font-family: 'BigNoodleTitling';
   src: url('./assets/fonts/BigNoodleTitling.ttf') format('truetype');
@@ -41,22 +19,19 @@ body {
   font-style: normal;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-
-.deep-cut {
+/* Clip Styles */
+.clip-corner {
   clip-path: polygon(
-    60px 0%,           /* Top-left cut */
-    100% 0%, 
-    100% calc(100% - 60px), /* Bottom-right cut start */
-    calc(100% - 60px) 100%, /* Bottom-right cut end */
-    0% 100%, 
-    0% 60px            /* Top-left cut return */
+    40px 0,
+    100% 0,
+    100% calc(100% - 40px),
+    calc(100% - 40px) 100%,
+    0 100%,
+    0 40px
   );
 }
 
+.clip-button,
 .button-clip {
   clip-path: polygon(
     10px 0%, 
@@ -68,16 +43,23 @@ html {
   );
 }
 
-@import "leaflet/dist/leaflet.css";
+.deep-cut {
+  clip-path: polygon(
+    60px 0%,           
+    100% 0%, 
+    100% calc(100% - 60px), 
+    calc(100% - 60px) 100%, 
+    0% 100%, 
+    0% 60px
+  );
+}
 
+/* Form Styles */
 .form-input {
   width: 100%;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding: 0.5rem 1rem;
   background-color: #000;
-  border: 1px solid rgba(255,255,255,0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 0.5rem;
   color: #fff;
   font-size: 1rem;
@@ -85,7 +67,7 @@ html {
 }
 
 .form-input::placeholder {
-  color: #6b7280; /* Tailwind's gray-500 */
+  color: #6b7280; /* Tailwind gray-500 */
 }
 
 .form-input:focus {
@@ -93,12 +75,10 @@ html {
   border-color: #64BD55;
 }
 
+/* Form Buttons */
 .form-btn {
   width: 100%;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   font-size: 0.875rem;
   font-weight: 500;

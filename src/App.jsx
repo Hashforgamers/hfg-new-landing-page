@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import './App.css';
+import "./App.css";
+
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -18,31 +21,29 @@ function App() {
 
   return (
     <div className="bg-black min-h-screen text-white">
-      {/* ✅ Pass to Navbar */}
+      {/* Navbar with Pre-register callback */}
       <Navbar onPreRegisterClick={() => setShowPreRegisterModal(true)} />
-
-      {/* ✅ Pass to Hero */}
       <Hero openPreRegister={() => setShowPreRegisterModal(true)} />
-
       <Waitlist />
       <Features />
       <WhatIsHash />
       <HowItWorks />
       <CafePricing />
-
-      {/* ✅ Pass to JoinCommunity */}
       <JoinCommunity openPreRegister={() => setShowPreRegisterModal(true)} />
-
       <Footer />
 
-      {/* ✅ Pre-registration Modal */}
+      {/* Pre-registration Modal */}
       <PreRegisterModal
         isOpen={showPreRegisterModal}
         onClose={() => setShowPreRegisterModal(false)}
       />
 
-      {/* Optional: List Cafe Modal kept hidden */}
+      {/* Optional: Hidden List Cafe Modal */}
       <ListYourCafeModal isOpen={false} onClose={() => {}} />
+
+      {/* ✅ Vercel Analytics & Speed Insights (must be at root) */}
+      <Analytics />
+      <SpeedInsights />
     </div>
   );
 }

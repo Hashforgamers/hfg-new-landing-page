@@ -5,11 +5,10 @@ import ListYourCafeModal from "./ListYourCafeModal";
 const menuItems = [
   { label: 'Features', href: '#features' },
   { label: 'What Is Hash?', href: '#what-is-hash' },
-  { label: 'How It Works?', href: '#how-it-works' },
-  { label: 'List Your Cafe With Us', href: '#list-your-cafe' }, // Triggers cafe modal
+  { label: 'How It Works?', href: '#how-it-works' }, // Triggers cafe modal
 ];
 
-const Navbar = ({ onPreRegisterClick }) => {
+const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const mobileMenuRef = useRef(null);
@@ -85,17 +84,16 @@ const Navbar = ({ onPreRegisterClick }) => {
           ))}
         </ul>
 
-        {/* Pre Register + Hamburger */}
+        {/* List Your Cafe Button (Replaces Pre Register) */}
         <div className="flex items-center gap-3 sm:gap-4">
-          {/* ✅ Pre Register triggers parent modal */}
           <button
-            onClick={onPreRegisterClick}
+            onClick={() => setShowModal(true)}
             className="bg-[#2ea836] text-white font-semibold text-xs sm:text-sm px-4 sm:px-5 py-[6px] sm:py-2 flex items-center justify-center hover:bg-[#24912b] transition-colors duration-200"
             style={{
               clipPath: 'polygon(10% 0, 0% 50%, 0 100%, 90% 100%, 100% 50%, 100% 0)',
             }}
           >
-            Pre Register
+            List Your Cafe
           </button>
 
           {/* Hamburger */}
@@ -150,15 +148,15 @@ const Navbar = ({ onPreRegisterClick }) => {
               )
             ))}
 
-            {/* ✅ Mobile Pre Register Button */}
+            {/* Mobile Cafe CTA Button */}
             <button
               onClick={() => {
-                onPreRegisterClick();
+                setShowModal(true);
                 setMobileOpen(false);
               }}
               className="mt-6 text-white text-base font-semibold py-3 text-center bg-[#2ea836] hover:bg-[#24912b] transition rounded-xl"
             >
-              Pre Register
+              List Your Cafe
             </button>
           </div>
         </div>

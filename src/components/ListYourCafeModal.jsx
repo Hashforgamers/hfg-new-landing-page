@@ -4,8 +4,8 @@ import stateCityData from "../data/stateCity.json";
 const ListYourCafeModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     cafeName: "",
-    city: "",
     state: "",
+    city: "",
     ownerName: "",
     contact: "",
     email: "",
@@ -69,37 +69,38 @@ const ListYourCafeModal = ({ isOpen, onClose }) => {
           />
 
           {/* City + State */}
-          <div className="grid grid-cols-2 gap-4">
-            <select
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-              className="bg-transparent border border-white text-white p-3 rounded-none clip-input"
-              required
-            >
-              <option value="">City</option>
-              {cities.map((city) => (
-                <option key={city} value={city} className="text-black">
-                  {city}
-                </option>
-              ))}
-            </select>
+         <div className="grid grid-cols-2 gap-4">
+  <select
+    name="state"
+    value={formData.state}
+    onChange={handleChange}
+    className="bg-transparent border border-white text-white p-3 rounded-none clip-input"
+    required
+  >
+    <option value="">State</option>
+    {Object.keys(stateCityData).map((state) => (
+      <option key={state} value={state} className="text-black">
+        {state}
+      </option>
+    ))}
+  </select>
 
-            <select
-              name="state"
-              value={formData.state}
-              onChange={handleChange}
-              className="bg-transparent border border-white text-white p-3 rounded-none clip-input"
-              required
-            >
-              <option value="">State</option>
-              {Object.keys(stateCityData).map((state) => (
-                <option key={state} value={state} className="text-black">
-                  {state}
-                </option>
-              ))}
-            </select>
-          </div>
+  <select
+    name="city"
+    value={formData.city}
+    onChange={handleChange}
+    className="bg-transparent border border-white text-white p-3 rounded-none clip-input"
+    required
+  >
+    <option value="">City</option>
+    {cities.map((city) => (
+      <option key={city} value={city} className="text-black">
+        {city}
+      </option>
+    ))}
+  </select>
+</div>
+
 
           {/* Owner Details */}
           <div className="text-white font-semibold uppercase tracking-wider border-t border-white pt-4 mb-4 text-center">
