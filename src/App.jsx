@@ -13,15 +13,18 @@ import HowItWorks from "./components/HowItWorks";
 import CafePricing from "./components/CafePricing";
 import JoinCommunity from "./components/JoinCommunity";
 import Footer from "./components/Footer";
+
 import ListYourCafeModal from "./components/ListYourCafeModal";
 import PreRegisterModal from "./components/PreRegisterModal";
 import AboutPopup from "./components/AboutPopup";
-import TermsModal from "./components/TermsModal"; // ✅ Import TermsModal
+import TermsModal from "./components/TermsModal";
+import PrivacyPolicyModal from "./components/PrivacyPolicyModal"; // ✅ Add this import
 
 function App() {
   const [showPreRegisterModal, setShowPreRegisterModal] = useState(false);
   const [showAboutPopup, setShowAboutPopup] = useState(false);
-  const [showTermsModal, setShowTermsModal] = useState(false); // ✅ State for Terms popup
+  const [showTermsModal, setShowTermsModal] = useState(false);
+  const [showPrivacyModal, setShowPrivacyModal] = useState(false); // ✅ State for privacy modal
 
   return (
     <div className="bg-black min-h-screen text-white">
@@ -37,10 +40,11 @@ function App() {
       <CafePricing />
       <JoinCommunity openPreRegister={() => setShowPreRegisterModal(true)} />
 
-      {/* Footer with both popups triggers */}
+      {/* Footer with modal triggers */}
       <Footer
         onAboutClick={() => setShowAboutPopup(true)}
-        onTermsClick={() => setShowTermsModal(true)} // ✅ Hooked Terms button
+        onTermsClick={() => setShowTermsModal(true)}
+        onPrivacyClick={() => setShowPrivacyModal(true)} // ✅ Pass to footer
       />
 
       {/* Modals */}
@@ -59,6 +63,11 @@ function App() {
       <TermsModal
         isOpen={showTermsModal}
         onClose={() => setShowTermsModal(false)}
+      />
+
+      <PrivacyPolicyModal
+        isOpen={showPrivacyModal}
+        onClose={() => setShowPrivacyModal(false)}
       />
 
       {/* Vercel Tracking */}
