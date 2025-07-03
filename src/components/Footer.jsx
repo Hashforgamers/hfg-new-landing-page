@@ -8,10 +8,10 @@ const Footer = ({ onAboutClick, onTermsClick, onPrivacyClick }) => {
   const [isContactOpen, setIsContactOpen] = useState(false); // Modal state
 
   const socialLinks = [
-    { icon: <FaTwitch />, name: "Twitch" },
-    { icon: <FaInstagram />, name: "Instagram" },
-    { icon: <FaTwitter />, name: "Twitter" },
-    { icon: <FaYoutube />, name: "YouTube" },
+    { icon: <FaTwitch />, name: "Twitch", href: "#" }, // Add your link here
+    { icon: <FaInstagram />, name: "Instagram", href: "https://www.instagram.com/hashforgamers/" },
+    { icon: <FaTwitter />, name: "Twitter", href: "#" }, // Add your link here
+    { icon: <FaYoutube />, name: "YouTube", href: "https://www.youtube.com/@hashforgamers2519" },
   ];
 
   return (
@@ -47,8 +47,6 @@ const Footer = ({ onAboutClick, onTermsClick, onPrivacyClick }) => {
             {/* Links */}
             <div className="flex flex-col gap-3 text-sm">
               <button onClick={onAboutClick} className="text-left hover:text-white">About</button>
-              <a href="#">Blog</a>
-              <a href="#">Help Center</a>
               <button
                 onClick={() => setIsContactOpen(true)}
                 className="text-left hover:text-white"
@@ -80,13 +78,15 @@ const Footer = ({ onAboutClick, onTermsClick, onPrivacyClick }) => {
               {socialLinks.map((item, index) => (
                 <motion.a
                   key={index}
-                  href="#"
+                  href={item.href}
                   className="flex items-center gap-2 hover:text-white"
                   variants={{
                     hidden: { opacity: 0, y: 20 },
                     visible: { opacity: 1, y: 0 },
                   }}
                   transition={{ duration: 0.5 }}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   {item.icon} {item.name}
                 </motion.a>
