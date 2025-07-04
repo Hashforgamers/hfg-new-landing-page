@@ -32,7 +32,7 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.1 }}
         >
          <motion.div
-  className="inline-flex items-center gap-1 px-2 py-[1px] rounded-full border border-red-500 text-red-500 text-[10px] font-medium w-max mx-auto md:mx-0 mb-1 -mt-2"
+  className="inline-flex items-center gap-1 px-2 py-[1px] rounded-full border border-red-500 text-red-500 text-[10px] font-medium w-max mx-auto md:mx-0 mb-3 -mt-4"
   initial={{ opacity: 0, y: 20 }}
   animate={{
     opacity: [1, 0.6, 1],
@@ -52,7 +52,6 @@ const Hero = () => {
   <span className="text-[11px]">⭕</span>
   Live Soon
 </motion.div>
-
 
           <motion.h1
   className="ml-2 sm:ml-4 text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase tracking-tighter leading-tight mb-4"
