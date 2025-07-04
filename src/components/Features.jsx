@@ -11,6 +11,11 @@ const Features = () => {
 
   const featuresData = [
     {
+      title: "DASHBOARD",
+      subtitle: "A comprehensive overview of your gaming center's performance",
+      image: featureUI,
+    },
+    {
       title: "BOOKING STATUS",
       subtitle: "Keep track of all bookings and their statuses in a single view",
       image: bookingStatusImage,
@@ -65,7 +70,11 @@ const Features = () => {
                 style={{ minHeight: "150px" }}
               >
                 <button
-                  onClick={() => setSelectedImage(feature.image)}
+                  onClick={() =>
+                    feature.title === "DASHBOARD"
+                      ? setSelectedImage(null)
+                      : setSelectedImage(feature.image)
+                  }
                   className="relative w-full h-[90px] md:h-[120px] lg:h-[150px] flex flex-col justify-start pl-[clamp(10%,24px,13%)] pr-[clamp(10%,24px,13%)] pt-6 bg-transparent group outline-none"
                 >
                   <svg
@@ -91,12 +100,16 @@ const Features = () => {
                     <polygon
                       points="40,0 500,0 500,110 460,150 0,150 0,40"
                       fill={
+                        (selectedImage === null && feature.title === "DASHBOARD") ||
                         selectedImage === feature.image
                           ? "url(#featureBtnGradient)"
                           : "#151c13"
                       }
                       stroke={
-                        selectedImage === feature.image ? "#6A7A58" : "transparent"
+                        (selectedImage === null && feature.title === "DASHBOARD") ||
+                        selectedImage === feature.image
+                          ? "#6A7A58"
+                          : "transparent"
                       }
                       strokeWidth="2"
                     />
@@ -115,7 +128,7 @@ const Features = () => {
             ))}
           </motion.div>
 
-          {/* Right: Dashboard with Overlaid Feature Image */}
+          {/* Right: UI Preview */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -131,14 +144,16 @@ const Features = () => {
                 className="absolute right-2 sm:right-6 top-[55%] -translate-y-1/2 w-[220px] sm:w-[260px] md:w-[280px] lg:w-[250px] z-0 pointer-events-none"
               />
 
-              {/* Static dashboard background */}
-              <img
-                src={featureUI}
-                alt="Dashboard UI"
-                className="relative z-10 w-[75%] sm:w-[70%] md:w-[65%] lg:w-[70%] h-auto mx-auto object-contain"
-              />
+              {/* Dashboard background - only show when no feature selected */}
+              {!selectedImage && (
+                <img
+                  src={featureUI}
+                  alt="Dashboard UI"
+                  className="relative z-10 w-[75%] sm:w-[70%] md:w-[65%] lg:w-[70%] h-auto mx-auto object-contain"
+                />
+              )}
 
-              {/* Feature overlay (same size as dashboard) */}
+              {/* Overlay preview when feature selected */}
               {selectedImage && (
                 <motion.div
                   key={selectedImage}

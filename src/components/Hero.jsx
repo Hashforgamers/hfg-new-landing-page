@@ -31,8 +31,8 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
         >
-         <motion.div
-  className="inline-flex items-center gap-1 px-2 py-[1px] rounded-full border border-red-500 text-red-500 text-[10px] font-medium w-max mx-auto md:mx-0 mb-3 -mt-4"
+        <motion.div
+  className="inline-flex items-center gap-1 px-2 py-[1px] rounded-full border border-red-500 text-red-500 text-[10px] font-medium w-max mx-auto md:ml-4 mb-3 -mt-4"
   initial={{ opacity: 0, y: 20 }}
   animate={{
     opacity: [1, 0.6, 1],
@@ -53,6 +53,7 @@ const Hero = () => {
   Live Soon
 </motion.div>
 
+
           <motion.h1
   className="ml-2 sm:ml-4 text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase tracking-tighter leading-tight mb-4"
   initial={{ opacity: 0, y: 30 }}
@@ -65,58 +66,58 @@ const Hero = () => {
 </motion.h1>
 
 
-          <motion.p
-            className="text-gray-400 mb-6 leading-relaxed text-base sm:text-lg"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-          >
-            Book Pro-Level Consoles. Crush Lobbies. Win Tournaments. This is
-            where real gamers play.
-          </motion.p>
+      <motion.p
+  className="text-gray-400 mb-6 leading-relaxed text-base sm:text-lg ml-2 sm:ml-4"
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.4 }}
+>
+  Book Pro-Level Consoles. Crush Lobbies. Win Tournaments. This is
+  where real gamers play.
+</motion.p>
 
-          {/* Buttons */}
-          <motion.div
-            className="flex flex-col sm:flex-row items-center gap-4 mb-10 justify-center md:justify-start"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-          >
-            <img
-              src={preRegisterBtn}
-              alt="Pre Register Now"
-              className="w-32 sm:w-40 md:w-44 cursor-pointer hover:opacity-90 transition duration-300"
-              onClick={() => setPreRegisterOpen(true)}
-            />
+{/* Buttons */}
+<motion.div
+  className="flex flex-col sm:flex-row items-center gap-4 mb-10 justify-center md:justify-start ml-2 sm:ml-4"
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.5 }}
+>
+  <img
+    src={preRegisterBtn}
+    alt="Pre Register Now"
+    className="w-32 sm:w-40 md:w-44 cursor-pointer hover:opacity-90 transition duration-300"
+    onClick={() => setPreRegisterOpen(true)}
+  />
 
-            <img
-              src={viewLocationsBtn}
-              alt="View Locations"
-              className="w-32 sm:w-40 md:w-44 h-10 cursor-pointer hover:opacity-90 transition duration-300"
-              onClick={() => setLocationModalOpen(true)}
-            />
-          </motion.div>
+  <img
+    src={viewLocationsBtn}
+    alt="View Locations"
+    className="w-32 sm:w-40 md:w-44 h-10 cursor-pointer hover:opacity-90 transition duration-300"
+    onClick={() => setLocationModalOpen(true)}
+  />
+</motion.div>
 
-          {/* Stats */}
-          <motion.div
-            className="flex flex-row justify-center sm:justify-start gap-4 overflow-x-auto no-scrollbar text-green-400 text-center sm:text-left"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-          >
-            <div className="w-[110px] shrink-0">
-              <p className="text-2xl">20+</p>
-              <p className="text-sm text-white leading-relaxed">Gaming Stations</p>
-            </div>
-            <div className="w-[110px] shrink-0">
-              <p className="text-2xl">5k+</p>
-              <p className="text-sm text-white leading-relaxed">Active Gamers</p>
-            </div>
-            <div className="w-[110px] shrink-0">
-              <p className="text-2xl">24x7</p>
-              <p className="text-sm text-white leading-relaxed">Available</p>
-            </div>
-          </motion.div>
+{/* Stats */}
+<motion.div
+  className="flex flex-row justify-center sm:justify-start gap-4 overflow-x-auto no-scrollbar text-green-400 text-center sm:text-left ml-2 sm:ml-4"
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.6 }}
+>
+  <div className="w-[110px] shrink-0">
+    <p className="text-2xl">20+</p>
+    <p className="text-sm text-white leading-relaxed">Gaming Stations</p>
+  </div>
+  <div className="w-[110px] shrink-0">
+    <p className="text-2xl">5k+</p>
+    <p className="text-sm text-white leading-relaxed">Active Gamers</p>
+  </div>
+  <div className="w-[110px] shrink-0">
+    <p className="text-2xl">24x7</p>
+    <p className="text-sm text-white leading-relaxed">Available</p>
+  </div>
+</motion.div>
         </motion.div>
 
         {/* Right-side Character Image */}
