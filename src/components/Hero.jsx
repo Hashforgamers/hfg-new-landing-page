@@ -31,26 +31,40 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
         >
-          <motion.div
-            className="inline-flex items-center gap-1 px-2 py-[1px] rounded-full border border-red-500 text-red-500 text-[10px] font-medium shadow-[0_0_0_2px_rgba(255,0,0,0.15)] w-max mx-auto md:mx-0 mb-1"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <span className="text-[11px]">⭕</span>
-            Live Soon
-          </motion.div>
+         <motion.div
+  className="inline-flex items-center gap-1 px-2 py-[1px] rounded-full border border-red-500 text-red-500 text-[10px] font-medium w-max mx-auto md:mx-0 mb-1"
+  initial={{ opacity: 0, y: 20 }}
+  animate={{
+    opacity: [1, 0.6, 1],
+    filter: [
+      "drop-shadow(0 0 6px #ff0000) drop-shadow(0 0 12px #ff0000)",
+      "drop-shadow(0 0 2px #ff0000)",
+      "drop-shadow(0 0 6px #ff0000) drop-shadow(0 0 12px #ff0000)",
+    ],
+  }}
+  transition={{
+    duration: 1.4,
+    repeat: Infinity,
+    ease: "easeInOut",
+    delay: 0.2,
+  }}
+>
+  <span className="text-[11px]">⭕</span>
+  Live Soon
+</motion.div>
+
 
           <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase tracking-tighter leading-tight mb-4"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            CONQUER THE THRONE.
-            <br />
-            RULE THE GAME
-          </motion.h1>
+  className="ml-2 sm:ml-4 text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase tracking-tighter leading-tight mb-4"
+  initial={{ opacity: 0, y: 30 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.3 }}
+>
+  CONQUER THE THRONE.
+  <br />
+  RULE THE GAME
+</motion.h1>
+
 
           <motion.p
             className="text-gray-400 mb-6 leading-relaxed text-base sm:text-lg"
@@ -86,27 +100,27 @@ const Hero = () => {
 
           {/* Stats */}
           <motion.div
-            className="grid grid-cols-2 sm:grid-cols-3 gap-6 text-green-400 text-center sm:text-left"
+            className="flex flex-row justify-center sm:justify-start gap-4 overflow-x-auto no-scrollbar text-green-400 text-center sm:text-left"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
           >
-            <div>
+            <div className="w-[110px] shrink-0">
               <p className="text-2xl">20+</p>
               <p className="text-sm text-white leading-relaxed">Gaming Stations</p>
             </div>
-            <div>
+            <div className="w-[110px] shrink-0">
               <p className="text-2xl">5k+</p>
               <p className="text-sm text-white leading-relaxed">Active Gamers</p>
             </div>
-            <div>
+            <div className="w-[110px] shrink-0">
               <p className="text-2xl">24x7</p>
               <p className="text-sm text-white leading-relaxed">Available</p>
             </div>
           </motion.div>
         </motion.div>
 
-        {/* Right-side image */}
+        {/* Right-side Character Image */}
         <motion.div
           className="w-full md:w-[480px] lg:w-[600px] px-4 md:px-0"
           initial={{ opacity: 0, scale: 0.9 }}
@@ -126,7 +140,6 @@ const Hero = () => {
         isOpen={preRegisterOpen}
         onClose={() => setPreRegisterOpen(false)}
       />
-
       <ViewLocationModal
         isOpen={locationModalOpen}
         onClose={() => setLocationModalOpen(false)}
