@@ -7,7 +7,7 @@ import manageDevicesImage from "../assets/manage-devices-preview.png";
 import pricingModelImage from "../assets/pricing-model-preview.png";
 
 const Features = () => {
-  const [modalImage, setModalImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const featuresData = [
     {
@@ -26,9 +26,6 @@ const Features = () => {
       image: pricingModelImage,
     },
   ];
-
-  const openModal = (img) => setModalImage(img);
-  const closeModal = () => setModalImage(null);
 
   return (
     <section
@@ -53,23 +50,23 @@ const Features = () => {
 
         {/* Two Columns */}
         <div className="flex flex-col lg:flex-row items-center gap-12">
-          {/* Left: Features Buttons */}
+          {/* Left: Feature Buttons */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="w-full lg:w-[45%] flex flex-col gap-0 md:gap-8 p-0"
+            className="w-full lg:w-[45%] flex flex-col gap-0 md:gap-8"
           >
             {featuresData.map((feature, idx) => (
               <div
                 key={idx}
-                className="relative w-full flex items-center justify-center p-0 m-0 border-0"
+                className="relative w-full flex items-center justify-center"
                 style={{ minHeight: "150px" }}
               >
                 <button
-                  onClick={() => openModal(feature.image)}
-                  className={`relative w-full h-[90px] md:h-[120px] lg:h-[150px] flex flex-col justify-start pl-[clamp(10%,24px,13%)] pr-[clamp(10%,24px,13%)] pt-6 bg-transparent group p-0 m-0 border-0 outline-none`}
+                  onClick={() => setSelectedImage(feature.image)}
+                  className="relative w-full h-[90px] md:h-[120px] lg:h-[150px] flex flex-col justify-start pl-[clamp(10%,24px,13%)] pr-[clamp(10%,24px,13%)] pt-6 bg-transparent group outline-none"
                 >
                   <svg
                     width="100%"
@@ -93,36 +90,32 @@ const Features = () => {
                     </defs>
                     <polygon
                       points="40,0 500,0 500,110 460,150 0,150 0,40"
-                      fill={idx === 0 ? "url(#featureBtnGradient)" : "#151c13"}
-                      stroke={idx === 0 ? "#6A7A58" : "transparent"}
+                      fill={
+                        selectedImage === feature.image
+                          ? "url(#featureBtnGradient)"
+                          : "#151c13"
+                      }
+                      stroke={
+                        selectedImage === feature.image ? "#6A7A58" : "transparent"
+                      }
                       strokeWidth="2"
-                      className="feature-polygon transition-colors duration-200"
                     />
                   </svg>
 
                   <div className="w-full flex flex-col items-start justify-start z-30 pointer-events-none pt-2 pl-2 sm:pl-4">
-                    <span className="block font-noodle font-normal uppercase tracking-wide text-xs sm:text-sm md:text-lg lg:text-[1.7rem] leading-tight mb-1 text-white text-left select-none break-words whitespace-normal max-w-full">
+                    <span className="block font-noodle font-normal uppercase tracking-wide text-xs sm:text-sm md:text-lg lg:text-[1.7rem] leading-tight mb-1 text-white text-left">
                       {feature.title}
                     </span>
-                    <span className="block font-inter font-normal text-[10px] sm:text-xs md:text-base lg:text-[1.1rem] leading-tight text-gray-300 text-left select-none break-words whitespace-normal max-w-full">
+                    <span className="block font-inter text-[10px] sm:text-xs md:text-base lg:text-[1.1rem] text-gray-300 text-left">
                       {feature.subtitle}
                     </span>
                   </div>
-
-                  {idx === 0 && (
-                    <style>{`
-                      .group:hover svg .feature-polygon {
-                        fill: url(#featureBtnGradient);
-                        stroke: #6A7A58;
-                      }
-                    `}</style>
-                  )}
                 </button>
               </div>
             ))}
           </motion.div>
 
-          {/* Right: Feature UI with Background */}
+          {/* Right: Dashboard with Overlaid Feature Image */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -131,39 +124,51 @@ const Features = () => {
             className="w-full lg:w-[55%] relative flex items-center justify-center"
           >
             <div className="relative w-full max-w-[1000px] mt-4 lg:mt-12 aspect-[4/3]">
+              {/* Background dots */}
               <img
                 src={featureBg}
                 alt="Dotted Background"
                 className="absolute right-2 sm:right-6 top-[55%] -translate-y-1/2 w-[220px] sm:w-[260px] md:w-[280px] lg:w-[250px] z-0 pointer-events-none"
               />
+
+              {/* Static dashboard background */}
               <img
                 src={featureUI}
-                alt="Feature UI"
+                alt="Dashboard UI"
                 className="relative z-10 w-[75%] sm:w-[70%] md:w-[65%] lg:w-[70%] h-auto mx-auto object-contain"
               />
+
+              {/* Feature overlay (same size as dashboard) */}
+              {selectedImage && (
+                <motion.div
+                  key={selectedImage}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute top-0 left-0 w-full h-full z-20 bg-black/60 backdrop-blur-sm flex items-center justify-center rounded-lg"
+                  onClick={() => setSelectedImage(null)}
+                >
+                  <img
+                    src={selectedImage}
+                    alt="Feature Preview"
+                    className="w-full h-full object-contain rounded-lg"
+                  />
+                  <button
+                    className="absolute top-3 right-4 text-white text-3xl font-bold hover:text-red-400"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedImage(null);
+                    }}
+                  >
+                    ×
+                  </button>
+                </motion.div>
+              )}
             </div>
           </motion.div>
         </div>
       </div>
-
-      {/* Modal Popup */}
-      {modalImage && (
-        <div className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center px-2 sm:px-6">
-          <div className="relative bg-[#1a1a1a] rounded-lg overflow-hidden shadow-2xl w-full max-w-6xl max-h-[90vh] flex items-center justify-center">
-            <button
-              onClick={closeModal}
-              className="absolute top-2 right-4 text-white text-3xl font-bold hover:text-red-400"
-            >
-              ×
-            </button>
-            <img
-              src={modalImage}
-              alt="Feature Preview"
-              className="w-full h-auto max-h-[85vh] object-contain"
-            />
-          </div>
-        </div>
-      )}
     </section>
   );
 };

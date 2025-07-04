@@ -32,7 +32,7 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.1 }}
         >
          <motion.div
-  className="inline-flex items-center gap-1 px-2 py-[1px] rounded-full border border-red-500 text-red-500 text-[10px] font-medium w-max mx-auto md:mx-0 mb-1"
+  className="inline-flex items-center gap-1 px-2 py-[1px] rounded-full border border-red-500 text-red-500 text-[10px] font-medium w-max mx-auto md:mx-0 mb-1 -mt-2"
   initial={{ opacity: 0, y: 20 }}
   animate={{
     opacity: [1, 0.6, 1],
