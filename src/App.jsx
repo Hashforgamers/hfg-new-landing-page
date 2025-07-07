@@ -24,7 +24,7 @@ import AboutPopup from "./components/AboutPopup";
 import TermsModal from "./components/TermsModal";
 import PrivacyPolicyModal from "./components/PrivacyPolicyModal";
 
-import Chatwoot from "./pages/Chatwoot"; // ✅ Add this import
+import PrivacyPolicy from "./pages/PrivacyPolicy"; // <-- Add this
 
 function MainApp() {
   const [showPreRegisterModal, setShowPreRegisterModal] = useState(false);
@@ -84,7 +84,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainApp />} />
-        <Route path="/chatwoot.html" element={<Chatwoot />} /> {/* ✅ Your support page */}
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       </Routes>
     </BrowserRouter>
   );
