@@ -1,8 +1,12 @@
+// App.jsx
 import React, { useState } from "react";
 import "./App.css";
 
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -18,20 +22,20 @@ import ListYourCafeModal from "./components/ListYourCafeModal";
 import PreRegisterModal from "./components/PreRegisterModal";
 import AboutPopup from "./components/AboutPopup";
 import TermsModal from "./components/TermsModal";
-import PrivacyPolicyModal from "./components/PrivacyPolicyModal"; // ✅ Add this import
+import PrivacyPolicyModal from "./components/PrivacyPolicyModal";
 
-function App() {
+import Chatwoot from "./pages/Chatwoot"; // ✅ Add this import
+
+function MainApp() {
   const [showPreRegisterModal, setShowPreRegisterModal] = useState(false);
   const [showAboutPopup, setShowAboutPopup] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
-  const [showPrivacyModal, setShowPrivacyModal] = useState(false); // ✅ State for privacy modal
+  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
 
   return (
     <div className="bg-black min-h-screen text-white">
-      {/* Navbar */}
       <Navbar onPreRegisterClick={() => setShowPreRegisterModal(true)} />
 
-      {/* Sections */}
       <Hero openPreRegister={() => setShowPreRegisterModal(true)} />
       <Waitlist />
       <Features />
@@ -40,14 +44,12 @@ function App() {
       <CafePricing />
       <JoinCommunity openPreRegister={() => setShowPreRegisterModal(true)} />
 
-      {/* Footer with modal triggers */}
       <Footer
         onAboutClick={() => setShowAboutPopup(true)}
         onTermsClick={() => setShowTermsModal(true)}
-        onPrivacyClick={() => setShowPrivacyModal(true)} // ✅ Pass to footer
+        onPrivacyClick={() => setShowPrivacyModal(true)}
       />
 
-      {/* Modals */}
       <PreRegisterModal
         isOpen={showPreRegisterModal}
         onClose={() => setShowPreRegisterModal(false)}
@@ -74,6 +76,17 @@ function App() {
       <Analytics />
       <SpeedInsights />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MainApp />} />
+        <Route path="/chatwoot.html" element={<Chatwoot />} /> {/* ✅ Your support page */}
+      </Routes>
+    </BrowserRouter>
   );
 }
 
