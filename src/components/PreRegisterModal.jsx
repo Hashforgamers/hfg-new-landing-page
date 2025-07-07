@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { supabase } from "../supabaseClient";
 
 export default function PreRegisterModal({ isOpen, onClose }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -43,11 +44,25 @@ export default function PreRegisterModal({ isOpen, onClose }) {
     setErrors((prev) => ({ ...prev, [field]: "" }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      console.log("Form Submitted", formData);
-      closeModal();
+      const { error } = await supabase.from("pre_registrations").insert([
+        {
+          full_name: formData.fullName,
+          phone: formData.phone,
+          whatsapp: formData.whatsapp,
+          email: formData.email,
+        },
+      ]);
+
+      if (error) {
+        console.error("Supabase Insert Error:", error.message);
+        alert("Something went wrong. Please try again.");
+      } else {
+        alert("Successfully pre-registered!");
+        closeModal();
+      }
     }
   };
 

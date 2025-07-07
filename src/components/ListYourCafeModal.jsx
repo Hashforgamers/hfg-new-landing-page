@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { supabase } from "../supabaseClient";
 import stateCityData from "../data/stateCity.json";
 
 const ListYourCafeModal = ({ isOpen, onClose }) => {
@@ -20,10 +21,35 @@ const ListYourCafeModal = ({ isOpen, onClose }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted Data:", formData);
-    onClose();
+
+    const { error } = await supabase.from("cafes").insert([
+      {
+        cafe_name: formData.cafeName,
+        state: formData.state,
+        city: formData.city,
+        owner_name: formData.ownerName,
+        contact: formData.contact,
+        email: formData.email,
+      },
+    ]);
+
+    if (error) {
+      console.error("Error saving cafe:", error.message);
+      alert("Something went wrong. Please try again.");
+    } else {
+      alert("Cafe listed successfully!");
+      setFormData({
+        cafeName: "",
+        state: "",
+        city: "",
+        ownerName: "",
+        contact: "",
+        email: "",
+      });
+      onClose();
+    }
   };
 
   if (!isOpen) return null;
@@ -32,13 +58,11 @@ const ListYourCafeModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center">
-      <div
-  className="relative w-full max-w-3xl p-6 sm:p-8 text-white font-noodle max-h-[90vh] overflow-y-auto bg-[#64BD55]/10 backdrop-blur-lg deep-cut"
->
+      <div className="relative w-full max-w-3xl p-6 sm:p-8 text-white font-noodle max-h-[90vh] overflow-y-auto bg-[#64BD55]/10 backdrop-blur-lg deep-cut">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-white text-3xl "
+          className="absolute top-4 right-4 text-white text-3xl"
         >
           ×
         </button>
@@ -49,13 +73,13 @@ const ListYourCafeModal = ({ isOpen, onClose }) => {
         </h2>
 
         {/* Cafe Details */}
-      <div className="flex items-center gap-4 text-white uppercase font-semibold tracking-wider text-center my-6">
-  <div className="flex-grow border-t border-white"></div>
-  <span className="text-sm sm:text-base whitespace-nowrap">Cafe Details</span>
-  <div className="flex-grow border-t border-white"></div>
-</div>
-
-
+        <div className="flex items-center gap-4 text-white uppercase font-semibold tracking-wider text-center my-6">
+          <div className="flex-grow border-t border-white"></div>
+          <span className="text-sm sm:text-base whitespace-nowrap">
+            Cafe Details
+          </span>
+          <div className="flex-grow border-t border-white"></div>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Cafe Name */}
@@ -68,39 +92,38 @@ const ListYourCafeModal = ({ isOpen, onClose }) => {
             required
           />
 
-          {/* City + State */}
-         <div className="grid grid-cols-2 gap-4">
-  <select
-    name="state"
-    value={formData.state}
-    onChange={handleChange}
-    className="bg-transparent border border-white text-white p-3 rounded-none clip-input"
-    required
-  >
-    <option value="">State</option>
-    {Object.keys(stateCityData).map((state) => (
-      <option key={state} value={state} className="text-black">
-        {state}
-      </option>
-    ))}
-  </select>
+          {/* State + City */}
+          <div className="grid grid-cols-2 gap-4">
+            <select
+              name="state"
+              value={formData.state}
+              onChange={handleChange}
+              className="bg-transparent border border-white text-white p-3 rounded-none clip-input"
+              required
+            >
+              <option value="">State</option>
+              {Object.keys(stateCityData).map((state) => (
+                <option key={state} value={state} className="text-black">
+                  {state}
+                </option>
+              ))}
+            </select>
 
-  <select
-    name="city"
-    value={formData.city}
-    onChange={handleChange}
-    className="bg-transparent border border-white text-white p-3 rounded-none clip-input"
-    required
-  >
-    <option value="">City</option>
-    {cities.map((city) => (
-      <option key={city} value={city} className="text-black">
-        {city}
-      </option>
-    ))}
-  </select>
-</div>
-
+            <select
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              className="bg-transparent border border-white text-white p-3 rounded-none clip-input"
+              required
+            >
+              <option value="">City</option>
+              {cities.map((city) => (
+                <option key={city} value={city} className="text-black">
+                  {city}
+                </option>
+              ))}
+            </select>
+          </div>
 
           {/* Owner Details */}
           <div className="text-white font-semibold uppercase tracking-wider border-t border-white pt-4 mb-4 text-center">
@@ -128,8 +151,8 @@ const ListYourCafeModal = ({ isOpen, onClose }) => {
 
           <input
             name="email"
-            placeholder="Enter your email id"
             type="email"
+            placeholder="Enter your email id"
             value={formData.email}
             onChange={handleChange}
             className="w-full bg-transparent border border-white placeholder-white text-white p-3 rounded-none clip-input"
@@ -137,14 +160,12 @@ const ListYourCafeModal = ({ isOpen, onClose }) => {
           />
 
           {/* Submit */}
-         <button
-  type="submit"
-  className="w-full max-w-xs mx-auto block py-2.5 px-6 bg-white text-green-800 font-bold uppercase tracking-wider mt-4 clip-input"
->
-  Submit
-</button>
-
-
+          <button
+            type="submit"
+            className="w-full max-w-xs mx-auto block py-2.5 px-6 bg-white text-green-800 font-bold uppercase tracking-wider mt-4 clip-input"
+          >
+            Submit
+          </button>
         </form>
       </div>
     </div>

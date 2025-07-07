@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Mail, Phone, MapPin } from "lucide-react"; // Lucide icons
+import { Mail, Phone, MapPin } from "lucide-react";
+import { supabase } from "../supabaseClient"; // Supabase client import
 
 const ContactUsModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
@@ -17,10 +18,26 @@ const ContactUsModal = ({ isOpen, onClose }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Contact Form Submitted:", formData);
-    onClose();
+
+    const { error } = await supabase.from("contact_messages").insert([
+      {
+        name: formData.name,
+        email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+      },
+    ]);
+
+    if (error) {
+      console.error("Supabase Error:", error.message);
+      alert("Something went wrong. Please try again.");
+    } else {
+      alert("Message sent successfully!");
+      setFormData({ name: "", email: "", subject: "", message: "" });
+      onClose();
+    }
   };
 
   if (!isOpen) return null;
