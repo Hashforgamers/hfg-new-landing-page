@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-       noodle: ["'BigNoodleTitling'", "sans-serif"],
+        noodle: ['"Big Noodle Titling"', 'sans-serif'],
       },
       letterSpacing: {
     tighter2: "-0.06em", 
