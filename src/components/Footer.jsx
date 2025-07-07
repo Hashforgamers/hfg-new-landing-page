@@ -28,8 +28,7 @@ const Footer = ({ onAboutClick, onTermsClick, onPrivacyClick }) => {
           >
             <img src={logo} alt="Hash Logo" className="w-20 mb-4" />
             <p className="text-sm max-w-sm">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Empowering gaming cafes with seamless booking, smart device management, and performance insights — all in one powerful dashboard.
             </p>
             <p className="text-xs mt-6 text-gray-500">
               © 2025 HashForGamers. All rights reserved.

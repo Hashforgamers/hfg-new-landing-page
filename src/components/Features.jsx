@@ -48,8 +48,7 @@ const Features = () => {
         >
           <h2 className="text-5xl uppercase tracking-tight mb-4">FEATURES</h2>
           <p className="text-gray-400 text-lg leading-relaxed font-inter">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt
+            Powerful tools built for gaming cafes, designed for performance and control.
           </p>
         </motion.div>
 

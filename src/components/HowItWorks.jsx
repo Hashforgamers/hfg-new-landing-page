@@ -37,8 +37,7 @@ const HowItWorks = () => {
           HOW IT WORKS
         </h2>
         <p className="text-gray-400 max-w-2xl mx-auto text-base sm:text-lg">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt
+         Book. Play. Win. It’s that simple.
         </p>
       </div>
 
