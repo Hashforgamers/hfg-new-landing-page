@@ -13,11 +13,12 @@ html {
 
 /* Font */
 @font-face {
-  font-family: 'BigNoodleTitling';
-  src: url('./assets/fonts/BigNoodleTitling.ttf') format('truetype');
+  font-family: 'Big Noodle Titling';
+  src: url('./assets/fonts/big_noodle_titling.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
+
 
 /* Clip Styles */
 .clip-corner {

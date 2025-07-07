@@ -20,6 +20,7 @@ const ContactUsModal = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("🟢 Submitting form data:", formData);
 
     const { error } = await supabase.from("contact_messages").insert([
       {
@@ -31,10 +32,10 @@ const ContactUsModal = ({ isOpen, onClose }) => {
     ]);
 
     if (error) {
-      console.error("Supabase Error:", error.message);
-      alert("Something went wrong. Please try again.");
+      console.error("🔴 Supabase Error:", error);
+      alert("Something went wrong: " + error.message);
     } else {
-      alert("Message sent successfully!");
+      alert("✅ Message sent successfully!");
       setFormData({ name: "", email: "", subject: "", message: "" });
       onClose();
     }
