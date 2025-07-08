@@ -24,7 +24,11 @@ import AboutPopup from "./components/AboutPopup";
 import TermsModal from "./components/TermsModal";
 import PrivacyPolicyModal from "./components/PrivacyPolicyModal";
 
+<<<<<<< HEAD
 import PrivacyPolicy from "./pages/PrivacyPolicy"; // <-- Add this
+=======
+import Chatwoot from "./pages/chatwoot"; // ✅ Add this import
+>>>>>>> d6c09f336f11edc94ce5ea063856361cbc5869eb
 
 function MainApp() {
   const [showPreRegisterModal, setShowPreRegisterModal] = useState(false);
@@ -84,10 +88,18 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainApp />} />
+<<<<<<< HEAD
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+=======
+        <Route path="/chatwoot.html" element={<Chatwoot />} /> {/* ✅ Your support page */}
+>>>>>>> d6c09f336f11edc94ce5ea063856361cbc5869eb
       </Routes>
     </BrowserRouter>
   );
 }
 
+<<<<<<< HEAD
 export default App;
+=======
+export default App;
+>>>>>>> d6c09f336f11edc94ce5ea063856361cbc5869eb
