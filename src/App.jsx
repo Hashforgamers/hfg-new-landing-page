@@ -25,7 +25,6 @@ import TermsModal from "./components/TermsModal";
 import PrivacyPolicyModal from "./components/PrivacyPolicyModal";
 
 import PrivacyPolicy from "./pages/PrivacyPolicy";
-import Chatwoot from "./pages/chatwoot";
 
 function MainApp() {
   const [showPreRegisterModal, setShowPreRegisterModal] = useState(false);
@@ -86,7 +85,6 @@ function App() {
       <Routes>
         <Route path="/" element={<MainApp />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/chatwoot.html" element={<Chatwoot />} />
       </Routes>
     </BrowserRouter>
   );
