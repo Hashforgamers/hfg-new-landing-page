@@ -1,6 +1,5 @@
 import React from "react";
 import { Gamepad2, Trophy, Users, Smartphone } from "lucide-react";
-import { motion } from "framer-motion";
 
 const features = [
   {
@@ -29,41 +28,57 @@ const WhatIsHash = () => {
   return (
     <section
       id="what-is-hash"
-      className="bg-[#000000] text-white py-20 px-6 md:px-12 font-noodle"
+      className="bg-[#000000] text-white py-20 px-4 sm:px-6 md:px-12 font-noodle"
     >
       <div className="max-w-screen-2xl mx-auto text-center mb-12">
-        <h2 className="text-4xl sm:text-5xl mb-2 uppercase">WHAT IS HASH?</h2>
-        <p className="text-gray-400 text-base sm:text-lg">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl mb-4 uppercase">
+          WHAT IS HASH?
+        </h2>
+        <p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-xl mx-auto">
           Hash is not just an app. It’s your gaming command center.
         </p>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6 max-w-screen-2xl mx-auto">
-        {features.map((feature, idx) => (
-          <motion.div
-            key={idx}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: idx * 0.2 }}
-            viewport={{ once: true }}
-            className="bg-[#0f1c14] p-6 border border-[#1a2a20] rounded-xl relative"
-            style={{
-              clipPath:
-                "polygon(10% 0, 0% 40%, 0 100%, 90% 100%, 100% 50%, 100% 0)",
-            }}
-          >
-            <div className="flex flex-col items-start gap-2 mb-2 pl-6 md:pl-8">
-              <div>{feature.icon}</div>
-              <h3 className="text-white text-base uppercase tracking-wider">
-                {feature.title}
-              </h3>
-            </div>
-            <p className="text-gray-400 text-base leading-relaxed pl-6 md:pl-8">
-              {feature.description}
-            </p>
-          </motion.div>
-        ))}
+      <div className="w-full max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6">
+  {features.map((feature, idx) => (
+    <div
+      key={idx}
+      className="relative flex items-center justify-center px-2"
+      style={{ minHeight: "160px" }}
+    >
+      <div className="relative w-full h-[160px] sm:h-[180px] md:h-[190px] lg:h-[200px] flex flex-col justify-start px-6 sm:px-8 pt-8 bg-transparent group outline-none">
+        <svg
+          width="100%"
+          height="100%"
+          viewBox="0 0 500 150"
+          className="absolute left-0 top-0 w-full h-full z-10"
+          preserveAspectRatio="none"
+          style={{ pointerEvents: "none" }}
+        >
+          <polygon
+            points="40,0 500,0 500,110 460,150 0,150 0,40"
+            fill="#161c18bb"
+            stroke="#1a2a20"
+            strokeWidth="2"
+          />
+        </svg>
+<div className="w-full flex flex-col items-start justify-start z-30 pointer-events-none pl-1 sm:pl-4 gap-5">
+  <div className="mb-0">{feature.icon}</div>
+  <div className="flex flex-col gap-1">
+    <span className="block font-noodle font-normal uppercase tracking-wide text-sm sm:text-base md:text-lg lg:text-xl leading-tight text-white text-left">
+      {feature.title}
+    </span>
+    <span className="block font-inter text-xs sm:text-sm md:text-base lg:text-base text-gray-300 text-left leading-snug">
+      {feature.description}
+    </span>
+  </div>
+</div>
+
       </div>
+    </div>
+  ))}
+</div>
+
     </section>
   );
 };

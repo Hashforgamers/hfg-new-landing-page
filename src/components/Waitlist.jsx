@@ -4,22 +4,22 @@ import { Zap, Gift, Crown, Lock } from "lucide-react";
 
 const features = [
   {
-    icon: <Zap className="text-green-400 w-6 h-6" />,
+    icon: <Zap className="text-[#64BD55] w-6 h-6" />,
     title: "EARLY ACCESS TO THE APP",
     description: "Be the first to book arenas and dominate leaderboards.",
   },
   {
-    icon: <Gift className="text-green-400 w-6 h-6" />,
+    icon: <Gift className="text-[#64BD55] w-6 h-6" />,
     title: "EXCLUSIVE HASHDROP REWARDS",
     description: "Get limited-edition merch, coins, and tournament invites.",
   },
   {
-    icon: <Crown className="text-green-400 w-6 h-6" />,
+    icon: <Crown className="text-[#64BD55] w-6 h-6" />,
     title: "FOUNDING MEMBER BADGE",
     description: "Your tag will carry legacy. Forever.",
   },
   {
-    icon: <Lock className="text-green-400 w-6 h-6" />,
+    icon: <Lock className="text-[#64BD55] w-6 h-6" />,
     title: "PRIVATE DISCORD ACCESS",
     description: "Strategize with top gamers and influencers before launch.",
   },
@@ -27,8 +27,8 @@ const features = [
 
 const Waitlist = () => {
   return (
-    <section className="relative bg-[#000000] text-white py-20 px-6 md:px-12 overflow-hidden font-noodle">
-      {/* 🔁 Background Lines */}
+    <section className="relative bg-black text-white py-20 px-4 sm:px-6 lg:px-8 font-noodle overflow-hidden">
+      {/* Background Animation */}
       <motion.div
         className="absolute inset-0 z-0 bg-[url('/bg-lines.png')] bg-cover bg-center opacity-5 pointer-events-none"
         animate={{
@@ -41,39 +41,50 @@ const Waitlist = () => {
         }}
       />
 
-      {/* ✅ Main Content */}
-      <div className="relative z-10 w-full max-w-screen-2xl mx-auto text-center">
-        <h2 className="text-4xl sm:text-5xl lg:text-6xl mb-2 tracking-tighter">
+      <div className="relative z-10 w-full max-w-7xl mx-auto text-center">
+        <h2 className="text-3xl sm:text-5xl lg:text-6xl mb-3 tracking-tighter leading-tight">
           WHY JOIN THE WAITLIST?
         </h2>
-        <p className="text-gray-400 mb-12 leading-relaxed text-base sm:text-lg">
+        <p className="text-white/70 mb-10 text-sm sm:text-lg">
           Power Comes to Those Who Wait.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-x-6 gap-y-6">
+        {/* Tightly spaced 2x2 Grid */}
+        <div className="-full max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6">
           {features.map((feature, idx) => (
-            <motion.div
+            <div
               key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: idx * 0.2 }}
-              viewport={{ once: true }}
-              className="bg-[#121c16] border border-[#1e2a24] rounded-xl p-6 text-left relative transition duration-300 hover:shadow-[0_0_20px_#1fff96]"
-              style={{
-                clipPath:
-                  "polygon(10% 0, 0% 40%, 0 100%, 90% 100%, 100% 50%, 100% 0)",
-              }}
+              className="relative w-[97%] mx-auto flex items-center justify-center"
+              style={{ minHeight: "170px" }}
             >
-              <div className="flex flex-col items-start gap-2 mb-2 pl-6 md:pl-8">
-                {feature.icon}
-                <h3 className="text-white text-lg tracking-tighter">
-                  {feature.title}
-                </h3>
+              <div className="relative w-full h-[160px] sm:h-[170px] md:h-[180px] lg:h-[190px] flex flex-col justify-start px-6 sm:px-10 pt-8 bg-transparent group outline-none">
+                <svg
+                  width="100%"
+                  height="100%"
+                  viewBox="0 0 500 150"
+                  className="absolute left-0 top-0 w-full h-full z-10"
+                   preserveAspectRatio="none"
+                  style={{ pointerEvents: "none" }}
+                >
+                  <polygon
+                    points="40,0 500,0 500,110 460,150 0,150 0,40"
+                    fill="#161c18bb" // dark forest green, 40% transparent
+                    stroke="#1a2a20"
+                    strokeWidth="2"
+                  />
+                </svg>
+
+                <div className="w-full flex flex-col items-start justify-start z-30 pointer-events-none pl-1 sm:pl-4">
+                  <div className="mb-3">{feature.icon}</div>
+                  <span className="block font-noodle font-normal uppercase tracking-wide text-[12px] sm:text-sm md:text-lg lg:text-[1.4rem] leading-tight mb-1 text-white text-left">
+                    {feature.title}
+                  </span>
+                  <span className="block font-inter text-[10px] sm:text-xs md:text-base lg:text-[1.1rem] text-gray-300 text-left leading-snug">
+                    {feature.description}
+                  </span>
+                </div>
               </div>
-              <p className="text-gray-400 text-base leading-relaxed pl-6 md:pl-8">
-                {feature.description}
-              </p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

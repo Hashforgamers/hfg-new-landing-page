@@ -44,7 +44,7 @@ const CafePricing = () => {
         {pricingItems.map((item, index) => (
           <motion.div
             key={index}
-            className="bg-[#1f2e1f] p-6 md:p-8 w-full md:w-1/2 clip-corner"
+            className="bg-[#161c18bb] p-6 md:p-8 w-full md:w-1/2 clip-corner"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}

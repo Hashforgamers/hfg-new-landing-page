@@ -46,27 +46,28 @@ const Features = () => {
           viewport={{ once: true }}
           className="text-center max-w-3xl mx-auto mb-10"
         >
-          <h2 className="text-5xl uppercase tracking-tight mb-4">FEATURES</h2>
-          <p className="text-gray-400 text-lg leading-relaxed font-inter">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl uppercase tracking-tight mb-4">
+            FEATURES
+          </h2>
+          <p className="text-gray-400 text-sm sm:text-base md:text-lg leading-relaxed font-inter">
             Powerful tools built for gaming cafes, designed for performance and control.
           </p>
         </motion.div>
 
         {/* Two Columns */}
-        <div className="flex flex-col lg:flex-row items-center gap-12">
+        <div className="flex flex-col lg:flex-row items-center gap-10">
           {/* Left: Feature Buttons */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="w-full lg:w-[45%] flex flex-col gap-0 md:gap-8"
+            className="w-full lg:w-[45%] flex flex-col gap-6"
           >
             {featuresData.map((feature, idx) => (
               <div
                 key={idx}
                 className="relative w-full flex items-center justify-center"
-                style={{ minHeight: "150px" }}
               >
                 <button
                   onClick={() =>
@@ -74,7 +75,7 @@ const Features = () => {
                       ? setSelectedImage(null)
                       : setSelectedImage(feature.image)
                   }
-                  className="relative w-full h-[90px] md:h-[120px] lg:h-[150px] flex flex-col justify-start pl-[clamp(10%,24px,13%)] pr-[clamp(10%,24px,13%)] pt-6 bg-transparent group outline-none"
+                  className="relative w-full h-[100px] sm:h-[110px] md:h-[120px] lg:h-[130px] flex flex-col justify-start px-4 sm:px-6 pt-6 bg-transparent group outline-none"
                 >
                   <svg
                     width="100%"
@@ -82,6 +83,7 @@ const Features = () => {
                     viewBox="0 0 500 150"
                     className="absolute left-0 top-0 w-full h-full z-10 transition-colors duration-200"
                     style={{ pointerEvents: "none" }}
+                    preserveAspectRatio="none"
                   >
                     <defs>
                       <linearGradient
@@ -115,10 +117,10 @@ const Features = () => {
                   </svg>
 
                   <div className="w-full flex flex-col items-start justify-start z-30 pointer-events-none pt-2 pl-2 sm:pl-4">
-                    <span className="block font-noodle font-normal uppercase tracking-wide text-xs sm:text-sm md:text-lg lg:text-[1.7rem] leading-tight mb-1 text-white text-left">
+                    <span className="block font-noodle font-normal uppercase tracking-wide text-sm sm:text-base md:text-lg lg:text-xl leading-tight mb-1 text-white text-left">
                       {feature.title}
                     </span>
-                    <span className="block font-inter text-[10px] sm:text-xs md:text-base lg:text-[1.1rem] text-gray-300 text-left">
+                    <span className="block font-inter text-xs sm:text-sm md:text-base lg:text-base text-gray-300 text-left">
                       {feature.subtitle}
                     </span>
                   </div>
@@ -135,15 +137,15 @@ const Features = () => {
             viewport={{ once: true }}
             className="w-full lg:w-[55%] relative flex items-center justify-center"
           >
-            <div className="relative w-full max-w-[1000px] mt-4 lg:mt-12 aspect-[4/3]">
+            <div className="relative w-full max-w-[900px] aspect-[4/3]">
               {/* Background dots */}
               <img
                 src={featureBg}
                 alt="Dotted Background"
-                className="absolute right-2 sm:right-6 top-[55%] -translate-y-1/2 w-[220px] sm:w-[260px] md:w-[280px] lg:w-[250px] z-0 pointer-events-none"
+                className="absolute right-2 sm:right-6 top-[55%] -translate-y-1/2 w-[180px] sm:w-[220px] md:w-[240px] lg:w-[250px] z-0 pointer-events-none"
               />
 
-              {/* Dashboard background - only show when no feature selected */}
+              {/* Dashboard background - default */}
               {!selectedImage && (
                 <img
                   src={featureUI}
@@ -152,33 +154,34 @@ const Features = () => {
                 />
               )}
 
-              {/* Overlay preview when feature selected */}
+              {/* Overlay preview */}
               {selectedImage && (
-                <motion.div
-                  key={selectedImage}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="absolute top-0 left-0 w-full h-full z-20 bg-black/60 backdrop-blur-sm flex items-center justify-center rounded-lg"
-                  onClick={() => setSelectedImage(null)}
-                >
-                  <img
-                    src={selectedImage}
-                    alt="Feature Preview"
-                    className="w-full h-full object-contain rounded-lg"
-                  />
-                  <button
-                    className="absolute top-3 right-4 text-white text-3xl font-bold hover:text-red-400"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedImage(null);
-                    }}
-                  >
-                    ×
-                  </button>
-                </motion.div>
-              )}
+  <motion.div
+    key={selectedImage}
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.3 }}
+    className="absolute top-0 left-0 w-full h-full z-20 bg-black/60 flex items-center justify-center rounded-lg"
+    onClick={() => setSelectedImage(null)}
+  >
+    <img
+      src={selectedImage}
+      alt="Feature Preview"
+      className="w-[90%] h-auto object-contain rounded-lg"
+    />
+    <button
+      className="absolute top-3 right-4 text-white text-3xl font-bold hover:text-red-400"
+      onClick={(e) => {
+        e.stopPropagation();
+        setSelectedImage(null);
+      }}
+    >
+      ×
+    </button>
+  </motion.div>
+)}
+
             </div>
           </motion.div>
         </div>

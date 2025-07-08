@@ -39,7 +39,7 @@ const Navbar = () => {
       <nav
         className="fixed top-0 left-0 w-full h-[60px] flex items-center justify-between px-4 sm:px-6 md:px-8 shadow-md z-50 text-white"
         style={{
-          backgroundColor: 'rgba(30, 30, 30, 0.65)',
+          backgroundColor: 'rgba(30, 30, 30, 0.30)',
           backdropFilter: 'blur(10px)',
           WebkitBackdropFilter: 'blur(10px)',
         }}
