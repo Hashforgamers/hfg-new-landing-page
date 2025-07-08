@@ -13,12 +13,17 @@ html {
 
 /* Font */
 @font-face {
-  font-family: 'Big Noodle Titling';
-  src: url('./assets/fonts/big_noodle_titling.ttf') format('truetype');
+  font-family: 'Big Shoulders Display';
+  src: url('./assets/fonts/big_shoulders_display.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
+/* Apply Big Shoulders Display font to all titles */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Big Shoulders Display', Space Grotesk;
+  font-weight: normal; /* or bold if you want */
+}
 
 /* Clip Styles */
 .clip-corner {

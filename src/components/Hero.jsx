@@ -55,7 +55,7 @@ const Hero = () => {
 
 
           <motion.h1
-  className="font-noodle ml-2 sm:ml-4 text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase tracking-tighter leading-tight mb-4"
+  className="font-noodle ml-2 sm:ml-4 text-5xl sm:text-6xl md:text-7xl lg:text-8xl uppercase tracking-tighter leading-tight mb-4"
   initial={{ opacity: 0, y: 30 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ delay: 0.3 }}
@@ -64,6 +64,7 @@ const Hero = () => {
   <br />
   RULE THE GAME
 </motion.h1>
+
 
 
       <motion.p

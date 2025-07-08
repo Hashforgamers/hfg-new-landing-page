@@ -66,7 +66,7 @@ const AboutModal = ({ isOpen, onClose }) => {
             </div>
 
             <div className="p-5 bg-black border border-[#64BD55]/30 rounded-xl">
-              <h3 className="text-2xl font-bold text-white mb-4">Our Mission</h3>
+              <h3 className="text-2xl font-normal text-white mb-4">Our Mission</h3>
               <p className="text-gray-300 text-sm mb-4">
                 We're here to redefine how people engage with high-end recreational and tech-enabled spaces. With simplified access, our goal is to eliminate barriers and provide users with reliable tools for seamless experiences.
               </p>
