@@ -124,19 +124,7 @@ export default function PreRegisterModal({ isOpen, onClose }) {
                 {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
               </div>
 
-              {/* WhatsApp Number */}
-              <div>
-                <input
-                  type="text"
-                  placeholder="WhatsApp Number"
-                  value={formData.whatsapp}
-                  onChange={(e) => handleChange("whatsapp", e.target.value)}
-                  className={`w-full bg-transparent border placeholder-white text-white p-3 rounded-none clip-input ${
-                    errors.whatsapp ? "border-red-500" : "border-white/20"
-                  }`}
-                />
-                {errors.whatsapp && <p className="text-red-500 text-sm mt-1">{errors.whatsapp}</p>}
-              </div>
+             
 
               {/* Email */}
               <div>

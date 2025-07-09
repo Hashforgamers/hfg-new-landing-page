@@ -60,7 +60,7 @@ const Hero = () => {
   animate={{ opacity: 1, y: 0 }}
   transition={{ delay: 0.3 }}
 >
-  CONQUER THE THRONE.
+  CONQUER THE THRONE
   <br />
   RULE THE GAME
 </motion.h1>
@@ -85,11 +85,12 @@ const Hero = () => {
   transition={{ delay: 0.5 }}
 >
   <img
-    src={preRegisterBtn}
-    alt="Pre Register Now"
-    className="w-32 sm:w-40 md:w-44 cursor-pointer hover:opacity-90 transition duration-300"
-    onClick={() => setPreRegisterOpen(true)}
-  />
+  src={preRegisterBtn}
+  alt="Pre Register Now"
+  className="w-36 sm:w-44 md:w-48 h-14 cursor-pointer hover:opacity-90 transition duration-300"
+  onClick={() => setPreRegisterOpen(true)}
+/>
+
 
   <img
     src={viewLocationsBtn}
