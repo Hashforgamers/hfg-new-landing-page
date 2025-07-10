@@ -25,102 +25,104 @@ const Hero = () => {
 
       <div className="relative z-10 w-full max-w-screen-2xl mx-auto flex flex-col md:flex-row items-center justify-between px-6 md:px-12 gap-12">
         {/* Left Content */}
-        <motion.div
-          className="w-full max-w-xl text-center md:text-left"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-        >
-        <motion.div
-  className="inline-flex items-center gap-1 px-2 py-[1px] rounded-full border border-red-500 text-red-500 text-[10px] font-medium w-max mx-auto md:ml-4 mb-3 -mt-4"
-  initial={{ opacity: 0, y: 20 }}
-  animate={{
-    opacity: [1, 0.6, 1],
-    filter: [
-      "drop-shadow(0 0 6px #ff0000) drop-shadow(0 0 12px #ff0000)",
-      "drop-shadow(0 0 2px #ff0000)",
-      "drop-shadow(0 0 6px #ff0000) drop-shadow(0 0 12px #ff0000)",
-    ],
-  }}
-  transition={{
-    duration: 1.4,
-    repeat: Infinity,
-    ease: "easeInOut",
-    delay: 0.2,
-  }}
->
-  <span className="text-[11px]">⭕</span>
-  Live Soon
-</motion.div>
+        <div className="px-6 sm:px-10 md:px-16 lg:px-24 py-10 sm:py-16">
+  <motion.div
+     className="w-full max-w-xl -ml-1 sm:-ml-2 text-center md:text-left"
+    initial={{ opacity: 0, y: 30 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.8, delay: 0.1 }}
+  >
+    {/* Live Soon Badge */}
+    <motion.div
+      className="inline-flex items-center gap-1 px-2 py-[1px] rounded-full border border-red-500 text-red-500 text-[10px] font-medium w-max mx-auto md:ml-4 mb-3 -mt-4"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{
+        opacity: [1, 0.6, 1],
+        filter: [
+          "drop-shadow(0 0 6px #ff0000) drop-shadow(0 0 12px #ff0000)",
+          "drop-shadow(0 0 2px #ff0000)",
+          "drop-shadow(0 0 6px #ff0000) drop-shadow(0 0 12px #ff0000)",
+        ],
+      }}
+      transition={{
+        duration: 1.4,
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: 0.2,
+      }}
+    >
+      <span className="text-[11px]">⭕</span>
+      Live Soon
+    </motion.div>
+
+    {/* Headline */}
+    <motion.h1
+      className="font-noodle ml-2 sm:ml-4 text-5xl sm:text-6xl md:text-7xl lg:text-8xl uppercase tracking-tighter leading-tight mb-4"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.3 }}
+    >
+      CONQUER THE THRONE
+      <br />
+      RULE THE GAME
+    </motion.h1>
+
+    {/* Subtitle */}
+    <motion.p
+      className="text-gray-400 mb-6 leading-relaxed text-base sm:text-lg ml-2 sm:ml-4"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.4 }}
+    >
+      Book Pro-Level Consoles. Crush Lobbies. Win Tournaments. This is
+      where real gamers play.
+    </motion.p>
+
+    {/* Buttons */}
+    <motion.div
+      className="flex flex-col sm:flex-row items-center gap-4 mb-10 justify-center md:justify-start ml-2 sm:ml-4"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.5 }}
+    >
+      <img
+        src={preRegisterBtn}
+        alt="Pre Register Now"
+        className="w-36 sm:w-44 md:w-48 h-14 cursor-pointer hover:opacity-90 transition duration-300"
+        onClick={() => setPreRegisterOpen(true)}
+      />
+      <img
+        src={viewLocationsBtn}
+        alt="View Locations"
+        className="w-32 sm:w-40 md:w-44 h-10 cursor-pointer hover:opacity-90 transition duration-300"
+        onClick={() => setLocationModalOpen(true)}
+      />
+    </motion.div>
+
+    {/* Stats */}
+    <motion.div
+      className="flex flex-row justify-center sm:justify-start gap-4 overflow-x-auto no-scrollbar text-green-400 text-center sm:text-left ml-2 sm:ml-4"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.6 }}
+    >
+      <div className="w-[110px] shrink-0">
+        <p className="text-2xl">8+</p>
+        <p className="text-sm text-white leading-relaxed">Gaming Stations</p>
+      </div>
+      <div className="w-[110px] shrink-0">
+        <p className="text-2xl">5k+</p>
+        <p className="text-sm text-white leading-relaxed">Active Gamers</p>
+      </div>
+      <div className="w-[110px] shrink-0">
+        <p className="text-2xl">24x7</p>
+        <p className="text-sm text-white leading-relaxed">Available</p>
+      </div>
+    </motion.div>
+  </motion.div>
+</div>
 
 
-          <motion.h1
-  className="font-noodle ml-2 sm:ml-4 text-5xl sm:text-6xl md:text-7xl lg:text-8xl uppercase tracking-tighter leading-tight mb-4"
-  initial={{ opacity: 0, y: 30 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.3 }}
->
-  CONQUER THE THRONE
-  <br />
-  RULE THE GAME
-</motion.h1>
-
-
-
-      <motion.p
-  className="text-gray-400 mb-6 leading-relaxed text-base sm:text-lg ml-2 sm:ml-4"
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.4 }}
->
-  Book Pro-Level Consoles. Crush Lobbies. Win Tournaments. This is
-  where real gamers play.
-</motion.p>
-
-{/* Buttons */}
-<motion.div
-  className="flex flex-col sm:flex-row items-center gap-4 mb-10 justify-center md:justify-start ml-2 sm:ml-4"
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.5 }}
->
-  <img
-  src={preRegisterBtn}
-  alt="Pre Register Now"
-  className="w-36 sm:w-44 md:w-48 h-14 cursor-pointer hover:opacity-90 transition duration-300"
-  onClick={() => setPreRegisterOpen(true)}
-/>
-
-
-  <img
-    src={viewLocationsBtn}
-    alt="View Locations"
-    className="w-32 sm:w-40 md:w-44 h-10 cursor-pointer hover:opacity-90 transition duration-300"
-    onClick={() => setLocationModalOpen(true)}
-  />
-</motion.div>
-
-{/* Stats */}
-<motion.div
-  className="flex flex-row justify-center sm:justify-start gap-4 overflow-x-auto no-scrollbar text-green-400 text-center sm:text-left ml-2 sm:ml-4"
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.6 }}
->
-  <div className="w-[110px] shrink-0">
-    <p className="text-2xl">20+</p>
-    <p className="text-sm text-white leading-relaxed">Gaming Stations</p>
-  </div>
-  <div className="w-[110px] shrink-0">
-    <p className="text-2xl">5k+</p>
-    <p className="text-sm text-white leading-relaxed">Active Gamers</p>
-  </div>
-  <div className="w-[110px] shrink-0">
-    <p className="text-2xl">24x7</p>
-    <p className="text-sm text-white leading-relaxed">Available</p>
-  </div>
-</motion.div>
-        </motion.div>
 
         {/* Right-side Character Image */}
         <motion.div

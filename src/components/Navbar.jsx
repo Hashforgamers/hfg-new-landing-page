@@ -5,7 +5,7 @@ import ListYourCafeModal from "./ListYourCafeModal";
 const menuItems = [
   { label: 'Features', href: '#features' },
   { label: 'What Is Hash?', href: '#what-is-hash' },
-  { label: 'How It Works?', href: '#how-it-works' }, // Triggers cafe modal
+  { label: 'How It Works?', href: '#how-it-works' },
 ];
 
 const Navbar = () => {
@@ -37,7 +37,7 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className="fixed top-0 left-0 w-full h-[60px] flex items-center justify-between px-4 sm:px-6 md:px-8 shadow-md z-50 text-white"
+        className="fixed top-0 left-0 w-full h-[80px] flex items-center justify-between px-4 sm:px-6 md:px-8 shadow-md z-50 text-white"
         style={{
           backgroundColor: 'rgba(30, 30, 30, 0.30)',
           backdropFilter: 'blur(10px)',
@@ -57,7 +57,7 @@ const Navbar = () => {
           <img
             src={logo}
             alt="Hash for Gamers Logo"
-            className="h-10 sm:h-11 md:h-12 w-auto transition-all duration-200"
+            className="h-12 sm:h-14 md:h-16 w-auto transition-all duration-200"
           />
         </div>
 
@@ -65,26 +65,17 @@ const Navbar = () => {
         <ul className="hidden md:flex items-center justify-center gap-8 lg:gap-12 list-none">
           {menuItems.map((item) => (
             <li key={item.label}>
-              {item.label === 'List Your Cafe With Us' ? (
-                <button
-                  onClick={() => setShowModal(true)}
-                  className="text-white text-sm font-medium hover:text-green-400 transition-colors duration-200 cursor-pointer whitespace-nowrap"
-                >
-                  {item.label}
-                </button>
-              ) : (
-                <a
-                  href={item.href}
-                  className="text-white text-sm font-medium hover:text-green-400 transition-colors duration-200 cursor-pointer whitespace-nowrap"
-                >
-                  {item.label}
-                </a>
-              )}
+              <a
+                href={item.href}
+                className="text-white text-sm font-medium hover:text-green-400 transition-colors duration-200 cursor-pointer whitespace-nowrap"
+              >
+                {item.label}
+              </a>
             </li>
           ))}
         </ul>
 
-        {/* List Your Cafe Button (Replaces Pre Register) */}
+        {/* List Your Cafe Button */}
         <div className="flex items-center gap-3 sm:gap-4">
           <button
             onClick={() => setShowModal(true)}
@@ -121,31 +112,18 @@ const Navbar = () => {
         {/* Mobile Menu Panel */}
         <div
           ref={mobileMenuRef}
-          className={`fixed top-[60px] right-0 w-full sm:w-[300px] h-[calc(100vh-60px)] bg-black/95 backdrop-blur-md transform transition-transform duration-300 ease-out md:hidden ${mobileOpen ? 'translate-x-0' : 'translate-x-full'}`}
+          className={`fixed top-[80px] right-0 w-full sm:w-[300px] h-[calc(100vh-80px)] bg-black/95 backdrop-blur-md transform transition-transform duration-300 ease-out md:hidden ${mobileOpen ? 'translate-x-0' : 'translate-x-full'}`}
         >
           <div className="flex flex-col items-stretch p-4">
             {menuItems.map((item) => (
-              item.label === "List Your Cafe With Us" ? (
-                <button
-                  key={item.label}
-                  onClick={() => {
-                    setShowModal(true);
-                    setMobileOpen(false);
-                  }}
-                  className="text-white text-base font-medium py-4 text-left hover:text-green-400 transition-colors duration-200 border-b border-white/10 last:border-none focus:outline-none focus:text-green-400"
-                >
-                  {item.label}
-                </button>
-              ) : (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="text-white text-base font-medium py-4 text-left hover:text-green-400 transition-colors duration-200 border-b border-white/10 last:border-none focus:outline-none focus:text-green-400"
-                >
-                  {item.label}
-                </a>
-              )
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={() => setMobileOpen(false)}
+                className="text-white text-base font-medium py-4 text-left hover:text-green-400 transition-colors duration-200 border-b border-white/10 last:border-none focus:outline-none focus:text-green-400"
+              >
+                {item.label}
+              </a>
             ))}
 
             {/* Mobile Cafe CTA Button */}
