@@ -65,9 +65,9 @@ const WhatIsHash = () => {
 <div className="w-full flex flex-col items-start justify-start z-30 pointer-events-none pl-1 sm:pl-4 gap-5">
   <div className="mb-0">{feature.icon}</div>
   <div className="flex flex-col gap-1">
-    <span className="block font-noodle font-normal uppercase tracking-wide text-sm sm:text-base md:text-lg lg:text-xl leading-tight text-white text-left">
+    <h2 className="block font-shoulders font-normal uppercase tracking-wide text-sm sm:text-base md:text-lg lg:text-3xl leading-tight text-white text-left">
       {feature.title}
-    </span>
+    </h2>
     <span className="block font-inter text-xs sm:text-sm md:text-base lg:text-base text-gray-300 text-left leading-snug">
       {feature.description}
     </span>

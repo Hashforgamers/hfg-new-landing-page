@@ -55,7 +55,7 @@ const HowItWorks = () => {
           >
             {/* Text Content */}
             <div className="flex-1 pl-4 md:pl-6">
-              <h3 className="text-xl font-bebas uppercase tracking-wide mb-3 leading-tight">
+              <h3 className="text-2xl font-shoulders uppercase tracking-wide mb-3 leading-tight">
                 {step.title}
               </h3>
               <p className="text-gray-300 text-sm leading-normal">

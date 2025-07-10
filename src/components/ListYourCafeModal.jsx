@@ -68,7 +68,7 @@ const ListYourCafeModal = ({ isOpen, onClose }) => {
         </button>
 
         {/* Title */}
-        <h2 className="text-3xl sm:text-4xl uppercase text-center mb-4 tracking-wider">
+        <h2 className="text-3xl sm:text-4xl font-shoulders uppercase text-center mb-4 tracking-wider">
           List Your Cafe With Us
         </h2>
 
@@ -126,7 +126,7 @@ const ListYourCafeModal = ({ isOpen, onClose }) => {
           </div>
 
           {/* Owner Details */}
-          <div className="text-white font-semibold uppercase tracking-wider border-t border-white pt-4 mb-4 text-center">
+          <div className="text-white font-shoulders font-semibold uppercase tracking-wider border-t border-white pt-4 mb-4 text-center">
             Owner Details
           </div>
 

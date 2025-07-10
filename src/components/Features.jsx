@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import featureUI from "../assets/feature-ui.JPG";
 import featureBg from "../assets/BG Frame.png";
 import bookingStatusImage from "../assets/booking-status-preview.png";
 import manageDevicesImage from "../assets/manage-devices-preview.png";
 import pricingModelImage from "../assets/pricing-model-preview.png";
+import dashboardPreview from "../assets/dashboard-preview.jpg";
+
 
 const Features = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -13,7 +14,7 @@ const Features = () => {
     {
       title: "DASHBOARD",
       subtitle: "A comprehensive overview of your gaming center's performance",
-      image: featureUI,
+      image: dashboardPreview,
     },
     {
       title: "BOOKING STATUS",
@@ -117,9 +118,11 @@ const Features = () => {
                   </svg>
 
                   <div className="w-full flex flex-col items-start justify-start z-30 pointer-events-none pt-2 pl-2 sm:pl-4">
-                    <span className="block font-noodle font-normal uppercase tracking-wide text-sm sm:text-base md:text-lg lg:text-xl leading-tight mb-1 text-white text-left">
-                      {feature.title}
-                    </span>
+                   <h3 className="block font-shoulders uppercase tracking-wide text-sm sm:text-base md:text-lg lg:text-3xl leading-tight mb-1 text-white text-left">
+  {feature.title}
+</h3>
+
+
                     <span className="block font-inter text-xs sm:text-sm md:text-base lg:text-base text-gray-300 text-left">
                       {feature.subtitle}
                     </span>
@@ -148,10 +151,12 @@ const Features = () => {
               {/* Dashboard background - default */}
               {!selectedImage && (
                 <img
-                  src={featureUI}
-                  alt="Dashboard UI"
-                  className="relative z-10 w-[75%] sm:w-[70%] md:w-[65%] lg:w-[70%] h-auto mx-auto object-contain"
-                />
+  src={dashboardPreview}
+  alt="Dashboard UI"
+  className="relative z-10 w-[90%] h-auto mx-auto object-contain mt-28 "
+/>
+
+
               )}
 
               {/* Overlay preview */}

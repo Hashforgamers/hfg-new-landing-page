@@ -76,9 +76,9 @@ const Waitlist = () => {
 
                 <div className="w-full flex flex-col items-start justify-start z-30 pointer-events-none pl-1 sm:pl-4">
                   <div className="mb-3">{feature.icon}</div>
-                  <span className="block font-noodle font-normal uppercase tracking-wide text-[12px] sm:text-sm md:text-lg lg:text-[1.4rem] leading-tight mb-1 text-white text-left">
+                  <h3 className="block font-shoulders font-normal uppercase tracking-wide text-[12px] sm:text-sm md:text-lg lg:text-[1.6rem] leading-tight mb-1 text-white text-left">
                     {feature.title}
-                  </span>
+                  </h3>
                   <span className="block font-inter text-[10px] sm:text-xs md:text-base lg:text-[1.1rem] text-gray-300 text-left leading-snug">
                     {feature.description}
                   </span>

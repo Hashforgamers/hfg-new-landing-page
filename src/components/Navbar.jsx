@@ -79,7 +79,7 @@ const Navbar = () => {
         <div className="flex items-center gap-3 sm:gap-4">
           <button
             onClick={() => setShowModal(true)}
-            className="bg-[#2ea836] text-white font-semibold text-xs sm:text-sm px-4 sm:px-5 py-[6px] sm:py-2 flex items-center justify-center hover:bg-[#24912b] transition-colors duration-200"
+            className="bg-[#2ea836] text-white font-shoulders font-semibold text-xs sm:text-sm px-4 sm:px-5 py-[6px] sm:py-2 flex items-center justify-center hover:bg-[#24912b] transition-colors duration-200"
             style={{
               clipPath: 'polygon(10% 0, 0% 50%, 0 100%, 90% 100%, 100% 50%, 100% 0)',
             }}
@@ -120,7 +120,7 @@ const Navbar = () => {
                 key={item.label}
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
-                className="text-white text-base font-medium py-4 text-left hover:text-green-400 transition-colors duration-200 border-b border-white/10 last:border-none focus:outline-none focus:text-green-400"
+                className="text-white text-base font-shoulders font-medium py-4 text-left hover:text-green-400 transition-colors duration-200 border-b border-white/10 last:border-none focus:outline-none focus:text-green-400"
               >
                 {item.label}
               </a>
@@ -132,7 +132,7 @@ const Navbar = () => {
                 setShowModal(true);
                 setMobileOpen(false);
               }}
-              className="mt-6 text-white text-base font-semibold py-3 text-center bg-[#2ea836] hover:bg-[#24912b] transition rounded-xl"
+              className="mt-6 text-white text-base font-shoulders font-semibold py-3 text-center bg-[#2ea836] hover:bg-[#24912b] transition rounded-xl"
             >
               List Your Cafe
             </button>
