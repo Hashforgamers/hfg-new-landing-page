@@ -50,7 +50,7 @@ export default function PreRegisterModal({ isOpen, onClose }) {
                 className="inline-block"
               >
                 <img
-                  src="public/playstore-badge.png" // Replace with your badge image if stored elsewhere
+                  src="/playstore-badge.png" // Replace with your badge image if stored elsewhere
                   alt="Get it on Google Play"
                   className="w-48 sm:w-56 hover:opacity-90 transition"
                 />
