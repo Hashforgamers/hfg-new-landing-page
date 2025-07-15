@@ -107,7 +107,7 @@ const Hero = () => {
       transition={{ delay: 0.6 }}
     >
       <div className="w-[110px] shrink-0">
-        <p className="text-2xl">8+</p>
+        <p className="text-2xl">16+</p>
         <p className="text-sm text-white leading-relaxed">Gaming Stations</p>
       </div>
       <div className="w-[110px] shrink-0">
