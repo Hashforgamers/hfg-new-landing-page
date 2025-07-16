@@ -38,6 +38,54 @@ const locations = [
     latitude: 19.1273,
     longitude: 72.9149,
     features: ["VR Zone", "18 Gaming Stations", "Pro Setup"]
+  },
+  {
+    id: 4,
+    name: "Hash Gaming Hinjawadi",
+    address: "Hinjawadi Phase 1 Rd, Mukai Nagar, Phase 1, Rajiv Gandhi Infotech Park, Hinjawadi, Pune, Maharashtra 411057",
+    latitude: 18.5913,
+    longitude: 73.7380,
+    features: ["High-Speed Internet", "22 Gaming Stations", "Startup Zone"]
+  },
+{
+    id: 5,
+    name: "Hash Gaming Nagpur",
+    address: "Floor 2, Bhole Building, Laxmi Bhawan Square, Dharampeth, Nagpur 440010",
+    latitude: 21.1458,
+    longitude: 79.0882,
+    features: ["Central Location", "20 Gaming Stations", "Student-Friendly"]
+  },
+  {
+    id: 6,
+    name: "Hash Gaming Jaipur",
+    address: "C-5, 80 Feet Road, Mahesh Nagar, Gopalpura Bypass Road, Jaipur, Rajasthan 302015",
+    latitude: 26.8866,
+    longitude: 75.7870,
+    features: ["Rajasthan's Best Setup", "25 Gaming Stations", "Casual + Pro Zone"]
+  },
+  {
+    id: 7,
+    name: "Hash Gaming Mira Road",
+    address: "Shop No-2, Teerth Plaza Building, Near L.R. Tiwari College, Kanakia Road, Mira Road, Mumbai 401107",
+    latitude: 19.2936,
+    longitude: 72.8617,
+    features: ["Near College", "19 Gaming Stations", "LAN + Console Room"]
+  },
+  {
+    id: 8,
+    name: "Hash Gaming Nalasopara",
+    address: "Shop No 20, PlayStation Paradise, Behind Fire Brigade, NSP Vasai Link Road, Agrawal Nagari, Vasant Nagri, Nalasopara (E), 401208",
+    latitude: 19.4256,
+    longitude: 72.8339,
+    features: ["West Zone Hub", "17 Gaming Stations", "Budget Friendly"]
+  },
+  {
+    id: 9,
+    name: "Hash Gaming Patiala",
+    address: "Gamebox Gaming Cafe, Near Kapsons Outlet, Bhupindra Road, Patiala, Punjab 147001",
+    latitude: 30.3398,
+    longitude: 76.3869,
+    features: ["North Zone Entry", "15 Gaming Stations", "Casual Arena"]
   }
 ];
 
