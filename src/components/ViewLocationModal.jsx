@@ -15,78 +15,81 @@ L.Icon.Default.mergeOptions({
 });
 
 const locations = [
+
   {
     id: 1,
-    name: "Hash Gaming Andheri",
-    address: "Shop 123, Link Road, Andheri West",
-    latitude: 19.1136,
-    longitude: 72.8697,
-    features: ["24/7 Open", "20 Gaming Stations", "Tournament Area"]
-  },
-  {
-    id: 2,
-    name: "Hash Gaming Bandra",
-    address: "Plot 45, Hill Road, Bandra West",
-    latitude: 19.0596,
-    longitude: 72.8295,
-    features: ["Premium Lounge", "15 Gaming Stations", "Cafe"]
-  },
-  {
-    id: 3,
-    name: "Hash Gaming Powai",
-    address: "Tower 3, Hiranandani Gardens",
-    latitude: 19.1273,
-    longitude: 72.9149,
-    features: ["VR Zone", "18 Gaming Stations", "Pro Setup"]
-  },
-  {
-    id: 4,
-    name: "Hash Gaming Hinjawadi",
+    name: "Matrix gaming",
     address: "Hinjawadi Phase 1 Rd, Mukai Nagar, Phase 1, Rajiv Gandhi Infotech Park, Hinjawadi, Pune, Maharashtra 411057",
     latitude: 18.5913,
     longitude: 73.7380,
     features: ["High-Speed Internet", "22 Gaming Stations", "Startup Zone"]
   },
 {
-    id: 5,
-    name: "Hash Gaming Nagpur",
+    id: 2,
+    name: "Levels Gaming lounge",
     address: "Floor 2, Bhole Building, Laxmi Bhawan Square, Dharampeth, Nagpur 440010",
     latitude: 21.1458,
     longitude: 79.0882,
     features: ["Central Location", "20 Gaming Stations", "Student-Friendly"]
   },
   {
-    id: 6,
-    name: "Hash Gaming Jaipur",
-    address: "C-5, 80 Feet Road, Mahesh Nagar, Gopalpura Bypass Road, Jaipur, Rajasthan 302015",
-    latitude: 26.8866,
-    longitude: 75.7870,
-    features: ["Rajasthan's Best Setup", "25 Gaming Stations", "Casual + Pro Zone"]
+    id :3,
+     name: "Levels Gaming Club",
+  address: "Levels Gaming Club, 2nd Floor, Plot No 306, Above Delhivery Office, Jaripatka, Nagpur",
+  latitude: 21.1736, // Approx location of Jaripatka, Nagpur
+  longitude: 79.1207,
+  features: ["Spacious Setup", "18 Gaming Stations", "Nagpur Central Hub"]
   },
   {
-    id: 7,
-    name: "Hash Gaming Mira Road",
+    id: 4,
+    name: "MAFIA GAMING CAFE ",
     address: "Shop No-2, Teerth Plaza Building, Near L.R. Tiwari College, Kanakia Road, Mira Road, Mumbai 401107",
     latitude: 19.2936,
     longitude: 72.8617,
     features: ["Near College", "19 Gaming Stations", "LAN + Console Room"]
   },
   {
-    id: 8,
-    name: "Hash Gaming Nalasopara",
+    id: 5,
+    name: "PlayStation Paradise",
     address: "Shop No 20, PlayStation Paradise, Behind Fire Brigade, NSP Vasai Link Road, Agrawal Nagari, Vasant Nagri, Nalasopara (E), 401208",
     latitude: 19.4256,
     longitude: 72.8339,
     features: ["West Zone Hub", "17 Gaming Stations", "Budget Friendly"]
   },
   {
-    id: 9,
-    name: "Hash Gaming Patiala",
+    id: 6,
+    name: "GAMEBOX",
     address: "Gamebox Gaming Cafe, Near Kapsons Outlet, Bhupindra Road, Patiala, Punjab 147001",
     latitude: 30.3398,
     longitude: 76.3869,
     features: ["North Zone Entry", "15 Gaming Stations", "Casual Arena"]
-  }
+  },
+  {
+    id:7,
+    name: "Levels Gaming Club",
+  address: "Plot No 94, Anand Nagar Square, Opp Shardanagar, Nanded 431602. Landmark: Old Bullet Showroom",
+  latitude: 19.1451,  // Approx for Anand Nagar Square, Nanded
+  longitude: 77.3004,
+  features: ["East Zone Entry", "16 Gaming Stations", "Landmark: Old Bullet Showroom"]
+  },
+  {
+  id: 8,
+  name: "Levels Gaming Lounge",
+  address: "Floor 1, Beside Puma Showroom, Near Telephone Exchange Square, Central Avenue, Bagadganj, Nagpur",
+  latitude: 21.1457,  // Approx for Central Avenue & Bagadganj, Nagpur
+  longitude: 79.1185,
+  features: ["Prime Location", "Modern Setup", "Near Telephone Exchange Square"]
+},
+{
+  id: 9,
+  name: "Retro Gaming",
+  address: "Shop 9, Mahadev Shree Building, Jain Hospital, Opp. Garden City Building, Indralok Phase 2, Queens Park, Bhayander East, Mira Bhayandar, Mumbai, Maharashtra 401105",
+  latitude: 19.3074,  // Approx for Indralok Phase 2, Bhayander East
+  longitude: 72.8702,
+  features: ["Mira Bhayandar Spot", "14 Gaming Stations", "Near Jain Hospital"]
+}
+
+
 ];
 
 function ChangeView({ center, zoom }) {
