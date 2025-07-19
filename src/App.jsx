@@ -7,7 +7,10 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+// Helmet
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
+// Components
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Waitlist from "./components/Waitlist";
@@ -34,6 +37,23 @@ function MainApp() {
 
   return (
     <div className="bg-black min-h-screen text-white">
+      {/* Helmet SEO for Homepage */}
+      <Helmet>
+        <title>Hash Gamers | India’s Top Gaming Cafe Platform</title>
+        <meta
+          name="description"
+          content="Find and list top gaming cafes across India. Hash Gamers is India’s ultimate gaming cafe discovery platform."
+        />
+        <meta property="og:title" content="Hash Gamers | Gaming Ka Naya Adda" />
+        <meta
+          property="og:description"
+          content="Explore India’s top gaming cafes, list your own cafe, and connect with the gaming community."
+        />
+        <meta property="og:image" content="/hash-og-image.jpg" />
+        <meta property="og:url" content="https://hashforgamers.co.in/" />
+        <meta property="og:type" content="website" />
+      </Helmet>
+
       <Navbar onPreRegisterClick={() => setShowPreRegisterModal(true)} />
 
       <Hero openPreRegister={() => setShowPreRegisterModal(true)} />
@@ -81,12 +101,14 @@ function MainApp() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<MainApp />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-      </Routes>
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainApp />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        </Routes>
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
 
