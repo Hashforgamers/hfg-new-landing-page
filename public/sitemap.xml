@@ -1,73 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+>
+
   <!-- Homepage -->
   <url>
     <loc>https://hashforgamers.co.in/</loc>
-    <changefreq>monthly</changefreq>
+    <lastmod>2025-07-22</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- Privacy Policy -->
+  <!-- Section Anchors -->
   <url>
-    <loc>https://hashforgamers.co.in/privacy-policy</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://hashforgamers.co.in/#features</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 
-  <!-- Terms & Conditions -->
   <url>
-    <loc>https://hashforgamers.co.in/terms</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://hashforgamers.co.in/#community</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 
-  <!-- About Us -->
+  <!-- Static Pages -->
   <url>
     <loc>https://hashforgamers.co.in/about</loc>
+    <lastmod>2025-07-22</lastmod>
     <changefreq>yearly</changefreq>
-    <priority>0.2</priority>
+    <priority>0.3</priority>
   </url>
 
-  <!-- Sample Product Pages -->
+  <url>
+    <loc>https://hashforgamers.co.in/privacy-policy</loc>
+    <lastmod>2025-07-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://hashforgamers.co.in/terms-and-conditions</loc>
+    <lastmod>2025-06-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- Alternate Language -->
+  <url>
+    <loc>https://hashforgamers.co.in/?lang=ta</loc>
+    <lastmod>2025-07-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.1</priority>
+  </url>
+
+  <!-- Product Pages -->
   <url>
     <loc>https://hashforgamers.co.in/product-page/flint</loc>
+    <lastmod>2025-06-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://hashforgamers.co.in/product-page/mach-gaming-chair</loc>
+    <lastmod>2025-06-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://hashforgamers.co.in/product-page/playbox-xz-gold-edition</loc>
+    <lastmod>2025-06-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://hashforgamers.co.in/product-page/dead-at-last</loc>
+    <lastmod>2025-06-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://hashforgamers.co.in/product-page/wave-gen-rx</loc>
+    <lastmod>2025-05-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://hashforgamers.co.in/product-page/x-2-wireless-mouse</loc>
+    <lastmod>2025-05-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://hashforgamers.co.in/product-page/chronosplit</loc>
+    <lastmod>2025-05-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
+
 </urlset>
