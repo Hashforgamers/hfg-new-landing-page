@@ -7,7 +7,16 @@ import { resolve } from 'path';
 const links = [
   { url: '/', changefreq: 'monthly', priority: 1.0 },
   { url: '/privacy-policy', changefreq: 'yearly', priority: 0.3 },
-  // Add more URLs here
+  { url: '/terms', changefreq: 'yearly', priority: 0.3 },
+  { url: '/list-your-cafe', changefreq: 'monthly', priority: 0.7 },
+  { url: '/view-locations', changefreq: 'monthly', priority: 0.7 },
+  { url: '/waitlist', changefreq: 'monthly', priority: 0.6 },
+  { url: '/about', changefreq: 'yearly', priority: 0.4 },
+  { url: '/join-community', changefreq: 'monthly', priority: 0.6 },
+  { url: '/what-is-hash', changefreq: 'yearly', priority: 0.5 },
+  { url: '/cafe-pricing', changefreq: 'monthly', priority: 0.6 },
+  { url: '/how-it-works', changefreq: 'yearly', priority: 0.4 },
+  // Add more if your routing supports them as standalone pages
 ];
 
 (async () => {

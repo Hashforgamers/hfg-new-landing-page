@@ -62,9 +62,9 @@ const Hero = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3 }}
     >
-      CONQUER THE THRONE
+      Built for Cafes
       <br />
-      RULE THE GAME
+    <span className="text-orange-500">Made</span> f<span className="text-[#000080]">o</span>r <span className="text-green-600">Gamers</span>
     </motion.h1>
 
     {/* Subtitle */}

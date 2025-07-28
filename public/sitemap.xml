@@ -1,39 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
+<urlset 
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
 >
-  <!-- Homepage -->
   <url>
     <loc>https://hashforgamers.co.in/</loc>
-    <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
-
-  <!-- Privacy Policy -->
   <url>
     <loc>https://hashforgamers.co.in/privacy-policy</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.8</priority>
   </url>
-
-  <!-- Terms & Conditions -->
   <url>
     <loc>https://hashforgamers.co.in/terms</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.8</priority>
   </url>
-
-  <!-- About Us -->
   <url>
-    <loc>https://hashforgamers.co.in/about</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.2</priority>
+    <loc>https://hashforgamers.co.in/list-your-cafe</loc>
+    <priority>0.7</priority>
   </url>
-
-  <!-- Join Community Section -->
   <url>
-    <loc>https://hashforgamers.co.in/#community</loc>
-    <changefreq>monthly</changefreq>
+    <loc>https://hashforgamers.co.in/view-locations</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hashforgamers.co.in/waitlist</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hashforgamers.co.in/contact-us</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://hashforgamers.co.in/about-us</loc>
     <priority>0.6</priority>
   </url>
 </urlset>

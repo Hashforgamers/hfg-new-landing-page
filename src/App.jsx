@@ -39,12 +39,12 @@ function MainApp() {
     <div className="bg-black min-h-screen text-white">
       {/* Helmet SEO for Homepage */}
       <Helmet>
-        <title>Hash Gamers | India’s Top Gaming Cafe Platform</title>
+        <title>Hash For Gamers | India’s Top Gaming Cafe Platform</title>
         <meta
           name="description"
-          content="Find and list top gaming cafes across India. Hash Gamers is India’s ultimate gaming cafe discovery platform."
+          content="Find and list top gaming cafes across India. Hash For Gamers is India’s ultimate gaming cafe discovery platform."
         />
-        <meta property="og:title" content="Hash Gamers | Gaming Ka Naya Adda" />
+        <meta property="og:title" content="Hash For Gamers | Gaming Ka Naya Adda" />
         <meta
           property="og:description"
           content="Explore India’s top gaming cafes, list your own cafe, and connect with the gaming community."
