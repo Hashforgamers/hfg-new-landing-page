@@ -108,11 +108,11 @@ const Hero = () => {
     >
       <div className="w-[110px] shrink-0">
         <p className="text-2xl">16+</p>
-        <p className="text-sm text-white leading-relaxed">Gaming Stations</p>
+        <p className="text-sm text-white leading-relaxed">Gaming Cafes</p>
       </div>
       <div className="w-[110px] shrink-0">
-        <p className="text-2xl">5k+</p>
-        <p className="text-sm text-white leading-relaxed">Active Gamers</p>
+        <p className="text-2xl">1000+</p>
+        <p className="text-sm text-white leading-relaxed">Pre-Registrations</p>
       </div>
       <div className="w-[110px] shrink-0">
         <p className="text-2xl">24x7</p>
