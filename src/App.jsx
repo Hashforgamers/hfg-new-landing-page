@@ -10,7 +10,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 // Helmet
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
-import {MetaPixel} from "./MetaPixel";
+import MetaPixel from "./MetaPixel";
 
 // Components
 import Navbar from "./components/Navbar";
