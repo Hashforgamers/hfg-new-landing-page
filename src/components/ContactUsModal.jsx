@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { supabase } from "../supabaseClient"; // Supabase client import
 
@@ -10,34 +10,87 @@ const ContactUsModal = ({ isOpen, onClose }) => {
     message: "",
   });
 
+  // Track modal open event
+  useEffect(() => {
+    if (isOpen && typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "ContactUsModalOpen");
+      console.log("✅ Meta Pixel: ContactUsModalOpen event sent");
+    }
+  }, [isOpen]);
+
+  // Wrap onClose to also send modal close event
+  const handleClose = () => {
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "ContactUsModalClose");
+      console.log("✅ Meta Pixel: ContactUsModalClose event sent");
+    }
+    onClose();
+  };
+
+  // Track form input changes (optional)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
+
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "ContactUsFormChange", {
+        fieldName: name,
+        fieldValueLength: value.length,
+      });
+      console.log(`✅ Meta Pixel: ContactUsFormChange event sent for field ${name}`);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("🟢 Submitting form data:", formData);
 
-    const { error } = await supabase.from("contact_messages").insert([
-      {
-        name: formData.name,
-        email: formData.email,
-        subject: formData.subject,
-        message: formData.message,
-      },
-    ]);
+    try {
+      const { error } = await supabase.from("contact_messages").insert([
+        {
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        },
+      ]);
 
-    if (error) {
+      if (error) {
+        throw error;
+      }
+
+      alert("✅ Message sent successfully!");
+
+      if (typeof window !== "undefined" && window.fbq) {
+        window.fbq("trackCustom", "ContactUsFormSubmitSuccess", {
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+        });
+        console.log("✅ Meta Pixel: ContactUsFormSubmitSuccess event sent");
+      }
+
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+
+      handleClose();
+    } catch (error) {
       console.error("🔴 Supabase Error:", error);
       alert("Something went wrong: " + error.message);
-    } else {
-      alert("✅ Message sent successfully!");
-      setFormData({ name: "", email: "", subject: "", message: "" });
-      onClose();
+
+      if (typeof window !== "undefined" && window.fbq) {
+        window.fbq("trackCustom", "ContactUsFormSubmitError", {
+          errorMessage: error.message,
+        });
+        console.log("❌ Meta Pixel: ContactUsFormSubmitError event sent");
+      }
     }
   };
 
@@ -47,21 +100,15 @@ const ContactUsModal = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center">
       <div className="relative w-full max-w-3xl p-6 sm:p-8 text-white font-noodle max-h-[90vh] overflow-y-auto bg-[#64BD55]/10 backdrop-blur-lg deep-cut">
         {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-white text-3xl"
-        >
+        <button onClick={handleClose} className="absolute top-4 right-4 text-white text-3xl">
           ×
         </button>
 
         {/* Title */}
-        <h2 className="text-3xl sm:text-4xl uppercase text-center mb-4 tracking-wider">
-          Contact Us
-        </h2>
+        <h2 className="text-3xl sm:text-4xl uppercase text-center mb-4 tracking-wider">Contact Us</h2>
 
         <p className="text-center text-sm sm:text-base text-white/90 mb-6">
-          Have questions about our gaming stations? Need help with booking?
-          Our team of battle-hardened support warriors are ready to assist you.
+          Have questions about our gaming stations? Need help with booking? Our team of battle-hardened support warriors are ready to assist you.
         </p>
 
         {/* Contact Form */}

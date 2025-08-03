@@ -6,9 +6,9 @@ import manageDevicesImage from "../assets/manage-devices-preview.png";
 import pricingModelImage from "../assets/pricing-model-preview.png";
 import dashboardPreview from "../assets/dashboard-preview.jpg";
 
-
 const Features = () => {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedFeature, setSelectedFeature] = useState(null); // Track selected feature title
 
   const featuresData = [
     {
@@ -33,10 +33,63 @@ const Features = () => {
     },
   ];
 
+  // Fire Pixel event when Features section is viewed
+  const handleSectionView = () => {
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "FeaturesSectionView");
+      console.log("✅ Meta Pixel: FeaturesSectionView event sent");
+    }
+  };
+
+  // Handle feature button click (sets selected image and fires event)
+  const handleFeatureClick = (feature) => {
+    if (feature.title === "DASHBOARD") {
+      setSelectedImage(null);
+      setSelectedFeature("DASHBOARD");
+    } else {
+      setSelectedImage(feature.image);
+      setSelectedFeature(feature.title);
+    }
+
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "FeatureButtonClick", {
+        featureTitle: feature.title,
+      });
+      console.log(`✅ Meta Pixel: FeatureButtonClick event sent for ${feature.title}`);
+    }
+  };
+
+  // Fire event on opening feature preview overlay (same as button click here)
+  const handlePreviewOpen = () => {
+    if (selectedFeature && selectedFeature !== "DASHBOARD") {
+      if (typeof window !== "undefined" && window.fbq) {
+        window.fbq("trackCustom", "FeaturePreviewOpen", {
+          featureTitle: selectedFeature,
+        });
+        console.log(`✅ Meta Pixel: FeaturePreviewOpen event sent for ${selectedFeature}`);
+      }
+    }
+  };
+
+  // Fire event on closing feature preview overlay
+  const handlePreviewClose = () => {
+    if (selectedFeature && selectedFeature !== "DASHBOARD") {
+      if (typeof window !== "undefined" && window.fbq) {
+        window.fbq("trackCustom", "FeaturePreviewClose", {
+          featureTitle: selectedFeature,
+        });
+        console.log(`✅ Meta Pixel: FeaturePreviewClose event sent for ${selectedFeature}`);
+      }
+    }
+    setSelectedImage(null);
+    setSelectedFeature(null);
+  };
+
   return (
     <section
       id="features"
       className="bg-black text-white py-20 px-4 sm:px-6 lg:px-8 font-noodle overflow-hidden"
+      onViewportEnter={handleSectionView}
     >
       <div className="max-w-7xl mx-auto">
         {/* Title */}
@@ -71,11 +124,7 @@ const Features = () => {
                 className="relative w-full flex items-center justify-center"
               >
                 <button
-                  onClick={() =>
-                    feature.title === "DASHBOARD"
-                      ? setSelectedImage(null)
-                      : setSelectedImage(feature.image)
-                  }
+                  onClick={() => handleFeatureClick(feature)}
                   className="relative w-full h-[100px] sm:h-[110px] md:h-[120px] lg:h-[130px] flex flex-col justify-start px-4 sm:px-6 pt-6 bg-transparent group outline-none"
                 >
                   <svg
@@ -118,10 +167,9 @@ const Features = () => {
                   </svg>
 
                   <div className="w-full flex flex-col items-start justify-start z-30 pointer-events-none pt-2 pl-2 sm:pl-4">
-                   <h3 className="block font-shoulders uppercase tracking-wide text-sm sm:text-base md:text-lg lg:text-3xl leading-tight mb-1 text-white text-left">
-  {feature.title}
-</h3>
-
+                    <h3 className="block font-shoulders uppercase tracking-wide text-sm sm:text-base md:text-lg lg:text-3xl leading-tight mb-1 text-white text-left">
+                      {feature.title}
+                    </h3>
 
                     <span className="block font-inter text-xs sm:text-sm md:text-base lg:text-base text-gray-300 text-left">
                       {feature.subtitle}
@@ -151,42 +199,41 @@ const Features = () => {
               {/* Dashboard background - default */}
               {!selectedImage && (
                 <img
-  src={dashboardPreview}
-  alt="Dashboard UI"
-  className="relative z-10 w-[90%] h-auto mx-auto object-contain mt-28 "
-/>
-
-
+                  src={dashboardPreview}
+                  alt="Dashboard UI"
+                  className="relative z-10 w-[90%] h-auto mx-auto object-contain mt-28 "
+                />
               )}
 
               {/* Overlay preview */}
               {selectedImage && (
-  <motion.div
-    key={selectedImage}
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-    transition={{ duration: 0.3 }}
-    className="absolute top-0 left-0 w-full h-full z-20 bg-black/60 flex items-center justify-center rounded-lg"
-    onClick={() => setSelectedImage(null)}
-  >
-    <img
-      src={selectedImage}
-      alt="Feature Preview"
-      className="w-[90%] h-auto object-contain rounded-lg"
-    />
-    <button
-      className="absolute top-3 right-4 text-white text-3xl font-bold hover:text-red-400"
-      onClick={(e) => {
-        e.stopPropagation();
-        setSelectedImage(null);
-      }}
-    >
-      ×
-    </button>
-  </motion.div>
-)}
-
+                <motion.div
+                  key={selectedImage}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute top-0 left-0 w-full h-full z-20 bg-black/60 flex items-center justify-center rounded-lg cursor-pointer"
+                  onClick={handlePreviewClose}
+                  onAnimationStart={handlePreviewOpen}
+                >
+                  <img
+                    src={selectedImage}
+                    alt="Feature Preview"
+                    className="w-[90%] h-auto object-contain rounded-lg"
+                  />
+                  <button
+                    className="absolute top-3 right-4 text-white text-3xl font-bold hover:text-red-400"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handlePreviewClose();
+                    }}
+                    aria-label="Close Feature Preview"
+                  >
+                    ×
+                  </button>
+                </motion.div>
+              )}
             </div>
           </motion.div>
         </div>

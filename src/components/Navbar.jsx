@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 import logo from "../assets/hash-logo.png";
 import ListYourCafeModal from "./ListYourCafeModal";
 
 const menuItems = [
-  { label: 'Features', href: '#features' },
-  { label: 'What Is Hash?', href: '#what-is-hash' },
-  { label: 'How It Works?', href: '#how-it-works' },
+  { label: "Features", href: "#features" },
+  { label: "What Is Hash?", href: "#what-is-hash" },
+  { label: "How It Works?", href: "#how-it-works" },
 ];
 
 const Navbar = () => {
@@ -14,8 +14,10 @@ const Navbar = () => {
   const mobileMenuRef = useRef(null);
   const hamburgerRef = useRef(null);
 
+  // Close mobile menu if clicking outside of it or hamburger button
   useEffect(() => {
     if (!mobileOpen) return;
+
     function handleClick(e) {
       if (
         mobileMenuRef.current &&
@@ -25,23 +27,34 @@ const Navbar = () => {
         setMobileOpen(false);
       }
     }
-    document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
+
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
   }, [mobileOpen]);
 
+  // Prevent background scroll when mobile menu is open
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? 'hidden' : 'unset';
-    return () => (document.body.style.overflow = 'unset');
+    document.body.style.overflow = mobileOpen ? "hidden" : "unset";
+    return () => (document.body.style.overflow = "unset");
   }, [mobileOpen]);
+
+  // Handler to open "List Your Cafe" modal and send Meta Pixel event
+  const openListYourCafeModal = () => {
+    setShowModal(true);
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "ListYourCafe");
+      console.log("✅ Meta Pixel: ListYourCafe event fired");
+    }
+  };
 
   return (
     <>
       <nav
         className="fixed top-0 left-0 w-full h-[80px] flex items-center justify-between px-4 sm:px-6 md:px-8 shadow-md z-50 text-white"
         style={{
-          backgroundColor: 'rgba(30, 30, 30, 0.30)',
-          backdropFilter: 'blur(10px)',
-          WebkitBackdropFilter: 'blur(10px)',
+          backgroundColor: "rgba(30, 30, 30, 0.30)",
+          backdropFilter: "blur(10px)",
+          WebkitBackdropFilter: "blur(10px)",
         }}
       >
         {/* Logo scroll to #hero */}
@@ -78,41 +91,57 @@ const Navbar = () => {
         {/* List Your Cafe Button */}
         <div className="flex items-center gap-3 sm:gap-4">
           <button
-            onClick={() => setShowModal(true)}
+            onClick={openListYourCafeModal}
             className="bg-[#2ea836] text-white font-shoulders font-semibold text-xs sm:text-sm px-4 sm:px-5 py-[6px] sm:py-2 flex items-center justify-center hover:bg-[#24912b] transition-colors duration-200"
             style={{
-              clipPath: 'polygon(10% 0, 0% 50%, 0 100%, 90% 100%, 100% 50%, 100% 0)',
+              clipPath: "polygon(10% 0, 0% 50%, 0 100%, 90% 100%, 100% 50%, 100% 0)",
             }}
           >
             List Your Cafe
           </button>
 
-          {/* Hamburger */}
+          {/* Hamburger for mobile */}
           <button
             ref={hamburgerRef}
             className="md:hidden p-2 focus:outline-none focus:ring-2 focus:ring-green-400 rounded-md transition-all duration-200"
             onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
           >
             <div className="w-6 h-5 relative flex flex-col justify-between">
-              <span className={`w-full h-[2px] bg-white transition-all duration-300 ${mobileOpen ? 'rotate-45 translate-y-2' : ''}`} />
-              <span className={`w-full h-[2px] bg-white transition-all duration-300 ${mobileOpen ? 'opacity-0' : ''}`} />
-              <span className={`w-full h-[2px] bg-white transition-all duration-300 ${mobileOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+              <span
+                className={`w-full h-[2px] bg-white transition-all duration-300 ${
+                  mobileOpen ? "rotate-45 translate-y-2" : ""
+                }`}
+              />
+              <span
+                className={`w-full h-[2px] bg-white transition-all duration-300 ${
+                  mobileOpen ? "opacity-0" : ""
+                }`}
+              />
+              <span
+                className={`w-full h-[2px] bg-white transition-all duration-300 ${
+                  mobileOpen ? "-rotate-45 -translate-y-2" : ""
+                }`}
+              />
             </div>
           </button>
         </div>
 
         {/* Mobile Menu Overlay */}
         <div
-          className={`fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 md:hidden ${mobileOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+          className={`fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
+            mobileOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
           onClick={() => setMobileOpen(false)}
         />
 
         {/* Mobile Menu Panel */}
         <div
           ref={mobileMenuRef}
-          className={`fixed top-[80px] right-0 w-full sm:w-[300px] h-[calc(100vh-80px)] bg-black/95 backdrop-blur-md transform transition-transform duration-300 ease-out md:hidden ${mobileOpen ? 'translate-x-0' : 'translate-x-full'}`}
+          className={`fixed top-[80px] right-0 w-full sm:w-[300px] h-[calc(100vh-80px)] bg-black/95 backdrop-blur-md transform transition-transform duration-300 ease-out md:hidden ${
+            mobileOpen ? "translate-x-0" : "translate-x-full"
+          }`}
         >
           <div className="flex flex-col items-stretch p-4">
             {menuItems.map((item) => (
@@ -129,7 +158,7 @@ const Navbar = () => {
             {/* Mobile Cafe CTA Button */}
             <button
               onClick={() => {
-                setShowModal(true);
+                openListYourCafeModal();
                 setMobileOpen(false);
               }}
               className="mt-6 text-white text-base font-shoulders font-semibold py-3 text-center bg-[#2ea836] hover:bg-[#24912b] transition rounded-xl"
@@ -140,7 +169,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Cafe Modal */}
+      {/* List Your Cafe Modal */}
       <ListYourCafeModal isOpen={showModal} onClose={() => setShowModal(false)} />
     </>
   );

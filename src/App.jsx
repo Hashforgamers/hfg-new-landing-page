@@ -50,6 +50,7 @@ function MainApp() {
   }, [location]);
 
   const handleOpenPreRegister = () => {
+    console.log("handleOpenPreRegister called");
     setShowPreRegisterModal(true);
     if (window.fbq) {
       window.fbq("trackCustom", "PreRegisterUser");
@@ -58,6 +59,7 @@ function MainApp() {
   };
 
   const handleOpenListYourCafeModal = () => {
+    console.log("handleOpenListYourCafeModal called");
     setShowListYourCafeModal(true);
     if (window.fbq) {
       window.fbq("trackCustom", "ListYourCafe");

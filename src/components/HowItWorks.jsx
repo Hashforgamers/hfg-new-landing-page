@@ -26,10 +26,36 @@ const steps = [
 ];
 
 const HowItWorks = () => {
+  // Track when the whole section comes into view
+  const handleSectionView = () => {
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "HowItWorksSectionView");
+      console.log("✅ Meta Pixel: HowItWorksSectionView event sent");
+    }
+  };
+
+  // Handler when a step scrolls into view (called once per step)
+  const handleStepView = (stepTitle) => {
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "HowItWorksStepView", { step: stepTitle });
+      console.log(`✅ Meta Pixel: HowItWorksStepView event sent for ${stepTitle}`);
+    }
+  };
+
+  // Handler for hover on a step - track hover event
+  const handleStepHover = (stepTitle) => {
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "HowItWorksStepHover", { step: stepTitle });
+      console.log(`✅ Meta Pixel: HowItWorksStepHover event sent for ${stepTitle}`);
+    }
+  };
+
   return (
     <section
       id="how-it-works"
       className="bg-[#000000] text-white py-20 px-6 md:px-12 font-noodle"
+      // Use onViewportEnter to track section view once when section enters viewport
+      onViewportEnter={handleSectionView}
     >
       {/* Title */}
       <div className="max-w-screen-2xl mx-auto text-center mb-16">
@@ -37,7 +63,7 @@ const HowItWorks = () => {
           HOW IT WORKS
         </h2>
         <p className="text-gray-400 max-w-2xl mx-auto text-base sm:text-lg">
-         Book. Play. Win. It’s that simple.
+          Book. Play. Win. It’s that simple.
         </p>
       </div>
 
@@ -48,19 +74,21 @@ const HowItWorks = () => {
             key={idx}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.6, delay: idx * 0.15, ease: "easeOut" }}
-            viewport={{ once: true, amount: 0.3 }}
             className="relative bg-[#161c18bb] text-white p-4 md:p-5 flex flex-col md:flex-row gap-4 shadow-md hover:shadow-lime-500/30 transition-all duration-300 clip-corner w-full"
+            // Fire step view event once when step scrolls into view
+            onViewportEnter={() => handleStepView(step.title)}
+            // Fire hover event when user hovers on a step
+            onHoverStart={() => handleStepHover(step.title)}
           >
             {/* Text Content */}
             <div className="flex-1 pl-4 md:pl-6">
               <h3 className="text-2xl font-shoulders uppercase tracking-wide mb-3 leading-tight">
                 {step.title}
               </h3>
-              <p className="text-gray-300 text-sm leading-normal">
-                {step.description}
-              </p>
+              <p className="text-gray-300 text-sm leading-normal">{step.description}</p>
             </div>
 
             {/* UI Image */}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
@@ -17,7 +17,7 @@ const PrivacyPolicyModal = ({ isOpen, onClose }) => {
       icon: <ShieldCheck className="w-5 h-5 text-[#64BD55]" />,
       title: "Introduction",
       content:
-        "This Privacy Policy describes how Hashforgamers Pvt Ltd and its affiliates (collectively \"Hashforgamers Pvt Ltd\", \"we\", \"our\", \"us\") collect, use, share, protect or otherwise process your information through our website https://hashforgamers.co.in/. Please note, we do not offer any product/service under this Platform outside India and your personal data will primarily be stored and processed in India.",
+        'This Privacy Policy describes how Hashforgamers Pvt Ltd and its affiliates (collectively "Hashforgamers Pvt Ltd", "we", "our", "us") collect, use, share, protect or otherwise process your information through our website https://hashforgamers.co.in/. Please note, we do not offer any product/service under this Platform outside India and your personal data will primarily be stored and processed in India.',
     },
     {
       icon: <Eye className="w-5 h-5 text-[#64BD55]" />,
@@ -57,6 +57,23 @@ const PrivacyPolicyModal = ({ isOpen, onClose }) => {
     },
   ];
 
+  // Track modal open event
+  useEffect(() => {
+    if (isOpen && typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "PrivacyPolicyModalOpen");
+      console.log("✅ Meta Pixel: PrivacyPolicyModalOpen event sent");
+    }
+  }, [isOpen]);
+
+  // Handle modal close with event tracking
+  const handleClose = () => {
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "PrivacyPolicyModalClose");
+      console.log("✅ Meta Pixel: PrivacyPolicyModalClose event sent");
+    }
+    onClose();
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -76,7 +93,8 @@ const PrivacyPolicyModal = ({ isOpen, onClose }) => {
             {/* Close Button */}
             <button
               className="absolute top-4 right-4 text-white hover:text-[#64BD55] transition"
-              onClick={onClose}
+              onClick={handleClose}
+              aria-label="Close Privacy Policy"
             >
               <X size={28} />
             </button>

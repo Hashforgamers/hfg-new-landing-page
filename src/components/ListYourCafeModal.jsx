@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 import stateCityData from "../data/stateCity.json";
 
@@ -12,6 +12,23 @@ const ListYourCafeModal = ({ isOpen, onClose }) => {
     email: "",
   });
 
+  // Track modal open event
+  useEffect(() => {
+    if (isOpen && typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "ListYourCafeModalOpen");
+      console.log("✅ Meta Pixel: ListYourCafeModalOpen event sent");
+    }
+  }, [isOpen]);
+
+  // Wrap onClose to also fire modal close event
+  const handleClose = () => {
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "ListYourCafeModalClose");
+      console.log("✅ Meta Pixel: ListYourCafeModalClose event sent");
+    }
+    onClose();
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -19,27 +36,49 @@ const ListYourCafeModal = ({ isOpen, onClose }) => {
       [name]: value,
       ...(name === "state" ? { city: "" } : {}),
     }));
+
+    // Optional: Track form field changes individually if desired
+    /*
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "ListYourCafeFormChange", {
+        field: name,
+        value: value,
+      });
+      console.log(`✅ Meta Pixel: ListYourCafeFormChange event sent for ${name}`);
+    }
+    */
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { error } = await supabase.from("cafes").insert([
-      {
-        cafe_name: formData.cafeName,
-        state: formData.state,
-        city: formData.city,
-        owner_name: formData.ownerName,
-        contact: formData.contact,
-        email: formData.email,
-      },
-    ]);
+    try {
+      const { error } = await supabase.from("cafes").insert([
+        {
+          cafe_name: formData.cafeName,
+          state: formData.state,
+          city: formData.city,
+          owner_name: formData.ownerName,
+          contact: formData.contact,
+          email: formData.email,
+        },
+      ]);
 
-    if (error) {
-      console.error("Error saving cafe:", error.message);
-      alert("Something went wrong. Please try again.");
-    } else {
+      if (error) {
+        throw error;
+      }
+
       alert("Cafe listed successfully!");
+      
+      if (typeof window !== "undefined" && window.fbq) {
+        window.fbq("trackCustom", "ListYourCafeFormSubmitSuccess", {
+          cafeName: formData.cafeName,
+          state: formData.state,
+          city: formData.city,
+        });
+        console.log("✅ Meta Pixel: ListYourCafeFormSubmitSuccess event sent");
+      }
+
       setFormData({
         cafeName: "",
         state: "",
@@ -48,7 +87,18 @@ const ListYourCafeModal = ({ isOpen, onClose }) => {
         contact: "",
         email: "",
       });
-      onClose();
+
+      handleClose();
+    } catch (error) {
+      console.error("Error saving cafe:", error.message);
+      alert("Something went wrong. Please try again.");
+
+      if (typeof window !== "undefined" && window.fbq) {
+        window.fbq("trackCustom", "ListYourCafeFormSubmitError", {
+          errorMessage: error.message,
+        });
+        console.log("❌ Meta Pixel: ListYourCafeFormSubmitError event sent");
+      }
     }
   };
 
@@ -60,10 +110,7 @@ const ListYourCafeModal = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center">
       <div className="relative w-full max-w-3xl p-6 sm:p-8 text-white font-noodle max-h-[90vh] overflow-y-auto bg-[#64BD55]/10 backdrop-blur-lg deep-cut">
         {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-white text-3xl"
-        >
+        <button onClick={handleClose} className="absolute top-4 right-4 text-white text-3xl">
           ×
         </button>
 
@@ -75,9 +122,7 @@ const ListYourCafeModal = ({ isOpen, onClose }) => {
         {/* Cafe Details */}
         <div className="flex items-center gap-4 text-white uppercase font-semibold tracking-wider text-center my-6">
           <div className="flex-grow border-t border-white"></div>
-          <span className="text-sm sm:text-base whitespace-nowrap">
-            Cafe Details
-          </span>
+          <span className="text-sm sm:text-base whitespace-nowrap">Cafe Details</span>
           <div className="flex-grow border-t border-white"></div>
         </div>
 

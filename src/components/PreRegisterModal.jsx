@@ -8,6 +8,14 @@ export default function PreRegisterModal({ isOpen, onClose }) {
     if (isOpen) setIsVisible(true);
   }, [isOpen]);
 
+  // Fire Meta Pixel event when modal opens
+  useEffect(() => {
+    if (isOpen && typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "PreRegisterModalOpen");
+      console.log("✅ Meta Pixel: PreRegisterModalOpen event sent");
+    }
+  }, [isOpen]);
+
   const closeModal = () => {
     setIsVisible(false);
     setTimeout(() => onClose(), 300);
@@ -48,9 +56,15 @@ export default function PreRegisterModal({ isOpen, onClose }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block"
+                onClick={() => {
+                  if (typeof window !== "undefined" && window.fbq) {
+                    window.fbq("trackCustom", "PreRegisterPlayStoreClick");
+                    console.log("✅ Meta Pixel: PreRegisterPlayStoreClick event sent");
+                  }
+                }}
               >
                 <img
-                  src="/playstore-badge.png" // Replace with your badge image if stored elsewhere
+                  src="/playstore-badge.png"
                   alt="Get it on Google Play"
                   className="w-48 sm:w-56 hover:opacity-90 transition"
                 />
