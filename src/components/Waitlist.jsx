@@ -26,8 +26,36 @@ const features = [
 ];
 
 const Waitlist = () => {
+  // Fired once when section scrolls into view
+  const handleSectionView = () => {
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "WaitlistSectionView");
+      console.log("✅ Meta Pixel: WaitlistSectionView event sent");
+    }
+  };
+
+  // Fired when user hovers a feature
+  const handleFeatureHover = (featureTitle) => {
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "WaitlistFeatureHover", { feature: featureTitle });
+      console.log(`✅ Meta Pixel: WaitlistFeatureHover event sent for ${featureTitle}`);
+    }
+  };
+
+  // Optional: Fired when user clicks a feature card
+  // You can make these clickable if desired, here is the handler:
+  const handleFeatureClick = (featureTitle) => {
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "WaitlistFeatureClick", { feature: featureTitle });
+      console.log(`✅ Meta Pixel: WaitlistFeatureClick event sent for ${featureTitle}`);
+    }
+  };
+
   return (
-    <section className="relative bg-black text-white py-20 px-4 sm:px-6 lg:px-8 font-noodle overflow-hidden">
+    <section
+      className="relative bg-black text-white py-20 px-4 sm:px-6 lg:px-8 font-noodle overflow-hidden"
+      onViewportEnter={handleSectionView}
+    >
       {/* Background Animation */}
       <motion.div
         className="absolute inset-0 z-0 bg-[url('/bg-lines.png')] bg-cover bg-center opacity-5 pointer-events-none"
@@ -54,8 +82,18 @@ const Waitlist = () => {
           {features.map((feature, idx) => (
             <div
               key={idx}
-              className="relative w-[97%] mx-auto flex items-center justify-center"
+              className="relative w-[97%] mx-auto flex items-center justify-center cursor-pointer"
               style={{ minHeight: "170px" }}
+              onMouseEnter={() => handleFeatureHover(feature.title)}
+              onClick={() => handleFeatureClick(feature.title)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  handleFeatureClick(feature.title);
+                }
+              }}
+              aria-label={`Feature: ${feature.title}`}
             >
               <div className="relative w-full h-[160px] sm:h-[170px] md:h-[180px] lg:h-[190px] flex flex-col justify-start px-6 sm:px-10 pt-8 bg-transparent group outline-none">
                 <svg
@@ -63,7 +101,7 @@ const Waitlist = () => {
                   height="100%"
                   viewBox="0 0 500 150"
                   className="absolute left-0 top-0 w-full h-full z-10"
-                   preserveAspectRatio="none"
+                  preserveAspectRatio="none"
                   style={{ pointerEvents: "none" }}
                 >
                   <polygon

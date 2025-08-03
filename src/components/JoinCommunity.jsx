@@ -4,6 +4,15 @@ import bgImage from "../assets/BgImage.png";
 import preRegisterBtn from "../assets/pre-register-btn2.png";
 
 const JoinCommunity = ({ openPreRegister }) => {
+  // Local click handler to send Meta Pixel event before calling the prop handler
+  const handlePreRegisterClick = () => {
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "JoinCommunityPreRegisterClick");
+      console.log("✅ Meta Pixel: JoinCommunityPreRegisterClick event sent");
+    }
+    openPreRegister();
+  };
+
   return (
     <section
       className="relative text-white py-24 px-6 md:px-12 bg-cover bg-center bg-no-repeat"
@@ -43,7 +52,7 @@ const JoinCommunity = ({ openPreRegister }) => {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
             viewport={{ once: true }}
-            onClick={openPreRegister}
+            onClick={handlePreRegisterClick}
           />
         </div>
       </div>

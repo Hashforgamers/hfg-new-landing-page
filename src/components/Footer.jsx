@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaTwitch, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import logo from "../assets/hash-logo.png";
@@ -8,11 +8,62 @@ const Footer = ({ onAboutClick, onTermsClick, onPrivacyClick }) => {
   const [isContactOpen, setIsContactOpen] = useState(false); // Modal state
 
   const socialLinks = [
-    { icon: <FaTwitch />, name: "Twitch", href: "#" }, // Add your link here
+    { icon: <FaTwitch />, name: "Twitch", href: "#" }, // Update href as needed
     { icon: <FaInstagram />, name: "Instagram", href: "https://www.instagram.com/hashforgamers/" },
-    { icon: <FaTwitter />, name: "Twitter", href: "#" }, // Add your link here
+    { icon: <FaTwitter />, name: "Twitter", href: "#" }, // Update href as needed
     { icon: <FaYoutube />, name: "YouTube", href: "https://www.youtube.com/@hashforgamers2519" },
   ];
+
+  // Wrap handlers to add Pixel event tracking
+
+  const handleAboutClick = () => {
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "FooterAboutClick");
+      console.log("✅ Meta Pixel: FooterAboutClick event sent");
+    }
+    if (onAboutClick) onAboutClick();
+  };
+
+  const handlePrivacyClick = () => {
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "FooterPrivacyPolicyClick");
+      console.log("✅ Meta Pixel: FooterPrivacyPolicyClick event sent");
+    }
+    if (onPrivacyClick) onPrivacyClick();
+  };
+
+  const handleTermsClick = () => {
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "FooterTermsClick");
+      console.log("✅ Meta Pixel: FooterTermsClick event sent");
+    }
+    if (onTermsClick) onTermsClick();
+  };
+
+  const handleContactOpen = () => {
+    setIsContactOpen(true);
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "FooterContactOpen");
+      console.log("✅ Meta Pixel: FooterContactOpen event sent");
+    }
+  };
+
+  // Track modal close event for Contact Us modal
+  const handleContactClose = () => {
+    setIsContactOpen(false);
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "FooterContactClose");
+      console.log("✅ Meta Pixel: FooterContactClose event sent");
+    }
+  };
+
+  // Track social link clicks
+  const handleSocialClick = (name) => {
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", "FooterSocialClick", { platform: name });
+      console.log(`✅ Meta Pixel: FooterSocialClick event sent for ${name}`);
+    }
+  };
 
   return (
     <>
@@ -30,9 +81,7 @@ const Footer = ({ onAboutClick, onTermsClick, onPrivacyClick }) => {
             <p className="text-sm max-w-sm">
               Empowering gaming cafes with seamless booking, smart device management, and performance insights — all in one powerful dashboard.
             </p>
-            <p className="text-xs mt-6 text-gray-500">
-              © 2025 HashForGamers. All rights reserved.
-            </p>
+            <p className="text-xs mt-6 text-gray-500">© 2025 HashForGamers. All rights reserved.</p>
           </motion.div>
 
           {/* Right Box */}
@@ -45,15 +94,18 @@ const Footer = ({ onAboutClick, onTermsClick, onPrivacyClick }) => {
           >
             {/* Links */}
             <div className="flex flex-col gap-3 text-sm">
-              <button onClick={onAboutClick} className="text-left hover:text-white">About</button>
-              <button
-                onClick={() => setIsContactOpen(true)}
-                className="text-left hover:text-white"
-              >
+              <button onClick={handleAboutClick} className="text-left hover:text-white">
+                About
+              </button>
+              <button onClick={handleContactOpen} className="text-left hover:text-white">
                 Contact Us
               </button>
-              <button onClick={onPrivacyClick} className="text-left hover:text-white">Privacy Policy</button>
-              <button onClick={onTermsClick} className="text-left hover:text-white">Terms & Conditions</button>
+              <button onClick={handlePrivacyClick} className="text-left hover:text-white">
+                Privacy Policy
+              </button>
+              <button onClick={handleTermsClick} className="text-left hover:text-white">
+                Terms & Conditions
+              </button>
             </div>
 
             {/* Divider */}
@@ -86,6 +138,7 @@ const Footer = ({ onAboutClick, onTermsClick, onPrivacyClick }) => {
                   transition={{ duration: 0.5 }}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => handleSocialClick(item.name)}
                 >
                   {item.icon} {item.name}
                 </motion.a>
@@ -99,7 +152,7 @@ const Footer = ({ onAboutClick, onTermsClick, onPrivacyClick }) => {
       </footer>
 
       {/* Contact Modal */}
-      <ContactUsModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
+      <ContactUsModal isOpen={isContactOpen} onClose={handleContactClose} />
     </>
   );
 };
