@@ -10,6 +10,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 // Helmet
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
+import {MetaPixel} from "./MetaPixel";
+
 // Components
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -37,6 +39,9 @@ function MainApp() {
 
   return (
     <div className="bg-black min-h-screen text-white">
+      {/* Inject Meta Pixel script */}
+      <MetaPixel />
+
       {/* Helmet SEO for Homepage */}
       <Helmet>
         <title>Hash For Gamers | India’s Top Gaming Cafe Platform</title>
