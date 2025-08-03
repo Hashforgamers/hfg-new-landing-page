@@ -40,25 +40,31 @@ function MainApp() {
   const location = useLocation();
 
   // Fire PageView event on route change (SPA)
+ // In MainApp component
+
   React.useEffect(() => {
     if (window.fbq) {
-      window.fbq("track", "PageView");
+      window.fbq("track", "PageView"); // standard event name
+      console.log("✅ Meta Pixel: PageView event sent");
     }
   }, [location]);
 
   const handleOpenPreRegister = () => {
     setShowPreRegisterModal(true);
     if (window.fbq) {
-      window.fbq("track", "PreRegisterUser");
+      window.fbq("trackCustom", "PreRegisterUser");
+      console.log("✅ Meta Pixel: PreRegisterUser event sent");
     }
   };
 
   const handleOpenListYourCafeModal = () => {
     setShowListYourCafeModal(true);
     if (window.fbq) {
-      window.fbq("track", "ListYourCafe");
+      window.fbq("trackCustom", "ListYourCafe");
+      console.log("✅ Meta Pixel: ListYourCafe event sent");
     }
   };
+
 
   return (
     <div className="bg-black min-h-screen text-white">
