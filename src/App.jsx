@@ -1,18 +1,15 @@
-// App.jsx
 import React, { useState } from "react";
 import "./App.css";
 
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
-// Helmet
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
 import MetaPixel from "./MetaPixel";
 
-// Components
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Waitlist from "./components/Waitlist";
@@ -32,17 +29,43 @@ import PrivacyPolicyModal from "./components/PrivacyPolicyModal";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 function MainApp() {
+  // Modal state
   const [showPreRegisterModal, setShowPreRegisterModal] = useState(false);
+  const [showListYourCafeModal, setShowListYourCafeModal] = useState(false);
   const [showAboutPopup, setShowAboutPopup] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
 
+  // React Router location, for page view tracking on route change
+  const location = useLocation();
+
+  // Fire PageView event on route change (SPA)
+  React.useEffect(() => {
+    if (window.fbq) {
+      window.fbq("track", "PageView");
+    }
+  }, [location]);
+
+  const handleOpenPreRegister = () => {
+    setShowPreRegisterModal(true);
+    if (window.fbq) {
+      window.fbq("track", "PreRegisterUser");
+    }
+  };
+
+  const handleOpenListYourCafeModal = () => {
+    setShowListYourCafeModal(true);
+    if (window.fbq) {
+      window.fbq("track", "ListYourCafe");
+    }
+  };
+
   return (
     <div className="bg-black min-h-screen text-white">
-      {/* Inject Meta Pixel script */}
+      {/* Add Meta Pixel script */}
       <MetaPixel />
 
-      {/* Helmet SEO for Homepage */}
+      {/* Helmet SEO */}
       <Helmet>
         <title>Hash For Gamers | India’s Top Gaming Cafe Platform</title>
         <meta
@@ -59,20 +82,21 @@ function MainApp() {
         <meta property="og:type" content="website" />
       </Helmet>
 
-      <Navbar onPreRegisterClick={() => setShowPreRegisterModal(true)} />
+      <Navbar onPreRegisterClick={handleOpenPreRegister} />
 
-      <Hero openPreRegister={() => setShowPreRegisterModal(true)} />
+      <Hero openPreRegister={handleOpenPreRegister} />
       <Waitlist />
       <Features />
       <WhatIsHash />
       <HowItWorks />
       <CafePricing />
-      <JoinCommunity openPreRegister={() => setShowPreRegisterModal(true)} />
+      <JoinCommunity openPreRegister={handleOpenPreRegister} />
 
       <Footer
         onAboutClick={() => setShowAboutPopup(true)}
         onTermsClick={() => setShowTermsModal(true)}
         onPrivacyClick={() => setShowPrivacyModal(true)}
+        onListYourCafeClick={handleOpenListYourCafeModal}
       />
 
       <PreRegisterModal
@@ -80,17 +104,14 @@ function MainApp() {
         onClose={() => setShowPreRegisterModal(false)}
       />
 
-      <ListYourCafeModal isOpen={false} onClose={() => {}} />
-
-      <AboutPopup
-        isOpen={showAboutPopup}
-        onClose={() => setShowAboutPopup(false)}
+      <ListYourCafeModal
+        isOpen={showListYourCafeModal}
+        onClose={() => setShowListYourCafeModal(false)}
       />
 
-      <TermsModal
-        isOpen={showTermsModal}
-        onClose={() => setShowTermsModal(false)}
-      />
+      <AboutPopup isOpen={showAboutPopup} onClose={() => setShowAboutPopup(false)} />
+
+      <TermsModal isOpen={showTermsModal} onClose={() => setShowTermsModal(false)} />
 
       <PrivacyPolicyModal
         isOpen={showPrivacyModal}
