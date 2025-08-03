@@ -1,4 +1,5 @@
 import React from "react";
+import { Gamepad2, Trophy, Users, Smartphone } from "lucide-react";
 
 const WhatIsHash = () => {
   const features = [
