@@ -4,12 +4,24 @@ import bgImage from "../assets/BgImage.png";
 import preRegisterBtn from "../assets/pre-register-btn2.png";
 
 const JoinCommunity = ({ openPreRegister }) => {
-  // Local click handler to send Meta Pixel event before calling the prop handler
+  // Combined handler for Meta Pixel and Google Analytics
   const handlePreRegisterClick = () => {
+    // Meta Pixel tracking
     if (typeof window !== "undefined" && window.fbq) {
       window.fbq("trackCustom", "JoinCommunityPreRegisterClick");
       console.log("✅ Meta Pixel: JoinCommunityPreRegisterClick event sent");
     }
+
+    // Google Analytics tracking
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "join_community_preregister_click", {
+        event_category: "engagement",
+        event_label: "Join Community Section",
+      });
+      console.log("✅ Google Analytics: join_community_preregister_click event sent");
+    }
+
+    // Open modal
     openPreRegister();
   };
 

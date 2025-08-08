@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
 import { Analytics } from "@vercel/analytics/react";
@@ -7,6 +7,7 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import ReactGA from "react-ga4"; // ✅ Google Analytics v4
 
 import MetaPixel from "./MetaPixel";
 
@@ -28,52 +29,61 @@ import PrivacyPolicyModal from "./components/PrivacyPolicyModal";
 
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 
+const TRACKING_ID = "G-B1QNYHZ26Z"; // ✅  GA4 tracking ID
+
 function MainApp() {
-  // Modal state
   const [showPreRegisterModal, setShowPreRegisterModal] = useState(false);
   const [showListYourCafeModal, setShowListYourCafeModal] = useState(false);
   const [showAboutPopup, setShowAboutPopup] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
 
-  // React Router location, for page view tracking on route change
   const location = useLocation();
 
-  // Fire PageView event on route change (SPA)
- // In MainApp component
+  // ✅ Initialize Google Analytics once
+  useEffect(() => {
+    ReactGA.initialize(TRACKING_ID);
+  }, []);
 
-  React.useEffect(() => {
+  // ✅ Track Page View on route change
+  useEffect(() => {
+    ReactGA.send({ hitType: "pageview", page: location.pathname });
+    console.log("✅ GA4 PageView:", location.pathname);
+
     if (window.fbq) {
-      window.fbq("track", "PageView"); // standard event name
+      window.fbq("track", "PageView");
       console.log("✅ Meta Pixel: PageView event sent");
     }
   }, [location]);
 
   const handleOpenPreRegister = () => {
-    console.log("handleOpenPreRegister called");
     setShowPreRegisterModal(true);
     if (window.fbq) {
       window.fbq("trackCustom", "PreRegisterUser");
       console.log("✅ Meta Pixel: PreRegisterUser event sent");
     }
+    ReactGA.event("pre_register", {
+      category: "User",
+      label: "Pre Register Modal Opened",
+    });
   };
 
   const handleOpenListYourCafeModal = () => {
-    console.log("handleOpenListYourCafeModal called");
     setShowListYourCafeModal(true);
     if (window.fbq) {
       window.fbq("trackCustom", "ListYourCafe");
       console.log("✅ Meta Pixel: ListYourCafe event sent");
     }
+    ReactGA.event("list_your_cafe", {
+      category: "User",
+      label: "List Your Cafe Modal Opened",
+    });
   };
-
 
   return (
     <div className="bg-black min-h-screen text-white">
-      {/* Add Meta Pixel script */}
       <MetaPixel />
 
-      {/* Helmet SEO */}
       <Helmet>
         <title>Hash For Gamers | India’s Top Gaming Cafe Platform</title>
         <meta
@@ -118,15 +128,9 @@ function MainApp() {
       />
 
       <AboutPopup isOpen={showAboutPopup} onClose={() => setShowAboutPopup(false)} />
-
       <TermsModal isOpen={showTermsModal} onClose={() => setShowTermsModal(false)} />
+      <PrivacyPolicyModal isOpen={showPrivacyModal} onClose={() => setShowPrivacyModal(false)} />
 
-      <PrivacyPolicyModal
-        isOpen={showPrivacyModal}
-        onClose={() => setShowPrivacyModal(false)}
-      />
-
-      {/* Vercel Tracking */}
       <Analytics />
       <SpeedInsights />
     </div>

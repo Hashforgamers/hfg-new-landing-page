@@ -1,75 +1,61 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaTwitch, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import logo from "../assets/hash-logo.png";
 import ContactUsModal from "./ContactUsModal"; // Import the modal component
 
 const Footer = ({ onAboutClick, onTermsClick, onPrivacyClick }) => {
-  const [isContactOpen, setIsContactOpen] = useState(false); // Modal state
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
   const socialLinks = [
-    { icon: <FaTwitch />, name: "Twitch", href: "#" }, // Update href as needed
+    { icon: <FaTwitch />, name: "Twitch", href: "#" },
     { icon: <FaInstagram />, name: "Instagram", href: "https://www.instagram.com/hashforgamers/" },
-    { icon: <FaTwitter />, name: "Twitter", href: "#" }, // Update href as needed
+    { icon: <FaTwitter />, name: "Twitter", href: "#" },
     { icon: <FaYoutube />, name: "YouTube", href: "https://www.youtube.com/@hashforgamers2519" },
   ];
 
-  // Wrap handlers to add Pixel event tracking
+  const sendMetaPixelEvent = (eventName, payload = {}) => {
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("trackCustom", eventName, payload);
+      console.log(`✅ Meta Pixel: ${eventName} event sent`, payload);
+    } else {
+      console.warn("❌ fbq is undefined");
+    }
+  };
 
   const handleAboutClick = () => {
-    if (typeof window !== "undefined" && window.fbq) {
-      window.fbq("trackCustom", "FooterAboutClick");
-      console.log("✅ Meta Pixel: FooterAboutClick event sent");
-    }
+    sendMetaPixelEvent("FooterAboutClick");
     if (onAboutClick) onAboutClick();
   };
 
   const handlePrivacyClick = () => {
-    if (typeof window !== "undefined" && window.fbq) {
-      window.fbq("trackCustom", "FooterPrivacyPolicyClick");
-      console.log("✅ Meta Pixel: FooterPrivacyPolicyClick event sent");
-    }
+    sendMetaPixelEvent("FooterPrivacyPolicyClick");
     if (onPrivacyClick) onPrivacyClick();
   };
 
   const handleTermsClick = () => {
-    if (typeof window !== "undefined" && window.fbq) {
-      window.fbq("trackCustom", "FooterTermsClick");
-      console.log("✅ Meta Pixel: FooterTermsClick event sent");
-    }
+    sendMetaPixelEvent("FooterTermsClick");
     if (onTermsClick) onTermsClick();
   };
 
   const handleContactOpen = () => {
     setIsContactOpen(true);
-    if (typeof window !== "undefined" && window.fbq) {
-      window.fbq("trackCustom", "FooterContactOpen");
-      console.log("✅ Meta Pixel: FooterContactOpen event sent");
-    }
+    sendMetaPixelEvent("FooterContactOpen");
   };
 
-  // Track modal close event for Contact Us modal
   const handleContactClose = () => {
     setIsContactOpen(false);
-    if (typeof window !== "undefined" && window.fbq) {
-      window.fbq("trackCustom", "FooterContactClose");
-      console.log("✅ Meta Pixel: FooterContactClose event sent");
-    }
+    sendMetaPixelEvent("FooterContactClose");
   };
 
-  // Track social link clicks
   const handleSocialClick = (name) => {
-    if (typeof window !== "undefined" && window.fbq) {
-      window.fbq("trackCustom", "FooterSocialClick", { platform: name });
-      console.log(`✅ Meta Pixel: FooterSocialClick event sent for ${name}`);
-    }
+    sendMetaPixelEvent("FooterSocialClick", { platform: name });
   };
 
   return (
     <>
       <footer className="bg-[#000000] text-gray-300 py-12 px-6 md:px-12">
         <div className="max-w-screen-2xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
-          {/* Left: Logo & Info */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -84,7 +70,6 @@ const Footer = ({ onAboutClick, onTermsClick, onPrivacyClick }) => {
             <p className="text-xs mt-6 text-gray-500">© 2025 HashForGamers. All rights reserved.</p>
           </motion.div>
 
-          {/* Right Box */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -92,7 +77,6 @@ const Footer = ({ onAboutClick, onTermsClick, onPrivacyClick }) => {
             viewport={{ once: true }}
             className="relative bg-[#101010] px-10 py-8 flex flex-col sm:flex-row gap-10 md:gap-20 rounded-tl-none rounded-bl-none rounded-tr-2xl rounded-br-[60px] border border-[#1f1f1f]"
           >
-            {/* Links */}
             <div className="flex flex-col gap-3 text-sm">
               <button onClick={handleAboutClick} className="text-left hover:text-white">
                 About
@@ -108,10 +92,8 @@ const Footer = ({ onAboutClick, onTermsClick, onPrivacyClick }) => {
               </button>
             </div>
 
-            {/* Divider */}
             <div className="hidden sm:block w-px bg-gray-600/40" />
 
-            {/* Social Icons */}
             <motion.div
               className="flex flex-col gap-4 text-sm"
               initial="hidden"
@@ -145,13 +127,11 @@ const Footer = ({ onAboutClick, onTermsClick, onPrivacyClick }) => {
               ))}
             </motion.div>
 
-            {/* Glow Blob */}
             <div className="absolute bottom-0 right-0 w-24 h-24 bg-lime-400 opacity-30 blur-2xl rounded-full pointer-events-none" />
           </motion.div>
         </div>
       </footer>
 
-      {/* Contact Modal */}
       <ContactUsModal isOpen={isContactOpen} onClose={handleContactClose} />
     </>
   );
