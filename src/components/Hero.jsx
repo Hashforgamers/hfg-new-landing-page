@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import heroBg from "../assets/hero-bg.png";
 import viewLocationsBtn from "../assets/view-locations-btn.png";
@@ -10,37 +10,43 @@ const Hero = () => {
   const [locationModalOpen, setLocationModalOpen] = useState(false);
   const [preRegisterOpen, setPreRegisterOpen] = useState(false);
 
-  // Handler to open PreRegister modal and send Pixel events
-  const openPreRegisterModal = () => {
-    setPreRegisterOpen(true);
+  // ✅ Send events to Google Analytics and Meta Pixel
+  const sendEvent = (eventName) => {
+    // Google Analytics (gtag)
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", eventName, {
+        event_category: "Hero Section",
+        event_label: eventName,
+      });
+      console.log(`✅ GA: ${eventName} event sent`);
+    }
+
+    // Meta Pixel (fbq)
     if (typeof window !== "undefined" && window.fbq) {
-      window.fbq("trackCustom", "PreRegisterClick");
-      console.log("✅ Meta Pixel: PreRegisterClick event sent");
+      window.fbq("trackCustom", eventName);
+      console.log(`✅ Meta Pixel: ${eventName} event sent`);
     }
   };
 
-  // Optional: Detect modal open event, in case you want to fire separately on modal open
-  React.useEffect(() => {
-    if (preRegisterOpen && typeof window !== "undefined" && window.fbq) {
-      window.fbq("trackCustom", "PreRegisterModalOpen");
-      console.log("✅ Meta Pixel: PreRegisterModalOpen event sent");
+  const openPreRegisterModal = () => {
+    setPreRegisterOpen(true);
+    sendEvent("PreRegisterClick");
+  };
+
+  useEffect(() => {
+    if (preRegisterOpen) {
+      sendEvent("PreRegisterModalOpen");
     }
   }, [preRegisterOpen]);
 
-  // Handler to open View Locations modal and send Pixel events
   const openViewLocationsModal = () => {
     setLocationModalOpen(true);
-    if (typeof window !== "undefined" && window.fbq) {
-      window.fbq("trackCustom", "ViewLocationsClick");
-      console.log("✅ Meta Pixel: ViewLocationsClick event sent");
-    }
+    sendEvent("ViewLocationsClick");
   };
 
-  // Optional: Detect ViewLocations modal open event on state change
-  React.useEffect(() => {
-    if (locationModalOpen && typeof window !== "undefined" && window.fbq) {
-      window.fbq("trackCustom", "ViewLocationsModalOpen");
-      console.log("✅ Meta Pixel: ViewLocationsModalOpen event sent");
+  useEffect(() => {
+    if (locationModalOpen) {
+      sendEvent("ViewLocationsModalOpen");
     }
   }, [locationModalOpen]);
 
@@ -66,7 +72,6 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
           >
-            {/* Live Soon Badge */}
             <motion.div
               className="inline-flex items-center gap-1 px-2 py-[1px] rounded-full border border-red-500 text-red-500 text-[10px] font-medium w-max mx-auto md:ml-4 mb-3 -mt-4"
               initial={{ opacity: 0, y: 20 }}
@@ -89,7 +94,6 @@ const Hero = () => {
               Live Soon
             </motion.div>
 
-            {/* Headline */}
             <motion.h1
               className="font-noodle ml-2 sm:ml-4 text-5xl sm:text-6xl md:text-7xl lg:text-8xl uppercase tracking-tighter leading-tight mb-4"
               initial={{ opacity: 0, y: 30 }}
@@ -102,7 +106,6 @@ const Hero = () => {
               <span className="text-green-600">Gamers</span>
             </motion.h1>
 
-            {/* Subtitle */}
             <motion.p
               className="text-gray-400 mb-6 leading-relaxed text-base sm:text-lg ml-2 sm:ml-4"
               initial={{ opacity: 0, y: 20 }}
@@ -113,7 +116,6 @@ const Hero = () => {
               where real gamers play.
             </motion.p>
 
-            {/* Buttons */}
             <motion.div
               className="flex flex-col sm:flex-row items-center gap-4 mb-10 justify-center md:justify-start ml-2 sm:ml-4"
               initial={{ opacity: 0, y: 20 }}
@@ -134,7 +136,6 @@ const Hero = () => {
               />
             </motion.div>
 
-            {/* Stats */}
             <motion.div
               className="flex flex-row justify-center sm:justify-start gap-4 overflow-x-auto no-scrollbar text-green-400 text-center sm:text-left ml-2 sm:ml-4"
               initial={{ opacity: 0, y: 20 }}

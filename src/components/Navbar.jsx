@@ -14,7 +14,7 @@ const Navbar = () => {
   const mobileMenuRef = useRef(null);
   const hamburgerRef = useRef(null);
 
-  // Close mobile menu if clicking outside of it or hamburger button
+  // Close mobile menu if clicking outside
   useEffect(() => {
     if (!mobileOpen) return;
 
@@ -32,18 +32,31 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClick);
   }, [mobileOpen]);
 
-  // Prevent background scroll when mobile menu is open
+  // Prevent background scroll
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "unset";
     return () => (document.body.style.overflow = "unset");
   }, [mobileOpen]);
 
-  // Handler to open "List Your Cafe" modal and send Meta Pixel event
+  // 🔥 List Your Cafe click handler with GA + Meta Pixel
   const openListYourCafeModal = () => {
     setShowModal(true);
+
+    // ✅ Meta Pixel
     if (typeof window !== "undefined" && window.fbq) {
       window.fbq("trackCustom", "ListYourCafe");
       console.log("✅ Meta Pixel: ListYourCafe event fired");
+    }
+
+    // ✅ Google Analytics
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "ListYourCafe", {
+        event_category: "engagement",
+        event_label: "Navbar CTA",
+      });
+      console.log("✅ GA: ListYourCafe event fired");
+    } else {
+      console.warn("❌ gtag is not defined");
     }
   };
 
@@ -57,7 +70,7 @@ const Navbar = () => {
           WebkitBackdropFilter: "blur(10px)",
         }}
       >
-        {/* Logo scroll to #hero */}
+        {/* Logo click scroll to hero */}
         <div
           className="flex items-center justify-start h-full cursor-pointer"
           onClick={() => {
@@ -94,7 +107,8 @@ const Navbar = () => {
             onClick={openListYourCafeModal}
             className="bg-[#2ea836] text-white font-shoulders font-semibold text-xs sm:text-sm px-4 sm:px-5 py-[6px] sm:py-2 flex items-center justify-center hover:bg-[#24912b] transition-colors duration-200"
             style={{
-              clipPath: "polygon(10% 0, 0% 50%, 0 100%, 90% 100%, 100% 50%, 100% 0)",
+              clipPath:
+                "polygon(10% 0, 0% 50%, 0 100%, 90% 100%, 100% 50%, 100% 0)",
             }}
           >
             List Your Cafe
@@ -170,7 +184,10 @@ const Navbar = () => {
       </nav>
 
       {/* List Your Cafe Modal */}
-      <ListYourCafeModal isOpen={showModal} onClose={() => setShowModal(false)} />
+      <ListYourCafeModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+      />
     </>
   );
 };

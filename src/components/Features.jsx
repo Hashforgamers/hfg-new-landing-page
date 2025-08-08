@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import featureBg from "../assets/BG Frame.png";
 import bookingStatusImage from "../assets/booking-status-preview.png";
@@ -8,7 +8,9 @@ import dashboardPreview from "../assets/dashboard-preview.jpg";
 
 const Features = () => {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [selectedFeature, setSelectedFeature] = useState(null); // Track selected feature title
+  const [selectedFeature, setSelectedFeature] = useState(null);
+  const hasViewedSection = useRef(false);
+  const sectionRef = useRef(null);
 
   const featuresData = [
     {
@@ -33,54 +35,65 @@ const Features = () => {
     },
   ];
 
-  // Fire Pixel event when Features section is viewed
-  const handleSectionView = () => {
-    if (typeof window !== "undefined" && window.fbq) {
-      window.fbq("trackCustom", "FeaturesSectionView");
-      console.log("✅ Meta Pixel: FeaturesSectionView event sent");
-    }
-  };
+  // Fire Pixel event when section becomes visible (once only)
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasViewedSection.current) {
+          hasViewedSection.current = true;
+          if (window.fbq) {
+            window.fbq("trackCustom", "FeaturesSectionView");
+            console.log("✅ Meta Pixel: FeaturesSectionView event sent");
+          }
+        }
+      },
+      { threshold: 0.3 }
+    );
 
-  // Handle feature button click (sets selected image and fires event)
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
   const handleFeatureClick = (feature) => {
-    if (feature.title === "DASHBOARD") {
-      setSelectedImage(null);
-      setSelectedFeature("DASHBOARD");
-    } else {
-      setSelectedImage(feature.image);
-      setSelectedFeature(feature.title);
-    }
+    setSelectedImage(feature.title === "DASHBOARD" ? null : feature.image);
+    setSelectedFeature(feature.title);
 
-    if (typeof window !== "undefined" && window.fbq) {
+    if (window.fbq) {
       window.fbq("trackCustom", "FeatureButtonClick", {
         featureTitle: feature.title,
       });
-      console.log(`✅ Meta Pixel: FeatureButtonClick event sent for ${feature.title}`);
+      console.log(`✅ Meta Pixel: FeatureButtonClick - ${feature.title}`);
+    }
+
+    if (feature.title !== "DASHBOARD") {
+      handlePreviewOpen(feature.title);
     }
   };
 
-  // Fire event on opening feature preview overlay (same as button click here)
-  const handlePreviewOpen = () => {
-    if (selectedFeature && selectedFeature !== "DASHBOARD") {
-      if (typeof window !== "undefined" && window.fbq) {
-        window.fbq("trackCustom", "FeaturePreviewOpen", {
-          featureTitle: selectedFeature,
-        });
-        console.log(`✅ Meta Pixel: FeaturePreviewOpen event sent for ${selectedFeature}`);
-      }
+  const handlePreviewOpen = (featureTitle) => {
+    if (window.fbq) {
+      window.fbq("trackCustom", "FeaturePreviewOpen", {
+        featureTitle,
+      });
+      console.log(`✅ Meta Pixel: FeaturePreviewOpen - ${featureTitle}`);
     }
   };
 
-  // Fire event on closing feature preview overlay
   const handlePreviewClose = () => {
-    if (selectedFeature && selectedFeature !== "DASHBOARD") {
-      if (typeof window !== "undefined" && window.fbq) {
-        window.fbq("trackCustom", "FeaturePreviewClose", {
-          featureTitle: selectedFeature,
-        });
-        console.log(`✅ Meta Pixel: FeaturePreviewClose event sent for ${selectedFeature}`);
-      }
+    if (selectedFeature && selectedFeature !== "DASHBOARD" && window.fbq) {
+      window.fbq("trackCustom", "FeaturePreviewClose", {
+        featureTitle: selectedFeature,
+      });
+      console.log(`✅ Meta Pixel: FeaturePreviewClose - ${selectedFeature}`);
     }
+
     setSelectedImage(null);
     setSelectedFeature(null);
   };
@@ -88,8 +101,8 @@ const Features = () => {
   return (
     <section
       id="features"
+      ref={sectionRef}
       className="bg-black text-white py-20 px-4 sm:px-6 lg:px-8 font-noodle overflow-hidden"
-      onViewportEnter={handleSectionView}
     >
       <div className="max-w-7xl mx-auto">
         {/* Title */}
@@ -170,7 +183,6 @@ const Features = () => {
                     <h3 className="block font-shoulders uppercase tracking-wide text-sm sm:text-base md:text-lg lg:text-3xl leading-tight mb-1 text-white text-left">
                       {feature.title}
                     </h3>
-
                     <span className="block font-inter text-xs sm:text-sm md:text-base lg:text-base text-gray-300 text-left">
                       {feature.subtitle}
                     </span>
@@ -180,7 +192,7 @@ const Features = () => {
             ))}
           </motion.div>
 
-          {/* Right: UI Preview */}
+          {/* Right: Preview Panel */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -189,23 +201,20 @@ const Features = () => {
             className="w-full lg:w-[55%] relative flex items-center justify-center"
           >
             <div className="relative w-full max-w-[900px] aspect-[4/3]">
-              {/* Background dots */}
               <img
                 src={featureBg}
                 alt="Dotted Background"
                 className="absolute right-2 sm:right-6 top-[55%] -translate-y-1/2 w-[180px] sm:w-[220px] md:w-[240px] lg:w-[250px] z-0 pointer-events-none"
               />
 
-              {/* Dashboard background - default */}
               {!selectedImage && (
                 <img
                   src={dashboardPreview}
                   alt="Dashboard UI"
-                  className="relative z-10 w-[90%] h-auto mx-auto object-contain mt-28 "
+                  className="relative z-10 w-[90%] h-auto mx-auto object-contain mt-28"
                 />
               )}
 
-              {/* Overlay preview */}
               {selectedImage && (
                 <motion.div
                   key={selectedImage}
@@ -215,7 +224,6 @@ const Features = () => {
                   transition={{ duration: 0.3 }}
                   className="absolute top-0 left-0 w-full h-full z-20 bg-black/60 flex items-center justify-center rounded-lg cursor-pointer"
                   onClick={handlePreviewClose}
-                  onAnimationStart={handlePreviewOpen}
                 >
                   <img
                     src={selectedImage}
