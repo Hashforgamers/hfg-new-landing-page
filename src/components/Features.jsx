@@ -35,16 +35,29 @@ const Features = () => {
     },
   ];
 
-  // Fire Pixel event when section becomes visible (once only)
+  // Helper to send GA event
+  const sendGAEvent = (eventName, params = {}) => {
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", eventName, params);
+      console.log(`📊 GA4: ${eventName}`, params);
+    }
+  };
+
+  // Fire Pixel + GA event when section becomes visible (once only)
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !hasViewedSection.current) {
           hasViewedSection.current = true;
+
+          // Meta Pixel
           if (window.fbq) {
             window.fbq("trackCustom", "FeaturesSectionView");
             console.log("✅ Meta Pixel: FeaturesSectionView event sent");
           }
+
+          // Google Analytics
+          sendGAEvent("features_section_view");
         }
       },
       { threshold: 0.3 }
@@ -65,6 +78,7 @@ const Features = () => {
     setSelectedImage(feature.title === "DASHBOARD" ? null : feature.image);
     setSelectedFeature(feature.title);
 
+    // Meta Pixel
     if (window.fbq) {
       window.fbq("trackCustom", "FeatureButtonClick", {
         featureTitle: feature.title,
@@ -72,26 +86,45 @@ const Features = () => {
       console.log(`✅ Meta Pixel: FeatureButtonClick - ${feature.title}`);
     }
 
+    // Google Analytics
+    sendGAEvent("feature_button_click", {
+      feature_title: feature.title,
+    });
+
     if (feature.title !== "DASHBOARD") {
       handlePreviewOpen(feature.title);
     }
   };
 
   const handlePreviewOpen = (featureTitle) => {
+    // Meta Pixel
     if (window.fbq) {
       window.fbq("trackCustom", "FeaturePreviewOpen", {
         featureTitle,
       });
       console.log(`✅ Meta Pixel: FeaturePreviewOpen - ${featureTitle}`);
     }
+
+    // Google Analytics
+    sendGAEvent("feature_preview_open", {
+      feature_title: featureTitle,
+    });
   };
 
   const handlePreviewClose = () => {
-    if (selectedFeature && selectedFeature !== "DASHBOARD" && window.fbq) {
-      window.fbq("trackCustom", "FeaturePreviewClose", {
-        featureTitle: selectedFeature,
+    if (selectedFeature && selectedFeature !== "DASHBOARD") {
+      // Meta Pixel
+      if (window.fbq) {
+        window.fbq("trackCustom", "FeaturePreviewClose", {
+          featureTitle: selectedFeature,
+        });
+        console.log(`✅ Meta Pixel: FeaturePreviewClose - ${selectedFeature}`);
+      }
+
+      // Google Analytics
+      sendGAEvent("feature_preview_close", {
+        feature_title: selectedFeature,
       });
-      console.log(`✅ Meta Pixel: FeaturePreviewClose - ${selectedFeature}`);
     }
 
     setSelectedImage(null);

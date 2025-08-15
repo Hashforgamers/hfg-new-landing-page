@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import heroBg from "../assets/hero-bg.png";
+
 import viewLocationsBtn from "../assets/view-locations-btn.png";
 import preRegisterBtn from "../assets/pre-register-btn.png";
+
 import ViewLocationModal from "./ViewLocationModal";
 import PreRegisterModal from "./PreRegisterModal";
 
@@ -10,9 +11,7 @@ const Hero = () => {
   const [locationModalOpen, setLocationModalOpen] = useState(false);
   const [preRegisterOpen, setPreRegisterOpen] = useState(false);
 
-  // ✅ Send events to Google Analytics and Meta Pixel
   const sendEvent = (eventName) => {
-    // Google Analytics (gtag)
     if (typeof window !== "undefined" && window.gtag) {
       window.gtag("event", eventName, {
         event_category: "Hero Section",
@@ -20,8 +19,6 @@ const Hero = () => {
       });
       console.log(`✅ GA: ${eventName} event sent`);
     }
-
-    // Meta Pixel (fbq)
     if (typeof window !== "undefined" && window.fbq) {
       window.fbq("trackCustom", eventName);
       console.log(`✅ Meta Pixel: ${eventName} event sent`);
@@ -34,9 +31,7 @@ const Hero = () => {
   };
 
   useEffect(() => {
-    if (preRegisterOpen) {
-      sendEvent("PreRegisterModalOpen");
-    }
+    if (preRegisterOpen) sendEvent("PreRegisterModalOpen");
   }, [preRegisterOpen]);
 
   const openViewLocationsModal = () => {
@@ -45,29 +40,37 @@ const Hero = () => {
   };
 
   useEffect(() => {
-    if (locationModalOpen) {
-      sendEvent("ViewLocationsModalOpen");
-    }
+    if (locationModalOpen) sendEvent("ViewLocationsModalOpen");
   }, [locationModalOpen]);
 
   return (
     <section
       id="hero"
       className="relative overflow-hidden text-white py-16 lg:py-24 font-noodle min-h-screen"
-      style={{
-        backgroundImage: `url(${heroBg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
     >
+      {/* Hero Background */}
+      <picture className="absolute inset-0 -z-10">
+        <source srcSet="/hero-bg.avif" type="image/avif" />
+        <source srcSet="/hero-bg.webp" type="image/webp" />
+        <img
+          src="/hero-bg.png"
+          alt="Hero Background"
+          fetchPriority="high"
+          loading="eager"
+          decoding="async"
+          className="w-full h-full object-cover"
+        />
+      </picture>
+
+      {/* Overlay */}
       <div className="absolute inset-0 bg-black/30 z-0 pointer-events-none" />
 
-      <div className="relative z-10 w-full max-w-screen-2xl mx-auto flex flex-col md:flex-row items-center justify-between px-6 md:px-12 gap-12">
-        {/* Left Content */}
-        <div className="px-6 sm:px-10 md:px-16 lg:px-24 py-10 sm:py-16">
+      {/* Content */}
+      <div className="relative z-10 w-full max-w-screen-2xl mx-auto flex flex-col md:flex-row items-stretch justify-between px-6 md:px-12 gap-12">
+        {/* Left */}
+        <div className="px-6 sm:px-10 md:px-16 lg:px-24 py-10 sm:py-16 flex-1">
           <motion.div
-            className="w-full max-w-xl -ml-1 sm:-ml-2 text-center md:text-left"
+            className="w-full max-w-xl -ml-1 sm:-ml-2 text-center md:text-left h-full flex flex-col justify-center"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
@@ -90,8 +93,7 @@ const Hero = () => {
                 delay: 0.2,
               }}
             >
-              <span className="text-[11px]">⭕</span>
-              Live Soon
+              <span className="text-[11px]">⭕</span> Live Soon
             </motion.div>
 
             <motion.h1
@@ -160,15 +162,17 @@ const Hero = () => {
 
         {/* Right-side Character Image */}
         <motion.div
-          className="w-full md:w-[480px] lg:w-[600px] px-4 md:px-0"
+          className="w-full md:w-[480px] lg:w-[600px] px-4 md:px-0 flex-1 flex items-center"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.7 }}
         >
           <img
-            src="/character.png"
+            src="/character.webp"
             alt="Gaming Character"
-            className="w-full h-auto max-w-[90%] md:max-w-full object-contain scale-105"
+            className="w-full h-full object-contain"
+            loading="lazy"
+            decoding="async"
           />
         </motion.div>
       </div>

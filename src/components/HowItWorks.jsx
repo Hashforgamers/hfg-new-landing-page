@@ -1,27 +1,37 @@
 import React from "react";
 import { motion } from "framer-motion";
-import paymentImg from "../assets/payment-ui.png";
+import frame from "../assets/frame.webp";
+import frame1 from "../assets/frame1.webp"; // ✅ no spaces
+import frame2 from "../assets/frame2.webp";
+import frame3 from "../assets/frame3.webp";
+
+
+
 
 const steps = [
   {
     title: "BOOK IN ADVANCE & PAY ONLINE",
     description:
       "Book your preferred gaming slot from anywhere, anytime, ensuring a seamless experience for gamers.",
+      image: frame1,
   },
   {
     title: "WALK-IN & PAY IN CASH",
     description:
       "Whether it’s an individual session, team game, or LAN session, pay the cafe owner directly and settle with your gang later.",
+      image: frame2,
   },
   {
     title: "SUBSCRIPTION MANAGEMENT",
     description:
       "Purchase, manage, and track your subscriptions, or passes with ease, making long-term gaming smoother.",
+      image: frame3,
   },
   {
     title: "EFFORTLESS CANCELLATIONS",
     description:
       "Cancel bookings directly on the platform without needing to contact the gaming cafe, simplifying last-minute decisions.",
+    image: frame,
   },
 ];
 
@@ -90,13 +100,17 @@ const HowItWorks = () => {
               </h3>
               <p className="text-gray-300 text-sm leading-normal">{step.description}</p>
             </div>
+             {/* Image */}
+           <motion.img
+  src={step.image}
+  alt={step.title}
+  className="w-full md:w-36 h-auto object-contain self-center cut-corner"
+  initial={{ opacity: 0, scale: 0.9 }}
+  whileInView={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 0.5, delay: 0.1 }}
+/>
 
-            {/* UI Image */}
-            <img
-              src={paymentImg}
-              alt="Payment UI"
-              className="w-full md:w-36 h-auto object-contain self-center"
-            />
+
           </motion.div>
         ))}
       </div>

@@ -123,3 +123,14 @@ h1, h2, h3, h4, h5, h6 {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.cut-corner {
+  clip-path: polygon(
+    0 0,               /* top-left */
+    100% 0,             /* top-right */
+    100% calc(100% - 40px), /* point above bottom-right cut */
+    calc(100% - 40px) 100%, /* point to left of bottom-right cut */
+    0 100%              /* bottom-left */
+  );
+}
+
