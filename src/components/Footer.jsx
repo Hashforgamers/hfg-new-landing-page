@@ -52,6 +52,16 @@ const Footer = ({ onAboutClick, onTermsClick, onPrivacyClick }) => {
     sendMetaPixelEvent("FooterSocialClick", { platform: name });
   };
 
+  const handleFAQClick = () => {
+    sendMetaPixelEvent("FooterFAQClick");
+    window.location.href = "/faq";
+  };
+
+  const handleSupportClick = () => {
+    sendMetaPixelEvent("FooterSupportClick");
+    window.location.href = "/support";
+  };
+
   return (
     <>
       <footer className="bg-[#000000] text-gray-300 py-12 px-6 md:px-12">
@@ -83,6 +93,12 @@ const Footer = ({ onAboutClick, onTermsClick, onPrivacyClick }) => {
               </button>
               <button onClick={handleContactOpen} className="text-left hover:text-white">
                 Contact Us
+              </button>
+              <button onClick={handleFAQClick} className="text-left hover:text-white">
+                FAQ
+              </button>
+              <button onClick={handleSupportClick} className="text-left hover:text-white">
+                Support
               </button>
               <button onClick={handlePrivacyClick} className="text-left hover:text-white">
                 Privacy Policy
