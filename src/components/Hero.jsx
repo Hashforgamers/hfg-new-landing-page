@@ -125,7 +125,7 @@ const Hero = () => {
               transition={{ delay: 0.5 }}
             >
               <img
-                src={preRegisterBtn}
+                src="https://res.cloudinary.com/dxjjigepf/image/upload/v1756065123/Primary_dczsxt.png"
                 alt="Download Now"
                 className="w-36 sm:w-44 md:w-48 h-14 cursor-pointer hover:opacity-90 transition duration-300"
                 onClick={openPreRegisterModal}
