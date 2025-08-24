@@ -93,7 +93,7 @@ const Hero = () => {
                 delay: 0.2,
               }}
             >
-              <span className="text-[11px]">⭕</span> Live Soon
+              <span className="text-[11px]">⭕</span> Live Now
             </motion.div>
 
             <motion.h1
