@@ -168,7 +168,7 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.7 }}
         >
           <img
-            src="/character.webp"
+            src="https://res.cloudinary.com/dxjjigepf/image/upload/v1756064604/Hero_Img_ftjneu.png"
             alt="Gaming Character"
             className="w-full h-full object-contain"
             loading="lazy"
