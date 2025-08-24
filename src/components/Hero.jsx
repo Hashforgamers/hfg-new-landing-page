@@ -126,7 +126,7 @@ const Hero = () => {
             >
               <img
                 src={preRegisterBtn}
-                alt="Pre Register Now"
+                alt="Download Now"
                 className="w-36 sm:w-44 md:w-48 h-14 cursor-pointer hover:opacity-90 transition duration-300"
                 onClick={openPreRegisterModal}
               />
@@ -145,12 +145,12 @@ const Hero = () => {
               transition={{ delay: 0.6 }}
             >
               <div className="w-[110px] shrink-0">
-                <p className="text-2xl">16+</p>
+                <p className="text-2xl">21+</p>
                 <p className="text-sm text-white leading-relaxed">Gaming Cafes</p>
               </div>
               <div className="w-[110px] shrink-0">
                 <p className="text-2xl">1000+</p>
-                <p className="text-sm text-white leading-relaxed">Pre-Registrations</p>
+                <p className="text-sm text-white leading-relaxed">Downloads</p>
               </div>
               <div className="w-[110px] shrink-0">
                 <p className="text-2xl">24x7</p>
