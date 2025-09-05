@@ -1,7 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import bgImage from "../assets/BgImage.png";
-import preRegisterBtn from "../assets/pre-register-btn2.png";
 
 const JoinCommunity = ({ openPreRegister }) => {
   // Combined handler for Meta Pixel and Google Analytics
@@ -56,16 +55,24 @@ const JoinCommunity = ({ openPreRegister }) => {
         </motion.p>
 
         <div className="flex justify-center mt-8">
-          <motion.img
-            src={preRegisterBtn}
-            alt="Pre Register Now"
-            className="w-44 sm:w-52 h-auto cursor-pointer hover:opacity-90 transition duration-300"
+          <motion.button
+            onClick={handlePreRegisterClick}
+            className="w-36 sm:w-44 md:w-48 h-10
+                       bg-[#096f00] text-white font-semibold text-lg 
+                       flex items-center justify-center
+                       cursor-pointer hover:opacity-90 
+                       transition duration-300"
+            style={{
+              clipPath:
+                "polygon(8% 0, 0% 40%, 0 100%, 92% 100%, 100% 60%, 100% 0)",
+            }}
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
             viewport={{ once: true }}
-            onClick={handlePreRegisterClick}
-          />
+          >
+            Download Now
+          </motion.button>
         </div>
       </div>
     </section>

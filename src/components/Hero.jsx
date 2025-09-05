@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 import viewLocationsBtn from "../assets/view-locations-btn.png";
-import preRegisterBtn from "../assets/pre-register-btn.png";
+
 
 import ViewLocationModal from "./ViewLocationModal";
 import PreRegisterModal from "./PreRegisterModal";
@@ -124,12 +124,21 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
             >
-              <img
-                src="https://res.cloudinary.com/dxjjigepf/image/upload/v1756065123/Primary_dczsxt.png"
-                alt="Download Now"
-                className="w-36 sm:w-44 md:w-48 h-14 cursor-pointer hover:opacity-90 transition duration-300"
-                onClick={openPreRegisterModal}
-              />
+
+            <button
+              onClick={openPreRegisterModal}
+              className="w-36 sm:w-44 md:w-48 h-10
+                         bg-[#096f00] text-white font-semibold text-lg 
+                         flex items-center justify-center
+                         cursor-pointer hover:opacity-90 
+                         transition duration-300"
+             style={{
+                clipPath: "polygon(8% 0, 0% 40%, 0 100%, 92% 100%, 100% 60%, 100% 0)"
+              }}
+            >
+              Download Now
+            </button>
+
               <img
                 src={viewLocationsBtn}
                 alt="View Locations"
