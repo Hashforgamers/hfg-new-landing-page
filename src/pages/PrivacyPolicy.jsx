@@ -115,6 +115,23 @@ const PrivacyPolicy = () => {
             We only act as a ticket booking platform. Gaming services are delivered by partnered cafés.
           </p>
         </div>
+        <div>
+          <h4 className="text-[#64BD55] font-semibold">App Store Privacy Requirements</h4>
+          <ul className="list-disc ml-5 space-y-2">
+            <li>
+              <span className="font-semibold text-white">Privacy Policy:</span> You must publish &amp; link a proper privacy policy (hosted on your site).
+            </li>
+            <li>
+              <span className="font-semibold text-white">App Privacy Details (App Store Connect):</span> Must be filled with correct data collection &amp; usage.
+            </li>
+            <li>
+              <span className="font-semibold text-white">ATT (App Tracking Transparency):</span> If you track users across apps/sites, you must request ATT permission.
+            </li>
+            <li>
+              <span className="font-semibold text-white">Account Deletion:</span> App must let users delete their account fully from inside the app (not just by emailing support).
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   );
