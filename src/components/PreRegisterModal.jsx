@@ -49,8 +49,9 @@ export default function PreRegisterModal({ isOpen, onClose }) {
               Download Our App
             </h2>
 
-            {/* Play Store Link */}
-            <div className="flex justify-center">
+            {/* Store Links */}
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+              {/* Google Play Link */}
               <a
                 href="https://play.google.com/store/apps/details?id=com.hfg.hash"
                 target="_blank"
@@ -66,6 +67,26 @@ export default function PreRegisterModal({ isOpen, onClose }) {
                 <img
                   src="/playstore-badge.png"
                   alt="Get it on Google Play"
+                  className="w-48 sm:w-56 hover:opacity-90 transition"
+                />
+              </a>
+
+              {/* App Store Link */}
+              <a
+                href="https://onelink.to/85rrgg"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block"
+                onClick={() => {
+                  if (typeof window !== "undefined" && window.fbq) {
+                    window.fbq("trackCustom", "PreRegisterAppStoreClick");
+                    console.log("✅ Meta Pixel: PreRegisterAppStoreClick event sent");
+                  }
+                }}
+              >
+                <img
+                  src="../../public/appstore-badge.png" // 👈 save your uploaded image as "public/appstore-badge.png"
+                  alt="Download on the App Store"
                   className="w-48 sm:w-56 hover:opacity-90 transition"
                 />
               </a>

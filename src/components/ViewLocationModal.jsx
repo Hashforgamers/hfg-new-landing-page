@@ -98,6 +98,140 @@ const locations = [
     longitude: 72.8702,
     features: ['Mira Bhayandar Spot', '14 Gaming Stations', 'Near Jain Hospital'],
   },
+  {
+    id: 10,
+    name: 'GenZ Gaming Lounge',
+    address:
+      '765, Pocket D, Dilshad Garden, Near Greenway Modern School, Delhi 110095, India',
+    latitude: 28.6863, // 👉 Approx coords for Dilshad Garden, Delhi
+    longitude: 77.3200,
+    features: ['Sound System', 'Washroom', 'Air Conditioner', '120 Capacity'],
+  },
+  {
+    id: 11,
+    name: "Gamer's Grub",
+    address:
+      '19 Block C, Bangur Avenue, Kolkata, West Bengal 700055, India',
+    latitude: 22.6167, // Approx coords for Bangur Avenue, Kolkata
+    longitude: 88.4000,
+    features: [
+      'PlayStation 4 & 5',
+      'VR Gaming',
+      'Racing Wheel Setup',
+      'High-End Gaming PCs',
+      'Food & Snacks from ₹60',
+    ],
+  },
+  {
+  "id": 12,
+  "name": "Gameverse",
+  "address": "Corporate Corner Shop No 7, Sundar Nagar, Malad West, Mumbai, Maharashtra 400064, India",
+  "latitude": 19.1860,
+  "longitude": 72.8480,
+  "features": [
+    "Valorant",
+    "CS 2.0",
+    "FIFA 25",
+    "WWE 2K25",
+    "Mortal Kombat",
+    "24/7 Access",
+    "Sound System",
+    "Air Conditioner"
+  ]
+},
+{
+  "id": 13,
+  "name": "Rex Gaming",
+  "address": "Near Station, Kalyan West, Maharashtra 421204, India",
+  "latitude": 19.2403,
+  "longitude": 73.1305,
+  "features": [
+    "Valorant",
+    "Washroom",
+    "Air Conditioner"
+  ]
+},
+{
+  "id": 14,
+  "name": "The FPS Crib",
+  "address": "B-13, Subhash Chownk, Laxmi Nagar, New Delhi 110092, India",
+  "latitude": 28.6271,
+  "longitude": 77.2773,
+  "features": [
+    "Valorant",
+    "Tekken 8",
+    "Fifa 24",
+    "24/7",
+    "Seating Area",
+    "Sound System",
+    "Washroom",
+    "Air Conditioner"
+  ]
+},
+{
+  "id": 15,
+  "name": "Gaming Zone 2.0",
+  "address": "H-69, Majnu ka Tilla Main Market, Near Vidhan Sabha Metro Station, Delhi 110054, India",
+  "latitude": 28.7022,
+  "longitude": 77.2275,
+  "features": [
+    "PS5",
+    "PS4",
+    "Car Wheel Setup",
+    "Tekken 8",
+    "GTA 5",
+    "Fifa",
+    "UFC",
+    "Mortal Kombat",
+    "NFS Heat",
+    "Parking",
+    "Seating Area",
+    "Sound System",
+    "Washroom",
+    "Air Conditioner"
+  ]
+},
+{
+  "id": 16,
+  "name": "EZ Gaming Cafe",
+  "address": "Shop No. 1, HEK Compound, Sher E Punjab, Radha Krishna Nagar, Aghadi Nagar, Andheri East, Mumbai, Maharashtra 400093, India",
+  "latitude": 19.1182,
+  "longitude": 72.8606,
+  "features": [
+    "FC 25",
+    "Valorant",
+    "CS",
+    "2K25",
+    "Call of Duty Black Ops",
+    "GTA 5",
+    "Parking",
+    "Seating Area",
+    "Washroom",
+    "Air Conditioner"
+  ]
+},
+{
+  "id": 17,
+  "name": "V1 Esports",
+  "address": "Shop 17, Kohinoor Bzone, Next to Vijay Sales, Chinchwad, Maharashtra 411019, India",
+  "latitude": 18.6756,
+  "longitude": 73.7827,
+  "features": [
+    "Valorant",
+    "CS2",
+    "Dota 2",
+    "GTA Online",
+    "PUBG",
+    "Forza Horizon 5",
+    "24/7",
+    "Parking",
+    "Seating Area",
+    "Sound System",
+    "Washroom",
+    "Air Conditioner",
+    "300Hz at only ₹70"
+  ]
+},
 ];
 
 // Component to change the map view center and zoom

@@ -53,7 +53,7 @@ const Hero = () => {
         <source srcSet="/hero-bg.avif" type="image/avif" />
         <source srcSet="/hero-bg.webp" type="image/webp" />
         <img
-          src="/hero-bg.png"
+          src="../../public/.png"
           alt="Hero Background"
           fetchPriority="high"
           loading="eager"
