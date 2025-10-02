@@ -3,9 +3,9 @@ import logo from "../assets/hash-logo.png";
 import ListYourCafeModal from "./ListYourCafeModal";
 
 const menuItems = [
-  { label: "Features", href: "#features" },
-  { label: "What Is Hash?", href: "#what-is-hash" },
-  { label: "How It Works?", href: "#how-it-works" },
+  { label: "Features", href: "/#features" },
+  { label: "What Is Hash?", href: "/#what-is-hash" },
+  { label: "How It Works?", href: "/#how-it-works" },
 ];
 
 const Navbar = () => {

@@ -28,6 +28,8 @@ import TermsModal from "./components/TermsModal";
 import PrivacyPolicyModal from "./components/PrivacyPolicyModal";
 
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Support from "./pages/Support";
+import FAQ from "./pages/FAQ";
 
 const TRACKING_ID = "G-B1QNYHZ26Z"; // ✅  GA4 tracking ID
 
@@ -144,6 +146,8 @@ function App() {
         <Routes>
           <Route path="/" element={<MainApp />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/support" element={<Support />} />
+          <Route path="/faq" element={<FAQ />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>
