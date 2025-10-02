@@ -6,32 +6,4 @@
     <loc>https://hashforgamers.co.in/</loc>
     <priority>1.0</priority>
   </url>
-  <url>
-    <loc>https://hashforgamers.co.in/privacy-policy</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://hashforgamers.co.in/terms</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://hashforgamers.co.in/list-your-cafe</loc>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://hashforgamers.co.in/view-locations</loc>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://hashforgamers.co.in/waitlist</loc>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://hashforgamers.co.in/contact-us</loc>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://hashforgamers.co.in/about-us</loc>
-    <priority>0.6</priority>
-  </url>
-</urlset>
+  

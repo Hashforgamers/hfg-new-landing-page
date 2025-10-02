@@ -53,7 +53,7 @@ const Hero = () => {
         <source srcSet="/hero-bg.avif" type="image/avif" />
         <source srcSet="/hero-bg.webp" type="image/webp" />
         <img
-          src="/hero-bg.png"
+          src="../../public/.png"
           alt="Hero Background"
           fetchPriority="high"
           loading="eager"
@@ -124,7 +124,6 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
             >
-
             <button
               onClick={openPreRegisterModal}
               className="w-36 sm:w-44 md:w-48 h-10
@@ -138,7 +137,6 @@ const Hero = () => {
             >
               Download Now
             </button>
-
               <img
                 src={viewLocationsBtn}
                 alt="View Locations"
