@@ -93,7 +93,7 @@ const Hero = () => {
                 delay: 0.2,
               }}
             >
-              <span className="text-[11px]">⭕</span> Live Soon
+              <span className="text-[11px]">⭕</span> Live Now
             </motion.div>
 
             <motion.h1
@@ -125,20 +125,18 @@ const Hero = () => {
               transition={{ delay: 0.5 }}
             >
             <button
-  onClick={openPreRegisterModal}
-  className="w-36 sm:w-44 md:w-48 h-10
-             bg-[#096f00] text-white font-semibold text-lg 
-             flex items-center justify-center
-             cursor-pointer hover:opacity-90 
-             transition duration-300"
- style={{
-    clipPath: "polygon(8% 0, 0% 40%, 0 100%, 92% 100%, 100% 60%, 100% 0)"
-  }}
->
-  Download Now
-</button>
-
-
+              onClick={openPreRegisterModal}
+              className="w-36 sm:w-44 md:w-48 h-10
+                         bg-[#096f00] text-white font-semibold text-lg 
+                         flex items-center justify-center
+                         cursor-pointer hover:opacity-90 
+                         transition duration-300"
+             style={{
+                clipPath: "polygon(8% 0, 0% 40%, 0 100%, 92% 100%, 100% 60%, 100% 0)"
+              }}
+            >
+              Download Now
+            </button>
               <img
                 src={viewLocationsBtn}
                 alt="View Locations"
@@ -154,12 +152,12 @@ const Hero = () => {
               transition={{ delay: 0.6 }}
             >
               <div className="w-[110px] shrink-0">
-                <p className="text-2xl">16+</p>
+                <p className="text-2xl">21+</p>
                 <p className="text-sm text-white leading-relaxed">Gaming Cafes</p>
               </div>
               <div className="w-[110px] shrink-0">
                 <p className="text-2xl">1000+</p>
-                <p className="text-sm text-white leading-relaxed">Pre-Registrations</p>
+                <p className="text-sm text-white leading-relaxed">Downloads</p>
               </div>
               <div className="w-[110px] shrink-0">
                 <p className="text-2xl">24x7</p>
@@ -177,7 +175,7 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.7 }}
         >
           <img
-            src="/character.webp"
+            src="https://res.cloudinary.com/dxjjigepf/image/upload/v1756064604/Hero_Img_ftjneu.png"
             alt="Gaming Character"
             className="w-full h-full object-contain"
             loading="lazy"
