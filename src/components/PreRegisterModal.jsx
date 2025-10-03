@@ -85,7 +85,7 @@ export default function PreRegisterModal({ isOpen, onClose }) {
                 }}
               >
                 <img
-                  src="../../public/appstore-badge.png" // 👈 save your uploaded image as "public/appstore-badge.png"
+                  src="/appstore-badge.png" // 👈 save your uploaded image as "public/appstore-badge.png"
                   alt="Download on the App Store"
                   className="w-48 sm:w-56 hover:opacity-90 transition"
                 />
