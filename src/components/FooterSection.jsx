@@ -38,7 +38,7 @@ const Footer = ({
         { label: 'Help Center', action: 'help' },
         { label: 'Contact Us', action: 'contact' },
         { label: 'Terms & Conditions', action: 'terms' }, // ✅ Fixed
-        { label: 'Privacy Policy', action: 'privacy' }
+        { label: "Privacy Policy", href: "/privacy-policy" },
       ]
     },
     {

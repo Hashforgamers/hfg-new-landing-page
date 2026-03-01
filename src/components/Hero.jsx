@@ -208,24 +208,24 @@ const HeroSection = () => {
   />
 
   {/* Vector Arrow */}
-  <div className="flex flex-col items-center gap-0.2 animate-bounce">
+  <div className="flex flex-col items-center gap-px animate-bounce">
   <Image
     src="/images/Vector 5.png"
     alt="Scroll Arrow 5"
-    width={22}
-    height={22}
+    width={20}
+    height={10}
   />
   <Image
     src="/images/Vector 4.png"
     alt="Scroll Arrow 4"
-    width={22}
-    height={22}
+    width={20}
+    height={10}
   />
   <Image
     src="/images/Vector 3.png"
     alt="Scroll Arrow 3"
-    width={22}
-    height={22}
+    width={20}
+    height={15}
   />
   </div>
 </div>
