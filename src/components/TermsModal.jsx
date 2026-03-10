@@ -34,6 +34,7 @@ export default function TermsModal({ isOpen, onClose }) {
           loop
           muted
           playsInline
+          preload="metadata"
           className="absolute inset-0 w-full h-full object-cover"
         >
           <source src="/videos/gaming-bg2.mp4" type="video/mp4" />

@@ -33,6 +33,7 @@ export default function AboutUsModal({ isOpen, onClose }) {
           loop
           muted
           playsInline
+          preload="metadata"
           className="absolute inset-0 w-full h-full object-cover rounded-2xl"
         >
           <source src="/videos/bg-video.mp4" type="video/mp4" />

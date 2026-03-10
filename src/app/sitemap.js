@@ -1,22 +1,35 @@
 import { SITE_URL } from "@/lib/site";
 
 const routes = [
-  "",
-  "/gaming-cafes",
-  "/tournaments",
-  "/shop",
-  "/rewards",
-  "/list-cafe",
-  "/privacy-policy",
+  {
+    url: "",
+    changeFrequency: "weekly",
+    priority: 1,
+  },
+  {
+    url: "/gaming-cafes",
+    changeFrequency: "weekly",
+    priority: 0.9,
+  },
+  {
+    url: "/list-cafe",
+    changeFrequency: "monthly",
+    priority: 0.8,
+  },
+  {
+    url: "/privacy-policy",
+    changeFrequency: "yearly",
+    priority: 0.3,
+  },
 ];
 
 export default function sitemap() {
   const lastModified = new Date();
 
   return routes.map((route) => ({
-    url: `${SITE_URL}${route}`,
+    url: `${SITE_URL}${route.url}`,
     lastModified,
-    changeFrequency: route === "" ? "weekly" : "monthly",
-    priority: route === "" ? 1 : 0.7,
+    changeFrequency: route.changeFrequency,
+    priority: route.priority,
   }));
 }

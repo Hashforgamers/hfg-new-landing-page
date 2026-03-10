@@ -1,7 +1,7 @@
 import { Orbitron } from 'next/font/google';
 import "./globals.css";
 import BackgroundMusic from '@/components/BackgroundMusic';
-import { SITE_DESCRIPTION, SITE_KEYWORDS, SITE_NAME, SITE_OG_IMAGE, SITE_TITLE_TEMPLATE, SITE_URL } from '@/lib/site';
+import { SITE_DESCRIPTION, SITE_EMAIL, SITE_KEYWORDS, SITE_NAME, SITE_OG_IMAGE, SITE_SOCIALS, SITE_TITLE_TEMPLATE, SITE_URL } from '@/lib/site';
 
 const orbitron = Orbitron({
   subsets: ['latin'],
@@ -12,13 +12,24 @@ const orbitron = Orbitron({
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   applicationName: SITE_NAME,
+  generator: "Next.js",
+  referrer: "origin-when-cross-origin",
   title: {
     default: SITE_NAME,
     template: SITE_TITLE_TEMPLATE,
   },
   description: SITE_DESCRIPTION,
   keywords: SITE_KEYWORDS,
+  authors: [{ name: SITE_NAME }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
   category: "gaming",
+  classification: "Gaming platform",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   alternates: {
     canonical: "/",
   },
@@ -43,6 +54,11 @@ export const metadata = {
     description: SITE_DESCRIPTION,
     images: [SITE_OG_IMAGE],
   },
+  appleWebApp: {
+    capable: true,
+    title: SITE_NAME,
+    statusBarStyle: "black-translucent",
+  },
   robots: {
     index: true,
     follow: true,
@@ -61,6 +77,15 @@ export const metadata = {
     ],
     apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
     shortcut: [SITE_OG_IMAGE],
+  },
+  manifest: "/manifest.webmanifest",
+  other: {
+    "apple-mobile-web-app-title": SITE_NAME,
+    "mobile-web-app-capable": "yes",
+    "theme-color": "#050505",
+    "color-scheme": "dark",
+    "contact:email": SITE_EMAIL,
+    "profile:same_as": SITE_SOCIALS.join(","),
   },
 };
 

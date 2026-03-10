@@ -114,6 +114,7 @@ const HeroSection = () => {
                 src='/images/hero-final.png' 
                 alt='Hero background'
                 fill
+                sizes="100vw"
                 className='object-cover opacity-45'
                 priority
               />
@@ -301,6 +302,7 @@ const HeroSection = () => {
               src='/images/characters.png?v=20260311-0203' 
               alt='Gaming characters'
               fill
+              sizes='(max-width: 768px) 420px, (max-width: 1200px) 500px, 800px'
               className='object-contain object-bottom opacity-100'
               style={{
                 maskImage: 'linear-gradient(90deg, rgba(0,0,0,0.01) 0%, rgba(0,0,0,0.18) 10%, rgba(0,0,0,0.56) 20%, rgba(0,0,0,0.9) 30%, rgba(0,0,0,1) 38%, rgba(0,0,0,1) 62%, rgba(0,0,0,0.9) 70%, rgba(0,0,0,0.56) 80%, rgba(0,0,0,0.18) 90%, rgba(0,0,0,0.01) 100%)',
@@ -321,6 +323,7 @@ const HeroSection = () => {
     alt='Hash For Gamers Logo'
     width={168}
     height={168}
+    sizes='168px'
     className='object-contain'
   />
 </motion.div>
@@ -338,6 +341,7 @@ const HeroSection = () => {
     alt='Scroll Down'
     width={90}
     height={20}
+    sizes='90px'
     className='object-contain'
   />
 
@@ -348,18 +352,21 @@ const HeroSection = () => {
     alt="Scroll Arrow 5"
     width={20}
     height={10}
+    sizes='20px'
   />
   <Image
     src="/images/Vector 4.png"
     alt="Scroll Arrow 4"
     width={20}
     height={10}
+    sizes='20px'
   />
   <Image
     src="/images/Vector 3.png"
     alt="Scroll Arrow 3"
     width={20}
     height={15}
+    sizes='20px'
   />
   </div>
 </motion.div>

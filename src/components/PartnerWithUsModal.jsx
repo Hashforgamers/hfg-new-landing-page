@@ -48,6 +48,8 @@ export default function PartnerWithUsModal({ isOpen, onClose }) {
           autoPlay
           loop
           muted
+          playsInline
+          preload="metadata"
           className="absolute inset-0 w-full h-full object-cover"
         >
           <source src="/cyber-bg.mp4" type="video/mp4" />

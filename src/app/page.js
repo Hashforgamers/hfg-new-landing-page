@@ -9,15 +9,18 @@ import ProblemsSection from "@/components/ProblemSection";
 import StorySection from "@/components/StorySection";
 import TrustSection from "@/components/TrustSection";
 import TryNow from "@/components/TryNow";
-import { SITE_DESCRIPTION, SITE_DOWNLOAD_URL, SITE_LOGO, SITE_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/site";
+import { SITE_DESCRIPTION, SITE_DOWNLOAD_URL, SITE_EMAIL, SITE_LOGO, SITE_NAME, SITE_OG_IMAGE, SITE_SOCIALS, SITE_URL, buildPageMetadata } from "@/lib/site";
 
-export const metadata = {
+export const metadata = buildPageMetadata({
   title: SITE_NAME,
   description: SITE_DESCRIPTION,
-  alternates: {
-    canonical: "/",
-  },
-};
+  path: "/",
+  keywords: [
+    "gaming booking app India",
+    "gaming cafe reservation app",
+    "premium gaming ecosystem",
+  ],
+});
 
 const storySections = [
   {
@@ -114,6 +117,16 @@ const storySections = [
 ];
 
 export default function Page() {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: SITE_NAME,
+    url: SITE_URL,
+    logo: `${SITE_URL}${SITE_LOGO}`,
+    email: SITE_EMAIL,
+    sameAs: SITE_SOCIALS,
+  };
+
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -124,6 +137,10 @@ export default function Page() {
       "@type": "Organization",
       name: SITE_NAME,
       logo: `${SITE_URL}${SITE_LOGO}`,
+    },
+    potentialAction: {
+      "@type": "ViewAction",
+      target: SITE_URL,
     },
   };
 
@@ -141,6 +158,44 @@ export default function Page() {
       name: SITE_NAME,
       logo: `${SITE_URL}${SITE_LOGO}`,
     },
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "INR",
+      url: SITE_DOWNLOAD_URL,
+      availability: "https://schema.org/InStock",
+    },
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "What is Hash For Gamers?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Hash For Gamers is a premium gaming platform that helps players discover gaming cafes, reserve setups faster, and access a stronger gaming lifestyle ecosystem in India.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Can I book gaming cafe slots through Hash?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. Hash is positioned to make gaming cafe discovery and booking cleaner, faster, and more premium for players and operators.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Is Hash For Gamers only for players?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "No. Hash also supports gaming cafe operators who want better demand quality, cleaner bookings, and a stronger premium brand presence.",
+        },
+      },
+    ],
   };
 
   return (
@@ -148,11 +203,19 @@ export default function Page() {
       <div className="min-h-screen w-screen">
         <script
           type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <script
+          type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
         {storySections.map(
           ({ id, chapter, title, subtitle, accent, align, cardPlacement, Component }, index) => (
