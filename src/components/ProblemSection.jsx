@@ -88,11 +88,22 @@ const ProblemsSection = () => {
 
   return (
     <div ref={ref} className='w-screen h-screen bg-black'>
-      <div className='flex flex-col lg:flex-row h-full items-center justify-center px-[5vw] py-[8vh] gap-8 lg:gap-12'>
+      <div className='relative flex h-full flex-col items-center justify-center gap-8 px-[5vw] py-[8vh] lg:flex-row lg:gap-12'>
+        <motion.div
+          className='absolute right-[5vw] top-[14vh] hidden rounded-[28px] border border-white/10 bg-black/40 px-5 py-4 text-white/80 backdrop-blur-md lg:block'
+          initial={{ opacity: 0, x: 80, rotate: 5 }}
+          animate={inView ? { opacity: 1, x: 0, rotate: 2 } : { opacity: 0, x: 80, rotate: 5 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+        >
+          <p className='text-[10px] uppercase tracking-[0.4em] text-violet-300'>Conflict Board</p>
+          <p className='mt-2 max-w-[220px] text-sm leading-6'>
+            Each pain point hits like a mission dossier before the Hash solution lands.
+          </p>
+        </motion.div>
         
         {/* Left Side - Boy at Computer Image */}
         <motion.div 
-          className='relative w-full max-w-[400px] lg:max-w-[500px] h-[500px] lg:h-[700px]'
+          className='relative h-[500px] w-full max-w-[400px] lg:h-[700px] lg:max-w-[500px]'
           variants={imageVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
@@ -143,18 +154,18 @@ const ProblemsSection = () => {
 
           {/* Bottom Box with Gradient Border */}
           <motion.div 
-            className='relative mt-8'
+            className='relative mt-8 overflow-hidden rounded-[28px] border border-white/10 bg-white/5 p-2 backdrop-blur-sm'
             variants={bottomImageVariants}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
           >
-            {/* Gradient Border Container */}
-            <div>
-              {/* Inner Content Box */}
-              <div className=''>
-                <Image src="/images/major-prblm.png" alt='prblm' width={560} height={560}/>
-              </div>
-            </div>
+            <motion.div
+              initial={{ x: 80, scale: 1.06 }}
+              animate={inView ? { x: 0, scale: 1 } : { x: 80, scale: 1.06 }}
+              transition={{ duration: 0.95, ease: 'easeOut', delay: 0.15 }}
+            >
+              <Image src="/images/major-prblm.png" alt='prblm' width={560} height={560} sizes='(max-width: 768px) 90vw, 560px' />
+            </motion.div>
           </motion.div>
 
         </div>
