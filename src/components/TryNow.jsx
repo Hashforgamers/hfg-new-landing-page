@@ -36,6 +36,7 @@ const HeroSection = () => {
           loop
           muted
           playsInline
+          preload="metadata"
           className='absolute top-0 left-0 w-full h-full object-cover -z-10'
         >
           <source src='/images/trynow.mp4' type='video/mp4' />
@@ -60,7 +61,7 @@ const HeroSection = () => {
           </button>
           
           <button>
-            <Link href={`https://play.google.com/store/apps/details?id=com.hfg.hash`}> <Image width={100} height={100} src='/component/button.svg' alt="Button" /> </Link>
+            <Link href={`https://play.google.com/store/apps/details?id=com.hfg.hash`}> <Image width={100} height={100} sizes="100px" src='/component/button.svg' alt="Button" /> </Link>
           </button>
         </div>
         
@@ -79,7 +80,7 @@ const HeroSection = () => {
           </p>
           
           <button>
-           <Link href={`https://play.google.com/store/apps/details?id=com.hfg.hash`}> <Image src="/images/trynow.svg" alt='trynow' width={150} height={160}/> </Link>
+           <Link href={`https://play.google.com/store/apps/details?id=com.hfg.hash`}> <Image src="/images/trynow.svg" alt='trynow' width={150} height={160} sizes="150px" /> </Link>
           </button>
         </div>
       </div>

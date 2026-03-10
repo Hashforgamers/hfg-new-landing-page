@@ -4,7 +4,6 @@ import Image from 'next/image';
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import Link from 'next/link';
-import Footer from './FooterSection';
 
 const IndiaGamingSection = () => {
   const ref = useRef(null);
@@ -60,7 +59,7 @@ const IndiaGamingSection = () => {
           alt='Retro car sunset background'
           fill
           className='object-cover'
-          priority
+          sizes='100vw'
         />
 
         <div className='absolute inset-0 flex flex-col items-start justify-between p-[5vw] md:p-[6vw] lg:p-[8vw]'>
@@ -95,7 +94,7 @@ const IndiaGamingSection = () => {
               style={{ transformStyle: 'preserve-3d' }}
               className='lg:my-[10vh] my-[6vh]'
             >
-             <Link href={`https://play.google.com/store/apps/details?id=com.hfg.hash`}> <Image src="/images/download2.png" width={200} height={220} alt="Download button"/></Link>
+             <Link href={`https://play.google.com/store/apps/details?id=com.hfg.hash`}> <Image src="/images/download2.png" width={200} height={220} sizes="200px" alt="Download button"/></Link>
             </motion.button>
           </div>
 
@@ -107,7 +106,7 @@ const IndiaGamingSection = () => {
               style={{ transformStyle: 'preserve-3d' }}
               className='flex justify-center mb-[-20vh] lg:mt-[24vh] mt-[20vh]'
             >
-              <Image src="/images/slogan.svg" width={200} height={180} alt="Slogan"/>
+              <Image src="/images/slogan.svg" width={200} height={180} sizes="200px" alt="Slogan"/>
             </motion.div>
           </div>
 

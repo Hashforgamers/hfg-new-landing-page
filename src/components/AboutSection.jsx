@@ -62,6 +62,7 @@ const AboutSection = () => {
           loop
           muted
           playsInline
+          preload="metadata"
           className="absolute inset-0 w-full h-full object-cover z-0"
         >
           <source src="/videos/about-bg.mp4" type="video/mp4" />
@@ -80,7 +81,7 @@ const AboutSection = () => {
             type="button"
             className="w-[40px] h-[40px] relative"
           >
-            <Image src="/component/sideButton.svg" alt="Menu" fill />
+            <Image src="/component/sideButton.svg" alt="Menu" fill sizes="40px" />
             <Menu className="absolute top-[12px] left-[12px] w-[16px] h-[16px] text-black" />
           </motion.button>
 
@@ -90,7 +91,7 @@ const AboutSection = () => {
             animate={isInView ? 'visible' : 'hidden'}
           >
             <Link href="https://play.google.com/store/apps/details?id=com.hfg.hash">
-              <Image src="/component/button.svg" alt="Download" width={100} height={100} />
+              <Image src="/component/button.svg" alt="Download" width={100} height={100} sizes="100px" />
             </Link>
           </motion.div>
         </div>

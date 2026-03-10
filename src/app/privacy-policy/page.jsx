@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
   ShieldCheck,
@@ -10,6 +8,22 @@ import {
   XCircle,
   IndianRupee,
 } from "lucide-react";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
+
+export const metadata = {
+  title: "Privacy Policy",
+  description:
+    "Read how Hash For Gamers collects, uses, and protects user data across the website and platform.",
+  alternates: {
+    canonical: "/privacy-policy",
+  },
+  openGraph: {
+    title: `Privacy Policy | ${SITE_NAME}`,
+    description:
+      "Read how Hash For Gamers collects, uses, and protects user data across the website and platform.",
+    url: `${SITE_URL}/privacy-policy`,
+  },
+};
 
 const theme = {
   primary: "#8E543E",       // your main accent
@@ -38,7 +52,7 @@ export default function PrivacyPolicyPage() {
         "Data is used to provide services, improve experience, prevent fraud, and communicate relevant updates.",
     },
     {
-      icon: <Lock class="w-5 h-5" style={{ color: theme.primary }} />,
+      icon: <Lock className="w-5 h-5" style={{ color: theme.primary }} />,
       title: "Security",
       content:
         "We follow reasonable security practices to protect your personal data from unauthorized access or misuse.",
