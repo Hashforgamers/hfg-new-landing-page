@@ -39,6 +39,7 @@ const Footer = ({
         { label: 'Contact Us', action: 'contact' },
         { label: 'Terms & Conditions', action: 'terms' }, // ✅ Fixed
         { label: "Privacy Policy", href: "/privacy-policy" },
+        { label: "Delete Account", href: "/delete-account" },
       ]
     },
     {
