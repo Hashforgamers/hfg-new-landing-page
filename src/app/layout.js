@@ -1,7 +1,7 @@
 import { Orbitron } from 'next/font/google';
 import "./globals.css";
 import BackgroundMusic from '@/components/BackgroundMusic';
-import { SITE_DESCRIPTION, SITE_KEYWORDS, SITE_NAME, SITE_URL } from '@/lib/site';
+import { SITE_DESCRIPTION, SITE_KEYWORDS, SITE_NAME, SITE_OG_IMAGE, SITE_TITLE_TEMPLATE, SITE_URL } from '@/lib/site';
 
 const orbitron = Orbitron({
   subsets: ['latin'],
@@ -14,10 +14,11 @@ export const metadata = {
   applicationName: SITE_NAME,
   title: {
     default: SITE_NAME,
-    template: `%s | ${SITE_NAME}`,
+    template: SITE_TITLE_TEMPLATE,
   },
   description: SITE_DESCRIPTION,
   keywords: SITE_KEYWORDS,
+  category: "gaming",
   alternates: {
     canonical: "/",
   },
@@ -29,10 +30,10 @@ export const metadata = {
     description: SITE_DESCRIPTION,
     images: [
       {
-        url: "/images/hash-logo.png",
-        width: 315,
-        height: 315,
-        alt: `${SITE_NAME} logo`,
+        url: SITE_OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: `${SITE_NAME} preview`,
       },
     ],
   },
@@ -40,7 +41,7 @@ export const metadata = {
     card: "summary_large_image",
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
-    images: ["/images/hash-logo.png"],
+    images: [SITE_OG_IMAGE],
   },
   robots: {
     index: true,
@@ -55,11 +56,11 @@ export const metadata = {
   },
   icons: {
     icon: [
-      { url: "/icon.png", type: "image/png" },
+      { url: SITE_OG_IMAGE, type: "image/png" },
       { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
     ],
     apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
-    shortcut: ["/icon.png"],
+    shortcut: [SITE_OG_IMAGE],
   },
 };
 

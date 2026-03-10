@@ -4,6 +4,7 @@ import Image from 'next/image';
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import Link from 'next/link';
+import { SITE_DOWNLOAD_URL } from '@/lib/site';
 
 const IndiaGamingSection = () => {
   const ref = useRef(null);
@@ -51,28 +52,33 @@ const IndiaGamingSection = () => {
   };
 
   return (
-    <div ref={ref} className='w-screen h-screen bg-black flex items-center justify-center p-[4vh] lg:py-[5vh]'>
-      <div className='relative w-full h-full rounded-3xl overflow-hidden' style={{ perspective: '1200px' }}>
+    <div ref={ref} className='flex min-h-screen w-screen items-center justify-center bg-black p-[3vh] lg:py-[5vh]'>
+      <div
+        className='relative min-h-[88vh] w-full rounded-3xl overflow-hidden'
+        style={{ perspective: '1200px' }}
+      >
         
         <Image 
-          src='/images/retro-car.png' 
+          src='/images/retro-car.jpg' 
           alt='Retro car sunset background'
           fill
           className='object-cover'
           sizes='100vw'
         />
 
+        <div className='absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/55' />
+
         <div className='absolute inset-0 flex flex-col items-start justify-between p-[5vw] md:p-[6vw] lg:p-[8vw]'>
           
-          <div className='flex flex-col gap-2 max-w-3xl'>
+          <div className='flex max-w-3xl flex-col gap-2'>
             <motion.h1
               variants={headingVariants}
               initial="hidden"
               animate={isInView ? 'visible' : 'hidden'}
               style={{ transformStyle: 'preserve-3d' }}
-              className='text-white text-2xl md:text-3xl lg:text-4xl xl:text-3xl font-medium leading-tight mt-[12vh] lg:mt-[10vh]'
+              className='mt-[10vh] text-2xl font-medium leading-tight text-white md:text-3xl lg:mt-[8vh] lg:text-4xl xl:text-3xl'
             >
-              Be part of India's gaming movement.
+              Play where the standard is higher.
             </motion.h1>
             
             <motion.h2
@@ -80,9 +86,9 @@ const IndiaGamingSection = () => {
               initial="hidden"
               animate={isInView ? 'visible' : 'hidden'}
               style={{ transformStyle: 'preserve-3d' }}
-              className='text-white text-2xl md:text-3xl lg:text-4xl xl:text-3xl font-medium'
+              className='text-2xl font-medium text-white md:text-3xl lg:text-4xl xl:text-3xl'
             >
-              Play. Earn. Compete.
+              Join Hash. Book better. Play premium.
             </motion.h2>
           </div>
 
@@ -94,19 +100,19 @@ const IndiaGamingSection = () => {
               style={{ transformStyle: 'preserve-3d' }}
               className='lg:my-[10vh] my-[6vh]'
             >
-             <Link href={`https://play.google.com/store/apps/details?id=com.hfg.hash`}> <Image src="/images/download2.png" width={200} height={220} sizes="200px" alt="Download button"/></Link>
+             <Link href={SITE_DOWNLOAD_URL}> <Image src="/images/download2.png" width={200} height={220} sizes="200px" alt="Download button"/></Link>
             </motion.button>
           </div>
 
-          <div className='flex justify-center w-full h-full'>
+          <div className='flex h-full w-full items-end justify-center'>
             <motion.div
               variants={sloganVariants}
               initial="hidden"
               animate={isInView ? 'visible' : 'hidden'}
               style={{ transformStyle: 'preserve-3d' }}
-              className='flex justify-center mb-[-20vh] lg:mt-[24vh] mt-[20vh]'
+              className='flex justify-center pb-6 md:pb-8 lg:pb-10'
             >
-              <Image src="/images/slogan.svg" width={200} height={180} sizes="200px" alt="Slogan"/>
+              <Image src="/images/slogan.svg" width={220} height={190} sizes="220px" alt="Slogan"/>
             </motion.div>
           </div>
 

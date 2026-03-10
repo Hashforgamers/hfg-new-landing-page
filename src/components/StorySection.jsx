@@ -5,10 +5,6 @@ import { motion, useInView, useScroll, useTransform } from "framer-motion";
 
 export default function StorySection({
   id,
-  chapter,
-  title,
-  subtitle,
-  align = "left",
   accent = "#F59E0B",
   showSeparator = true,
   children,
@@ -24,8 +20,6 @@ export default function StorySection({
   const mediaScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.96, 1, 0.98]);
   const overlayOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.15, 1, 1, 0.15]);
   const railScale = useTransform(scrollYProgress, [0, 1], [0.35, 1]);
-
-  const isRight = align === "right";
 
   return (
     <section
@@ -56,42 +50,6 @@ export default function StorySection({
         style={{ y: mediaY, scale: mediaScale }}
       >
         {children}
-      </motion.div>
-
-      <motion.div
-        className={`pointer-events-none absolute inset-x-0 top-0 z-30 flex px-5 pt-6 sm:px-8 sm:pt-8 lg:px-12 lg:pt-10 ${
-          isRight ? "justify-end" : "justify-start"
-        }`}
-        initial={{ opacity: 0, y: 36 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0.2, y: 24 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        <div
-          className={`max-w-[320px] rounded-[28px] border border-white/10 bg-black/30 p-4 backdrop-blur-md sm:max-w-[420px] sm:p-5 lg:p-6 ${
-            isRight ? "text-right" : "text-left"
-          }`}
-        >
-          <motion.div
-            className={`mb-3 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.45em] sm:text-xs ${
-              isRight ? "justify-end" : "justify-start"
-            }`}
-            style={{ color: accent }}
-          >
-            <span>{chapter}</span>
-            <motion.span
-              className="h-px w-16 origin-left bg-current sm:w-24"
-              style={{ scaleX: railScale }}
-            />
-          </motion.div>
-
-          <h2 className="text-2xl font-black uppercase tracking-[0.18em] text-white sm:text-3xl lg:text-4xl">
-            {title}
-          </h2>
-
-          <p className="mt-2 max-w-md text-xs leading-5 text-white/72 sm:text-sm sm:leading-6">
-            {subtitle}
-          </p>
-        </div>
       </motion.div>
 
       {showSeparator && (

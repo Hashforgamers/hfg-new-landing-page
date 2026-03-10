@@ -6,43 +6,76 @@ import { Volume2, VolumeX } from 'lucide-react';
 const BackgroundMusic = () => {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
     const audio = audioRef.current;
 
     if (!audio) return;
+    let fadeFrame;
+    audio.volume = 0;
+    audio.muted = true;
 
-    // Try autoplay immediately
+    const fadeInAudio = () => {
+      cancelAnimationFrame(fadeFrame);
+      const step = () => {
+        if (!audio.muted && audio.volume < 0.35) {
+          audio.volume = Math.min(0.35, audio.volume + 0.03);
+          fadeFrame = requestAnimationFrame(step);
+        }
+      };
+      fadeFrame = requestAnimationFrame(step);
+    };
+
+    const attemptUnmute = () => {
+      try {
+        audio.muted = false;
+        setIsMuted(false);
+        fadeInAudio();
+      } catch {}
+    };
+
     const playAudio = async () => {
       try {
         await audio.play();
         setIsPlaying(true);
+        window.setTimeout(attemptUnmute, 120);
       } catch (error) {
-        console.log('Autoplay blocked, waiting for interaction...');
+        setIsPlaying(false);
       }
     };
 
     playAudio();
 
-    // Fallback: play on first interaction if blocked
     const handleFirstInteraction = async () => {
       try {
         await audio.play();
         setIsPlaying(true);
-      } catch (err) {
-        console.log('Still blocked:', err);
+        attemptUnmute();
+      } catch {
+        setIsPlaying(false);
       }
     };
 
-    window.addEventListener('click', handleFirstInteraction, { once: true });
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && audio.paused) {
+        playAudio();
+      }
+    };
+
+    window.addEventListener('pointerdown', handleFirstInteraction, { once: true });
     window.addEventListener('keydown', handleFirstInteraction, { once: true });
     window.addEventListener('touchstart', handleFirstInteraction, { once: true });
+    window.addEventListener('pageshow', playAudio);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
-      window.removeEventListener('click', handleFirstInteraction);
+      cancelAnimationFrame(fadeFrame);
+      window.removeEventListener('pointerdown', handleFirstInteraction);
       window.removeEventListener('keydown', handleFirstInteraction);
       window.removeEventListener('touchstart', handleFirstInteraction);
+      window.removeEventListener('pageshow', playAudio);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 
@@ -56,6 +89,13 @@ const BackgroundMusic = () => {
     } else {
       try {
         await audio.play();
+        if (audio.muted) {
+          audio.muted = false;
+          setIsMuted(false);
+        }
+        if (audio.volume < 0.35) {
+          audio.volume = 0.35;
+        }
         setIsPlaying(true);
       } catch (err) {
         console.log('Play failed:', err);
@@ -79,20 +119,25 @@ const BackgroundMusic = () => {
         src="/audio/metallica.mp3"
         loop
         preload="auto"
+        autoPlay
+        playsInline
+        muted
       />
 
-      {/* Controls */}
-      <div className="fixed bottom-6 right-6 z-50 flex gap-2">
+      <div className="fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full border border-white/10 bg-black/70 p-2 shadow-lg backdrop-blur-md">
         <button
           onClick={toggleMute}
-          className="bg-gray-900/80 backdrop-blur-sm text-white p-3 rounded-full hover:bg-green-500 transition-all duration-300 shadow-lg"
+          className="rounded-full bg-white/5 p-3 text-white transition-all duration-300 hover:bg-[#16FF00] hover:text-black"
+          type="button"
+          aria-label={isMuted ? 'Unmute background music' : 'Mute background music'}
         >
           {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
         </button>
 
         <button
           onClick={togglePlay}
-          className="bg-gray-900/80 backdrop-blur-sm text-white px-4 py-3 rounded-full hover:bg-green-500 transition-all duration-300 shadow-lg text-sm font-medium"
+          className="rounded-full bg-white/5 px-4 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-[#16FF00] hover:text-black"
+          type="button"
         >
           {isPlaying ? 'Pause' : 'Play'}
         </button>

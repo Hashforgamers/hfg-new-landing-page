@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
@@ -46,10 +47,13 @@ export default function GamingCafePage() {
 
         {/* Background Image */}
         <div className="absolute inset-0">
-          <img
+          <Image
             src="/cyber-bg.jpeg"
             alt="Cyber Background"
-            className="w-full h-full object-cover"
+            fill
+            sizes="100vw"
+            priority
+            className="object-cover"
           />
           <div className="absolute inset-0 bg-black/70"></div>
         </div>

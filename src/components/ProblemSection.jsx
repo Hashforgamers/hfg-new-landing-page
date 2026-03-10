@@ -126,7 +126,7 @@ const ProblemsSection = () => {
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
           >
-            {['Can\'t find gaming cafes?', 'Can\'t trust new gaming gear?', 'Not got a single gaming identity?', 'Feel a lack of community?'].map((question, index) => (
+            {['Still hunting for a good setup every night?', 'Still booking through calls, DMs, and chaos?', 'Still invisible after every session ends?', 'Still switching between broken gaming communities?'].map((question, index) => (
               <motion.h2 
                 key={index}
                 className='text-white text-2xl md:text-3xl lg:text-2xl'
@@ -145,10 +145,10 @@ const ProblemsSection = () => {
             animate={inView ? "visible" : "hidden"}
           >
             <p className='text-[#16FF00] text-xl md:text-2xl lg:text-2xl font-normal mb-2'>
-              your solution is,
+              the premium answer is,
             </p>
             <h1 className='text-[#16FF00] text-4xl md:text-5xl lg:text-4xl xl:text-5xl font-bold tracking-wide'>
-              HASH 4 GAMERS
+              HASH FOR GAMERS
             </h1>
           </motion.div>
 

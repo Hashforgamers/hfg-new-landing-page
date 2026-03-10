@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { SITE_DOWNLOAD_URL } from '@/lib/site';
 
 const HashShop = () => {
   const videoRef = useRef(null);
@@ -26,7 +27,7 @@ const HashShop = () => {
         loop
         muted
         playsInline
-        preload='metadata'
+        preload='none'
         className='absolute top-0 left-0 w-full h-full object-cover z-0'
       >
         <source src='/videos/joystick.mp4' type='video/mp4' />
@@ -38,7 +39,7 @@ const HashShop = () => {
 
       {/* Top Right Button - Responsive positioning */}
       <div className='absolute top-4 right-4 sm:top-8 sm:right-8 md:top-12 md:right-12 lg:top-16 lg:right-16 z-30'>
-        <Link href='https://play.google.com/store/apps/details?id=com.hfg.hash'>
+        <Link href={SITE_DOWNLOAD_URL}>
           <div className='relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 hover:scale-110 transition-transform duration-300'>
             <Image 
               src='/component/button.svg' 
@@ -52,7 +53,7 @@ const HashShop = () => {
       </div>
 
       {/* Content Container */}
-      <div className='relative z-20 min-h-screen flex flex-col lg:flex-row items-center justify-between px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 py-8 md:py-12 lg:py-16'>
+      <div className='relative z-20 min-h-screen flex flex-col lg:flex-row items-center justify-between px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 py-10 md:py-12 lg:py-16'>
         
         {/* Left Side - Text Content */}
         <motion.div
@@ -107,7 +108,7 @@ const HashShop = () => {
           >
             <p className='text-[10px] uppercase tracking-[0.4em] text-rose-300'>Loot Drop</p>
             <p className='mt-2 max-w-[200px] text-sm leading-6'>
-              Product shots now enter like promo panels instead of static shelf art.
+              Premium brands expand through gear, ritual, and identity. Hash Gear is part of that world.
             </p>
           </motion.div>
 

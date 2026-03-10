@@ -5,7 +5,7 @@ import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { Menu } from 'lucide-react';
 import Sidebar from '@/components/common/Sidebar';
-
+import { SITE_DOWNLOAD_URL } from '@/lib/site';
 import Link from 'next/link';
 
 const AboutSection = () => {
@@ -45,6 +45,10 @@ const AboutSection = () => {
     setIsSidebarOpen(true);
   };
 
+  const handleMenuHover = () => {
+    setIsSidebarOpen(true);
+  };
+
   return (
     <>
       <AnimatePresence>
@@ -54,7 +58,7 @@ const AboutSection = () => {
       </AnimatePresence>
 
       {/* MAIN SECTION */}
-      <div ref={ref} className="relative w-screen h-screen overflow-hidden">
+      <div ref={ref} className="relative min-h-screen w-screen overflow-hidden">
 
         {/* BACKGROUND VIDEO */}
         <video
@@ -62,7 +66,7 @@ const AboutSection = () => {
           loop
           muted
           playsInline
-          preload="metadata"
+          preload="none"
           className="absolute inset-0 w-full h-full object-cover z-0"
         >
           <source src="/videos/about-bg.mp4" type="video/mp4" />
@@ -72,9 +76,10 @@ const AboutSection = () => {
         <div className="absolute inset-0 bg-black/70 z-10"></div>
 
         {/* TOP BAR */}
-        <div className="relative z-20 flex justify-between py-[100px] px-[8vw]">
+        <div className="relative z-20 flex justify-between px-[5vw] py-[52px] md:px-[8vw] md:py-[84px]">
           <motion.button
             onClick={handleMenuClick}
+            onMouseEnter={handleMenuHover}
             variants={buttonVariants}
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
@@ -90,31 +95,28 @@ const AboutSection = () => {
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
           >
-            <Link href="https://play.google.com/store/apps/details?id=com.hfg.hash">
+            <Link href={SITE_DOWNLOAD_URL}>
               <Image src="/component/button.svg" alt="Download" width={100} height={100} sizes="100px" />
             </Link>
           </motion.div>
         </div>
 
         {/* TEXT CONTENT */}
-        <div className="relative z-20 mt-[1vh] px-[19vw]">
+        <div className="relative z-20 mt-[2vh] px-[6vw] md:px-[12vw] lg:mt-[4vh] lg:px-[18vw]">
 
           <motion.h1
-            className="text-5xl lg:text-6xl font-bold leading-tight"
+            className="text-4xl font-bold leading-tight md:text-5xl lg:text-6xl"
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
           >
-            <motion.span
-              className="text-[#16FF00] block drop-shadow-[0_0_12px_#16FF00]"
-              variants={childVariants}
-            >
+            <motion.span className="block text-[#16FF00] drop-shadow-[0_0_12px_#16FF00]" variants={childVariants}>
               At Hash,
             </motion.span>
           </motion.h1>
 
           <motion.p
-            className="lg:text-4xl text-xl font-bold leading-tight mt-8"
+            className="mt-5 max-w-4xl text-lg font-bold leading-tight md:text-2xl lg:mt-8 lg:text-4xl"
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
@@ -123,66 +125,51 @@ const AboutSection = () => {
               booking your next{' '}
             </motion.span>
             <motion.span className="text-[#FFEB3B]" variants={childVariants}>
-              gaming session{' '}
+              premium session{' '}
             </motion.span>
             <motion.span className="text-gray-400" variants={childVariants}>
-              is as
+              feels sharp, clean, and high-status.
             </motion.span>
             <br />
 
             <motion.span className="text-[#16FF00]" variants={childVariants}>
-              smooth as a{' '}
+              Find the right{' '}
             </motion.span>
             <motion.span className="text-[#FFEB3B]" variants={childVariants}>
-              headshot flick.
+              battleground,
             </motion.span>
             <motion.span className="text-gray-400" variants={childVariants}>
-              {' '}Whether you're{' '}
+              {' '}lock the setup,
             </motion.span>
             <br />
 
             <motion.span className="text-[#FFEB3B]" variants={childVariants}>
-              grinding ranked
+              reserve your station,
             </motion.span>
             <motion.span className="text-gray-400" variants={childVariants}>
-              , partying with{' '}
+              and walk in like you own the lobby.
             </motion.span>
             <br />
 
             <motion.span className="text-[#16FF00]" variants={childVariants}>
-              friends
+              Hash turns discovery,
             </motion.span>
             <motion.span className="text-gray-400" variants={childVariants}>
-              , or diving into a{' '}
+              access,
             </motion.span>
             <motion.span className="text-[#FFEB3B]" variants={childVariants}>
-              new release
+              rewards,
             </motion.span>
             <motion.span className="text-gray-400" variants={childVariants}>
-              , we've got your setup ready.
+              and community
             </motion.span>
             <br />
 
             <motion.span className="text-gray-400" variants={childVariants}>
-              PCs,{' '}
-            </motion.span>
-            <motion.span className="text-[#FFEB3B]" variants={childVariants}>
-              consoles
-            </motion.span>
-            <motion.span className="text-gray-400" variants={childVariants}>
-              ,{' '}
-            </motion.span>
-            <motion.span className="text-[#AA00FF]" variants={childVariants}>
-              VR
-            </motion.span>
-            <motion.span className="text-gray-400" variants={childVariants}>
-              , and{' '}
-            </motion.span>
-            <motion.span className="text-[#FFEB3B]" variants={childVariants}>
-              snacks
+              into one
             </motion.span>
             <motion.span className="text-[#16FF00]" variants={childVariants}>
-              {' '}included.
+              {' '}premium gamer identity.
             </motion.span>
           </motion.p>
         </div>
