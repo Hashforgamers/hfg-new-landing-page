@@ -1,5 +1,6 @@
 import AppShell from '@/components/AppShell';
 import AboutSection from "@/components/AboutSection";
+import ExternalCafeLikesSection from "@/components/ExternalCafeLikesSection";
 import FeaturesSection from "@/components/FeatureSection";
 import IndiaGamingSection from "@/components/GameSection";
 import HashShop from "@/components/HashShop";
@@ -85,8 +86,18 @@ const storySections = [
     Component: FeaturesSection,
   },
   {
-    id: "shop",
+    id: "cafe-likes",
     chapter: "Chapter 07",
+    title: "Live Cafe Board",
+    subtitle:
+      "Real cafes and real player interest from Firebase make the platform feel alive, credible, and data-backed.",
+    accent: "#22C55E",
+    align: "left",
+    Component: ExternalCafeLikesSection,
+  },
+  {
+    id: "shop",
+    chapter: "Chapter 08",
     title: "Hash Gear",
     subtitle:
       "Hash Gear extends the brand beyond bookings into a premium gaming lifestyle layer.",
@@ -96,7 +107,7 @@ const storySections = [
   },
   {
     id: "problems",
-    chapter: "Chapter 08",
+    chapter: "Chapter 09",
     title: "Why Winners Switch",
     subtitle:
       "Once the friction is obvious, the premium answer becomes obvious too: one platform that upgrades the whole gaming routine.",
