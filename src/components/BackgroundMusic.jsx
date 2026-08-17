@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { Volume2, VolumeX } from 'lucide-react';
 import { SITE_LOGO } from '@/lib/site';
 
@@ -9,6 +10,7 @@ const TARGET_VOLUME = 0.35;
 const EXIT_DURATION_MS = 550;
 
 const BackgroundMusic = () => {
+  const pathname = usePathname();
   const audioRef = useRef(null);
   const fadeFrameRef = useRef(0);
   const [hasEntered, setHasEntered] = useState(false);
@@ -16,7 +18,14 @@ const BackgroundMusic = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
 
+  const isUtilityPage =
+    pathname?.startsWith('/support') ||
+    pathname?.startsWith('/privacy-policy') ||
+    pathname?.startsWith('/delete-account');
+
   useEffect(() => {
+    if (isUtilityPage) return;
+
     const audio = audioRef.current;
     if (!audio) return;
 
@@ -34,7 +43,11 @@ const BackgroundMusic = () => {
       audio.removeEventListener('volumechange', handleVolumeChange);
       cancelAnimationFrame(fadeFrameRef.current);
     };
-  }, []);
+  }, [isUtilityPage]);
+
+  if (isUtilityPage) {
+    return null;
+  }
 
   const fadeToTargetVolume = () => {
     const audio = audioRef.current;
@@ -114,7 +127,7 @@ const BackgroundMusic = () => {
         ref={audioRef}
         src="/audio/metallica.mp3"
         loop
-        preload="auto"
+        preload="none"
         playsInline
       />
 

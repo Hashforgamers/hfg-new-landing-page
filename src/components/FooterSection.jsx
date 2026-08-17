@@ -36,7 +36,7 @@ const Footer = ({
     {
       title: 'Support',
       links: [
-        { label: 'Help Center', action: 'help' },
+        { label: 'Help Center', href: '/support' },
         { label: 'Terms & Conditions', action: 'terms' }, // ✅ Fixed
         { label: "Privacy Policy", href: "/privacy-policy" },
         { label: "Delete Account", href: "/delete-account" },
