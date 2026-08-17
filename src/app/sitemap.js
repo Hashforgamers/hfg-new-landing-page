@@ -21,6 +21,11 @@ const routes = [
     changeFrequency: "yearly",
     priority: 0.3,
   },
+  {
+    url: "/support",
+    changeFrequency: "monthly",
+    priority: 0.5,
+  },
 ];
 
 export default function sitemap() {
