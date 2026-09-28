@@ -34,3 +34,29 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## App link association files
+
+The iOS and Android association files live in `public/.well-known/` and are
+served at `/.well-known/apple-app-site-association` (no `.json` extension) and
+`/.well-known/assetlinks.json`. `vercel.json` sets their JSON content type.
+
+Before deploying, replace `REPLACE_WITH_PLAY_APP_SIGNING_SHA256` in
+`assetlinks.json` with the Play app signing certificate's SHA-256 fingerprint
+from Play Console → App integrity. The supplied debug fingerprint is retained.
+
+Attach all four domains below to the Vercel project and remove dashboard domain
+redirects so these endpoints can return files directly. Any website redirects
+must exclude `/.well-known/`.
+
+After deployment, verify both endpoints on every domain without following redirects:
+
+```bash
+for domain in hashforgamers.com www.hashforgamers.com hashforgamers.co.in www.hashforgamers.co.in; do
+  for file in apple-app-site-association assetlinks.json; do
+    curl -sS -o /dev/null -w "$domain/$file: %{http_code} %{content_type}\n" "https://$domain/.well-known/$file"
+  done
+done
+```
+
+Every result should show `200` and `application/json`.
