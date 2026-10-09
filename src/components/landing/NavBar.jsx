@@ -37,10 +37,10 @@ export default function NavBar() {
       >
         Skip to content
       </a>
-      <nav className="mx-auto flex h-20 max-w-[1600px] items-center justify-between px-4 sm:px-8" aria-label="Main">
+      <nav className="mx-auto flex h-20 max-w-[1600px] sm:h-28 items-center justify-between px-4 sm:px-8" aria-label="Main">
         <Link href="/" className="flex items-center gap-2" aria-label="Hash For Gamers home">
-          <Image src={SITE_LOGO} alt="" width={56} height={56} priority className="h-11 w-11 sm:h-14 sm:w-14" />
-          <span className="font-display text-3xl uppercase tracking-wide text-white">Hash</span>
+          <Image src={SITE_LOGO} alt="" width={96} height={96} priority className="h-16 w-16 sm:h-24 sm:w-24" />
+          <span className="font-display text-4xl uppercase tracking-wide text-white sm:text-5xl">Hash</span>
         </Link>
 
         <ul className="hidden items-center gap-8 lg:flex">
