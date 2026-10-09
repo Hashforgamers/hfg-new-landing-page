@@ -44,9 +44,10 @@ export default function ListYourCafePage() {
         muted
         playsInline
         preload="metadata"
+        poster="/videos/gaming-bg-poster.jpg"
         className="absolute inset-0 w-full h-full object-cover"
       >
-        <source src="/gaming-bg.mp4" type="video/mp4" />
+        <source src="/videos/gaming-bg.mp4" type="video/mp4" />
       </video>
 
       {/* Overlay */}

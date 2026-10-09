@@ -3,6 +3,7 @@ import Link from "next/link";
 import AppShell from "@/components/AppShell";
 import NavBar from "@/components/landing/NavBar";
 import Reveal from "@/components/landing/Reveal";
+import HeroVideo from "@/components/landing/HeroVideo";
 import StoreButtons from "@/components/landing/StoreButtons";
 import { FAQS, FEATURES, GAMES, STEPS, TICKER } from "@/lib/landing";
 import MobileDownloadBar from "@/components/landing/MobileDownloadBar";
@@ -25,6 +26,10 @@ export const metadata = buildPageMetadata({
   path: "/",
   keywords: ["gaming booking app India", "gaming cafe reservation app", "esports app India"],
 });
+
+// Add the hero clip here once it's in public/videos/, e.g. { src: "/videos/hero.mp4", type: "video/mp4" }.
+// With no sources the poster image is shown on its own.
+const HERO_VIDEO_SOURCES = [];
 
 const SIZE_CLASSES = {
   lg: "sm:col-span-2 sm:row-span-2",
@@ -85,14 +90,7 @@ function Eyebrow({ children }) {
 function Hero() {
   return (
     <section className="relative flex min-h-[100svh] items-end overflow-hidden" aria-labelledby="hero-title">
-      <Image
-        src="/images/retro-car.jpg"
-        alt="Neon city highway at night"
-        fill
-        priority
-        sizes="100vw"
-        className="scale-105 object-cover"
-      />
+      <HeroVideo poster="/images/retro-car.jpg" sources={HERO_VIDEO_SOURCES} />
       {/* Vice-style sunset grade: pink → orange haze over a deep purple floor */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#ff3d8b]/25 via-transparent to-[#3b0a45]/50" />
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />

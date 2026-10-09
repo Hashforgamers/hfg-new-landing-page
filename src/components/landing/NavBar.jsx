@@ -31,6 +31,12 @@ export default function NavBar() {
         scrolled || open ? 'bg-black/85 backdrop-blur-md' : 'bg-gradient-to-b from-black/70 to-transparent'
       }`}
     >
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-black"
+      >
+        Skip to content
+      </a>
       <nav className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-4 sm:px-8" aria-label="Main">
         <Link href="/" className="flex items-center gap-2" aria-label="Hash For Gamers home">
           <Image src={SITE_LOGO} alt="" width={36} height={36} priority />

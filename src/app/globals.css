@@ -32,3 +32,8 @@ body {
 section {
   scroll-margin-top: 24px;
 }
+
+/* Readable body text for the landing page; display headings keep Anton via .font-display. */
+.font-body {
+  font-family: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+}
