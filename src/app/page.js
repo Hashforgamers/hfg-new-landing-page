@@ -3,6 +3,10 @@ import AppShell from "@/components/AppShell";
 import NavBar from "@/components/landing/NavBar";
 import Reveal from "@/components/landing/Reveal";
 import HeroVideo from "@/components/landing/HeroVideo";
+import { FadeUp, HeroScene, RevealLine } from "@/components/landing/HeroParallax";
+import Parallax from "@/components/landing/Parallax";
+import ScrollBand from "@/components/landing/ScrollBand";
+import TiltCard from "@/components/landing/TiltCard";
 import StoreButtons from "@/components/landing/StoreButtons";
 import { FAQS, FEATURES, GAMES, STEPS, TICKER } from "@/lib/landing";
 import MobileDownloadBar from "@/components/landing/MobileDownloadBar";
@@ -89,31 +93,54 @@ function Eyebrow({ children }) {
 
 function Hero() {
   return (
-    <section className="relative flex min-h-[100svh] items-end overflow-hidden" aria-labelledby="hero-title">
-      <HeroVideo poster="/images/retro-car.jpg" sources={HERO_VIDEO_SOURCES} />
-      {/* Vice-style sunset grade: pink → orange haze over a deep purple floor */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#ff3d8b]/25 via-transparent to-[#3b0a45]/50" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-
-      <div className="relative z-10 mx-auto w-full max-w-[1600px] px-4 pb-16 pt-32 sm:px-8 sm:pb-24">
-        <div>
-          <Eyebrow>Free on Android &amp; iOS · Made in India</Eyebrow>
+    <section className="relative min-h-[100svh] overflow-hidden bg-black" aria-labelledby="hero-title">
+      <HeroScene
+        background={
+          <>
+            <HeroVideo poster="/images/retro-car.jpg" sources={HERO_VIDEO_SOURCES} />
+            {/* Vice-style sunset grade: pink → orange haze over a deep purple floor */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[#ff3d8b]/25 via-transparent to-[#3b0a45]/50" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+          </>
+        }
+      >
+        <div className="relative z-10 mx-auto w-full max-w-[1600px] px-4 pb-16 pt-32 sm:px-8 sm:pb-24">
+          <FadeUp>
+            <Eyebrow>Free on Android &amp; iOS · Made in India</Eyebrow>
+          </FadeUp>
           <h1
             id="hero-title"
             className="font-display text-[clamp(3.5rem,13vw,13rem)] uppercase leading-[0.85] text-white"
           >
-            <span className="block">Compete.</span>
-            <span className="block bg-gradient-to-r from-[#ff3d8b] via-[#ff9a3d] to-[#ffd23d] bg-clip-text text-transparent">
+            <RevealLine delay={0.1}>Compete.</RevealLine>
+            <RevealLine
+              delay={0.25}
+              className="bg-gradient-to-r from-[#ff3d8b] via-[#ff9a3d] to-[#ffd23d] bg-clip-text text-transparent"
+            >
               Book. Win.
-            </span>
+            </RevealLine>
           </h1>
-          <p className="mt-6 max-w-xl text-base leading-7 text-white/80 sm:text-lg">
-            Esports tournaments, gaming cafe bookings, squads and rewards in one app. Hash For Gamers is where
-            India&apos;s players compete and get paid.
-          </p>
-          <StoreButtons className="mt-8" />
+          <FadeUp delay={0.5}>
+            <p className="mt-6 max-w-xl text-base leading-7 text-white/80 sm:text-lg">
+              Esports tournaments, gaming cafe bookings, squads and rewards in one app. Hash For Gamers is where
+              India&apos;s players compete and get paid.
+            </p>
+          </FadeUp>
+          <FadeUp delay={0.65}>
+            <StoreButtons className="mt-8" />
+          </FadeUp>
         </div>
-      </div>
+      </HeroScene>
+
+      <a
+        href="#features"
+        className="absolute bottom-6 right-6 z-20 hidden flex-col items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.35em] text-white/60 transition hover:text-white sm:flex"
+      >
+        Scroll
+        <span className="relative h-12 w-px overflow-hidden bg-white/20">
+          <span className="absolute inset-x-0 top-0 h-1/2 animate-scroll-cue bg-white" />
+        </span>
+      </a>
     </section>
   );
 }
@@ -152,11 +179,13 @@ function FeatureGrid() {
         <div className="grid auto-rows-[280px] grid-flow-dense gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {FEATURES.map((f, i) => (
             <Reveal key={f.id} delay={(i % 4) * 0.08} className={SIZE_CLASSES[f.size]}>
+              <TiltCard className="h-full">
               <article
                 id={f.id === "tournaments" ? "tournaments" : undefined}
                 className="group relative h-full overflow-hidden rounded-sm bg-[#120818]"
               >
                 {f.image && (
+                  <Parallax speed={f.fit === "contain" ? -0.08 : 0.12} className="absolute -inset-y-10 inset-x-0">
                   <Image
                     src={f.image}
                     alt={f.alt || ""}
@@ -166,6 +195,7 @@ function FeatureGrid() {
                       f.fit === "contain" ? "object-contain object-right p-6 pl-[45%] opacity-30 sm:opacity-100" : "object-cover"
                     }`}
                   />
+                  </Parallax>
                 )}
                 <div className={`absolute inset-0 bg-gradient-to-tr ${f.accent} via-black/40 to-transparent`} />
                 <div className="relative flex h-full flex-col justify-end p-6 sm:p-8">
@@ -182,6 +212,7 @@ function FeatureGrid() {
                   </p>
                 </div>
               </article>
+              </TiltCard>
             </Reveal>
           ))}
         </div>
@@ -242,7 +273,8 @@ function AppShowcase() {
           <StoreButtons className="mt-8" />
         </Reveal>
         <div className="relative mx-auto flex h-[560px] w-full max-w-[520px] justify-center">
-          <Reveal className="absolute left-0 top-10 w-[48%] -rotate-6" delay={0.1}>
+          <Parallax speed={0.25} className="absolute left-0 top-10 w-[48%]">
+          <Reveal className="-rotate-6" delay={0.1}>
             <Image
               src="/images/app/tournaments.webp"
               alt="Hash app tournaments screen with live and upcoming esports tournaments"
@@ -252,7 +284,9 @@ function AppShowcase() {
               className="h-auto w-full rounded-[28px] border-4 border-white/10 drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
             />
           </Reveal>
-          <Reveal className="absolute right-0 top-0 w-[48%] rotate-6" delay={0.2}>
+          </Parallax>
+          <Parallax speed={-0.2} className="absolute right-0 top-0 w-[48%]">
+          <Reveal className="rotate-6" delay={0.2}>
             <Image
               src="/images/app/tournament-detail.webp"
               alt="Hash app tournament detail with prize pool, slots, teams, rules and leaderboard"
@@ -262,6 +296,7 @@ function AppShowcase() {
               className="h-auto w-full rounded-[28px] border-4 border-white/10 drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
             />
           </Reveal>
+          </Parallax>
         </div>
       </div>
     </section>
@@ -296,13 +331,9 @@ function HowItWorks() {
 function ForCafes() {
   return (
     <section className="relative overflow-hidden bg-black px-4 py-28 sm:px-8" aria-labelledby="cafes-title">
-      <Image
-        src="/gta6-miami-sunset.jpg"
-        alt=""
-        fill
-        sizes="100vw"
-        className="object-cover opacity-40"
-      />
+      <Parallax speed={0.3} scale className="absolute -inset-y-24 inset-x-0">
+        <Image src="/gta6-miami-sunset.jpg" alt="" fill sizes="100vw" className="object-cover opacity-40" />
+      </Parallax>
       <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
       <Reveal className="relative mx-auto max-w-[1600px]">
         <Eyebrow>For gaming cafe owners</Eyebrow>
@@ -383,9 +414,11 @@ export default function Page() {
       <Hero />
       <Ticker />
       <FeatureGrid />
+      <ScrollBand top="Compete · Book · Win · Compete · Book · Win ·" bottom="Squad up · Earn HashCoins · Squad up · Earn HashCoins ·" />
       <Games />
       <AppShowcase />
       <HowItWorks />
+      <ScrollBand top="Fill every seat · Host tournaments ·" bottom="Go live on Hash · Fill every seat ·" />
       <ForCafes />
       <Faq />
       <FinalCta />
