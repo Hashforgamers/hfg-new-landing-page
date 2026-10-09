@@ -4,13 +4,13 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
-import { SITE_DOWNLOAD_URL, SITE_LOGO } from '@/lib/site';
+import { SITE_DOWNLOAD_URL, SITE_LOGO, SITE_ONBOARD_URL } from '@/lib/site';
 
 const LINKS = [
   { href: '#tournaments', label: 'Tournaments' },
   { href: '#features', label: 'Features' },
   { href: '#how-it-works', label: 'How it works' },
-  { href: '/list-cafe', label: 'For cafes' },
+  { href: SITE_ONBOARD_URL, label: 'For cafes' },
   { href: '#faq', label: 'FAQ' },
 ];
 
@@ -37,10 +37,10 @@ export default function NavBar() {
       >
         Skip to content
       </a>
-      <nav className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-4 sm:px-8" aria-label="Main">
+      <nav className="mx-auto flex h-20 max-w-[1600px] items-center justify-between px-4 sm:px-8" aria-label="Main">
         <Link href="/" className="flex items-center gap-2" aria-label="Hash For Gamers home">
-          <Image src={SITE_LOGO} alt="" width={36} height={36} priority />
-          <span className="font-display text-2xl uppercase tracking-wide text-white">Hash</span>
+          <Image src={SITE_LOGO} alt="" width={56} height={56} priority className="h-11 w-11 sm:h-14 sm:w-14" />
+          <span className="font-display text-3xl uppercase tracking-wide text-white">Hash</span>
         </Link>
 
         <ul className="hidden items-center gap-8 lg:flex">

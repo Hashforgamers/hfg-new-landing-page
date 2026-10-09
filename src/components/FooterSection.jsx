@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Instagram, Twitter, Linkedin, Youtube } from 'lucide-react';
-import { SITE_DOWNLOAD_URL } from '@/lib/site';
+import { SITE_DOWNLOAD_URL, SITE_ONBOARD_URL } from '@/lib/site';
 
 const Footer = ({
   openAbout,
@@ -46,7 +46,8 @@ const Footer = ({
     {
       title: 'For Business',
       links: [
-        { label: 'List Your Cafe', href: '/list-cafe' },
+        { label: 'Onboard Your Cafe', href: SITE_ONBOARD_URL },
+        { label: 'Request a Callback', href: '/list-cafe' },
         { label: 'Partner With Hash', action: 'partner' },
       ]
     }

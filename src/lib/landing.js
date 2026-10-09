@@ -117,6 +117,6 @@ export const FAQS = [
   },
   {
     q: "I own a gaming cafe. How do I list it on Hash?",
-    a: "Use the List Your Cafe page to apply. Listed cafes get bookings, tournament hosting tools and visibility to players nearby.",
+    a: "Sign up at onboard.hashforgamers.com: verify your email with an OTP, add your cafe details and documents, and go live. Listed cafes get bookings, tournament hosting tools and visibility to players nearby.",
   },
 ];

@@ -170,6 +170,16 @@ export default function ListYourCafePage() {
           >
             Submit
           </button>
+
+          <p className="text-center text-sm text-white/70">
+            Ready to go live now?{" "}
+            <a
+              href="https://onboard.hashforgamers.com"
+              className="font-semibold text-green-400 underline underline-offset-4 hover:text-white"
+            >
+              Onboard your cafe yourself
+            </a>
+          </p>
         </form>
       </div>
     </div>

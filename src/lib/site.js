@@ -6,6 +6,8 @@ export const SITE_PLAY_STORE_URL = `https://play.google.com/store/apps/details?i
 // No public App Store ID in the repo yet; the OneLink routes iOS users to the App Store.
 export const SITE_APP_STORE_URL = SITE_DOWNLOAD_URL;
 export const SITE_OG_IMAGE = "/images/og-home.jpg";
+// Self-serve onboarding for gaming cafe owners.
+export const SITE_ONBOARD_URL = "https://onboard.hashforgamers.com";
 export const SITE_EMAIL = "support@hashforgamers.com";
 export const SITE_INSTAGRAM = "https://instagram.com/hashforgamers";
 export const SITE_TWITTER = "https://twitter.com/hashforgamers";

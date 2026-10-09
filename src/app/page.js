@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import AppShell from "@/components/AppShell";
 import NavBar from "@/components/landing/NavBar";
 import Reveal from "@/components/landing/Reveal";
@@ -14,6 +13,7 @@ import {
   SITE_LOGO,
   SITE_NAME,
   SITE_OG_IMAGE,
+  SITE_ONBOARD_URL,
   SITE_PLAY_STORE_URL,
   SITE_SOCIALS,
   SITE_URL,
@@ -310,14 +310,14 @@ function ForCafes() {
           Fill every seat
         </h2>
         <p className="mt-6 max-w-xl text-base leading-7 text-white/80">
-          List your gaming cafe on Hash to get advance bookings, host tournaments and reach players nearby.
+          List your gaming cafe on Hash to get advance bookings, host tournaments and reach players nearby. Sign up online, verify with OTP, upload your documents and go live.
         </p>
-        <Link
-          href="/list-cafe"
+        <a
+          href={SITE_ONBOARD_URL}
           className="mt-8 inline-block rounded-full border border-white px-8 py-3 font-display text-xl uppercase tracking-wide text-white transition hover:bg-white hover:text-black"
         >
           List your cafe
-        </Link>
+        </a>
       </Reveal>
     </section>
   );
