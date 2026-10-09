@@ -47,3 +47,10 @@ section {
 .font-body {
   font-family: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
 }
+
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }

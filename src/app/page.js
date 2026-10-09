@@ -7,6 +7,10 @@ import { FadeUp, HeroScene, RevealLine } from "@/components/landing/HeroParallax
 import Parallax from "@/components/landing/Parallax";
 import ScrollBand from "@/components/landing/ScrollBand";
 import TiltCard from "@/components/landing/TiltCard";
+import MaskHeading from "@/components/landing/MaskHeading";
+import WipeReveal from "@/components/landing/WipeReveal";
+import SmoothScroll from "@/components/landing/SmoothScroll";
+import ScrollProgress from "@/components/landing/ScrollProgress";
 import StoreButtons from "@/components/landing/StoreButtons";
 import { FAQS, FEATURES, GAMES, STEPS, TICKER } from "@/lib/landing";
 import MobileDownloadBar from "@/components/landing/MobileDownloadBar";
@@ -167,9 +171,9 @@ function FeatureGrid() {
         <Reveal className="mb-12 flex flex-wrap items-end justify-between gap-6">
           <div>
             <Eyebrow>Everything in one app</Eyebrow>
-            <h2 id="features-title" className="font-display text-6xl uppercase leading-none text-white sm:text-8xl">
+            <MaskHeading id="features-title" className="font-display text-6xl uppercase leading-none text-white sm:text-8xl">
               Your whole scene
-            </h2>
+            </MaskHeading>
           </div>
           <p className="max-w-md text-sm leading-7 text-white/70">
             From tournament brackets to the PC you&apos;ll sit at tonight, Hash runs your gaming life from one place.
@@ -178,7 +182,7 @@ function FeatureGrid() {
 
         <div className="grid auto-rows-[280px] grid-flow-dense gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {FEATURES.map((f, i) => (
-            <Reveal key={f.id} delay={(i % 4) * 0.08} className={SIZE_CLASSES[f.size]}>
+            <WipeReveal key={f.id} delay={(i % 4) * 0.12} className={SIZE_CLASSES[f.size]}>
               <TiltCard className="h-full">
               <article
                 id={f.id === "tournaments" ? "tournaments" : undefined}
@@ -213,7 +217,7 @@ function FeatureGrid() {
                 </div>
               </article>
               </TiltCard>
-            </Reveal>
+            </WipeReveal>
           ))}
         </div>
       </div>
@@ -227,9 +231,9 @@ function Games() {
       <div className="mx-auto max-w-[1600px]">
         <Reveal>
           <Eyebrow>Pick your game</Eyebrow>
-          <h2 id="games-title" className="font-display text-6xl uppercase leading-none text-white sm:text-8xl">
+          <MaskHeading id="games-title" className="font-display text-6xl uppercase leading-none text-white sm:text-8xl">
             Games on Hash
-          </h2>
+          </MaskHeading>
         </Reveal>
         <ul className="mt-12 grid grid-cols-2 border-l border-t border-white/10 lg:grid-cols-4">
           {GAMES.map((g, i) => (
@@ -263,9 +267,9 @@ function AppShowcase() {
       <div className="mx-auto grid max-w-[1400px] items-center gap-16 lg:grid-cols-2">
         <Reveal>
           <Eyebrow>The Hash app</Eyebrow>
-          <h2 id="showcase-title" className="font-display text-6xl uppercase leading-[0.9] text-white sm:text-8xl">
+          <MaskHeading id="showcase-title" className="font-display text-6xl uppercase leading-[0.9] text-white sm:text-8xl">
             The city is your arena
-          </h2>
+          </MaskHeading>
           <p className="mt-6 max-w-lg text-base leading-7 text-white/80">
             Browse tonight&apos;s tournaments, see which cafes have free PCs and consoles, invite your squad and track
             your wallet without switching apps.
@@ -273,7 +277,7 @@ function AppShowcase() {
           <StoreButtons className="mt-8" />
         </Reveal>
         <div className="relative mx-auto flex h-[560px] w-full max-w-[520px] justify-center">
-          <Parallax speed={0.25} className="absolute left-0 top-10 w-[48%]">
+          <Parallax speed={0.25} rotate={4} className="absolute left-0 top-10 w-[48%]">
           <Reveal className="-rotate-6" delay={0.1}>
             <Image
               src="/images/app/tournaments.webp"
@@ -285,7 +289,7 @@ function AppShowcase() {
             />
           </Reveal>
           </Parallax>
-          <Parallax speed={-0.2} className="absolute right-0 top-0 w-[48%]">
+          <Parallax speed={-0.2} rotate={-4} className="absolute right-0 top-0 w-[48%]">
           <Reveal className="rotate-6" delay={0.2}>
             <Image
               src="/images/app/tournament-detail.webp"
@@ -308,9 +312,9 @@ function HowItWorks() {
     <section id="how-it-works" className="bg-[#ff3d8b] px-4 py-24 text-black sm:px-8" aria-labelledby="how-title">
       <div className="mx-auto max-w-[1600px]">
         <Reveal>
-          <h2 id="how-title" className="font-display text-6xl uppercase leading-none sm:text-8xl">
+          <MaskHeading id="how-title" className="font-display text-6xl uppercase leading-none sm:text-8xl">
             How it works
-          </h2>
+          </MaskHeading>
         </Reveal>
         <ol className="mt-14 grid gap-px bg-black/20 sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((s, i) => (
@@ -337,9 +341,9 @@ function ForCafes() {
       <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
       <Reveal className="relative mx-auto max-w-[1600px]">
         <Eyebrow>For gaming cafe owners</Eyebrow>
-        <h2 id="cafes-title" className="max-w-3xl font-display text-6xl uppercase leading-[0.9] text-white sm:text-8xl">
+        <MaskHeading id="cafes-title" className="max-w-3xl font-display text-6xl uppercase leading-[0.9] text-white sm:text-8xl">
           Fill every seat
-        </h2>
+        </MaskHeading>
         <p className="mt-6 max-w-xl text-base leading-7 text-white/80">
           List your gaming cafe on Hash to get advance bookings, host tournaments and reach players nearby. Sign up online, verify with OTP, upload your documents and go live.
         </p>
@@ -360,9 +364,9 @@ function Faq() {
       <div className="mx-auto grid max-w-[1400px] gap-12 lg:grid-cols-[1fr_1.4fr]">
         <Reveal>
           <Eyebrow>Questions</Eyebrow>
-          <h2 id="faq-title" className="font-display text-6xl uppercase leading-none text-white sm:text-7xl">
+          <MaskHeading id="faq-title" className="font-display text-6xl uppercase leading-none text-white sm:text-7xl">
             FAQ
-          </h2>
+          </MaskHeading>
         </Reveal>
         <div className="divide-y divide-white/15 border-y border-white/15">
           {FAQS.map(({ q, a }) => (
@@ -390,7 +394,8 @@ function FinalCta() {
     >
       <Reveal className="mx-auto max-w-4xl">
         <h2 id="cta-title" className="font-display text-[clamp(3.5rem,11vw,10rem)] uppercase leading-[0.85] text-black">
-          Get Hash. <br /> Get in the game.
+          <MaskHeading as="span" className="block">Get Hash.</MaskHeading>
+          <MaskHeading as="span" className="block">Get in the game.</MaskHeading>
         </h2>
         <div className="mt-10 flex justify-center [&_a:first-child]:bg-black [&_a:first-child]:text-white [&_a:last-child]:border-black [&_a:last-child]:text-black">
           <StoreButtons className="justify-center" />
@@ -410,6 +415,8 @@ export default function Page() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
         />
       ))}
+      <SmoothScroll />
+      <ScrollProgress />
       <NavBar />
       <Hero />
       <Ticker />
