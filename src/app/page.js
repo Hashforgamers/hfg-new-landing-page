@@ -4,7 +4,8 @@ import AppShell from "@/components/AppShell";
 import NavBar from "@/components/landing/NavBar";
 import Reveal from "@/components/landing/Reveal";
 import StoreButtons from "@/components/landing/StoreButtons";
-import { FAQS, FEATURES, STEPS, TICKER } from "@/lib/landing";
+import { FAQS, FEATURES, GAMES, STEPS, TICKER } from "@/lib/landing";
+import MobileDownloadBar from "@/components/landing/MobileDownloadBar";
 import {
   SITE_APP_STORE_URL,
   SITE_DESCRIPTION,
@@ -164,7 +165,7 @@ function FeatureGrid() {
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 50vw"
                     className={`transition duration-700 group-hover:scale-105 ${
-                      f.fit === "contain" ? "object-contain object-right p-6 pl-[45%]" : "object-cover"
+                      f.fit === "contain" ? "object-contain object-right p-6 pl-[45%] opacity-30 sm:opacity-100" : "object-cover"
                     }`}
                   />
                 )}
@@ -186,6 +187,39 @@ function FeatureGrid() {
             </Reveal>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+function Games() {
+  return (
+    <section className="border-y border-white/10 bg-[#0b0414] px-4 py-24 sm:px-8" aria-labelledby="games-title">
+      <div className="mx-auto max-w-[1600px]">
+        <Reveal>
+          <Eyebrow>Pick your game</Eyebrow>
+          <h2 id="games-title" className="font-display text-6xl uppercase leading-none text-white sm:text-8xl">
+            Games on Hash
+          </h2>
+        </Reveal>
+        <ul className="mt-12 grid grid-cols-2 border-l border-t border-white/10 lg:grid-cols-4">
+          {GAMES.map((g, i) => (
+            <li key={g.name} className="border-b border-r border-white/10">
+              <Reveal delay={(i % 4) * 0.06} y={20} className="group flex h-full flex-col justify-between gap-6 p-5 transition-colors duration-300 hover:bg-[#ff3d8b] sm:p-8">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 group-hover:text-black/70">
+                  {String(i + 1).padStart(2, "0")} · {g.type}
+                </span>
+                <h3 className="font-display text-3xl uppercase leading-none text-white group-hover:text-black sm:text-5xl">
+                  {g.name}
+                </h3>
+              </Reveal>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-6 text-xs leading-6 text-white/40">
+          Game titles are trademarks of their respective owners. Tournament line-ups change weekly; check the app for
+          what&apos;s live near you.
+        </p>
       </div>
     </section>
   );
@@ -351,11 +385,13 @@ export default function Page() {
       <Hero />
       <Ticker />
       <FeatureGrid />
+      <Games />
       <AppShowcase />
       <HowItWorks />
       <ForCafes />
       <Faq />
       <FinalCta />
+      <MobileDownloadBar />
     </AppShell>
   );
 }

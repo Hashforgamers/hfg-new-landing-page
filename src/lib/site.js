@@ -5,7 +5,7 @@ export const SITE_ANDROID_PACKAGE = "com.hfg.hash";
 export const SITE_PLAY_STORE_URL = `https://play.google.com/store/apps/details?id=${SITE_ANDROID_PACKAGE}`;
 // No public App Store ID in the repo yet; the OneLink routes iOS users to the App Store.
 export const SITE_APP_STORE_URL = SITE_DOWNLOAD_URL;
-export const SITE_OG_IMAGE = "/images/hash-logo.png?v=20260311-0146";
+export const SITE_OG_IMAGE = "/images/og-home.jpg";
 export const SITE_EMAIL = "support@hashforgamers.com";
 export const SITE_INSTAGRAM = "https://instagram.com/hashforgamers";
 export const SITE_TWITTER = "https://twitter.com/hashforgamers";
