@@ -14,6 +14,7 @@ import ScrollProgress from "@/components/landing/ScrollProgress";
 import StoreButtons from "@/components/landing/StoreButtons";
 import { DASHBOARD_SCREENS, KIOSK_POINTS, FAQS, FEATURES, GAMES, STEPS, TICKER } from "@/lib/landing";
 import CafeDashboard from "@/components/landing/CafeDashboard";
+import GrowthVisual from "@/components/landing/GrowthVisual";
 import MobileDownloadBar from "@/components/landing/MobileDownloadBar";
 import {
   SITE_APP_STORE_URL,
@@ -464,22 +465,30 @@ function ForCafes() {
       <Parallax speed={0.3} scale className="absolute -inset-y-24 inset-x-0">
         <Image src="/gta6-miami-sunset.jpg" alt="" fill sizes="100vw" className="object-cover opacity-40" />
       </Parallax>
-      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
-      <Reveal className="relative mx-auto max-w-[1600px]">
-        <Eyebrow>Ready when you are</Eyebrow>
-        <MaskHeading id="cafes-title" className="max-w-3xl font-display text-6xl uppercase leading-[0.9] text-white sm:text-8xl">
-          Fill every seat
-        </MaskHeading>
-        <p className="mt-6 max-w-xl text-base leading-7 text-white/80">
-          List your gaming cafe on Hash to get advance bookings, host tournaments and reach players nearby. Sign up online, verify with OTP, upload your documents and go live.
-        </p>
-        <a
-          href={SITE_ONBOARD_URL}
-          className="mt-8 inline-block rounded-full border border-white px-8 py-3 font-display text-xl uppercase tracking-wide text-white transition hover:bg-white hover:text-black"
-        >
-          List your cafe
-        </a>
-      </Reveal>
+      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/40" />
+      <div className="relative mx-auto grid max-w-[1600px] items-center gap-12 lg:grid-cols-2">
+        <Reveal>
+          <Eyebrow>Ready when you are</Eyebrow>
+          <MaskHeading id="cafes-title" className="max-w-3xl font-display text-6xl uppercase leading-[0.9] text-white sm:text-8xl">
+            Fill every seat
+          </MaskHeading>
+          <p className="mt-6 max-w-xl text-base leading-7 text-white/80">
+            Empty PCs earn nothing. List your gaming cafe on Hash to get advance bookings, host tournaments and reach
+            players nearby. Sign up online, verify with OTP, upload your documents and go live.
+          </p>
+          <a
+            href={SITE_ONBOARD_URL}
+            className="mt-8 inline-block rounded-full bg-white px-8 py-3 font-display text-xl uppercase tracking-wide text-black transition hover:bg-[#ff3d8b] hover:text-white"
+          >
+            List your cafe
+          </a>
+        </Reveal>
+        <Reveal delay={0.15}>
+          <TiltCard>
+            <GrowthVisual />
+          </TiltCard>
+        </Reveal>
+      </div>
     </section>
   );
 }
