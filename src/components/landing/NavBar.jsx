@@ -4,13 +4,13 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
-import { SITE_DOWNLOAD_URL, SITE_LOGO, SITE_ONBOARD_URL } from '@/lib/site';
+import { SITE_DOWNLOAD_URL, SITE_LOGO } from '@/lib/site';
 
 const LINKS = [
   { href: '#tournaments', label: 'Tournaments' },
   { href: '#features', label: 'Features' },
   { href: '#how-it-works', label: 'How it works' },
-  { href: SITE_ONBOARD_URL, label: 'For cafes' },
+  { href: '#for-cafes', label: 'For cafes' },
   { href: '#faq', label: 'FAQ' },
 ];
 

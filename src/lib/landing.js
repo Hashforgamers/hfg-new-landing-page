@@ -94,6 +94,38 @@ export const GAMES = [
   { name: "PC & console", type: "At gaming cafes" },
 ];
 
+// Cafe dashboard tour. Customer names and phone numbers in the Gamers screenshot are sample data.
+export const DASHBOARD_SCREENS = [
+  {
+    id: "overview",
+    title: "Live floor",
+    body: "See today's bookings, live sessions and open slots at a glance, and book a walk-in in two clicks.",
+    image: "/images/dashboard/overview.webp",
+    alt: "Hash cafe dashboard overview with quick booking slots, live sessions and upcoming bookings",
+  },
+  {
+    id: "consoles",
+    title: "Every console",
+    body: "Link your PCs, PlayStations, Xboxes, VR and racing rigs. Track which are free and manage them remotely.",
+    image: "/images/dashboard/consoles.webp",
+    alt: "Hash cafe dashboard gaming consoles page listing linked PCs with status and controls",
+  },
+  {
+    id: "gamers",
+    title: "Know your gamers",
+    body: "Spend, visits and loyalty tier for every customer, so you know who your regulars are.",
+    image: "/images/dashboard/gamers.webp",
+    alt: "Hash cafe dashboard customer list with total slots, revenue and loyalty tier per gamer",
+  },
+  {
+    id: "pricing",
+    title: "Your prices",
+    body: "Set slot rates per console type, run offers and squad pricing, and change them any time.",
+    image: "/images/dashboard/pricing.webp",
+    alt: "Hash cafe dashboard console pricing page with per-slot rates for PC, PlayStation, Xbox and VR",
+  },
+];
+
 export const FAQS = [
   {
     q: "What is Hash For Gamers?",

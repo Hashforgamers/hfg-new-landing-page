@@ -12,7 +12,8 @@ import WipeReveal from "@/components/landing/WipeReveal";
 import SmoothScroll from "@/components/landing/SmoothScroll";
 import ScrollProgress from "@/components/landing/ScrollProgress";
 import StoreButtons from "@/components/landing/StoreButtons";
-import { FAQS, FEATURES, GAMES, STEPS, TICKER } from "@/lib/landing";
+import { DASHBOARD_SCREENS, FAQS, FEATURES, GAMES, STEPS, TICKER } from "@/lib/landing";
+import CafeDashboard from "@/components/landing/CafeDashboard";
 import MobileDownloadBar from "@/components/landing/MobileDownloadBar";
 import {
   SITE_APP_STORE_URL,
@@ -332,6 +333,41 @@ function HowItWorks() {
   );
 }
 
+function CafeDashboardTour() {
+  return (
+    <section
+      id="for-cafes"
+      className="relative overflow-hidden bg-[#0b0414] px-4 py-24 sm:px-8"
+      aria-labelledby="dashboard-title"
+    >
+      <div
+        className="pointer-events-none absolute -right-40 top-0 h-[600px] w-[600px] rounded-full bg-[#ff3d8b]/20 blur-[140px]"
+        aria-hidden="true"
+      />
+      <div className="relative mx-auto max-w-[1600px]">
+        <Reveal>
+          <Eyebrow>For gaming cafe owners</Eyebrow>
+        </Reveal>
+        <MaskHeading
+          id="dashboard-title"
+          className="max-w-5xl font-display text-6xl uppercase leading-[0.9] text-white sm:text-8xl"
+        >
+          Run your cafe from one screen
+        </MaskHeading>
+        <Reveal delay={0.15}>
+          <p className="mt-6 max-w-2xl text-base leading-7 text-white/75">
+            The Hash cafe dashboard handles bookings, consoles, customers and pricing, so you spend less time on
+            registers and more on the floor.
+          </p>
+        </Reveal>
+        <WipeReveal className="mt-14" delay={0.1}>
+          <CafeDashboard screens={DASHBOARD_SCREENS} />
+        </WipeReveal>
+      </div>
+    </section>
+  );
+}
+
 function ForCafes() {
   return (
     <section className="relative overflow-hidden bg-black px-4 py-28 sm:px-8" aria-labelledby="cafes-title">
@@ -340,7 +376,7 @@ function ForCafes() {
       </Parallax>
       <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
       <Reveal className="relative mx-auto max-w-[1600px]">
-        <Eyebrow>For gaming cafe owners</Eyebrow>
+        <Eyebrow>Ready when you are</Eyebrow>
         <MaskHeading id="cafes-title" className="max-w-3xl font-display text-6xl uppercase leading-[0.9] text-white sm:text-8xl">
           Fill every seat
         </MaskHeading>
@@ -426,6 +462,7 @@ export default function Page() {
       <AppShowcase />
       <HowItWorks />
       <ScrollBand top="Fill every seat · Host tournaments ·" bottom="Go live on Hash · Fill every seat ·" />
+      <CafeDashboardTour />
       <ForCafes />
       <Faq />
       <FinalCta />

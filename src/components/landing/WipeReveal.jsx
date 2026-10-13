@@ -7,7 +7,8 @@ import { motion, useInView, useReducedMotion } from 'framer-motion';
 // The outer box is never clipped, so it is what we watch for visibility.
 export default function WipeReveal({ children, delay = 0, className = '' }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.2 });
+  // Trigger once any part is 12% up the viewport; a fixed fraction would never be met by very tall content.
+  const inView = useInView(ref, { once: true, margin: '0px 0px -12% 0px' });
   const reduce = useReducedMotion();
 
   return (
