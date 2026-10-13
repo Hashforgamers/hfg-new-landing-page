@@ -1,7 +1,7 @@
 import { Anton, Inter, Orbitron } from 'next/font/google';
 import "./globals.css";
 import BackgroundMusic from '@/components/BackgroundMusic';
-import { SITE_DESCRIPTION, SITE_EMAIL, SITE_KEYWORDS, SITE_LOGO, SITE_NAME, SITE_OG_IMAGE, SITE_SOCIALS, SITE_TITLE_TEMPLATE, SITE_URL } from '@/lib/site';
+import { SITE_APP_STORE_ID, SITE_DESCRIPTION, SITE_EMAIL, SITE_KEYWORDS, SITE_LOGO, SITE_NAME, SITE_OG_IMAGE, SITE_SOCIALS, SITE_TITLE_TEMPLATE, SITE_URL } from '@/lib/site';
 
 const orbitron = Orbitron({
   subsets: ['latin'],
@@ -67,6 +67,8 @@ export const metadata = {
     description: SITE_DESCRIPTION,
     images: [SITE_OG_IMAGE],
   },
+  // Shows Safari's Smart App Banner on iPhone and iPad.
+  itunes: { appId: SITE_APP_STORE_ID },
   appleWebApp: {
     capable: true,
     title: SITE_NAME,

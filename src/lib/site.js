@@ -3,8 +3,8 @@ export const SITE_LOGO = "/images/hash-logo.png?v=20260311-0146";
 export const SITE_DOWNLOAD_URL = "https://onelink.to/85rrgg";
 export const SITE_ANDROID_PACKAGE = "com.hfg.hash";
 export const SITE_PLAY_STORE_URL = `https://play.google.com/store/apps/details?id=${SITE_ANDROID_PACKAGE}`;
-// No public App Store ID in the repo yet; the OneLink routes iOS users to the App Store.
-export const SITE_APP_STORE_URL = SITE_DOWNLOAD_URL;
+export const SITE_APP_STORE_ID = "6750488424";
+export const SITE_APP_STORE_URL = `https://apps.apple.com/in/app/hash-gaming-esports-network/id${SITE_APP_STORE_ID}`;
 export const SITE_OG_IMAGE = "/images/og-home.jpg";
 // Self-serve onboarding for gaming cafe owners.
 export const SITE_ONBOARD_URL = "https://onboard.hashforgamers.com";
