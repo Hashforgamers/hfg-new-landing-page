@@ -27,6 +27,11 @@ const routes = [
     priority: 0.6,
   },
   {
+    url: "/gaming-cafe-cost-calculator",
+    changeFrequency: "monthly",
+    priority: 0.9,
+  },
+  {
     url: "/list-cafe",
     changeFrequency: "monthly",
     priority: 0.8,

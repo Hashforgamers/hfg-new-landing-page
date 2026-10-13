@@ -47,6 +47,7 @@ const Footer = ({
       title: 'For Business',
       links: [
         { label: 'Onboard Your Cafe', href: SITE_ONBOARD_URL },
+        { label: 'Cafe Cost Calculator', href: '/gaming-cafe-cost-calculator' },
         { label: 'Request a Callback', href: '/list-cafe' },
         { label: 'Partner With Hash', action: 'partner' },
       ]

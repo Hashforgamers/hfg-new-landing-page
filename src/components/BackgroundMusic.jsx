@@ -21,6 +21,7 @@ const BackgroundMusic = () => {
   // The home page is the main SEO/conversion surface, so it skips the tap-to-enter gate too.
   const isUtilityPage =
     pathname === '/' ||
+    pathname?.startsWith('/gaming-cafe-cost-calculator') ||
     pathname?.startsWith('/support') ||
     pathname?.startsWith('/privacy-policy') ||
     pathname?.startsWith('/delete-account');
