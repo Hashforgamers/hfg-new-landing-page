@@ -165,6 +165,20 @@ export const MARKET_BRANDS = [
   { name: "Redragon", logo: "redragon" },
 ];
 
+// Draft positioning for the franchise offer. Confirm every row against the real franchise terms.
+// `own` and `franchise` are true/false, or a short string when the answer needs a qualifier.
+export const FRANCHISE_ROWS = [
+  { label: "You own and run the cafe", own: true, franchise: true },
+  { label: "Listed on the Hash app for bookings", own: "After onboarding", franchise: "From day one" },
+  { label: "Hash kiosk app and cafe dashboard", own: "Set up yourself", franchise: "Installed and configured" },
+  { label: "Hash branding, signage and interior design", own: false, franchise: true },
+  { label: "Setup plan and equipment sourcing help", own: false, franchise: true },
+  { label: "Launch marketing to gamers nearby", own: false, franchise: true },
+  { label: "Official Hash tournaments at your venue", own: false, franchise: true },
+  { label: "Staff training and operating playbook", own: false, franchise: true },
+  { label: "Priority support", own: false, franchise: true },
+];
+
 export const FAQS = [
   {
     q: "What is Hash For Gamers?",

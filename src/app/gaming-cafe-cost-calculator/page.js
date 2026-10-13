@@ -1,5 +1,6 @@
 import AppShell from "@/components/AppShell";
 import CafeCalculator from "@/components/landing/CafeCalculator";
+import FranchiseCompare from "@/components/landing/FranchiseCompare";
 import MaskHeading from "@/components/landing/MaskHeading";
 import NavBar from "@/components/landing/NavBar";
 import Reveal from "@/components/landing/Reveal";
@@ -122,6 +123,8 @@ export default function Page() {
           <CafeCalculator />
         </div>
       </section>
+
+      <FranchiseCompare />
 
       <section className="bg-[#0b0414] px-4 py-24 sm:px-8" aria-labelledby="calc-faq-title">
         <div className="mx-auto grid max-w-[1400px] gap-12 lg:grid-cols-[1fr_1.4fr]">

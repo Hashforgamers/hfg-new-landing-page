@@ -292,6 +292,12 @@ export default function CafeCalculator() {
             >
               Fill these seats with Hash
             </a>
+            <a
+              href="#franchise"
+              className="mt-3 block rounded-full bg-gradient-to-r from-[#ff3d8b] via-[#ff9a3d] to-[#ffd23d] px-8 py-3.5 text-center font-display text-xl uppercase tracking-wide text-black transition hover:brightness-110"
+            >
+              Get Hash franchise
+            </a>
             <p className="mt-4 text-[11px] leading-5 text-white/40">
               Estimates only, not financial advice. Rent, salaries, power tariffs and demand vary a lot by location.
             </p>

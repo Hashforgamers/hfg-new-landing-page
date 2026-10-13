@@ -17,6 +17,7 @@ import { DASHBOARD_SCREENS, KIOSK_POINTS, MARKET_BRANDS, MARKET_CATEGORIES, FAQS
 import CafeDashboard from "@/components/landing/CafeDashboard";
 import { DEFAULT_PRICES as CALC_PRICES, DEFAULTS as CALC_DEFAULTS, calculate, inrShort } from "@/lib/calculator";
 import GrowthVisual from "@/components/landing/GrowthVisual";
+import FranchiseCompare from "@/components/landing/FranchiseCompare";
 import MobileDownloadBar from "@/components/landing/MobileDownloadBar";
 import {
   SITE_APP_STORE_URL,
@@ -640,6 +641,12 @@ function ForCafes() {
           >
             List your cafe
           </a>
+          <a
+            href="#franchise"
+            className="ml-3 mt-8 inline-block rounded-full bg-gradient-to-r from-[#ff3d8b] via-[#ff9a3d] to-[#ffd23d] px-8 py-3 font-display text-xl uppercase tracking-wide text-black transition hover:brightness-110"
+          >
+            Get Hash franchise
+          </a>
         </Reveal>
         <Reveal delay={0.15}>
           <TiltCard>
@@ -724,6 +731,7 @@ export default function Page() {
       <KioskShowcase />
       <CalculatorTeaser />
       <ForCafes />
+      <FranchiseCompare />
       <Faq />
       <FinalCta />
       <MobileDownloadBar />
