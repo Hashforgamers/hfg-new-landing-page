@@ -40,11 +40,11 @@ export default function StoreButtons({ className = '' }) {
         target="_blank"
         rel="noopener"
         className={`${base} border border-white/40 text-white hover:border-white hover:bg-white hover:text-black`}
-        aria-label="Download Hash For Gamers on the App Store"
+        aria-label="Get Hash For Gamers on the App Store"
       >
         <AppleIcon />
         <span className="flex flex-col leading-none">
-          <span className="whitespace-nowrap text-[8px] font-semibold uppercase tracking-[0.12em] opacity-70 sm:text-[10px] sm:tracking-[0.2em]">Download on the</span>
+          <span className="whitespace-nowrap text-[8px] font-semibold uppercase tracking-[0.12em] opacity-70 sm:text-[10px] sm:tracking-[0.2em]">Get it on</span>
           <span className="whitespace-nowrap font-display text-base uppercase tracking-wide sm:text-xl">App Store</span>
         </span>
       </a>
