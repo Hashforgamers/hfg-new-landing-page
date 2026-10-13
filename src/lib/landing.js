@@ -141,6 +141,30 @@ export const KIOSK_POINTS = [
   },
 ];
 
+export const MARKET_CATEGORIES = [
+  { title: "Headsets", body: "Hear every footstep." },
+  { title: "Mice", body: "Lightweight, low-latency aim." },
+  { title: "Keyboards", body: "Mechanical, hot-swap, RGB." },
+  { title: "Monitors", body: "High refresh for ranked nights." },
+  { title: "Controllers", body: "For console and fighting games." },
+  { title: "Chairs & desks", body: "Sit right through long sessions." },
+];
+
+// Logos are monochrome marks from Simple Icons (public/images/brands). Each is the trademark of its
+// owner: keep only brands Hash actually stocks or has permission to show.
+export const MARKET_BRANDS = [
+  { name: "ASUS", logo: "asus" },
+  { name: "ROG", logo: "republicofgamers" },
+  { name: "Razer", logo: "razer" },
+  { name: "Logitech G", logo: "logitechg" },
+  { name: "HyperX", logo: "hyperx" },
+  { name: "SteelSeries", logo: "steelseries" },
+  { name: "Corsair", logo: "corsair" },
+  { name: "MSI", logo: "msi" },
+  { name: "Cooler Master", logo: "coolermaster" },
+  { name: "Redragon", logo: "redragon" },
+];
+
 export const FAQS = [
   {
     q: "What is Hash For Gamers?",

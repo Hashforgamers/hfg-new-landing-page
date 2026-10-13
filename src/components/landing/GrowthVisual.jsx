@@ -33,11 +33,11 @@ export default function GrowthVisual() {
       ref={ref}
       className="relative overflow-hidden rounded-2xl border border-white/15 bg-black/60 p-6 backdrop-blur-md sm:p-8"
       role="img"
-      aria-label="Illustration of cafe bookings growing from 1x to 10x after listing on Hash, with seats filling up"
+      aria-label="Illustration of a cafe's monthly earnings growing 10x, from 10 thousand rupees before Hash to 1 lakh rupees on Hash, with seats filling up"
     >
       <div className="flex items-end justify-between gap-4">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#ff9a3d]">Bookings with Hash</p>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#ff9a3d]">Monthly earnings with Hash</p>
           <p className="mt-1 bg-gradient-to-r from-[#ff3d8b] via-[#ff9a3d] to-[#ffd23d] bg-clip-text font-display text-[clamp(5rem,14vw,11rem)] leading-[0.85] text-transparent tabular-nums">
             {count}X
           </p>
@@ -52,12 +52,25 @@ export default function GrowthVisual() {
         </motion.p>
       </div>
 
-      <div className="relative mt-6 h-48 sm:h-56">
+      <div className="relative mt-12 h-48 sm:h-56">
         <div className="absolute inset-0 flex items-end gap-2 sm:gap-3">
           {BARS.map((b, i) => {
             const peak = i === BARS.length - 1;
             return (
               <div key={i} className="relative flex h-full flex-1 items-end">
+                {(i === 0 || peak) && (
+                  <motion.span
+                    className={`absolute left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-2.5 py-1 text-center font-display text-sm uppercase leading-none tracking-wide sm:text-base ${
+                      peak ? 'bg-white text-black' : 'bg-white/15 text-white'
+                    } ${peak ? '-translate-x-[70%] sm:-translate-x-1/2' : 'translate-x-[-30%] sm:-translate-x-1/2'}`}
+                    style={{ bottom: `calc(${b * 10}% + 10px)` }}
+                    initial={reduce ? false : { opacity: 0, y: 8 }}
+                    animate={play ? { opacity: 1, y: 0 } : undefined}
+                    transition={{ duration: 0.5, delay: peak ? 2.2 : 0.9 }}
+                  >
+                    {peak ? '₹1L / month' : '₹10K / month'}
+                  </motion.span>
+                )}
                 <motion.div
                   className={`w-full origin-bottom rounded-t-md ${
                     peak
@@ -88,8 +101,8 @@ export default function GrowthVisual() {
         </svg>
       </div>
       <div className="mt-2 flex justify-between text-[10px] font-semibold uppercase tracking-[0.25em] text-white/45">
-        <span>Before Hash</span>
-        <span>On Hash</span>
+        <span>Before Hash · ₹10K/mo</span>
+        <span>On Hash · 10X/mo</span>
       </div>
 
       <div className="mt-8 border-t border-white/10 pt-6">

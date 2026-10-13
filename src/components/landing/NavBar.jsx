@@ -10,6 +10,7 @@ const LINKS = [
   { href: '#tournaments', label: 'Tournaments' },
   { href: '#features', label: 'Features' },
   { href: '#how-it-works', label: 'How it works' },
+  { href: '#marketplace', label: 'Marketplace' },
   { href: '#for-cafes', label: 'For cafes' },
   { href: '#faq', label: 'FAQ' },
 ];

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import AppShell from "@/components/AppShell";
 import NavBar from "@/components/landing/NavBar";
 import Reveal from "@/components/landing/Reveal";
@@ -12,7 +13,7 @@ import WipeReveal from "@/components/landing/WipeReveal";
 import SmoothScroll from "@/components/landing/SmoothScroll";
 import ScrollProgress from "@/components/landing/ScrollProgress";
 import StoreButtons from "@/components/landing/StoreButtons";
-import { DASHBOARD_SCREENS, KIOSK_POINTS, FAQS, FEATURES, GAMES, STEPS, TICKER } from "@/lib/landing";
+import { DASHBOARD_SCREENS, KIOSK_POINTS, MARKET_BRANDS, MARKET_CATEGORIES, FAQS, FEATURES, GAMES, STEPS, TICKER } from "@/lib/landing";
 import CafeDashboard from "@/components/landing/CafeDashboard";
 import GrowthVisual from "@/components/landing/GrowthVisual";
 import MobileDownloadBar from "@/components/landing/MobileDownloadBar";
@@ -309,6 +310,97 @@ function AppShowcase() {
   );
 }
 
+function Marketplace() {
+  const brands = [...MARKET_BRANDS, ...MARKET_BRANDS];
+  return (
+    <section id="marketplace" className="relative overflow-hidden bg-black py-24" aria-labelledby="market-title">
+      <div
+        className="pointer-events-none absolute left-1/2 top-0 h-[480px] w-[900px] -translate-x-1/2 rounded-full bg-[#ff9a3d]/15 blur-[140px]"
+        aria-hidden="true"
+      />
+      <div className="relative mx-auto max-w-[1600px] px-4 sm:px-8">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <Reveal>
+              <Eyebrow>Hash Marketplace</Eyebrow>
+            </Reveal>
+            <MaskHeading
+              id="market-title"
+              className="max-w-4xl font-display text-6xl uppercase leading-[0.9] text-white sm:text-8xl"
+            >
+              Gear up to win
+            </MaskHeading>
+          </div>
+          <Reveal delay={0.15} className="max-w-md">
+            <p className="text-sm leading-7 text-white/70">
+              Gaming gear in the Hash app, from the brands gamers already trust. Spend your HashCoins at checkout.
+            </p>
+            <Link
+              href="/shop"
+              className="mt-5 inline-block rounded-full border border-white px-7 py-2.5 font-display text-lg uppercase tracking-wide text-white transition hover:bg-white hover:text-black"
+            >
+              Explore Hash Shop
+            </Link>
+          </Reveal>
+        </div>
+
+        <ul className="mt-14 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
+          {MARKET_CATEGORIES.map((c, i) => (
+            <li key={c.title}>
+              <WipeReveal delay={i * 0.07} className="h-full">
+                <TiltCard className="h-full">
+                  <div className="group flex h-full min-h-[180px] flex-col justify-between rounded-sm bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-5 transition-colors duration-300 hover:from-[#ff3d8b] hover:to-[#ff9a3d]">
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#ff9a3d] group-hover:text-black/70">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <h3 className="font-display text-3xl uppercase leading-none text-white group-hover:text-black">
+                        {c.title}
+                      </h3>
+                      <p className="mt-2 text-xs leading-5 text-white/60 group-hover:text-black/75">{c.body}</p>
+                    </div>
+                  </div>
+                </TiltCard>
+              </WipeReveal>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="relative mt-16 border-y border-white/10 py-8">
+        <p className="mb-6 text-center text-[11px] font-semibold uppercase tracking-[0.4em] text-white/45">
+          Brands gamers play with
+        </p>
+        <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
+          <ul className="animate-ticker flex w-max items-center gap-16 whitespace-nowrap pr-16" aria-label="Gaming brands">
+            {brands.map((b, i) => (
+              <li
+                key={i}
+                aria-hidden={i >= MARKET_BRANDS.length}
+                className="group flex items-center gap-4 opacity-45 transition-opacity duration-300 hover:opacity-100"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`/images/brands/${b.logo}.svg`}
+                  alt={i < MARKET_BRANDS.length ? `${b.name} logo` : ""}
+                  width={56}
+                  height={56}
+                  loading="lazy"
+                  className="h-12 w-12 invert sm:h-14 sm:w-14"
+                />
+                <span className="font-display text-3xl uppercase tracking-wide text-white sm:text-4xl">{b.name}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <p className="mt-6 px-4 text-center text-[10px] leading-4 text-white/30">
+          Brand names and logos are trademarks of their respective owners. Product availability varies.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 function HowItWorks() {
   return (
     <section id="how-it-works" className="bg-[#ff3d8b] px-4 py-24 text-black sm:px-8" aria-labelledby="how-title">
@@ -560,6 +652,7 @@ export default function Page() {
       <Games />
       <AppShowcase />
       <HowItWorks />
+      <Marketplace />
       <ScrollBand top="Fill every seat · Host tournaments ·" bottom="Go live on Hash · Fill every seat ·" />
       <CafeDashboardTour />
       <KioskShowcase />
