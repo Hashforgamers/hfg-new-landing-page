@@ -12,7 +12,7 @@ import WipeReveal from "@/components/landing/WipeReveal";
 import SmoothScroll from "@/components/landing/SmoothScroll";
 import ScrollProgress from "@/components/landing/ScrollProgress";
 import StoreButtons from "@/components/landing/StoreButtons";
-import { DASHBOARD_SCREENS, FAQS, FEATURES, GAMES, STEPS, TICKER } from "@/lib/landing";
+import { DASHBOARD_SCREENS, KIOSK_POINTS, FAQS, FEATURES, GAMES, STEPS, TICKER } from "@/lib/landing";
 import CafeDashboard from "@/components/landing/CafeDashboard";
 import MobileDownloadBar from "@/components/landing/MobileDownloadBar";
 import {
@@ -368,6 +368,96 @@ function CafeDashboardTour() {
   );
 }
 
+function KioskShowcase() {
+  return (
+    <section className="relative overflow-hidden bg-black px-4 py-24 sm:px-8" aria-labelledby="kiosk-title">
+      <div
+        className="pointer-events-none absolute -left-40 bottom-0 h-[520px] w-[520px] rounded-full bg-[#3b6bff]/20 blur-[140px]"
+        aria-hidden="true"
+      />
+      <div className="relative mx-auto max-w-[1600px]">
+        <Reveal>
+          <Eyebrow>Hash Kiosk for Windows</Eyebrow>
+        </Reveal>
+        <MaskHeading
+          id="kiosk-title"
+          className="max-w-5xl font-display text-6xl uppercase leading-[0.9] text-white sm:text-8xl"
+        >
+          Every PC on autopilot
+        </MaskHeading>
+        <Reveal delay={0.15}>
+          <p className="mt-6 max-w-2xl text-base leading-7 text-white/75">
+            Install the Hash kiosk app on each gaming PC. It locks the machine, starts sessions from the Hash app,
+            tracks time and hands the PC back when the session ends.
+          </p>
+        </Reveal>
+
+        <div className="relative mt-16 lg:pb-24">
+          <WipeReveal className="lg:w-[78%]">
+            <TiltCard>
+              <figure className="overflow-hidden rounded-xl border border-white/15 shadow-[0_40px_120px_rgba(59,107,255,0.3)]">
+                <Image
+                  src="/images/kiosk/launcher.webp"
+                  alt="Hash kiosk game launcher showing game cover art, the selected game and session time left"
+                  width={1800}
+                  height={1090}
+                  sizes="(max-width: 1024px) 100vw, 75vw"
+                  className="h-auto w-full"
+                />
+              </figure>
+            </TiltCard>
+          </WipeReveal>
+
+          <Parallax
+            speed={-0.18}
+            className="relative z-10 mt-6 lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[46%]"
+          >
+            <Reveal delay={0.2}>
+              <figure className="overflow-hidden rounded-xl border border-white/20 shadow-[0_30px_80px_rgba(0,0,0,0.7)]">
+                <Image
+                  src="/images/kiosk/lock.webp"
+                  alt="Hash kiosk lock screen with a QR code to scan in the Hash app and an access code entry"
+                  width={1800}
+                  height={1030}
+                  sizes="(max-width: 1024px) 100vw, 45vw"
+                  className="h-auto w-full"
+                />
+              </figure>
+            </Reveal>
+          </Parallax>
+        </div>
+
+        <ol className="mt-16 grid gap-px bg-white/10 md:grid-cols-3">
+          {KIOSK_POINTS.map((k, i) => (
+            <li key={k.title} className="bg-black">
+              <Reveal delay={i * 0.1} className="h-full p-6 sm:p-8">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#ff9a3d]">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mt-3 font-display text-3xl uppercase leading-none text-white sm:text-4xl">{k.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-white/70">{k.body}</p>
+                {i === 2 && (
+                  <Image
+                    src="/images/kiosk/admin.webp"
+                    alt="Hash kiosk staff panel with buttons to add 15, 30 or 60 minutes or end the session"
+                    width={1800}
+                    height={263}
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="mt-5 h-auto w-full rounded-md border border-white/15"
+                  />
+                )}
+              </Reveal>
+            </li>
+          ))}
+        </ol>
+        <p className="mt-6 text-xs leading-6 text-white/40">
+          Game artwork shown belongs to its respective publishers and appears as it does in the kiosk launcher.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 function ForCafes() {
   return (
     <section className="relative overflow-hidden bg-black px-4 py-28 sm:px-8" aria-labelledby="cafes-title">
@@ -463,6 +553,7 @@ export default function Page() {
       <HowItWorks />
       <ScrollBand top="Fill every seat · Host tournaments ·" bottom="Go live on Hash · Fill every seat ·" />
       <CafeDashboardTour />
+      <KioskShowcase />
       <ForCafes />
       <Faq />
       <FinalCta />

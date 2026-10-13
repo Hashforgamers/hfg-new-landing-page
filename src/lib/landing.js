@@ -126,6 +126,21 @@ export const DASHBOARD_SCREENS = [
   },
 ];
 
+export const KIOSK_POINTS = [
+  {
+    title: "Locked until they pay",
+    body: "Each PC stays on the Hash lock screen. Gamers start by scanning a QR in the app or typing their booking code.",
+  },
+  {
+    title: "A launcher gamers love",
+    body: "Installed games are detected automatically and shown console-style with cover art and the time left.",
+  },
+  {
+    title: "Staff stay in control",
+    body: "Add 15, 30 or 60 minutes or end a session from the desk. The PC locks itself when time runs out.",
+  },
+];
+
 export const FAQS = [
   {
     q: "What is Hash For Gamers?",
