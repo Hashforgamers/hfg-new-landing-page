@@ -1,7 +1,13 @@
 export const SITE_URL = "https://hashforgamers.co.in";
 export const SITE_LOGO = "/images/hash-logo.png?v=20260311-0146";
 export const SITE_DOWNLOAD_URL = "https://onelink.to/85rrgg";
-export const SITE_OG_IMAGE = "/images/hash-logo.png?v=20260311-0146";
+export const SITE_ANDROID_PACKAGE = "com.hfg.hash";
+export const SITE_PLAY_STORE_URL = `https://play.google.com/store/apps/details?id=${SITE_ANDROID_PACKAGE}`;
+// No public App Store ID in the repo yet; the OneLink routes iOS users to the App Store.
+export const SITE_APP_STORE_URL = SITE_DOWNLOAD_URL;
+export const SITE_OG_IMAGE = "/images/og-home.jpg";
+// Self-serve onboarding for gaming cafe owners.
+export const SITE_ONBOARD_URL = "https://onboard.hashforgamers.com";
 export const SITE_EMAIL = "support@hashforgamers.com";
 export const SITE_INSTAGRAM = "https://instagram.com/hashforgamers";
 export const SITE_TWITTER = "https://twitter.com/hashforgamers";
@@ -12,10 +18,16 @@ export const SITE_NAME = "Hash For Gamers";
 export const SITE_TITLE_TEMPLATE = `%s | ${SITE_NAME}`;
 
 export const SITE_DESCRIPTION =
-  "Hash For Gamers is the premium gaming platform for players who want elite cafes, faster bookings, stronger identity, and a better gaming lifestyle in India.";
+  "Join esports tournaments, book gaming cafes near you, build your squad and earn HashCoins. Hash For Gamers is India's tournament-first gaming app for Android and iOS.";
 
 export const SITE_KEYWORDS = [
   "Hash For Gamers",
+  "esports tournaments India",
+  "online gaming tournaments India",
+  "BGMI tournament app",
+  "Valorant tournaments India",
+  "gaming tournament app",
+  "gaming cafe near me",
   "gaming cafes India",
   "book gaming cafe",
   "book gaming cafe in India",

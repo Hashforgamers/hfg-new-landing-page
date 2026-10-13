@@ -12,6 +12,21 @@ const routes = [
     priority: 0.9,
   },
   {
+    url: "/tournaments",
+    changeFrequency: "daily",
+    priority: 0.9,
+  },
+  {
+    url: "/rewards",
+    changeFrequency: "weekly",
+    priority: 0.7,
+  },
+  {
+    url: "/shop",
+    changeFrequency: "weekly",
+    priority: 0.6,
+  },
+  {
     url: "/list-cafe",
     changeFrequency: "monthly",
     priority: 0.8,

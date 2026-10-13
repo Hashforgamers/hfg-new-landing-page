@@ -32,7 +32,7 @@ export default function ContactUsModal({ isOpen, onClose }) {
         <div
           className="absolute inset-0 bg-cover bg-center transition-transform duration-200 ease-out"
           style={{
-            backgroundImage: "url('/contact-us.png')",
+            backgroundImage: "url('/contact-us.webp')",
             transform: `translate(${position.x}px, ${position.y}px) scale(1.05)`
           }}
         />

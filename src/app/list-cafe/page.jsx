@@ -44,9 +44,10 @@ export default function ListYourCafePage() {
         muted
         playsInline
         preload="metadata"
+        poster="/videos/gaming-bg-poster.jpg"
         className="absolute inset-0 w-full h-full object-cover"
       >
-        <source src="/gaming-bg.mp4" type="video/mp4" />
+        <source src="/videos/gaming-bg.mp4" type="video/mp4" />
       </video>
 
       {/* Overlay */}
@@ -169,6 +170,16 @@ export default function ListYourCafePage() {
           >
             Submit
           </button>
+
+          <p className="text-center text-sm text-white/70">
+            Ready to go live now?{" "}
+            <a
+              href="https://onboard.hashforgamers.com"
+              className="font-semibold text-green-400 underline underline-offset-4 hover:text-white"
+            >
+              Onboard your cafe yourself
+            </a>
+          </p>
         </form>
       </div>
     </div>

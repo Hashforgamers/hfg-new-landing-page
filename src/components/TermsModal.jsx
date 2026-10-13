@@ -37,7 +37,7 @@ export default function TermsModal({ isOpen, onClose }) {
           preload="metadata"
           className="absolute inset-0 w-full h-full object-cover"
         >
-          <source src="/videos/gaming-bg2.mp4" type="video/mp4" />
+          <source src="/videos/gaming-bg.mp4" type="video/mp4" />
         </video>
 
         {/* Dark Overlay for readability */}

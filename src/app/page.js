@@ -1,123 +1,56 @@
-import AppShell from '@/components/AppShell';
-import AboutSection from "@/components/AboutSection";
-import FeaturesSection from "@/components/FeatureSection";
-import IndiaGamingSection from "@/components/GameSection";
-import HashShop from "@/components/HashShop";
-import Hero from "@/components/Hero";
-import HowItWorksSection from "@/components/HowItWorksSection";
-import ProblemsSection from "@/components/ProblemSection";
-import StorySection from "@/components/StorySection";
-import TrustSection from "@/components/TrustSection";
-import TryNow from "@/components/TryNow";
-import { SITE_DESCRIPTION, SITE_DOWNLOAD_URL, SITE_EMAIL, SITE_LOGO, SITE_NAME, SITE_OG_IMAGE, SITE_SOCIALS, SITE_URL, buildPageMetadata } from "@/lib/site";
+import Image from "next/image";
+import Link from "next/link";
+import AppShell from "@/components/AppShell";
+import NavBar from "@/components/landing/NavBar";
+import Reveal from "@/components/landing/Reveal";
+import HeroVideo from "@/components/landing/HeroVideo";
+import { FadeUp, HeroScene, RevealLine } from "@/components/landing/HeroParallax";
+import Parallax from "@/components/landing/Parallax";
+import ScrollBand from "@/components/landing/ScrollBand";
+import TiltCard from "@/components/landing/TiltCard";
+import MaskHeading from "@/components/landing/MaskHeading";
+import WipeReveal from "@/components/landing/WipeReveal";
+import SmoothScroll from "@/components/landing/SmoothScroll";
+import ScrollProgress from "@/components/landing/ScrollProgress";
+import StoreButtons from "@/components/landing/StoreButtons";
+import { DASHBOARD_SCREENS, KIOSK_POINTS, MARKET_BRANDS, MARKET_CATEGORIES, FAQS, FEATURES, GAMES, STEPS, TICKER } from "@/lib/landing";
+import CafeDashboard from "@/components/landing/CafeDashboard";
+import GrowthVisual from "@/components/landing/GrowthVisual";
+import MobileDownloadBar from "@/components/landing/MobileDownloadBar";
+import {
+  SITE_APP_STORE_URL,
+  SITE_DESCRIPTION,
+  SITE_EMAIL,
+  SITE_LOGO,
+  SITE_NAME,
+  SITE_OG_IMAGE,
+  SITE_ONBOARD_URL,
+  SITE_PLAY_STORE_URL,
+  SITE_SOCIALS,
+  SITE_URL,
+  buildPageMetadata,
+} from "@/lib/site";
 
 export const metadata = buildPageMetadata({
-  title: SITE_NAME,
+  title: "Hash For Gamers: Esports Tournaments & Gaming Cafe Booking App in India",
   description: SITE_DESCRIPTION,
   path: "/",
-  keywords: [
-    "gaming booking app India",
-    "gaming cafe reservation app",
-    "premium gaming ecosystem",
-  ],
+  keywords: ["gaming booking app India", "gaming cafe reservation app", "esports app India"],
 });
 
-const storySections = [
-  {
-    id: "hero",
-    chapter: "Chapter 01",
-    title: "Premium Spawn",
-    subtitle:
-      "Hash should feel like the premium front door to gaming culture, not another basic utility app.",
-    accent: "#F97316",
-    align: "left",
-    cardPlacement: "lower-left",
-    Component: Hero,
-  },
-  {
-    id: "about",
-    chapter: "Chapter 02",
-    title: "Elite Flow",
-    subtitle:
-      "Hash moves from flex to function: find the right battleground, reserve faster, and own the night with one premium flow.",
-    accent: "#22C55E",
-    align: "right",
-    Component: AboutSection,
-  },
-  {
-    id: "trust",
-    chapter: "Chapter 03",
-    title: "Premium Signal",
-    subtitle:
-      "Strong positioning, clear traction language, and operator value make Hash feel credible, serious, and built to lead.",
-    accent: "#16FF00",
-    align: "left",
-    Component: TrustSection,
-  },
-  {
-    id: "how-it-works",
-    chapter: "Chapter 04",
-    title: "Lock The Slot",
-    subtitle:
-      "The flow should be instant to understand: discover, reserve, arrive, dominate.",
-    accent: "#14B8A6",
-    align: "right",
-    Component: HowItWorksSection,
-  },
-  {
-    id: "try-now",
-    chapter: "Chapter 05",
-    title: "Zero Friction",
-    subtitle:
-      "Hash removes every low-status booking ritual between intent and play.",
-    accent: "#EAB308",
-    align: "left",
-    Component: TryNow,
-  },
-  {
-    id: "features",
-    chapter: "Chapter 06",
-    title: "The Stack",
-    subtitle:
-      "This is the premium system behind the brand: bookings, identity, rewards, and community built into one stack.",
-    accent: "#38BDF8",
-    align: "right",
-    Component: FeaturesSection,
-  },
-  {
-    id: "shop",
-    chapter: "Chapter 07",
-    title: "Hash Gear",
-    subtitle:
-      "Hash Gear extends the brand beyond bookings into a premium gaming lifestyle layer.",
-    accent: "#FB7185",
-    align: "left",
-    Component: HashShop,
-  },
-  {
-    id: "problems",
-    chapter: "Chapter 08",
-    title: "Why Winners Switch",
-    subtitle:
-      "Once the friction is obvious, the premium answer becomes obvious too: one platform that upgrades the whole gaming routine.",
-    accent: "#A855F7",
-    align: "right",
-    Component: ProblemsSection,
-  },
-  {
-    id: "finale",
-    chapter: "Final Chapter",
-    title: "Enter The Premium Tier",
-    subtitle:
-      "The close should feel inevitable: install Hash, enter the network, and play in a different league.",
-    accent: "#F59E0B",
-    align: "left",
-    Component: IndiaGamingSection,
-  },
-];
+// Add the hero clip here once it's in public/videos/, e.g. { src: "/videos/hero.mp4", type: "video/mp4" }.
+// With no sources the poster image is shown on its own.
+const HERO_VIDEO_SOURCES = [];
 
-export default function Page() {
-  const organizationSchema = {
+const SIZE_CLASSES = {
+  lg: "sm:col-span-2 sm:row-span-2",
+  md: "sm:col-span-2",
+  tall: "sm:row-span-2",
+  sm: "",
+};
+
+const jsonLd = [
+  {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: SITE_NAME,
@@ -125,116 +58,608 @@ export default function Page() {
     logo: `${SITE_URL}${SITE_LOGO}`,
     email: SITE_EMAIL,
     sameAs: SITE_SOCIALS,
-  };
-
-  const websiteSchema = {
+  },
+  {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: SITE_NAME,
     url: SITE_URL,
     description: SITE_DESCRIPTION,
-    publisher: {
-      "@type": "Organization",
-      name: SITE_NAME,
-      logo: `${SITE_URL}${SITE_LOGO}`,
-    },
-    potentialAction: {
-      "@type": "ViewAction",
-      target: SITE_URL,
-    },
-  };
-
-  const appSchema = {
+    inLanguage: "en-IN",
+  },
+  {
     "@context": "https://schema.org",
     "@type": "MobileApplication",
     name: SITE_NAME,
     applicationCategory: "GameApplication",
     operatingSystem: "Android, iOS",
-    downloadUrl: SITE_DOWNLOAD_URL,
     description: SITE_DESCRIPTION,
     image: `${SITE_URL}${SITE_OG_IMAGE}`,
-    publisher: {
-      "@type": "Organization",
-      name: SITE_NAME,
-      logo: `${SITE_URL}${SITE_LOGO}`,
-    },
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "INR",
-      url: SITE_DOWNLOAD_URL,
-      availability: "https://schema.org/InStock",
-    },
-  };
-
-  const faqSchema = {
+    downloadUrl: [SITE_PLAY_STORE_URL, SITE_APP_STORE_URL],
+    installUrl: SITE_PLAY_STORE_URL,
+    featureList: FEATURES.map((f) => f.title),
+    offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
+    publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+  },
+  {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: "What is Hash For Gamers?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Hash For Gamers is a premium gaming platform that helps players discover gaming cafes, reserve setups faster, and access a stronger gaming lifestyle ecosystem in India.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Can I book gaming cafe slots through Hash?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Yes. Hash is positioned to make gaming cafe discovery and booking cleaner, faster, and more premium for players and operators.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Is Hash For Gamers only for players?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "No. Hash also supports gaming cafe operators who want better demand quality, cleaner bookings, and a stronger premium brand presence.",
-        },
-      },
-    ],
-  };
+    mainEntity: FAQS.map(({ q, a }) => ({
+      "@type": "Question",
+      name: q,
+      acceptedAnswer: { "@type": "Answer", text: a },
+    })),
+  },
+];
 
+function Eyebrow({ children }) {
+  return (
+    <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#ff9a3d]">{children}</p>
+  );
+}
+
+function Hero() {
+  return (
+    <section className="relative min-h-[100svh] overflow-hidden bg-black" aria-labelledby="hero-title">
+      <HeroScene
+        background={
+          <>
+            <HeroVideo poster="/images/retro-car.jpg" sources={HERO_VIDEO_SOURCES} />
+            {/* Vice-style sunset grade: pink → orange haze over a deep purple floor */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[#ff3d8b]/25 via-transparent to-[#3b0a45]/50" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+          </>
+        }
+      >
+        <div className="relative z-10 mx-auto w-full max-w-[1600px] px-4 pb-16 pt-32 sm:px-8 sm:pb-24">
+          <FadeUp>
+            <Eyebrow>Free on Android &amp; iOS · Made in India</Eyebrow>
+          </FadeUp>
+          <h1
+            id="hero-title"
+            className="font-display text-[clamp(3.5rem,13vw,13rem)] uppercase leading-[0.85] text-white"
+          >
+            <RevealLine delay={0.1}>Compete.</RevealLine>
+            <RevealLine
+              delay={0.25}
+              className="bg-gradient-to-r from-[#ff3d8b] via-[#ff9a3d] to-[#ffd23d] bg-clip-text text-transparent"
+            >
+              Book. Win.
+            </RevealLine>
+          </h1>
+          <FadeUp delay={0.5}>
+            <p className="mt-6 max-w-xl text-base leading-7 text-white/80 sm:text-lg">
+              Esports tournaments, gaming cafe bookings, squads and rewards in one app. Hash For Gamers is where
+              India&apos;s players compete and get paid.
+            </p>
+          </FadeUp>
+          <FadeUp delay={0.65}>
+            <StoreButtons className="mt-8" />
+          </FadeUp>
+        </div>
+      </HeroScene>
+
+      <a
+        href="#features"
+        className="absolute bottom-6 right-6 z-20 hidden flex-col items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.35em] text-white/60 transition hover:text-white sm:flex"
+      >
+        Scroll
+        <span className="relative h-12 w-px overflow-hidden bg-white/20">
+          <span className="absolute inset-x-0 top-0 h-1/2 animate-scroll-cue bg-white" />
+        </span>
+      </a>
+    </section>
+  );
+}
+
+function Ticker() {
+  const items = [...TICKER, ...TICKER];
+  return (
+    <div className="overflow-hidden border-y border-white/10 bg-[#ff3d8b] py-3" aria-hidden="true">
+      <div className="animate-ticker flex w-max gap-10 whitespace-nowrap">
+        {items.map((t, i) => (
+          <span key={i} className="font-display text-2xl uppercase tracking-wide text-black">
+            {t} <span className="ml-10">✦</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function FeatureGrid() {
+  return (
+    <section id="features" className="bg-black px-4 py-24 sm:px-8" aria-labelledby="features-title">
+      <div className="mx-auto max-w-[1600px]">
+        <Reveal className="mb-12 flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <Eyebrow>Everything in one app</Eyebrow>
+            <MaskHeading id="features-title" className="font-display text-6xl uppercase leading-none text-white sm:text-8xl">
+              Your whole scene
+            </MaskHeading>
+          </div>
+          <p className="max-w-md text-sm leading-7 text-white/70">
+            From tournament brackets to the PC you&apos;ll sit at tonight, Hash runs your gaming life from one place.
+          </p>
+        </Reveal>
+
+        <div className="grid auto-rows-[280px] grid-flow-dense gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {FEATURES.map((f, i) => (
+            <WipeReveal key={f.id} delay={(i % 4) * 0.12} className={SIZE_CLASSES[f.size]}>
+              <TiltCard className="h-full">
+              <article
+                id={f.id === "tournaments" ? "tournaments" : undefined}
+                className="group relative h-full overflow-hidden rounded-sm bg-[#120818]"
+              >
+                {f.image && (
+                  <Parallax speed={f.fit === "contain" ? -0.08 : 0.12} className="absolute -inset-y-10 inset-x-0">
+                  <Image
+                    src={f.image}
+                    alt={f.alt || ""}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 50vw"
+                    className={`transition duration-700 group-hover:scale-105 ${
+                      f.fit === "contain" ? "object-contain object-right p-6 pl-[45%] opacity-30 sm:opacity-100" : "object-cover"
+                    }`}
+                  />
+                  </Parallax>
+                )}
+                <div className={`absolute inset-0 bg-gradient-to-tr ${f.accent} via-black/40 to-transparent`} />
+                <div className="relative flex h-full flex-col justify-end p-6 sm:p-8">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-white/80">{f.kicker}</p>
+                  <h3
+                    className={`mt-2 font-display uppercase leading-[0.9] text-white ${
+                      f.size === "lg" ? "text-5xl sm:text-6xl xl:text-8xl" : "text-4xl xl:text-5xl"
+                    }`}
+                  >
+                    {f.title}
+                  </h3>
+                  <p className={`mt-3 text-sm leading-6 text-white/85 ${f.size === "lg" ? "max-w-sm" : "max-w-xs"}`}>
+                    {f.body}
+                  </p>
+                </div>
+              </article>
+              </TiltCard>
+            </WipeReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Games() {
+  return (
+    <section className="border-y border-white/10 bg-[#0b0414] px-4 py-24 sm:px-8" aria-labelledby="games-title">
+      <div className="mx-auto max-w-[1600px]">
+        <Reveal>
+          <Eyebrow>Pick your game</Eyebrow>
+          <MaskHeading id="games-title" className="font-display text-6xl uppercase leading-none text-white sm:text-8xl">
+            Games on Hash
+          </MaskHeading>
+        </Reveal>
+        <ul className="mt-12 grid grid-cols-2 border-l border-t border-white/10 lg:grid-cols-4">
+          {GAMES.map((g, i) => (
+            <li key={g.name} className="border-b border-r border-white/10">
+              <Reveal delay={(i % 4) * 0.06} y={20} className="group flex h-full flex-col justify-between gap-6 p-5 transition-colors duration-300 hover:bg-[#ff3d8b] sm:p-8">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 group-hover:text-black/70">
+                  {String(i + 1).padStart(2, "0")} · {g.type}
+                </span>
+                <h3 className="font-display text-3xl uppercase leading-none text-white group-hover:text-black sm:text-5xl">
+                  {g.name}
+                </h3>
+              </Reveal>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-6 text-xs leading-6 text-white/40">
+          Game titles are trademarks of their respective owners. Tournament line-ups change weekly; check the app for
+          what&apos;s live near you.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function AppShowcase() {
+  return (
+    <section
+      className="relative overflow-hidden bg-gradient-to-b from-black via-[#2a0838] to-[#ff3d8b] px-4 py-28 sm:px-8"
+      aria-labelledby="showcase-title"
+    >
+      <div className="mx-auto grid max-w-[1400px] items-center gap-16 lg:grid-cols-2">
+        <Reveal>
+          <Eyebrow>The Hash app</Eyebrow>
+          <MaskHeading id="showcase-title" className="font-display text-6xl uppercase leading-[0.9] text-white sm:text-8xl">
+            The city is your arena
+          </MaskHeading>
+          <p className="mt-6 max-w-lg text-base leading-7 text-white/80">
+            Browse tonight&apos;s tournaments, see which cafes have free PCs and consoles, invite your squad and track
+            your wallet without switching apps.
+          </p>
+          <StoreButtons className="mt-8" />
+        </Reveal>
+        <div className="relative mx-auto flex h-[560px] w-full max-w-[520px] justify-center">
+          <Parallax speed={0.25} rotate={4} className="absolute left-0 top-10 w-[48%]">
+          <Reveal className="-rotate-6" delay={0.1}>
+            <Image
+              src="/images/app/tournaments.webp"
+              alt="Hash app tournaments screen with live and upcoming esports tournaments"
+              width={720}
+              height={1460}
+              sizes="260px"
+              className="h-auto w-full rounded-[28px] border-4 border-white/10 drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
+            />
+          </Reveal>
+          </Parallax>
+          <Parallax speed={-0.2} rotate={-4} className="absolute right-0 top-0 w-[48%]">
+          <Reveal className="rotate-6" delay={0.2}>
+            <Image
+              src="/images/app/tournament-detail.webp"
+              alt="Hash app tournament detail with prize pool, slots, teams, rules and leaderboard"
+              width={720}
+              height={1460}
+              sizes="260px"
+              className="h-auto w-full rounded-[28px] border-4 border-white/10 drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
+            />
+          </Reveal>
+          </Parallax>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Marketplace() {
+  const brands = [...MARKET_BRANDS, ...MARKET_BRANDS];
+  return (
+    <section id="marketplace" className="relative overflow-hidden bg-black py-24" aria-labelledby="market-title">
+      <div
+        className="pointer-events-none absolute left-1/2 top-0 h-[480px] w-[900px] -translate-x-1/2 rounded-full bg-[#ff9a3d]/15 blur-[140px]"
+        aria-hidden="true"
+      />
+      <div className="relative mx-auto max-w-[1600px] px-4 sm:px-8">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <Reveal>
+              <Eyebrow>Hash Marketplace</Eyebrow>
+            </Reveal>
+            <MaskHeading
+              id="market-title"
+              className="max-w-4xl font-display text-6xl uppercase leading-[0.9] text-white sm:text-8xl"
+            >
+              Gear up to win
+            </MaskHeading>
+          </div>
+          <Reveal delay={0.15} className="max-w-md">
+            <p className="text-sm leading-7 text-white/70">
+              Gaming gear in the Hash app, from the brands gamers already trust. Spend your HashCoins at checkout.
+            </p>
+            <Link
+              href="/shop"
+              className="mt-5 inline-block rounded-full border border-white px-7 py-2.5 font-display text-lg uppercase tracking-wide text-white transition hover:bg-white hover:text-black"
+            >
+              Explore Hash Shop
+            </Link>
+          </Reveal>
+        </div>
+
+        <ul className="mt-14 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
+          {MARKET_CATEGORIES.map((c, i) => (
+            <li key={c.title}>
+              <WipeReveal delay={i * 0.07} className="h-full">
+                <TiltCard className="h-full">
+                  <div className="group flex h-full min-h-[180px] flex-col justify-between rounded-sm bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-5 transition-colors duration-300 hover:from-[#ff3d8b] hover:to-[#ff9a3d]">
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#ff9a3d] group-hover:text-black/70">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <h3 className="font-display text-3xl uppercase leading-none text-white group-hover:text-black">
+                        {c.title}
+                      </h3>
+                      <p className="mt-2 text-xs leading-5 text-white/60 group-hover:text-black/75">{c.body}</p>
+                    </div>
+                  </div>
+                </TiltCard>
+              </WipeReveal>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="relative mt-16 border-y border-white/10 py-8">
+        <p className="mb-6 text-center text-[11px] font-semibold uppercase tracking-[0.4em] text-white/45">
+          Brands gamers play with
+        </p>
+        <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
+          <ul className="animate-ticker flex w-max items-center gap-16 whitespace-nowrap pr-16" aria-label="Gaming brands">
+            {brands.map((b, i) => (
+              <li
+                key={i}
+                aria-hidden={i >= MARKET_BRANDS.length}
+                className="group flex items-center gap-4 opacity-45 transition-opacity duration-300 hover:opacity-100"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`/images/brands/${b.logo}.svg`}
+                  alt={i < MARKET_BRANDS.length ? `${b.name} logo` : ""}
+                  width={56}
+                  height={56}
+                  loading="lazy"
+                  className="h-12 w-12 invert sm:h-14 sm:w-14"
+                />
+                <span className="font-display text-3xl uppercase tracking-wide text-white sm:text-4xl">{b.name}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <p className="mt-6 px-4 text-center text-[10px] leading-4 text-white/30">
+          Brand names and logos are trademarks of their respective owners. Product availability varies.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function HowItWorks() {
+  return (
+    <section id="how-it-works" className="bg-[#ff3d8b] px-4 py-24 text-black sm:px-8" aria-labelledby="how-title">
+      <div className="mx-auto max-w-[1600px]">
+        <Reveal>
+          <MaskHeading id="how-title" className="font-display text-6xl uppercase leading-none sm:text-8xl">
+            How it works
+          </MaskHeading>
+        </Reveal>
+        <ol className="mt-14 grid gap-px bg-black/20 sm:grid-cols-2 lg:grid-cols-4">
+          {STEPS.map((s, i) => (
+            <li key={s.n} className="bg-[#ff3d8b]">
+              <Reveal delay={i * 0.1} className="p-6 sm:p-8">
+                <span className="font-display text-8xl leading-none text-black/25">{s.n}</span>
+                <h3 className="mt-4 font-display text-4xl uppercase">{s.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-black/75">{s.body}</p>
+              </Reveal>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+function CafeDashboardTour() {
+  return (
+    <section
+      id="for-cafes"
+      className="relative overflow-hidden bg-[#0b0414] px-4 py-24 sm:px-8"
+      aria-labelledby="dashboard-title"
+    >
+      <div
+        className="pointer-events-none absolute -right-40 top-0 h-[600px] w-[600px] rounded-full bg-[#ff3d8b]/20 blur-[140px]"
+        aria-hidden="true"
+      />
+      <div className="relative mx-auto max-w-[1600px]">
+        <Reveal>
+          <Eyebrow>For gaming cafe owners</Eyebrow>
+        </Reveal>
+        <MaskHeading
+          id="dashboard-title"
+          className="max-w-5xl font-display text-6xl uppercase leading-[0.9] text-white sm:text-8xl"
+        >
+          Run your cafe from one screen
+        </MaskHeading>
+        <Reveal delay={0.15}>
+          <p className="mt-6 max-w-2xl text-base leading-7 text-white/75">
+            The Hash cafe dashboard handles bookings, consoles, customers and pricing, so you spend less time on
+            registers and more on the floor.
+          </p>
+        </Reveal>
+        <WipeReveal className="mt-14" delay={0.1}>
+          <CafeDashboard screens={DASHBOARD_SCREENS} />
+        </WipeReveal>
+      </div>
+    </section>
+  );
+}
+
+function KioskShowcase() {
+  return (
+    <section className="relative overflow-hidden bg-black px-4 py-24 sm:px-8" aria-labelledby="kiosk-title">
+      <div
+        className="pointer-events-none absolute -left-40 bottom-0 h-[520px] w-[520px] rounded-full bg-[#3b6bff]/20 blur-[140px]"
+        aria-hidden="true"
+      />
+      <div className="relative mx-auto max-w-[1600px]">
+        <Reveal>
+          <Eyebrow>Hash Kiosk for Windows</Eyebrow>
+        </Reveal>
+        <MaskHeading
+          id="kiosk-title"
+          className="max-w-5xl font-display text-6xl uppercase leading-[0.9] text-white sm:text-8xl"
+        >
+          Every PC on autopilot
+        </MaskHeading>
+        <Reveal delay={0.15}>
+          <p className="mt-6 max-w-2xl text-base leading-7 text-white/75">
+            Install the Hash kiosk app on each gaming PC. It locks the machine, starts sessions from the Hash app,
+            tracks time and hands the PC back when the session ends.
+          </p>
+        </Reveal>
+
+        <div className="relative mt-16 lg:pb-24">
+          <WipeReveal className="lg:w-[78%]">
+            <TiltCard>
+              <figure className="overflow-hidden rounded-xl border border-white/15 shadow-[0_40px_120px_rgba(59,107,255,0.3)]">
+                <Image
+                  src="/images/kiosk/launcher.webp"
+                  alt="Hash kiosk game launcher showing game cover art, the selected game and session time left"
+                  width={1800}
+                  height={1090}
+                  sizes="(max-width: 1024px) 100vw, 75vw"
+                  className="h-auto w-full"
+                />
+              </figure>
+            </TiltCard>
+          </WipeReveal>
+
+          <Parallax
+            speed={-0.18}
+            className="relative z-10 mt-6 lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[46%]"
+          >
+            <Reveal delay={0.2}>
+              <figure className="overflow-hidden rounded-xl border border-white/20 shadow-[0_30px_80px_rgba(0,0,0,0.7)]">
+                <Image
+                  src="/images/kiosk/lock.webp"
+                  alt="Hash kiosk lock screen with a QR code to scan in the Hash app and an access code entry"
+                  width={1800}
+                  height={1030}
+                  sizes="(max-width: 1024px) 100vw, 45vw"
+                  className="h-auto w-full"
+                />
+              </figure>
+            </Reveal>
+          </Parallax>
+        </div>
+
+        <ol className="mt-16 grid gap-px bg-white/10 md:grid-cols-3">
+          {KIOSK_POINTS.map((k, i) => (
+            <li key={k.title} className="bg-black">
+              <Reveal delay={i * 0.1} className="h-full p-6 sm:p-8">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#ff9a3d]">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mt-3 font-display text-3xl uppercase leading-none text-white sm:text-4xl">{k.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-white/70">{k.body}</p>
+                {i === 2 && (
+                  <Image
+                    src="/images/kiosk/admin.webp"
+                    alt="Hash kiosk staff panel with buttons to add 15, 30 or 60 minutes or end the session"
+                    width={1800}
+                    height={263}
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="mt-5 h-auto w-full rounded-md border border-white/15"
+                  />
+                )}
+              </Reveal>
+            </li>
+          ))}
+        </ol>
+        <p className="mt-6 text-xs leading-6 text-white/40">
+          Game artwork shown belongs to its respective publishers and appears as it does in the kiosk launcher.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function ForCafes() {
+  return (
+    <section className="relative overflow-hidden bg-black px-4 py-28 sm:px-8" aria-labelledby="cafes-title">
+      <Parallax speed={0.3} scale className="absolute -inset-y-24 inset-x-0">
+        <Image src="/gta6-miami-sunset.jpg" alt="" fill sizes="100vw" className="object-cover opacity-40" />
+      </Parallax>
+      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/40" />
+      <div className="relative mx-auto grid max-w-[1600px] items-center gap-12 lg:grid-cols-2">
+        <Reveal>
+          <Eyebrow>Ready when you are</Eyebrow>
+          <MaskHeading id="cafes-title" className="max-w-3xl font-display text-6xl uppercase leading-[0.9] text-white sm:text-8xl">
+            Fill every seat
+          </MaskHeading>
+          <p className="mt-6 max-w-xl text-base leading-7 text-white/80">
+            Empty PCs earn nothing. List your gaming cafe on Hash to get advance bookings, host tournaments and reach
+            players nearby. Sign up online, verify with OTP, upload your documents and go live.
+          </p>
+          <a
+            href={SITE_ONBOARD_URL}
+            className="mt-8 inline-block rounded-full bg-white px-8 py-3 font-display text-xl uppercase tracking-wide text-black transition hover:bg-[#ff3d8b] hover:text-white"
+          >
+            List your cafe
+          </a>
+        </Reveal>
+        <Reveal delay={0.15}>
+          <TiltCard>
+            <GrowthVisual />
+          </TiltCard>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function Faq() {
+  return (
+    <section id="faq" className="bg-black px-4 py-24 sm:px-8" aria-labelledby="faq-title">
+      <div className="mx-auto grid max-w-[1400px] gap-12 lg:grid-cols-[1fr_1.4fr]">
+        <Reveal>
+          <Eyebrow>Questions</Eyebrow>
+          <MaskHeading id="faq-title" className="font-display text-6xl uppercase leading-none text-white sm:text-7xl">
+            FAQ
+          </MaskHeading>
+        </Reveal>
+        <div className="divide-y divide-white/15 border-y border-white/15">
+          {FAQS.map(({ q, a }) => (
+            <details key={q} className="group py-6">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 font-display text-2xl uppercase text-white sm:text-3xl">
+                <h3>{q}</h3>
+                <span className="text-3xl text-[#ff9a3d] transition group-open:rotate-45" aria-hidden="true">
+                  +
+                </span>
+              </summary>
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-white/75">{a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FinalCta() {
+  return (
+    <section
+      className="relative overflow-hidden bg-gradient-to-br from-[#ff3d8b] via-[#ff9a3d] to-[#ffd23d] px-4 py-28 text-center sm:px-8"
+      aria-labelledby="cta-title"
+    >
+      <Reveal className="mx-auto max-w-4xl">
+        <h2 id="cta-title" className="font-display text-[clamp(3.5rem,11vw,10rem)] uppercase leading-[0.85] text-black">
+          <MaskHeading as="span" className="block">Get Hash.</MaskHeading>
+          <MaskHeading as="span" className="block">Get in the game.</MaskHeading>
+        </h2>
+        <div className="mt-10 flex justify-center [&_a:first-child]:bg-black [&_a:first-child]:text-white [&_a:last-child]:border-black [&_a:last-child]:text-black">
+          <StoreButtons className="justify-center" />
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
+export default function Page() {
   return (
     <AppShell>
-      <div className="min-h-screen w-screen">
+      {jsonLd.map((data) => (
         <script
+          key={data["@type"]}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-        />
-        {storySections.map(
-          ({ id, chapter, title, subtitle, accent, align, cardPlacement, Component }, index) => (
-            <StorySection
-              key={id}
-              id={id}
-              chapter={chapter}
-              title={title}
-              subtitle={subtitle}
-              accent={accent}
-              align={align}
-              cardPlacement={cardPlacement}
-              showSeparator={index < storySections.length - 1}
-            >
-              <Component />
-            </StorySection>
-          )
-        )}
-      </div>
+      ))}
+      <SmoothScroll />
+      <ScrollProgress />
+      <NavBar />
+      <Hero />
+      <Ticker />
+      <FeatureGrid />
+      <ScrollBand top="Compete · Book · Win · Compete · Book · Win ·" bottom="Squad up · Earn HashCoins · Squad up · Earn HashCoins ·" />
+      <Games />
+      <AppShowcase />
+      <HowItWorks />
+      <Marketplace />
+      <ScrollBand top="Fill every seat · Host tournaments ·" bottom="Go live on Hash · Fill every seat ·" />
+      <CafeDashboardTour />
+      <KioskShowcase />
+      <ForCafes />
+      <Faq />
+      <FinalCta />
+      <MobileDownloadBar />
     </AppShell>
   );
 }

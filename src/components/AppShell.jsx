@@ -39,7 +39,7 @@ export default function AppShell({ children }) {
   }, [isAnyModalOpen]);
 
   return (
-    <>
+    <div className="font-body">
       {/* Sidebar */}
       <Sidebar
         isOpen={sidebarOpen}
@@ -53,7 +53,7 @@ export default function AppShell({ children }) {
       />
 
       {/* Page Content */}
-      <main>{children}</main>
+      <main id="main">{children}</main>
 
       {/* Footer */}
       <Footer
@@ -72,6 +72,6 @@ export default function AppShell({ children }) {
       <PartnerWithUsModal isOpen={partnerOpen} onClose={() => setPartnerOpen(false)} />
       <HelpCenterModal isOpen={helpOpen} onClose={() => setHelpOpen(false)} />
       <TermsModal isOpen={termsOpen} onClose={() => setTermsOpen(false)} />
-    </>
+    </div>
   );
 }

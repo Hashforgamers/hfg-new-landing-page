@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Instagram, Twitter, Linkedin, Youtube } from 'lucide-react';
-import { SITE_DOWNLOAD_URL } from '@/lib/site';
+import { SITE_DOWNLOAD_URL, SITE_ONBOARD_URL } from '@/lib/site';
 
 const Footer = ({
   openAbout,
@@ -21,6 +21,7 @@ const Footer = ({
         { label: 'Gaming Cafes', href: '/gaming-cafes' },
         { label: 'Rewards', href: '/rewards' },
         { label: 'Shop', href: '/shop' },
+        { label: 'Tournaments', href: '/tournaments' },
         { label: 'Download App', href: SITE_DOWNLOAD_URL }
       ]
     },
@@ -45,17 +46,18 @@ const Footer = ({
     {
       title: 'For Business',
       links: [
-        { label: 'List Your Cafe', href: '/list-cafe' },
+        { label: 'Onboard Your Cafe', href: SITE_ONBOARD_URL },
+        { label: 'Request a Callback', href: '/list-cafe' },
         { label: 'Partner With Hash', action: 'partner' },
       ]
     }
   ];
 
   const socialLinks = [
-    { icon: Instagram, href: 'https://instagram.com/hashforgamers' },
-    { icon: Twitter, href: 'https://twitter.com/hashforgamers' },
-    { icon: Youtube, href: 'https://youtube.com/@hashforgamers' },
-    { icon: Linkedin, href: 'https://linkedin.com/company/hashforgamers' }
+    { icon: Instagram, href: 'https://instagram.com/hashforgamers', label: 'Hash on Instagram' },
+    { icon: Twitter, href: 'https://twitter.com/hashforgamers', label: 'Hash on X' },
+    { icon: Youtube, href: 'https://youtube.com/@hashforgamers', label: 'Hash on YouTube' },
+    { icon: Linkedin, href: 'https://linkedin.com/company/hashforgamers', label: 'Hash on LinkedIn' }
   ];
 
   const handleAction = (action) => {
@@ -77,86 +79,63 @@ const Footer = ({
     }
   };
 
+  const linkClass =
+    'text-sm text-white/60 transition hover:text-white focus-visible:text-white';
+
   return (
-    <footer className="bg-black px-6 py-12 text-gray-400 md:px-12 lg:px-24">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-12 rounded-[32px] border border-white/10 bg-white/[0.04] p-6 backdrop-blur-md md:p-8">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-3xl">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.42em] text-[#16FF00]">
-                Premium Gaming Access
-              </p>
-              <h3 className="mt-3 text-2xl font-black uppercase tracking-[0.12em] text-white md:text-3xl">
-                The premium gaming brand for players who expect more.
-              </h3>
-              <p className="mt-3 text-sm leading-7 text-white/70">
-                Hash is where serious gamers discover elite cafes, reserve high-quality setups, build identity, unlock rewards, and stay inside one premium ecosystem. For operators, it turns demand into a cleaner, stronger, more valuable gaming business.
-              </p>
-            </div>
+    <footer className="bg-black px-4 pb-10 pt-20 text-white sm:px-8">
+      <div className="mx-auto max-w-[1600px]">
+        <p
+          className="select-none font-display text-[clamp(5rem,22vw,22rem)] uppercase leading-[0.8] text-white/[0.06]"
+          aria-hidden="true"
+        >
+          Hash
+        </p>
 
-            <Link
-              href={SITE_DOWNLOAD_URL}
-              className="inline-flex w-fit items-center rounded-full border border-[#16FF00]/40 bg-[#16FF00]/10 px-6 py-3 text-sm font-semibold uppercase tracking-[0.22em] text-[#16FF00] transition hover:bg-[#16FF00] hover:text-black"
-            >
-              Download Hash
-            </Link>
-          </div>
-        </div>
-
-        {/* Footer Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-          {footerSections.map((section, index) => (
-            <div key={index}>
-              <h3 className="text-white font-bold text-lg mb-4">
+        <div className="mt-10 grid grid-cols-2 gap-10 border-t border-white/15 pt-10 md:grid-cols-4">
+          {footerSections.map((section) => (
+            <nav key={section.title} aria-label={section.title}>
+              <h2 className="mb-5 text-[11px] font-semibold uppercase tracking-[0.35em] text-[#ff9a3d]">
                 {section.title}
-              </h3>
-
+              </h2>
               <ul className="space-y-3">
-                {section.links.map((link, linkIndex) => (
-                  <li key={linkIndex}>
+                {section.links.map((link) => (
+                  <li key={link.label}>
                     {link.action ? (
-                      <button
-                        onClick={() => handleAction(link.action)}
-                        className="hover:text-green-400 transition"
-                      >
+                      <button type="button" onClick={() => handleAction(link.action)} className={linkClass}>
                         {link.label}
                       </button>
                     ) : (
-                      <Link
-                        href={link.href}
-                        className="hover:text-green-400 transition"
-                      >
+                      <Link href={link.href} className={linkClass}>
                         {link.label}
                       </Link>
                     )}
                   </li>
                 ))}
               </ul>
-            </div>
+            </nav>
           ))}
         </div>
 
-        <div className="border-t border-gray-800 mb-8" />
-
-        {/* Social Icons */}
-        <div className="flex justify-center gap-6 mb-8">
-          {socialLinks.map((social, index) => (
-            <Link
-              key={index}
-              href={social.href}
-              target="_blank"
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-green-500 transition"
-            >
-              <social.icon size={20} className="text-white" />
-            </Link>
-          ))}
+        <div className="mt-14 flex flex-col-reverse items-start justify-between gap-6 border-t border-white/15 pt-8 sm:flex-row sm:items-center">
+          <p className="text-xs uppercase tracking-[0.25em] text-white/40">
+            © {new Date().getFullYear()} Hash For Gamers · Made in India
+          </p>
+          <div className="flex gap-3">
+            {socialLinks.map((social) => (
+              <a
+                key={social.href}
+                href={social.href}
+                target="_blank"
+                rel="noopener"
+                aria-label={social.label}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white/70 transition hover:border-white hover:bg-white hover:text-black"
+              >
+                <social.icon size={18} aria-hidden="true" />
+              </a>
+            ))}
+          </div>
         </div>
-
-        {/* Copyright */}
-        <div className="text-center text-gray-500 text-sm">
-          © 2025 HashForGamers. All rights reserved.
-        </div>
-
       </div>
     </footer>
   );

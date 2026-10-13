@@ -18,7 +18,9 @@ const BackgroundMusic = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
 
+  // The home page is the main SEO/conversion surface, so it skips the tap-to-enter gate too.
   const isUtilityPage =
+    pathname === '/' ||
     pathname?.startsWith('/support') ||
     pathname?.startsWith('/privacy-policy') ||
     pathname?.startsWith('/delete-account');

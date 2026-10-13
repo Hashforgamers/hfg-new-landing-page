@@ -1,12 +1,25 @@
-import { Orbitron } from 'next/font/google';
+import { Anton, Inter, Orbitron } from 'next/font/google';
 import "./globals.css";
 import BackgroundMusic from '@/components/BackgroundMusic';
-import { SITE_DESCRIPTION, SITE_EMAIL, SITE_KEYWORDS, SITE_NAME, SITE_OG_IMAGE, SITE_SOCIALS, SITE_TITLE_TEMPLATE, SITE_URL } from '@/lib/site';
+import { SITE_DESCRIPTION, SITE_EMAIL, SITE_KEYWORDS, SITE_LOGO, SITE_NAME, SITE_OG_IMAGE, SITE_SOCIALS, SITE_TITLE_TEMPLATE, SITE_URL } from '@/lib/site';
 
 const orbitron = Orbitron({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700', '800', '900'],
   variable: '--font-orbitron',
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
+
+const anton = Anton({
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+  variable: '--font-anton',
 });
 
 export const metadata = {
@@ -72,11 +85,11 @@ export const metadata = {
   },
   icons: {
     icon: [
-      { url: SITE_OG_IMAGE, type: "image/png" },
+      { url: SITE_LOGO, type: "image/png" },
       { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
     ],
     apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
-    shortcut: [SITE_OG_IMAGE],
+    shortcut: [SITE_LOGO],
   },
   manifest: "/manifest.webmanifest",
   other: {
@@ -91,8 +104,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={orbitron.variable}>
+    <html lang="en-IN">
+      <body className={`${orbitron.variable} ${anton.variable} ${inter.variable}`}>
         {children}
         <BackgroundMusic />
       </body>
