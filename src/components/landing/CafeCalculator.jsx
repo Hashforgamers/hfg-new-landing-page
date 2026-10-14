@@ -16,6 +16,7 @@ import {
   inrShort,
 } from '@/lib/calculator';
 import { SITE_ONBOARD_URL } from '@/lib/site';
+import { track } from '@/lib/analytics';
 
 const COLORS = ['#ff3d8b', '#ff9a3d', '#ffd23d', '#16ff7a', '#38bdf8', '#a78bfa', '#f472b6', '#94a3b8', '#64748b'];
 
@@ -199,6 +200,26 @@ export default function CafeCalculator() {
   const r = useMemo(() => calculate(s, prices), [s, prices]);
   const profitable = r.profit > 0;
 
+  // Report the visitor's setup once they stop adjusting for 2s (skips the initial render).
+  const touched = useRef(false);
+  useEffect(() => {
+    if (!touched.current) {
+      touched.current = true;
+      return;
+    }
+    const t = setTimeout(() => {
+      track('calculator_used', {
+        stations: r.stations,
+        pcs: s.pcs,
+        consoles: s.ps5 + s.xbox,
+        city_tier: s.city,
+        setup_cost: Math.round(r.setupTotal),
+        break_even_months: r.breakEven ?? -1,
+      });
+    }, 2000);
+    return () => clearTimeout(t);
+  }, [s, prices]); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <div>
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
@@ -288,12 +309,16 @@ export default function CafeCalculator() {
 
             <a
               href={SITE_ONBOARD_URL}
+              data-track="calculator_cta_click"
+              data-track-cta="onboard"
               className="mt-8 block rounded-full bg-white px-8 py-3.5 text-center font-display text-xl uppercase tracking-wide text-black transition hover:bg-[#ff3d8b] hover:text-white"
             >
               Fill these seats with Hash
             </a>
             <a
               href="#franchise"
+              data-track="franchise_section_click"
+              data-track-placement="calculator_results"
               className="mt-3 block rounded-full bg-gradient-to-r from-[#ff3d8b] via-[#ff9a3d] to-[#ffd23d] px-8 py-3.5 text-center font-display text-xl uppercase tracking-wide text-black transition hover:brightness-110"
             >
               Get Hash franchise
@@ -335,10 +360,10 @@ export default function CafeCalculator() {
                 <p className="font-semibold text-white">{item.label}</p>
                 <p className="text-xs text-white/50">{item.note}</p>
                 <p className="mt-1.5 flex gap-3 text-[11px] font-semibold uppercase tracking-[0.15em]">
-                  <a href={item.amazon} target="_blank" rel="noopener nofollow" className="text-[#ff9a3d] hover:text-white">
+                  <a href={item.amazon} target="_blank" rel="noopener nofollow" data-track="price_check_click" data-track-retailer="amazon" data-track-item={key} className="text-[#ff9a3d] hover:text-white">
                     Amazon ↗
                   </a>
-                  <a href={item.flipkart} target="_blank" rel="noopener nofollow" className="text-[#38bdf8] hover:text-white">
+                  <a href={item.flipkart} target="_blank" rel="noopener nofollow" data-track="price_check_click" data-track-retailer="flipkart" data-track-item={key} className="text-[#38bdf8] hover:text-white">
                     Flipkart ↗
                   </a>
                 </p>

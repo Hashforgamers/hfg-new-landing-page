@@ -48,7 +48,7 @@ export default function NavBar() {
         <ul className="hidden items-center gap-8 lg:flex">
           {LINKS.map((l) => (
             <li key={l.href}>
-              <a href={l.href} className="text-xs font-semibold uppercase tracking-[0.25em] text-white/75 transition hover:text-white">
+              <a href={l.href} data-track="nav_click" data-track-label={l.label} className="text-xs font-semibold uppercase tracking-[0.25em] text-white/75 transition hover:text-white">
                 {l.label}
               </a>
             </li>
@@ -58,6 +58,9 @@ export default function NavBar() {
         <div className="flex items-center gap-2">
           <a
             href={SITE_DOWNLOAD_URL}
+            data-track="app_download_click"
+            data-track-store="onelink"
+            data-track-placement="nav"
             className="rounded-full bg-white px-5 py-2 font-display text-lg uppercase tracking-wide text-black transition hover:bg-[#ff3d8b] hover:text-white"
           >
             Download

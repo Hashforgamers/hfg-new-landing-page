@@ -107,7 +107,19 @@ const Footer = ({
                         {link.label}
                       </button>
                     ) : (
-                      <Link href={link.href} className={linkClass}>
+                      <Link
+                        href={link.href}
+                        className={linkClass}
+                        data-track={
+                          link.href === SITE_DOWNLOAD_URL
+                            ? 'app_download_click'
+                            : link.href === SITE_ONBOARD_URL
+                              ? 'cafe_onboard_click'
+                              : undefined
+                        }
+                        data-track-store={link.href === SITE_DOWNLOAD_URL ? 'onelink' : undefined}
+                        data-track-placement="footer"
+                      >
                         {link.label}
                       </Link>
                     )}

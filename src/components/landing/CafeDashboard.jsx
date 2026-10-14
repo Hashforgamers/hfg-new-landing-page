@@ -33,6 +33,8 @@ export default function CafeDashboard({ screens }) {
               role="tab"
               aria-selected={selected}
               aria-controls="cafe-dashboard-panel"
+              data-track="dashboard_tab_click"
+              data-track-tab={s.id}
               onClick={() => {
                 setActive(i);
                 setAuto(false);

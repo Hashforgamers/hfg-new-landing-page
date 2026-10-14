@@ -20,6 +20,10 @@ export const SITE_TWITTER = "https://twitter.com/hashforgamers";
 export const SITE_LINKEDIN = "https://linkedin.com/company/hashforgamers";
 export const SITE_YOUTUBE = "https://youtube.com/@hashforgamers";
 
+// Analytics IDs carried over from the previous site; override per environment if needed.
+export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || "G-B1QNYHZ26Z";
+export const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || "3210237032478677";
+
 export const SITE_NAME = "Hash For Gamers";
 export const SITE_TITLE_TEMPLATE = `%s | ${SITE_NAME}`;
 

@@ -47,12 +47,15 @@ export default function FranchiseCompare() {
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href={SITE_FRANCHISE_URL}
+                data-track="franchise_enquiry_click"
                 className="rounded-full bg-gradient-to-r from-[#ff3d8b] via-[#ff9a3d] to-[#ffd23d] px-8 py-3.5 font-display text-xl uppercase tracking-wide text-black shadow-[0_0_40px_rgba(255,154,61,0.45)] transition hover:brightness-110"
               >
                 Get Hash franchise
               </a>
               <a
                 href={SITE_ONBOARD_URL}
+                data-track="cafe_onboard_click"
+                data-track-placement="franchise_compare"
                 className="rounded-full border border-white/40 px-8 py-3.5 font-display text-xl uppercase tracking-wide text-white transition hover:bg-white hover:text-black"
               >
                 List my own cafe
