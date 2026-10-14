@@ -43,9 +43,11 @@ export const metadata = buildPageMetadata({
   keywords: ["gaming booking app India", "gaming cafe reservation app", "esports app India"],
 });
 
-// Add the hero clip here once it's in public/videos/, e.g. { src: "/videos/hero.mp4", type: "video/mp4" }.
-// With no sources the poster image is shown on its own.
-const HERO_VIDEO_SOURCES = [];
+// Hero background loop. Phones get the lighter 480p file; the first match wins.
+const HERO_VIDEO_SOURCES = [
+  { src: "/videos/hero-480.mp4", type: "video/mp4", media: "(max-width: 767px)" },
+  { src: "/videos/hero.mp4", type: "video/mp4" },
+];
 
 const CALC_EXAMPLE = calculate(CALC_DEFAULTS, CALC_PRICES);
 
@@ -156,7 +158,7 @@ function Hero() {
       <HeroScene
         background={
           <>
-            <HeroVideo poster="/images/retro-car.jpg" sources={HERO_VIDEO_SOURCES} />
+            <HeroVideo poster="/images/hero-poster.jpg" sources={HERO_VIDEO_SOURCES} />
             {/* Vice-style sunset grade: pink → orange haze over a deep purple floor */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#ff3d8b]/25 via-transparent to-[#3b0a45]/50" />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
