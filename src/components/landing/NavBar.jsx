@@ -15,6 +15,7 @@ const LINKS = [
   { href: '/#marketplace', label: 'Marketplace' },
   { href: '/#for-cafes', label: 'For cafes' },
   { href: '/gaming-cafe-cost-calculator', label: 'Cost calculator' },
+  { href: '/blog', label: 'News' },
   { href: '/#faq', label: 'FAQ' },
 ];
 

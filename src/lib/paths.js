@@ -12,6 +12,7 @@ export const PATH_NAV = {
     { href: '#features', label: 'Features' },
     { href: '#how-it-works', label: 'How it works' },
     { href: '#marketplace', label: 'Marketplace' },
+    { href: '/blog', label: 'News' },
     { href: '#faq', label: 'FAQ' },
   ],
   cafe: [

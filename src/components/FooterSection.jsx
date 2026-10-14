@@ -22,6 +22,7 @@ const Footer = ({
         { label: 'Rewards', href: '/rewards' },
         { label: 'Shop', href: '/shop' },
         { label: 'Tournaments', href: '/tournaments' },
+        { label: 'Blog', href: '/blog' },
         { label: 'Download App', href: SITE_DOWNLOAD_URL }
       ]
     },
