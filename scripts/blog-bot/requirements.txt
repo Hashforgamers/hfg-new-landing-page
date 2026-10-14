@@ -1,0 +1,12 @@
+anthropic>=1.14
+pydantic>=2.14
+scrapling==0.4.15
+# HTTP fetcher dependencies (installed one by one; `scrapling[fetchers]` can stall pip's resolver)
+click
+curl_cffi
+msgspec
+protego
+browserforge
+apify-fingerprint-datapoints
+playwright
+patchright

@@ -1,3 +1,4 @@
+import { getAllPosts } from "@/lib/blog";
 import { SITE_URL } from "@/lib/site";
 
 const routes = [
@@ -15,6 +16,11 @@ const routes = [
     url: "/tournaments",
     changeFrequency: "daily",
     priority: 0.9,
+  },
+  {
+    url: "/blog",
+    changeFrequency: "daily",
+    priority: 0.8,
   },
   {
     url: "/rewards",
@@ -46,10 +52,17 @@ const routes = [
 export default function sitemap() {
   const lastModified = new Date();
 
-  return routes.map((route) => ({
+  const pages = routes.map((route) => ({
     url: `${SITE_URL}${route.url}`,
     lastModified,
     changeFrequency: route.changeFrequency,
     priority: route.priority,
   }));
+  const posts = getAllPosts().map((post) => ({
+    url: `${SITE_URL}/blog/${post.slug}`,
+    lastModified: new Date(post.date),
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+  return [...pages, ...posts];
 }
