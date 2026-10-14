@@ -109,9 +109,12 @@ function PathCard({ card, index, onEnter, onSelect, leaving }) {
           {String(index + 1).padStart(2, '0')} · {card.kicker}
         </span>
         <div>
-          <h2 className="font-display text-4xl uppercase leading-[0.9] text-white md:text-6xl">
-            <span className="block text-2xl text-white/80 md:text-3xl">{card.title}</span>
-            <span className={`block bg-gradient-to-r ${card.curtain} bg-clip-text text-transparent drop-shadow-[0_2px_18px_rgba(0,0,0,0.5)] transition-[filter] duration-300 group-hover:brightness-125`}>
+          <h2 className="font-display uppercase leading-[0.9] text-white">
+            <span className="block text-2xl text-white/80 md:text-[clamp(1.25rem,2vw,1.9rem)]">{card.title}</span>
+            <span
+              className="shine-text block text-[2.6rem] transition-[filter] duration-300 group-hover:brightness-125 md:text-[clamp(2.2rem,4.6vw,4.6rem)]"
+              style={{ '--shine-a': card.shine[0], '--shine-b': card.shine[1], animationDelay: `${index * 0.6}s` }}
+            >
               {card.highlight}
             </span>
           </h2>

@@ -63,3 +63,33 @@ html:not(.has-gate) #path-gate { display: none; }
 html[data-path="gamer"] [data-audience]:not([data-audience~="gamer"]),
 html[data-path="cafe"] [data-audience]:not([data-audience~="cafe"]),
 html[data-path="franchise"] [data-audience]:not([data-audience~="franchise"]) { display: none; }
+
+/* Shiny gradient keyword: card colours with a bright sheen sweeping across, plus a soft glow. */
+.shine-text {
+  background-image: linear-gradient(
+    110deg,
+    var(--shine-a) 0%,
+    var(--shine-b) 38%,
+    #ffffff 47%,
+    #fff8e6 50%,
+    var(--shine-b) 60%,
+    var(--shine-a) 100%
+  );
+  background-size: 260% 100%;
+  background-position: 120% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--shine-a) 55%, transparent))
+    drop-shadow(0 2px 2px rgba(0, 0, 0, 0.45));
+  animation: shine-sweep 3.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes shine-sweep {
+  0% { background-position: 120% 0; }
+  45%, 100% { background-position: -20% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shine-text { animation: none; background-position: 60% 0; }
+}
