@@ -1,205 +1,92 @@
-"use client";
-
 import Image from "next/image";
-import { useState } from "react";
-import { motion } from "framer-motion";
+import Link from "next/link";
+import AppShell from "@/components/AppShell";
+import InfoCards from "@/components/landing/InfoCards";
+import MaskHeading from "@/components/landing/MaskHeading";
+import NavBar from "@/components/landing/NavBar";
+import PageHero from "@/components/landing/PageHero";
+import Reveal from "@/components/landing/Reveal";
+import ScrollProgress from "@/components/landing/ScrollProgress";
+import StoreButtons from "@/components/landing/StoreButtons";
+import { buildPageMetadata } from "@/lib/site";
 
-export default function GamingCafePage() {
-  const [isOpen, setIsOpen] = useState(false);
+export const metadata = buildPageMetadata({
+  title: "Book Gaming Cafes Near You",
+  description:
+    "Find gaming cafes near you on the Hash app. Compare PC, PlayStation, Xbox, VR and racing setups, book a slot in advance and walk in to play.",
+  path: "/gaming-cafes",
+  keywords: ["gaming cafe near me", "book gaming cafe", "gaming zone near me", "PS5 cafe near me", "gaming cafe booking app"],
+});
 
-  const [form, setForm] = useState({
-    name: "",
-    phone: "",
-    device: "PC",
-    date: "",
-    time: "",
-    hours: 1,
-    extras: [],
-    payment: "Cash",
-  });
+const STEPS = [
+  { title: "Find a cafe", body: "Open the Hash app to see gaming cafes near you with their setups, timings and photos." },
+  { title: "Pick your setup", body: "Choose a PC, PlayStation, Xbox, VR or racing rig and a time slot that suits you." },
+  { title: "Book in advance", body: "Pay with Hash Pay or at the cafe. Your slot is held for you." },
+  { title: "Walk in and play", body: "Show up, start your session on the kiosk and play. No waiting at the counter." },
+];
 
-  const pricePerHour = {
-    PC: 100,
-    PS5: 200,
-    Xbox: 180,
-  };
+const SETUPS = ["Gaming PCs", "PlayStation", "Xbox", "VR", "Racing rigs", "Private rooms"];
 
-  const extraPrices = {
-    Headset: 50,
-    "Extra Controller": 70,
-    Snacks: 100,
-  };
-
-  const calculateTotal = () => {
-    const base = form.hours * pricePerHour[form.device];
-    const extraTotal = form.extras.reduce(
-      (sum, item) => sum + extraPrices[item],
-      0
-    );
-    return base + extraTotal;
-  };
-
+export default function GamingCafesPage() {
   return (
-    <div className="min-h-screen text-white">
+    <AppShell>
+      <ScrollProgress />
+      <NavBar />
+      <PageHero
+        eyebrow="Gaming cafes on Hash"
+        lines={["Your next session,", "booked."]}
+        body="Find gaming cafes near you, see which PCs and consoles they have, and lock your slot before you leave home."
+        image="/gta6-miami-sunset.jpg"
+        placement="gaming_cafes_hero"
+        aside={
+          <div className="mx-auto w-full max-w-[340px] rotate-3">
+            <Image
+              src="/images/app/cafes-near-you.webp"
+              alt="Hash app showing verified gaming cafes near you with directions"
+              width={720}
+              height={1460}
+              priority
+              className="h-auto w-full rounded-[28px] border-4 border-white/10 shadow-[0_40px_100px_rgba(0,0,0,0.7)]"
+            />
+          </div>
+        }
+      />
+      <InfoCards id="cafe-steps" title="How booking works" items={STEPS} />
 
-      {/* HERO SECTION WITH CYBER BG */}
-      <section className="relative h-screen flex flex-col justify-center items-center text-center px-6 overflow-hidden">
-
-        {/* Background Image */}
-        <div className="absolute inset-0">
-          <Image
-            src="/cyber-bg.jpeg"
-            alt="Cyber Background"
-            fill
-            sizes="100vw"
-            priority
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-black/70"></div>
-        </div>
-
-        {/* Content */}
-        <div className="relative z-10">
-
-          <motion.h1
-            initial={{ opacity: 0, y: -40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-5xl md:text-7xl font-bold 
-            bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-400 
-            bg-clip-text text-transparent"
-          >
-            Ultimate Gaming Café Experience
-          </motion.h1>
-
-          <p className="mt-6 text-gray-300 max-w-2xl mx-auto">
-            High-end PCs, ultra-fast internet and competitive gaming setup.
-          </p>
-
-          <button
-            onClick={() => setIsOpen(true)}
-            className="mt-8 px-8 py-3 bg-purple-600 rounded-2xl hover:bg-purple-500 transition"
-          >
-            Book Your Slot 🎮
-          </button>
-
+      <section className="bg-black px-4 py-24 sm:px-8" aria-labelledby="setups-title">
+        <div className="mx-auto max-w-[1500px]">
+          <MaskHeading id="setups-title" className="font-display text-5xl uppercase leading-none text-white sm:text-7xl">
+            What you can play
+          </MaskHeading>
+          <ul className="mt-10 flex flex-wrap gap-3">
+            {SETUPS.map((s, i) => (
+              <li key={s}>
+                <Reveal delay={i * 0.05} y={16}>
+                  <span className="inline-block rounded-full border border-white/20 px-6 py-3 font-display text-2xl uppercase text-white transition hover:border-[#ff3d8b] hover:bg-[#ff3d8b]">
+                    {s}
+                  </span>
+                </Reveal>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-6 text-sm text-white/50">Setups vary by cafe. The app shows what each one has.</p>
+          <StoreButtons className="mt-10" placement="gaming_cafes_bottom" />
         </div>
       </section>
 
-      {/* BOOKING MODAL */}
-      {isOpen && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
-          <div className="bg-zinc-900 p-8 rounded-2xl w-[95%] max-w-lg relative text-white">
-
-            <button
-              onClick={() => setIsOpen(false)}
-              className="absolute top-3 right-3 text-gray-400 hover:text-white"
-            >
-              ✕
-            </button>
-
-            <h2 className="text-2xl font-bold mb-6 text-center">
-              Book Your Gaming Slot
-            </h2>
-
-            <input
-              type="text"
-              placeholder="Your Name"
-              className="w-full mb-4 px-4 py-2 bg-black rounded-lg outline-none"
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-            />
-
-            <input
-              type="tel"
-              placeholder="Phone Number"
-              className="w-full mb-4 px-4 py-2 bg-black rounded-lg outline-none"
-              onChange={(e) => setForm({ ...form, phone: e.target.value })}
-            />
-
-            <select
-              className="w-full mb-4 px-4 py-2 bg-black rounded-lg outline-none"
-              onChange={(e) => setForm({ ...form, device: e.target.value })}
-            >
-              <option value="PC">PC (₹100/hr)</option>
-              <option value="PS5">PS5 (₹200/hr)</option>
-              <option value="Xbox">Xbox (₹180/hr)</option>
-            </select>
-
-            <input
-              type="date"
-              className="w-full mb-4 px-4 py-2 bg-black rounded-lg outline-none"
-              onChange={(e) => setForm({ ...form, date: e.target.value })}
-            />
-
-            <input
-              type="time"
-              className="w-full mb-4 px-4 py-2 bg-black rounded-lg outline-none"
-              onChange={(e) => setForm({ ...form, time: e.target.value })}
-            />
-
-            <input
-              type="number"
-              min="1"
-              placeholder="Number of Hours"
-              className="w-full mb-4 px-4 py-2 bg-black rounded-lg outline-none"
-              onChange={(e) =>
-                setForm({ ...form, hours: Number(e.target.value) })
-              }
-            />
-
-            <div className="mb-4">
-              <p className="text-gray-400 mb-2">Extra Services</p>
-
-              {["Headset", "Extra Controller", "Snacks"].map((item) => (
-                <label key={item} className="block text-sm mb-1">
-                  <input
-                    type="checkbox"
-                    className="mr-2"
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setForm({
-                          ...form,
-                          extras: [...form.extras, item],
-                        });
-                      } else {
-                        setForm({
-                          ...form,
-                          extras: form.extras.filter((ex) => ex !== item),
-                        });
-                      }
-                    }}
-                  />
-                  {item}
-                </label>
-              ))}
-            </div>
-
-            <select
-              className="w-full mb-4 px-4 py-2 bg-black rounded-lg outline-none"
-              onChange={(e) => setForm({ ...form, payment: e.target.value })}
-            >
-              <option value="Cash">Cash</option>
-              <option value="UPI">UPI</option>
-              <option value="Card">Card</option>
-            </select>
-
-            <div className="mb-4 text-right text-green-400 font-semibold">
-              Total: ₹{calculateTotal()}
-            </div>
-
-            <button
-              onClick={() => {
-                alert("Booking Successful 🎮");
-                setIsOpen(false);
-              }}
-              className="w-full bg-green-500 py-3 rounded-lg hover:bg-green-400 transition font-semibold"
-            >
-              Confirm Booking
-            </button>
-
-          </div>
+      <section className="bg-[#ff3d8b] px-4 py-16 text-black sm:px-8">
+        <div className="mx-auto flex max-w-[1500px] flex-wrap items-center justify-between gap-6">
+          <h2 className="font-display text-4xl uppercase leading-none sm:text-6xl">Own a gaming cafe?</h2>
+          <Link
+            href="/list-cafe"
+            data-track="cafe_onboard_click"
+            data-track-placement="gaming_cafes"
+            className="rounded-full bg-black px-8 py-3.5 font-display text-xl uppercase tracking-wide text-white transition hover:bg-white hover:text-black"
+          >
+            List your cafe
+          </Link>
         </div>
-      )}
-    </div>
+      </section>
+    </AppShell>
   );
 }

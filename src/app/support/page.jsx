@@ -1,3 +1,5 @@
+import AppShell from "@/components/AppShell";
+import NavBar from "@/components/landing/NavBar";
 import Link from "next/link";
 import {
   Swords,
@@ -131,11 +133,13 @@ export default function SupportPage() {
   };
 
   return (
-    <main
-      className="min-h-screen bg-[#050505] px-6 py-12 text-white md:px-12 lg:px-24"
+    <AppShell>
+      <NavBar />
+      <main
+      className="min-h-screen bg-[#050505] px-6 pb-16 pt-28 text-white sm:pt-32 md:px-12 lg:px-24"
       style={{
         backgroundImage:
-          "radial-gradient(circle at 20% 0%, rgba(22,255,0,0.12), transparent 28%), radial-gradient(circle at 80% 8%, rgba(249,115,22,0.1), transparent 24%), linear-gradient(180deg, #050505 0%, #080808 44%, #000 100%)",
+          "radial-gradient(circle at 20% 0%, rgba(255,61,139,0.14), transparent 28%), radial-gradient(circle at 80% 8%, rgba(249,115,22,0.1), transparent 24%), linear-gradient(180deg, #050505 0%, #080808 44%, #000 100%)",
         backgroundPosition: "center top",
         backgroundSize: "cover",
       }}
@@ -148,17 +152,17 @@ export default function SupportPage() {
       <div className="mx-auto max-w-6xl">
         <Link
           href="/"
-          className="inline-flex text-sm font-semibold uppercase tracking-[0.22em] text-[#16FF00] transition hover:text-white"
+          className="font-tech inline-flex text-[11px] uppercase tracking-[0.2em] text-[#ff9a3d] transition hover:text-white"
         >
           Hash For Gamers
         </Link>
 
         <section className="grid gap-10 py-16 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
           <div>
-            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.42em] text-[#16FF00]">
+            <p className="font-tech mb-4 text-[11px] uppercase tracking-[0.3em] text-[#ff9a3d]">
               Tournament First Support
             </p>
-            <h1 className="max-w-4xl text-4xl font-black uppercase tracking-[0.12em] text-white md:text-6xl">
+            <h1 className="max-w-4xl text-4xl font-display uppercase tracking-wide text-white md:text-6xl">
               Support for Hash For Gamers
             </h1>
             <p className="mt-6 max-w-2xl text-sm leading-7 text-white/72 md:text-base">
@@ -168,16 +172,16 @@ export default function SupportPage() {
             </p>
           </div>
 
-          <div className="rounded-[8px] border border-[#16FF00]/25 bg-black/80 p-6">
-            <h2 className="text-xl font-bold uppercase tracking-[0.12em] text-white">
+          <div className="rounded-[8px] border border-[#ff9a3d]/25 bg-black/80 p-6">
+            <h2 className="font-display text-2xl uppercase tracking-wide text-white">
               Contact
             </h2>
             <div className="mt-6 space-y-5 text-sm text-white/75">
               <a
                 href={`mailto:${supportEmail}`}
-                className="flex items-start gap-3 transition hover:text-[#16FF00]"
+                className="flex items-start gap-3 transition hover:text-[#ff9a3d]"
               >
-                <Mail className="mt-0.5 h-5 w-5 shrink-0 text-[#16FF00]" />
+                <Mail className="mt-0.5 h-5 w-5 shrink-0 text-[#ff9a3d]" />
                 <span>
                   <span className="block text-white">Support Email</span>
                   {supportEmail}
@@ -185,16 +189,16 @@ export default function SupportPage() {
               </a>
               <a
                 href="tel:+919137757935"
-                className="flex items-start gap-3 transition hover:text-[#16FF00]"
+                className="flex items-start gap-3 transition hover:text-[#ff9a3d]"
               >
-                <Phone className="mt-0.5 h-5 w-5 shrink-0 text-[#16FF00]" />
+                <Phone className="mt-0.5 h-5 w-5 shrink-0 text-[#ff9a3d]" />
                 <span>
                   <span className="block text-white">Phone</span>
                   {supportPhone}
                 </span>
               </a>
               <div className="flex items-start gap-3">
-                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-[#16FF00]" />
+                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-[#ff9a3d]" />
                 <span>
                   <span className="block text-white">Registered Office</span>
                   Hash for Gamers Private Limited
@@ -212,8 +216,8 @@ export default function SupportPage() {
               key={title}
               className="rounded-[8px] border border-white/10 bg-white/[0.045] p-6"
             >
-              <Icon className="h-6 w-6 text-[#16FF00]" />
-              <h2 className="mt-5 text-lg font-bold uppercase tracking-[0.12em] text-white">
+              <Icon className="h-6 w-6 text-[#ff9a3d]" />
+              <h2 className="mt-5 font-display text-xl uppercase tracking-wide text-white">
                 {title}
               </h2>
               <p className="mt-3 text-sm leading-7 text-white/68">{text}</p>
@@ -222,7 +226,7 @@ export default function SupportPage() {
         </section>
 
         <section className="py-16">
-          <h2 className="text-2xl font-black uppercase tracking-[0.12em] text-white">
+          <h2 className="text-2xl font-display uppercase tracking-wide text-white">
             Quick Answers
           </h2>
           <div className="mt-6 space-y-4">
@@ -231,7 +235,7 @@ export default function SupportPage() {
                 key={item.question}
                 className="rounded-[8px] border border-white/10 bg-black/60 p-6"
               >
-                <h3 className="text-base font-bold text-[#16FF00]">
+                <h3 className="text-base font-bold text-[#ff9a3d]">
                   {item.question}
                 </h3>
                 <p className="mt-3 text-sm leading-7 text-white/70">
@@ -240,7 +244,7 @@ export default function SupportPage() {
                 {item.link ? (
                   <Link
                     href={item.link}
-                    className="mt-4 inline-flex text-sm font-semibold text-white underline decoration-[#16FF00]/60 underline-offset-4 transition hover:text-[#16FF00]"
+                    className="mt-4 inline-flex text-sm font-semibold text-white underline decoration-[#ff9a3d]/60 underline-offset-4 transition hover:text-[#ff9a3d]"
                   >
                     {item.linkLabel}
                   </Link>
@@ -251,5 +255,6 @@ export default function SupportPage() {
         </section>
       </div>
     </main>
+    </AppShell>
   );
 }

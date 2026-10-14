@@ -5,8 +5,8 @@ import Link from "next/link";
 import { AlertTriangle, CheckCircle2, Trash2 } from "lucide-react";
 
 const theme = {
-  primary: "#8E543E",
-  accent: "#E3B998",
+  primary: "#ff3d8b",
+  accent: "#ff9a3d",
   surface: "rgba(15, 10, 8, 0.8)",
 };
 
@@ -67,10 +67,10 @@ export default function DeleteAccountPage({ initialToken = "" }) {
 
   return (
     <div
-      className="min-h-screen px-6 py-16 text-white"
+      className="min-h-screen px-6 pb-16 pt-28 text-white sm:pt-32"
       style={{
         background:
-          "radial-gradient(circle at top, rgba(142,84,62,0.35), transparent 35%), linear-gradient(180deg, #050505 0%, #120d0a 100%)",
+          "radial-gradient(circle at top, rgba(255,61,139,0.25), transparent 35%), linear-gradient(180deg, #050505 0%, #120d0a 100%)",
       }}
     >
       <div className="mx-auto max-w-3xl">
@@ -82,7 +82,7 @@ export default function DeleteAccountPage({ initialToken = "" }) {
             Hash For Gamers
           </p>
           <h1
-            className="mb-4 text-4xl font-black uppercase md:text-5xl"
+            className="mb-4 text-4xl font-display uppercase md:text-5xl"
             style={{ color: theme.primary }}
           >
             Delete Account
@@ -125,7 +125,7 @@ export default function DeleteAccountPage({ initialToken = "" }) {
                 value={token}
                 onChange={(event) => setToken(event.target.value)}
                 placeholder="Paste the bearer token from the Hash app or open this page with ?token=..."
-                className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white outline-none transition focus:border-[#8E543E]"
+                className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white outline-none transition focus:border-[#ff3d8b]"
               />
               <p className="mt-2 text-xs leading-5 text-[#d4b39b]">
                 This page does not create a login session. It forwards your
@@ -142,7 +142,7 @@ export default function DeleteAccountPage({ initialToken = "" }) {
                 value={confirmText}
                 onChange={(event) => setConfirmText(event.target.value)}
                 placeholder="DELETE"
-                className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white outline-none transition focus:border-[#8E543E]"
+                className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white outline-none transition focus:border-[#ff3d8b]"
               />
             </div>
 
@@ -151,7 +151,7 @@ export default function DeleteAccountPage({ initialToken = "" }) {
                 type="checkbox"
                 checked={consentChecked}
                 onChange={(event) => setConsentChecked(event.target.checked)}
-                className="mt-1 h-4 w-4 accent-[#8E543E]"
+                className="mt-1 h-4 w-4 accent-[#ff3d8b]"
               />
               <span>
                 I understand this will permanently delete my Hash account and
@@ -165,7 +165,7 @@ export default function DeleteAccountPage({ initialToken = "" }) {
               className="flex w-full items-center justify-center gap-2 rounded-2xl px-5 py-4 font-bold uppercase tracking-[0.2em] text-white transition disabled:cursor-not-allowed disabled:opacity-50"
               style={{
                 background:
-                  "linear-gradient(90deg, #8E543E 0%, #B56D4F 50%, #8E543E 100%)",
+                  "linear-gradient(90deg, #ff3d8b 0%, #B56D4F 50%, #ff3d8b 100%)",
               }}
             >
               <Trash2 className="h-4 w-4" />
