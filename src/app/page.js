@@ -13,8 +13,9 @@ import WipeReveal from "@/components/landing/WipeReveal";
 import SmoothScroll from "@/components/landing/SmoothScroll";
 import ScrollProgress from "@/components/landing/ScrollProgress";
 import StoreButtons from "@/components/landing/StoreButtons";
-import { DASHBOARD_SCREENS, KIOSK_POINTS, MARKET_BRANDS, MARKET_CATEGORIES, FAQS, FEATURES, GAMES, STEPS, TICKER } from "@/lib/landing";
+import { JOURNEYS, DASHBOARD_SCREENS, KIOSK_POINTS, MARKET_BRANDS, MARKET_CATEGORIES, FAQS, FEATURES, GAMES, STEPS, TICKER } from "@/lib/landing";
 import CafeDashboard from "@/components/landing/CafeDashboard";
+import JourneyCards from "@/components/landing/JourneyCards";
 import { DEFAULT_PRICES as CALC_PRICES, DEFAULTS as CALC_DEFAULTS, calculate, inrShort } from "@/lib/calculator";
 import GrowthVisual from "@/components/landing/GrowthVisual";
 import FranchiseCompare from "@/components/landing/FranchiseCompare";
@@ -734,6 +735,7 @@ export default function Page() {
       <NavBar />
       <Hero />
       <Ticker />
+      <JourneyCards cards={JOURNEYS} />
       <FeatureGrid />
       <ScrollBand top="Compete · Book · Win · Compete · Book · Win ·" bottom="Squad up · Earn HashCoins · Squad up · Earn HashCoins ·" />
       <Games />

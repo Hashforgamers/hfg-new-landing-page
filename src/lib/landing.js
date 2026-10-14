@@ -1,6 +1,40 @@
 // Content for the home page. FAQ entries here also feed the FAQPage JSON-LD,
 // so the visible answers and the structured data never drift apart.
 
+// "Choose your path" cards under the hero: one entry point per audience.
+export const JOURNEYS = [
+  {
+    id: "gamer",
+    kicker: "Players",
+    title: "I'm a gamer",
+    body: "Join daily tournaments, book a PC or console near you and earn HashCoins.",
+    cta: "Join a tournament",
+    href: "#tournaments",
+    image: "/gta6-miami-sunset.jpg",
+    tint: "from-[#ff3d8b]/90",
+  },
+  {
+    id: "cafe",
+    kicker: "Cafe owners",
+    title: "I own a gaming cafe",
+    body: "Get bookings, run every PC with the kiosk and manage it all from one dashboard.",
+    cta: "List my cafe",
+    href: "#for-cafes",
+    image: "/images/dashboard/overview.webp",
+    tint: "from-[#ff9a3d]/90",
+  },
+  {
+    id: "franchise",
+    kicker: "Investors",
+    title: "I want a franchise",
+    body: "Open a Hash-branded cafe with setup help, launch marketing and tournaments.",
+    cta: "Explore the franchise",
+    href: "#franchise",
+    image: "/images/kiosk/launcher.webp",
+    tint: "from-[#7c3aed]/90",
+  },
+];
+
 export const FEATURES = [
   {
     id: "tournaments",
