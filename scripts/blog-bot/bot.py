@@ -30,7 +30,7 @@ REPO_DIR = HOME / "repo"
 REPO_SLUG = "Hashforgamers/hfg-new-landing-page"
 BRANCH = "Main"
 POSTS_DIR = "content/blog"
-MODEL = os.environ.get("OPENAI_MODEL", "gpt-5")
+MODEL = "gpt-5"  # default; OPENAI_MODEL in .env overrides at runtime
 MAX_AGE_HOURS = 48
 CATEGORIES = ["esports", "gta", "industry", "business", "cafes", "hardware"]
 
@@ -241,7 +241,7 @@ POST_SCHEMA = {
 
 def ask_json(client: OpenAI, system: str, prompt: str, schema: dict, max_tokens: int = 16000) -> dict:
     response = client.responses.create(
-        model=MODEL,
+        model=os.environ.get("OPENAI_MODEL", MODEL),
         instructions=system,
         input=prompt,
         max_output_tokens=max_tokens,
@@ -315,7 +315,7 @@ Source article text:
         "tags": post["tags"][:6],
         "body": body,
         "sources": [{"title": story["title"], "url": story["url"], "publisher": story["publisher"]}],
-        "generated": {"by": "blog-bot", "model": MODEL},
+        "generated": {"by": "blog-bot", "model": os.environ.get("OPENAI_MODEL", MODEL)},
     }
 
 
