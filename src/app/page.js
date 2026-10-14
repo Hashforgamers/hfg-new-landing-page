@@ -119,13 +119,13 @@ function PathIntro({ eyebrow, title, body, primary, secondary }) {
         <FadeUp>
           <Eyebrow>{eyebrow}</Eyebrow>
         </FadeUp>
-        <h1 className="max-w-5xl font-display text-[clamp(3.2rem,10vw,9rem)] uppercase leading-[0.86] text-white">
+        <h2 className="max-w-5xl font-display text-[clamp(3.2rem,10vw,9rem)] uppercase leading-[0.86] text-white">
           {title.map((line, i) => (
             <RevealLine key={line} delay={0.1 + i * 0.15} className={i === title.length - 1 ? "bg-gradient-to-r from-[#ff3d8b] via-[#ff9a3d] to-[#ffd23d] bg-clip-text text-transparent" : ""}>
               {line}
             </RevealLine>
           ))}
-        </h1>
+        </h2>
         <FadeUp delay={0.45}>
           <p className="mt-6 max-w-2xl text-base leading-7 text-white/75 sm:text-lg">{body}</p>
           <div className="mt-8 flex flex-wrap gap-3">

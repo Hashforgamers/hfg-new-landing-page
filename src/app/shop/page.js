@@ -12,6 +12,8 @@ export const metadata = buildPageMetadata({
   description:
     "Hash Shop is bringing gaming headsets, mice, keyboards, monitors, controllers and chairs to the Hash app, with HashCoins at checkout. Coming soon.",
   path: "/shop",
+  // Hidden from search until the shop launches; remove this line then.
+  noIndex: true,
   keywords: ["gaming gear India", "gaming accessories", "Hash Shop", "buy gaming headset"],
 });
 
