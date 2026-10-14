@@ -109,7 +109,12 @@ function PathCard({ card, index, onEnter, onSelect, leaving }) {
           {String(index + 1).padStart(2, '0')} · {card.kicker}
         </span>
         <div>
-          <h2 className="font-display text-4xl uppercase leading-[0.9] text-white md:text-6xl">{card.title}</h2>
+          <h2 className="font-display text-4xl uppercase leading-[0.9] text-white md:text-6xl">
+            <span className="block text-2xl text-white/80 md:text-3xl">{card.title}</span>
+            <span className={`block bg-gradient-to-r ${card.curtain} bg-clip-text text-transparent drop-shadow-[0_2px_18px_rgba(0,0,0,0.5)] transition-[filter] duration-300 group-hover:brightness-125`}>
+              {card.highlight}
+            </span>
+          </h2>
           <p className="mt-2 hidden max-w-xs text-sm leading-6 text-white/80 md:block">{card.body}</p>
           <span className="mt-3 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 font-display text-base uppercase tracking-wide text-black transition group-hover:bg-[#ff3d8b] group-hover:text-white md:mt-6 md:px-5 md:py-2.5 md:text-lg">
             {card.cta} <span aria-hidden="true">→</span>
