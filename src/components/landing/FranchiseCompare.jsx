@@ -34,7 +34,7 @@ export default function FranchiseCompare() {
       <div className="relative mx-auto grid max-w-[1600px] gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <div>
           <Reveal>
-            <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#ff9a3d]">Hash franchise</p>
+            <p className="font-tech mb-4 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#ff9a3d]">Hash franchise</p>
           </Reveal>
           <MaskHeading id="franchise-title" className="font-display text-6xl uppercase leading-[0.9] text-white sm:text-8xl">
             Open as a Hash cafe
@@ -70,7 +70,7 @@ export default function FranchiseCompare() {
               <caption className="sr-only">What you get running your own cafe on Hash compared with a Hash franchise</caption>
               <thead>
                 <tr>
-                  <th scope="col" className="bg-white/[0.04] p-4 text-[11px] font-semibold uppercase tracking-[0.25em] text-white/50">
+                  <th scope="col" className="font-tech bg-white/[0.04] p-4 text-[11px] font-semibold uppercase tracking-[0.25em] text-white/50">
                     What you get
                   </th>
                   <th scope="col" className="w-[26%] bg-white/[0.04] p-4 text-center font-display text-xl uppercase text-white sm:text-2xl">

@@ -105,7 +105,7 @@ function PathCard({ card, index, onEnter, onSelect, leaving }) {
         style={{ background: glare }}
       />
       <div className="relative flex h-full min-h-[150px] flex-col justify-between p-5 md:min-h-[440px] md:p-8">
-        <span className="text-[10px] font-semibold uppercase tracking-[0.35em] text-white/70 md:text-[11px]">
+        <span className="font-tech whitespace-nowrap text-[10px] font-semibold uppercase tracking-[0.18em] text-white/70 md:text-[11px]">
           {String(index + 1).padStart(2, '0')} · {card.kicker}
         </span>
         <div>

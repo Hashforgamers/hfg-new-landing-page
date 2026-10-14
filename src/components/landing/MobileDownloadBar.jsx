@@ -26,7 +26,7 @@ export default function MobileDownloadBar() {
         <Image src={SITE_LOGO} alt="" width={36} height={36} className="rounded-full" />
         <div className="leading-tight">
           <p className="font-display text-lg uppercase text-white">Hash</p>
-          <p className="whitespace-nowrap text-[10px] uppercase tracking-[0.2em] text-white/60">Free app</p>
+          <p className="font-tech whitespace-nowrap text-[10px] uppercase tracking-[0.2em] text-white/60">Free app</p>
         </div>
       </div>
       <a

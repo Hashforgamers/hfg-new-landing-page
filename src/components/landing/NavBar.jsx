@@ -53,7 +53,7 @@ export default function NavBar() {
         <ul className="hidden items-center gap-8 lg:flex">
           {links.map((l) => (
             <li key={l.href}>
-              <a href={l.href} data-track="nav_click" data-track-label={l.label} className="text-xs font-semibold uppercase tracking-[0.25em] text-white/75 transition hover:text-white">
+              <a href={l.href} data-track="nav_click" data-track-label={l.label} className="font-tech text-[11px] uppercase tracking-[0.2em] text-white/75 transition hover:text-white">
                 {l.label}
               </a>
             </li>
@@ -70,7 +70,7 @@ export default function NavBar() {
               }}
               data-track="path_switch_click"
               data-track-from={path}
-              className="hidden items-center gap-1.5 rounded-full border border-white/30 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/80 transition hover:border-white hover:text-white sm:inline-flex"
+              className="font-tech hidden items-center gap-1.5 rounded-full border border-white/30 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/80 transition hover:border-white hover:text-white sm:inline-flex"
               aria-label={`Switch path (currently ${PATH_LABEL[path]})`}
             >
               <Repeat2 size={14} aria-hidden="true" /> {PATH_LABEL[path]}

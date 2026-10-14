@@ -93,3 +93,10 @@ html[data-path="franchise"] [data-audience]:not([data-audience~="franchise"]) { 
 @media (prefers-reduced-motion: reduce) {
   .shine-text { animation: none; background-position: 60% 0; }
 }
+
+/* Orbitron for HUD-style detail text: labels, kickers, nav, stat captions. Headlines stay Anton,
+   paragraphs stay Inter. */
+.font-tech {
+  font-family: var(--font-orbitron), "Arial Narrow", sans-serif;
+  font-weight: 600;
+}

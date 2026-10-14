@@ -101,7 +101,7 @@ const jsonLd = [
 
 function Eyebrow({ children }) {
   return (
-    <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#ff9a3d]">{children}</p>
+    <p className="font-tech mb-4 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#ff9a3d]">{children}</p>
   );
 }
 
@@ -193,7 +193,7 @@ function Hero() {
 
       <a
         href="#features"
-        className="absolute bottom-6 right-6 z-20 hidden flex-col items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.35em] text-white/60 transition hover:text-white sm:flex"
+        className="font-tech absolute bottom-6 right-6 z-20 hidden flex-col items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.35em] text-white/60 transition hover:text-white sm:flex"
       >
         Scroll
         <span className="relative h-12 w-px overflow-hidden bg-white/20">
@@ -258,7 +258,7 @@ function FeatureGrid() {
                 )}
                 <div className={`absolute inset-0 bg-gradient-to-tr ${f.accent} via-black/40 to-transparent`} />
                 <div className="relative flex h-full flex-col justify-end p-6 sm:p-8">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-white/80">{f.kicker}</p>
+                  <p className="font-tech text-[11px] font-semibold uppercase tracking-[0.35em] text-white/80">{f.kicker}</p>
                   <h3
                     className={`mt-2 font-display uppercase leading-[0.9] text-white ${
                       f.size === "lg" ? "text-5xl sm:text-6xl xl:text-8xl" : "text-4xl xl:text-5xl"
@@ -294,7 +294,7 @@ function Games() {
           {GAMES.map((g, i) => (
             <li key={g.name} className="border-b border-r border-white/10">
               <Reveal delay={(i % 4) * 0.06} y={20} className="group flex h-full flex-col justify-between gap-6 p-5 transition-colors duration-300 hover:bg-[#ff3d8b] sm:p-8">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 group-hover:text-black/70">
+                <span className="font-tech text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 group-hover:text-black/70">
                   {String(i + 1).padStart(2, "0")} · {g.type}
                 </span>
                 <h3 className="font-display text-3xl uppercase leading-none text-white group-hover:text-black sm:text-5xl">
@@ -404,7 +404,7 @@ function Marketplace() {
               <WipeReveal delay={i * 0.07} className="h-full">
                 <TiltCard className="h-full">
                   <div className="group flex h-full min-h-[180px] flex-col justify-between rounded-sm bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-5 transition-colors duration-300 hover:from-[#ff3d8b] hover:to-[#ff9a3d]">
-                    <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#ff9a3d] group-hover:text-black/70">
+                    <span className="font-tech text-[11px] font-semibold uppercase tracking-[0.3em] text-[#ff9a3d] group-hover:text-black/70">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <div>
@@ -422,7 +422,7 @@ function Marketplace() {
       </div>
 
       <div className="relative mt-16 border-y border-white/10 py-8">
-        <p className="mb-6 text-center text-[11px] font-semibold uppercase tracking-[0.4em] text-white/45">
+        <p className="font-tech mb-6 text-center text-[11px] font-semibold uppercase tracking-[0.4em] text-white/45">
           Brands gamers play with
         </p>
         <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
@@ -578,7 +578,7 @@ function KioskShowcase() {
           {KIOSK_POINTS.map((k, i) => (
             <li key={k.title} className="bg-black">
               <Reveal delay={i * 0.1} className="h-full p-6 sm:p-8">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#ff9a3d]">
+                <span className="font-tech text-[11px] font-semibold uppercase tracking-[0.3em] text-[#ff9a3d]">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="mt-3 font-display text-3xl uppercase leading-none text-white sm:text-4xl">{k.title}</h3>
@@ -611,7 +611,7 @@ function CalculatorTeaser() {
       <div className="mx-auto grid max-w-[1600px] items-center gap-10 lg:grid-cols-[1.3fr_1fr]">
         <div>
           <Reveal>
-            <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.4em] text-black/70">
+            <p className="font-tech mb-4 text-[11px] font-semibold uppercase tracking-[0.4em] text-black/70">
               Planning a new cafe?
             </p>
           </Reveal>
@@ -645,7 +645,7 @@ function CalculatorTeaser() {
               className="block rounded-2xl bg-black p-6 text-white shadow-[0_30px_80px_rgba(0,0,0,0.35)] sm:p-8"
               aria-label="Example estimate. Open the cost calculator"
             >
-              <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#ff9a3d]">
+              <p className="font-tech text-[11px] font-semibold uppercase tracking-[0.3em] text-[#ff9a3d]">
                 Example: 10 PCs + 2 PS5s, tier 2 city
               </p>
               <p className="mt-2 bg-gradient-to-r from-[#ff3d8b] via-[#ff9a3d] to-[#ffd23d] bg-clip-text font-display text-7xl leading-none text-transparent sm:text-8xl">
@@ -659,7 +659,7 @@ function CalculatorTeaser() {
                   ["Break-even", CALC_EXAMPLE.breakEven ? `${CALC_EXAMPLE.breakEven} mo` : "n/a"],
                 ].map(([k, v]) => (
                   <div key={k}>
-                    <dt className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/50">{k}</dt>
+                    <dt className="font-tech text-[10px] font-semibold uppercase tracking-[0.2em] text-white/50">{k}</dt>
                     <dd className="mt-1 font-display text-2xl sm:text-3xl">{v}</dd>
                   </div>
                 ))}

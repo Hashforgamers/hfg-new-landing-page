@@ -99,7 +99,7 @@ export default function Page() {
         />
         <div className="relative mx-auto max-w-[1600px]">
           <Reveal>
-            <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#ff9a3d]">
+            <p className="font-tech mb-4 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#ff9a3d]">
               Free tool for cafe owners
             </p>
           </Reveal>

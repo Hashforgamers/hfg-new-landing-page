@@ -37,7 +37,7 @@ export default function GrowthVisual() {
     >
       <div className="flex items-end justify-between gap-4">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#ff9a3d]">Monthly earnings with Hash</p>
+          <p className="font-tech text-[11px] font-semibold uppercase tracking-[0.3em] text-[#ff9a3d]">Monthly earnings with Hash</p>
           <p className="mt-1 bg-gradient-to-r from-[#ff3d8b] via-[#ff9a3d] to-[#ffd23d] bg-clip-text font-display text-[clamp(5rem,14vw,11rem)] leading-[0.85] text-transparent tabular-nums">
             {count}X
           </p>
@@ -100,13 +100,13 @@ export default function GrowthVisual() {
           />
         </svg>
       </div>
-      <div className="mt-2 flex justify-between text-[10px] font-semibold uppercase tracking-[0.25em] text-white/45">
+      <div className="font-tech mt-2 flex justify-between text-[10px] font-semibold uppercase tracking-[0.25em] text-white/45">
         <span>Before Hash · ₹10K/mo</span>
         <span>On Hash · 10X/mo</span>
       </div>
 
       <div className="mt-8 border-t border-white/10 pt-6">
-        <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/60">Your floor, filling up</p>
+        <p className="font-tech mb-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/60">Your floor, filling up</p>
         <div className="grid grid-cols-10 gap-1.5">
           {Array.from({ length: SEATS }, (_, i) => (
             <motion.span

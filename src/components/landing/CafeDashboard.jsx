@@ -49,7 +49,7 @@ export default function CafeDashboard({ screens }) {
                 }`}
                 aria-hidden="true"
               />
-              <span className="block text-[11px] font-semibold uppercase tracking-[0.3em] text-[#ff9a3d]">
+              <span className="font-tech block text-[11px] font-semibold uppercase tracking-[0.3em] text-[#ff9a3d]">
                 {String(i + 1).padStart(2, '0')}
               </span>
               <span className="mt-1 block font-display text-3xl uppercase leading-none sm:text-4xl">{s.title}</span>
