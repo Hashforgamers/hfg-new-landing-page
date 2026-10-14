@@ -10,6 +10,8 @@ export default function SmoothScroll() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const lenis = new Lenis({ duration: 1.15, smoothWheel: true, anchors: { offset: -80 } });
+    // Exposed so path switches (src/lib/paths.js) can jump to the top without Lenis easing back.
+    window.__lenis = lenis;
     let frame = requestAnimationFrame(function raf(time) {
       lenis.raf(time);
       frame = requestAnimationFrame(raf);
@@ -25,6 +27,7 @@ export default function SmoothScroll() {
     return () => {
       lock.disconnect();
       cancelAnimationFrame(frame);
+      if (window.__lenis === lenis) delete window.__lenis;
       lenis.destroy();
     };
   }, []);

@@ -9,9 +9,9 @@ export const JOURNEYS = [
     title: "I'm a gamer",
     body: "Join daily tournaments, book a PC or console near you and earn HashCoins.",
     cta: "Join a tournament",
-    href: "#tournaments",
     image: "/gta6-miami-sunset.jpg",
     tint: "from-[#ff3d8b]/90",
+    curtain: "from-[#ff3d8b] to-[#ff9a3d]",
   },
   {
     id: "cafe",
@@ -19,9 +19,9 @@ export const JOURNEYS = [
     title: "I own a gaming cafe",
     body: "Get bookings, run every PC with the kiosk and manage it all from one dashboard.",
     cta: "List my cafe",
-    href: "#for-cafes",
     image: "/images/dashboard/overview.webp",
     tint: "from-[#ff9a3d]/90",
+    curtain: "from-[#ff9a3d] to-[#ffd23d]",
   },
   {
     id: "franchise",
@@ -29,9 +29,9 @@ export const JOURNEYS = [
     title: "I want a franchise",
     body: "Open a Hash-branded cafe with setup help, launch marketing and tournaments.",
     cta: "Explore the franchise",
-    href: "#franchise",
     image: "/images/kiosk/launcher.webp",
     tint: "from-[#7c3aed]/90",
+    curtain: "from-[#7c3aed] to-[#ff3d8b]",
   },
 ];
 
@@ -109,6 +109,10 @@ export const STEPS = [
 ];
 
 export const TICKER = [
+  "10K+ users",
+  "4.7★ rated",
+  "35+ cafes",
+  "15+ tournaments",
   "Tournaments live daily",
   "Book gaming cafes near you",
   "Earn HashCoins",

@@ -54,3 +54,12 @@ html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 .lenis.lenis-stopped { overflow: hidden; }
+
+/* Audience paths on the home page (src/lib/paths.js). The entry gate shows until a path is set;
+   once html[data-path] is present, sections tagged for other audiences are hidden. */
+html.has-gate:not([data-path]) body { overflow: hidden; }
+html[data-path] #path-gate { display: none; }
+html:not(.has-gate) #path-gate { display: none; }
+html[data-path="gamer"] [data-audience]:not([data-audience~="gamer"]),
+html[data-path="cafe"] [data-audience]:not([data-audience~="cafe"]),
+html[data-path="franchise"] [data-audience]:not([data-audience~="franchise"]) { display: none; }
