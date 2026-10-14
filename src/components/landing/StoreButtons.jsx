@@ -34,7 +34,7 @@ export default function StoreButtons({ className = '', placement = 'unknown' }) 
       >
         <PlayIcon />
         <span className="flex flex-col leading-none">
-          <span className="whitespace-nowrap text-[8px] font-semibold uppercase tracking-[0.12em] opacity-70 sm:text-[10px] sm:tracking-[0.2em]">Get it on</span>
+          <span className="font-tech whitespace-nowrap text-[8px] font-semibold uppercase tracking-[0.12em] opacity-70 sm:text-[10px] sm:tracking-[0.2em]">Get it on</span>
           <span className="whitespace-nowrap font-display text-base uppercase tracking-wide sm:text-xl">Google Play</span>
         </span>
       </a>
@@ -50,7 +50,7 @@ export default function StoreButtons({ className = '', placement = 'unknown' }) 
       >
         <AppleIcon />
         <span className="flex flex-col leading-none">
-          <span className="whitespace-nowrap text-[8px] font-semibold uppercase tracking-[0.12em] opacity-70 sm:text-[10px] sm:tracking-[0.2em]">Get it on</span>
+          <span className="font-tech whitespace-nowrap text-[8px] font-semibold uppercase tracking-[0.12em] opacity-70 sm:text-[10px] sm:tracking-[0.2em]">Get it on</span>
           <span className="whitespace-nowrap font-display text-base uppercase tracking-wide sm:text-xl">App Store</span>
         </span>
       </a>

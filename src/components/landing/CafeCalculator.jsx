@@ -79,7 +79,7 @@ function Stepper({ label, hint, value, onChange, max = 60 }) {
 function Segmented({ label, options, value, onChange }) {
   return (
     <fieldset className="border-b border-white/10 py-4">
-      <legend className="mb-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/60">{label}</legend>
+      <legend className="font-tech mb-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/60">{label}</legend>
       <div className="flex flex-wrap gap-2">
         {options.map((o) => (
           <button
@@ -104,7 +104,7 @@ function Slider({ label, value, onChange, min, max, step = 1, suffix = '', prefi
   return (
     <div className="border-b border-white/10 py-4">
       <div className="flex items-baseline justify-between">
-        <label htmlFor={id} className="text-[11px] font-semibold uppercase tracking-[0.3em] text-white/60">
+        <label htmlFor={id} className="font-tech text-[11px] font-semibold uppercase tracking-[0.3em] text-white/60">
           {label}
         </label>
         <span className="font-display text-2xl text-white tabular-nums">
@@ -183,7 +183,7 @@ function Floor({ s }) {
         ))}
         {!seats.length && <p className="text-sm text-white/40">Add a station to start.</p>}
       </div>
-      <p className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[10px] uppercase tracking-[0.2em] text-white/45">
+      <p className="font-tech mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[10px] uppercase tracking-[0.2em] text-white/45">
         <span><i className="mr-1.5 inline-block h-2 w-2 rounded-sm bg-[#ff3d8b]" />PC</span>
         <span><i className="mr-1.5 inline-block h-2 w-2 rounded-sm bg-[#38bdf8]" />Console</span>
         <span><i className="mr-1.5 inline-block h-2 w-2 rounded-sm bg-[#a78bfa]" />VR</span>
@@ -258,7 +258,7 @@ export default function CafeCalculator() {
         {/* Results */}
         <div id="calc-results" className="scroll-mt-28 lg:sticky lg:top-28 lg:self-start">
           <div className="rounded-2xl border border-white/15 bg-white/[0.04] p-6 backdrop-blur-md sm:p-8">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#ff9a3d]">Estimated setup cost</p>
+            <p className="font-tech text-[11px] font-semibold uppercase tracking-[0.3em] text-[#ff9a3d]">Estimated setup cost</p>
             <p className="mt-1 bg-gradient-to-r from-[#ff3d8b] via-[#ff9a3d] to-[#ffd23d] bg-clip-text font-display text-[clamp(3rem,8vw,5.5rem)] leading-[0.95] text-transparent">
               <AnimatedNumber value={r.setupTotal} format={inrShort} />
             </p>
@@ -277,25 +277,25 @@ export default function CafeCalculator() {
 
             <div className="mt-8 grid grid-cols-2 gap-3 border-t border-white/10 pt-6">
               <div className="rounded-xl bg-black/40 p-4">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/50">Monthly costs</p>
+                <p className="font-tech text-[10px] font-semibold uppercase tracking-[0.25em] text-white/50">Monthly costs</p>
                 <p className="mt-1 font-display text-3xl text-white">
                   <AnimatedNumber value={r.monthlyTotal} format={inrShort} />
                 </p>
               </div>
               <div className="rounded-xl bg-black/40 p-4">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/50">Monthly earnings</p>
+                <p className="font-tech text-[10px] font-semibold uppercase tracking-[0.25em] text-white/50">Monthly earnings</p>
                 <p className="mt-1 font-display text-3xl text-white">
                   <AnimatedNumber value={r.revenue} format={inrShort} />
                 </p>
               </div>
               <div className="rounded-xl bg-black/40 p-4">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/50">Monthly profit</p>
+                <p className="font-tech text-[10px] font-semibold uppercase tracking-[0.25em] text-white/50">Monthly profit</p>
                 <p className={`mt-1 font-display text-3xl ${profitable ? 'text-[#16ff7a]' : 'text-[#ff6b6b]'}`}>
                   <AnimatedNumber value={r.profit} format={inrShort} />
                 </p>
               </div>
               <div className="rounded-xl bg-black/40 p-4">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/50">Break-even</p>
+                <p className="font-tech text-[10px] font-semibold uppercase tracking-[0.25em] text-white/50">Break-even</p>
                 <p className="mt-1 font-display text-3xl text-white">
                   {r.breakEven ? `${r.breakEven} months` : 'Not yet'}
                 </p>
@@ -335,7 +335,7 @@ export default function CafeCalculator() {
         href="#calc-results"
         className="fixed inset-x-3 bottom-3 z-40 flex items-center justify-between gap-3 rounded-full border border-white/15 bg-black/90 px-5 py-3 backdrop-blur-md lg:hidden"
       >
-        <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/60">Setup cost</span>
+        <span className="font-tech text-[10px] font-semibold uppercase tracking-[0.2em] text-white/60">Setup cost</span>
         <span className="font-display text-2xl text-white">
           <AnimatedNumber value={r.setupTotal} format={inrShort} />
         </span>
@@ -359,7 +359,7 @@ export default function CafeCalculator() {
               <div className="min-w-0">
                 <p className="font-semibold text-white">{item.label}</p>
                 <p className="text-xs text-white/50">{item.note}</p>
-                <p className="mt-1.5 flex gap-3 text-[11px] font-semibold uppercase tracking-[0.15em]">
+                <p className="font-tech mt-1.5 flex gap-3 text-[11px] font-semibold uppercase tracking-[0.15em]">
                   <a href={item.amazon} target="_blank" rel="noopener nofollow" data-track="price_check_click" data-track-retailer="amazon" data-track-item={key} className="text-[#ff9a3d] hover:text-white">
                     Amazon ↗
                   </a>

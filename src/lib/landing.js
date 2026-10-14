@@ -6,7 +6,9 @@ export const JOURNEYS = [
   {
     id: "gamer",
     kicker: "Players",
-    title: "I'm a gamer",
+    title: "I'm a",
+    highlight: "gamer",
+    shine: ["#ff3d8b", "#ffb36b"],
     body: "Join daily tournaments, book a PC or console near you and earn HashCoins.",
     cta: "Join a tournament",
     image: "/gta6-miami-sunset.jpg",
@@ -16,7 +18,9 @@ export const JOURNEYS = [
   {
     id: "cafe",
     kicker: "Cafe owners",
-    title: "I own a gaming cafe",
+    title: "I own a",
+    highlight: "gaming cafe",
+    shine: ["#ff9a3d", "#ffe27a"],
     body: "Get bookings, run every PC with the kiosk and manage it all from one dashboard.",
     cta: "List my cafe",
     image: "/images/dashboard/overview.webp",
@@ -26,7 +30,9 @@ export const JOURNEYS = [
   {
     id: "franchise",
     kicker: "Investors",
-    title: "I want a franchise",
+    title: "I want a",
+    highlight: "franchise",
+    shine: ["#a78bfa", "#ff6fae"],
     body: "Open a Hash-branded cafe with setup help, launch marketing and tournaments.",
     cta: "Explore the franchise",
     image: "/images/kiosk/launcher.webp",

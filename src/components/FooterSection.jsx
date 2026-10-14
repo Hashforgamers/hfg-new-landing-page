@@ -96,7 +96,7 @@ const Footer = ({
         <div className="mt-10 grid grid-cols-2 gap-10 border-t border-white/15 pt-10 md:grid-cols-4">
           {footerSections.map((section) => (
             <nav key={section.title} aria-label={section.title}>
-              <h2 className="mb-5 text-[11px] font-semibold uppercase tracking-[0.35em] text-[#ff9a3d]">
+              <h2 className="font-tech mb-5 text-[11px] font-semibold uppercase tracking-[0.35em] text-[#ff9a3d]">
                 {section.title}
               </h2>
               <ul className="space-y-3">
@@ -131,7 +131,7 @@ const Footer = ({
         </div>
 
         <div className="mt-14 flex flex-col-reverse items-start justify-between gap-6 border-t border-white/15 pt-8 sm:flex-row sm:items-center">
-          <p className="text-xs uppercase tracking-[0.25em] text-white/40">
+          <p className="font-tech text-[11px] uppercase tracking-[0.2em] text-white/40">
             © {new Date().getFullYear()} Hash For Gamers · Made in India
           </p>
           <div className="flex gap-3">

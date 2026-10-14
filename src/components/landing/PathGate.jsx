@@ -105,11 +105,19 @@ function PathCard({ card, index, onEnter, onSelect, leaving }) {
         style={{ background: glare }}
       />
       <div className="relative flex h-full min-h-[150px] flex-col justify-between p-5 md:min-h-[440px] md:p-8">
-        <span className="text-[10px] font-semibold uppercase tracking-[0.35em] text-white/70 md:text-[11px]">
+        <span className="font-tech whitespace-nowrap text-[10px] font-semibold uppercase tracking-[0.18em] text-white/70 md:text-[11px]">
           {String(index + 1).padStart(2, '0')} · {card.kicker}
         </span>
         <div>
-          <h2 className="font-display text-4xl uppercase leading-[0.9] text-white md:text-6xl">{card.title}</h2>
+          <h2 className="font-display uppercase leading-[0.9] text-white">
+            <span className="block text-2xl text-white/80 md:text-[clamp(1.25rem,2vw,1.9rem)]">{card.title}</span>
+            <span
+              className="shine-text block text-[2.6rem] transition-[filter] duration-300 group-hover:brightness-125 md:text-[clamp(2.2rem,4.6vw,4.6rem)]"
+              style={{ '--shine-a': card.shine[0], '--shine-b': card.shine[1], animationDelay: `${index * 0.6}s` }}
+            >
+              {card.highlight}
+            </span>
+          </h2>
           <p className="mt-2 hidden max-w-xs text-sm leading-6 text-white/80 md:block">{card.body}</p>
           <span className="mt-3 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 font-display text-base uppercase tracking-wide text-black transition group-hover:bg-[#ff3d8b] group-hover:text-white md:mt-6 md:px-5 md:py-2.5 md:text-lg">
             {card.cta} <span aria-hidden="true">→</span>
