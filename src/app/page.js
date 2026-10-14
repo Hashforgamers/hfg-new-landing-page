@@ -15,7 +15,9 @@ import ScrollProgress from "@/components/landing/ScrollProgress";
 import StoreButtons from "@/components/landing/StoreButtons";
 import { DASHBOARD_SCREENS, KIOSK_POINTS, MARKET_BRANDS, MARKET_CATEGORIES, FAQS, FEATURES, GAMES, STEPS, TICKER } from "@/lib/landing";
 import CafeDashboard from "@/components/landing/CafeDashboard";
+import { DEFAULT_PRICES as CALC_PRICES, DEFAULTS as CALC_DEFAULTS, calculate, inrShort } from "@/lib/calculator";
 import GrowthVisual from "@/components/landing/GrowthVisual";
+import FranchiseCompare from "@/components/landing/FranchiseCompare";
 import MobileDownloadBar from "@/components/landing/MobileDownloadBar";
 import {
   SITE_APP_STORE_URL,
@@ -41,6 +43,8 @@ export const metadata = buildPageMetadata({
 // Add the hero clip here once it's in public/videos/, e.g. { src: "/videos/hero.mp4", type: "video/mp4" }.
 // With no sources the poster image is shown on its own.
 const HERO_VIDEO_SOURCES = [];
+
+const CALC_EXAMPLE = calculate(CALC_DEFAULTS, CALC_PRICES);
 
 const SIZE_CLASSES = {
   lg: "sm:col-span-2 sm:row-span-2",
@@ -551,6 +555,69 @@ function KioskShowcase() {
   );
 }
 
+function CalculatorTeaser() {
+  return (
+    <section className="relative overflow-hidden bg-[#ff3d8b] px-4 py-20 text-black sm:px-8" aria-labelledby="calc-teaser-title">
+      <div className="mx-auto grid max-w-[1600px] items-center gap-10 lg:grid-cols-[1.3fr_1fr]">
+        <div>
+          <Reveal>
+            <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.4em] text-black/70">
+              Planning a new cafe?
+            </p>
+          </Reveal>
+          <MaskHeading
+            id="calc-teaser-title"
+            className="font-display text-6xl uppercase leading-[0.9] sm:text-8xl"
+          >
+            What will your cafe cost?
+          </MaskHeading>
+          <Reveal delay={0.15}>
+            <p className="mt-6 max-w-xl text-base leading-7 text-black/75">
+              Pick your PCs, consoles and city. The calculator shows setup cost, monthly expenses, earnings and
+              break-even, with Amazon and Flipkart links for every price.
+            </p>
+            <Link
+              href="/gaming-cafe-cost-calculator"
+              className="mt-8 inline-block rounded-full bg-black px-8 py-3.5 font-display text-xl uppercase tracking-wide text-white transition hover:bg-white hover:text-black"
+            >
+              Open the cost calculator
+            </Link>
+          </Reveal>
+        </div>
+        <WipeReveal>
+          <TiltCard>
+            <Link
+              href="/gaming-cafe-cost-calculator"
+              className="block rounded-2xl bg-black p-6 text-white shadow-[0_30px_80px_rgba(0,0,0,0.35)] sm:p-8"
+              aria-label="Example estimate. Open the cost calculator"
+            >
+              <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#ff9a3d]">
+                Example: 10 PCs + 2 PS5s, tier 2 city
+              </p>
+              <p className="mt-2 bg-gradient-to-r from-[#ff3d8b] via-[#ff9a3d] to-[#ffd23d] bg-clip-text font-display text-7xl leading-none text-transparent sm:text-8xl">
+                {inrShort(CALC_EXAMPLE.setupTotal)}
+              </p>
+              <p className="mt-1 text-sm text-white/60">estimated setup cost</p>
+              <dl className="mt-6 grid grid-cols-3 gap-3 border-t border-white/10 pt-5">
+                {[
+                  ["Monthly costs", inrShort(CALC_EXAMPLE.monthlyTotal)],
+                  ["Monthly earnings", inrShort(CALC_EXAMPLE.revenue)],
+                  ["Break-even", CALC_EXAMPLE.breakEven ? `${CALC_EXAMPLE.breakEven} mo` : "n/a"],
+                ].map(([k, v]) => (
+                  <div key={k}>
+                    <dt className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/50">{k}</dt>
+                    <dd className="mt-1 font-display text-2xl sm:text-3xl">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+            </Link>
+          </TiltCard>
+        </WipeReveal>
+      </div>
+    </section>
+  );
+}
+
 function ForCafes() {
   return (
     <section className="relative overflow-hidden bg-black px-4 py-28 sm:px-8" aria-labelledby="cafes-title">
@@ -573,6 +640,12 @@ function ForCafes() {
             className="mt-8 inline-block rounded-full bg-white px-8 py-3 font-display text-xl uppercase tracking-wide text-black transition hover:bg-[#ff3d8b] hover:text-white"
           >
             List your cafe
+          </a>
+          <a
+            href="#franchise"
+            className="ml-3 mt-8 inline-block rounded-full bg-gradient-to-r from-[#ff3d8b] via-[#ff9a3d] to-[#ffd23d] px-8 py-3 font-display text-xl uppercase tracking-wide text-black transition hover:brightness-110"
+          >
+            Get Hash franchise
           </a>
         </Reveal>
         <Reveal delay={0.15}>
@@ -656,7 +729,9 @@ export default function Page() {
       <ScrollBand top="Fill every seat · Host tournaments ·" bottom="Go live on Hash · Fill every seat ·" />
       <CafeDashboardTour />
       <KioskShowcase />
+      <CalculatorTeaser />
       <ForCafes />
+      <FranchiseCompare />
       <Faq />
       <FinalCta />
       <MobileDownloadBar />
