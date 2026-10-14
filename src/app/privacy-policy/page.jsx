@@ -1,3 +1,5 @@
+import AppShell from "@/components/AppShell";
+import NavBar from "@/components/landing/NavBar";
 import React from "react";
 import {
   ShieldCheck,
@@ -26,9 +28,9 @@ export const metadata = {
 };
 
 const theme = {
-  primary: "#8E543E",       // your main accent
+  primary: "#ff9a3d",       // your main accent
   soft: "rgba(142,84,62,0.08)", // soft card bg
-  highlight: "#E3B998",     // light accent
+  highlight: "#ffd23d",     // light accent
 };
 
 export default function PrivacyPolicyPage() {
@@ -78,8 +80,10 @@ export default function PrivacyPolicyPage() {
   ];
 
   return (
+    <AppShell>
+      <NavBar />
     <div
-      className="min-h-screen text-white px-6 py-16 bg-cover bg-center relative"
+      className="min-h-screen text-white px-6 pb-16 pt-28 sm:pt-32 bg-cover bg-center relative"
       style={{
         backgroundImage:
           "linear-gradient(to bottom, rgba(0,0,0,0.75), rgba(0,0,0,0.9)), url('/gta6-miami-sunset.jpg')",
@@ -87,10 +91,10 @@ export default function PrivacyPolicyPage() {
     >
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Title */}
-        <h1 className="text-5xl uppercase text-center mb-4 font-black text-[#8E543E] tracking-wider">
+        <h1 className="text-5xl uppercase text-center mb-4 font-black text-[#ff9a3d] tracking-wider">
           Privacy Policy
         </h1>
-        <p className="text-center text-[#E3B998] mb-12">
+        <p className="text-center text-white/70 mb-12">
           Your privacy matters. Here’s how we protect your data.
         </p>
 
@@ -99,13 +103,13 @@ export default function PrivacyPolicyPage() {
           {policyCards.map((item, index) => (
             <div
               key={index}
-              className="backdrop-blur-lg border border-[#8E543E]/30 p-6 rounded-xl shadow-md"
+              className="backdrop-blur-lg border border-[#ff9a3d]/30 p-6 rounded-xl shadow-md"
               style={{ backgroundColor: theme.soft }}
             >
               <h3 className="flex items-center gap-2 text-lg font-semibold mb-3" style={{ color: theme.primary }}>
                 {item.icon} {item.title}
               </h3>
-              <p className="text-[#E3B998] leading-relaxed">
+              <p className="text-white/70 leading-relaxed">
                 {item.content}
               </p>
             </div>
@@ -113,7 +117,7 @@ export default function PrivacyPolicyPage() {
         </div>
 
         {/* Footer */}
-        <div className="mt-16 text-center text-sm text-[#E3B998]">
+        <div className="mt-16 text-center text-sm text-white/70">
           For any privacy-related queries, contact us at{" "}
           <a
             href="mailto:privacy@hashforgamers.co.in"
@@ -125,5 +129,6 @@ export default function PrivacyPolicyPage() {
         </div>
       </div>
     </div>
+    </AppShell>
   );
 }

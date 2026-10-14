@@ -1,6 +1,5 @@
 import { Anton, Inter, Orbitron } from 'next/font/google';
 import "./globals.css";
-import BackgroundMusic from '@/components/BackgroundMusic';
 import Analytics from '@/components/Analytics';
 import { SITE_APP_STORE_ID, SITE_DESCRIPTION, SITE_EMAIL, SITE_KEYWORDS, SITE_LOGO, SITE_NAME, SITE_OG_IMAGE, SITE_SOCIALS, SITE_TITLE_TEMPLATE, SITE_URL } from '@/lib/site';
 
@@ -110,7 +109,6 @@ export default function RootLayout({ children }) {
     <html lang="en-IN" suppressHydrationWarning>
       <body className={`${orbitron.variable} ${anton.variable} ${inter.variable}`}>
         {children}
-        <BackgroundMusic />
         <Analytics />
       </body>
     </html>
