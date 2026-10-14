@@ -1,4 +1,4 @@
-export const SITE_URL = "https://hashforgamers.co.in";
+export const SITE_URL = "https://www.hashforgamers.com";
 export const SITE_LOGO = "/images/hash-logo.png?v=20260311-0146";
 export const SITE_DOWNLOAD_URL = "https://onelink.to/85rrgg";
 export const SITE_ANDROID_PACKAGE = "com.hfg.hash";
