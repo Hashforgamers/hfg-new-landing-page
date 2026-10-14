@@ -31,6 +31,9 @@ export default function MobileDownloadBar() {
       </div>
       <a
         href={SITE_DOWNLOAD_URL}
+        data-track="app_download_click"
+        data-track-store="onelink"
+        data-track-placement="mobile_bar"
         tabIndex={visible ? 0 : -1}
         className="whitespace-nowrap rounded-full bg-[#ff3d8b] px-5 py-2.5 font-display text-lg uppercase tracking-wide text-white"
       >

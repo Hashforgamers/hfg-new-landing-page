@@ -134,6 +134,8 @@ export default function Page() {
             </MaskHeading>
             <a
               href={SITE_ONBOARD_URL}
+              data-track="cafe_onboard_click"
+              data-track-placement="calculator_faq"
               className="mt-8 inline-block rounded-full bg-white px-8 py-3 font-display text-xl uppercase tracking-wide text-black transition hover:bg-[#ff3d8b] hover:text-white"
             >
               List your cafe on Hash
@@ -142,7 +144,7 @@ export default function Page() {
           <div className="divide-y divide-white/15 border-y border-white/15">
             {FAQS.map(({ q, a }) => (
               <details key={q} className="group py-6">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 font-display text-2xl uppercase text-white sm:text-3xl">
+                <summary data-track="faq_open" data-track-question={q} className="flex cursor-pointer list-none items-center justify-between gap-6 font-display text-2xl uppercase text-white sm:text-3xl">
                   <h3>{q}</h3>
                   <span className="text-3xl text-[#ff9a3d] transition group-open:rotate-45" aria-hidden="true">
                     +

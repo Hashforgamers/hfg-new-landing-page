@@ -138,7 +138,7 @@ function Hero() {
             </p>
           </FadeUp>
           <FadeUp delay={0.65}>
-            <StoreButtons className="mt-8" />
+            <StoreButtons className="mt-8" placement="hero" />
           </FadeUp>
         </div>
       </HeroScene>
@@ -281,7 +281,7 @@ function AppShowcase() {
             Browse tonight&apos;s tournaments, see which cafes have free PCs and consoles, invite your squad and track
             your wallet without switching apps.
           </p>
-          <StoreButtons className="mt-8" />
+          <StoreButtons className="mt-8" placement="app_showcase" />
         </Reveal>
         <div className="relative mx-auto flex h-[560px] w-full max-w-[520px] justify-center">
           <Parallax speed={0.25} rotate={4} className="absolute left-0 top-10 w-[48%]">
@@ -341,6 +341,8 @@ function Marketplace() {
             </p>
             <Link
               href="/shop"
+              data-track="shop_click"
+              data-track-placement="marketplace"
               className="mt-5 inline-block rounded-full border border-white px-7 py-2.5 font-display text-lg uppercase tracking-wide text-white transition hover:bg-white hover:text-black"
             >
               Explore Hash Shop
@@ -578,6 +580,8 @@ function CalculatorTeaser() {
             </p>
             <Link
               href="/gaming-cafe-cost-calculator"
+              data-track="calculator_open_click"
+              data-track-placement="home_teaser_button"
               className="mt-8 inline-block rounded-full bg-black px-8 py-3.5 font-display text-xl uppercase tracking-wide text-white transition hover:bg-white hover:text-black"
             >
               Open the cost calculator
@@ -588,6 +592,8 @@ function CalculatorTeaser() {
           <TiltCard>
             <Link
               href="/gaming-cafe-cost-calculator"
+              data-track="calculator_open_click"
+              data-track-placement="home_teaser_card"
               className="block rounded-2xl bg-black p-6 text-white shadow-[0_30px_80px_rgba(0,0,0,0.35)] sm:p-8"
               aria-label="Example estimate. Open the cost calculator"
             >
@@ -637,12 +643,16 @@ function ForCafes() {
           </p>
           <a
             href={SITE_ONBOARD_URL}
+            data-track="cafe_onboard_click"
+            data-track-placement="fill_every_seat"
             className="mt-8 inline-block rounded-full bg-white px-8 py-3 font-display text-xl uppercase tracking-wide text-black transition hover:bg-[#ff3d8b] hover:text-white"
           >
             List your cafe
           </a>
           <a
             href="#franchise"
+            data-track="franchise_section_click"
+            data-track-placement="fill_every_seat"
             className="ml-3 mt-8 inline-block rounded-full bg-gradient-to-r from-[#ff3d8b] via-[#ff9a3d] to-[#ffd23d] px-8 py-3 font-display text-xl uppercase tracking-wide text-black transition hover:brightness-110"
           >
             Get Hash franchise
@@ -671,7 +681,11 @@ function Faq() {
         <div className="divide-y divide-white/15 border-y border-white/15">
           {FAQS.map(({ q, a }) => (
             <details key={q} className="group py-6">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 font-display text-2xl uppercase text-white sm:text-3xl">
+              <summary
+                data-track="faq_open"
+                data-track-question={q}
+                className="flex cursor-pointer list-none items-center justify-between gap-6 font-display text-2xl uppercase text-white sm:text-3xl"
+              >
                 <h3>{q}</h3>
                 <span className="text-3xl text-[#ff9a3d] transition group-open:rotate-45" aria-hidden="true">
                   +
@@ -698,7 +712,7 @@ function FinalCta() {
           <MaskHeading as="span" className="block">Get in the game.</MaskHeading>
         </h2>
         <div className="mt-10 flex justify-center [&_a:first-child]:bg-black [&_a:first-child]:text-white [&_a:last-child]:border-black [&_a:last-child]:text-black">
-          <StoreButtons className="justify-center" />
+          <StoreButtons className="justify-center" placement="final_cta" />
         </div>
       </Reveal>
     </section>

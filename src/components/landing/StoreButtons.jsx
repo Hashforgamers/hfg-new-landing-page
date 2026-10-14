@@ -19,11 +19,14 @@ function AppleIcon() {
 const base =
   'group inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-full px-3 py-2.5 transition duration-300 sm:flex-none sm:justify-start sm:gap-3 sm:px-6 sm:py-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white';
 
-export default function StoreButtons({ className = '' }) {
+export default function StoreButtons({ className = '', placement = 'unknown' }) {
   return (
     <div className={`flex max-w-md gap-2 sm:max-w-none sm:gap-3 ${className}`}>
       <a
         href={SITE_PLAY_STORE_URL}
+        data-track="app_download_click"
+        data-track-store="google_play"
+        data-track-placement={placement}
         target="_blank"
         rel="noopener"
         className={`${base} bg-white text-black hover:bg-[#ff3d8b] hover:text-white`}
@@ -37,6 +40,9 @@ export default function StoreButtons({ className = '' }) {
       </a>
       <a
         href={SITE_APP_STORE_URL}
+        data-track="app_download_click"
+        data-track-store="app_store"
+        data-track-placement={placement}
         target="_blank"
         rel="noopener"
         className={`${base} border border-white/40 text-white hover:border-white hover:bg-white hover:text-black`}
