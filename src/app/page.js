@@ -13,8 +13,10 @@ import WipeReveal from "@/components/landing/WipeReveal";
 import SmoothScroll from "@/components/landing/SmoothScroll";
 import ScrollProgress from "@/components/landing/ScrollProgress";
 import StoreButtons from "@/components/landing/StoreButtons";
-import { DASHBOARD_SCREENS, KIOSK_POINTS, MARKET_BRANDS, MARKET_CATEGORIES, FAQS, FEATURES, GAMES, STEPS, TICKER } from "@/lib/landing";
+import { JOURNEYS, DASHBOARD_SCREENS, KIOSK_POINTS, MARKET_BRANDS, MARKET_CATEGORIES, FAQS, FEATURES, GAMES, STEPS, TICKER } from "@/lib/landing";
 import CafeDashboard from "@/components/landing/CafeDashboard";
+import PathGate from "@/components/landing/PathGate";
+import { PATH_BOOT_SCRIPT } from "@/lib/paths";
 import { DEFAULT_PRICES as CALC_PRICES, DEFAULTS as CALC_DEFAULTS, calculate, inrShort } from "@/lib/calculator";
 import GrowthVisual from "@/components/landing/GrowthVisual";
 import FranchiseCompare from "@/components/landing/FranchiseCompare";
@@ -26,6 +28,7 @@ import {
   SITE_LOGO,
   SITE_NAME,
   SITE_OG_IMAGE,
+  SITE_FRANCHISE_URL,
   SITE_ONBOARD_URL,
   SITE_PLAY_STORE_URL,
   SITE_SOCIALS,
@@ -99,6 +102,51 @@ const jsonLd = [
 function Eyebrow({ children }) {
   return (
     <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#ff9a3d]">{children}</p>
+  );
+}
+
+// Top-of-page intro for the cafe-owner and franchise paths (the gamer path keeps the main hero).
+function PathIntro({ eyebrow, title, body, primary, secondary }) {
+  return (
+    <section className="relative overflow-hidden bg-black px-4 pb-16 pt-36 sm:px-8 sm:pt-44">
+      <Parallax speed={0.3} scale className="absolute -inset-y-24 inset-x-0">
+        <Image src="/images/dashboard/overview.webp" alt="" fill priority sizes="100vw" className="object-cover object-left-top opacity-25" />
+      </Parallax>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/70 to-black" />
+      <div className="relative mx-auto max-w-[1600px]">
+        <FadeUp>
+          <Eyebrow>{eyebrow}</Eyebrow>
+        </FadeUp>
+        <h1 className="max-w-5xl font-display text-[clamp(3.2rem,10vw,9rem)] uppercase leading-[0.86] text-white">
+          {title.map((line, i) => (
+            <RevealLine key={line} delay={0.1 + i * 0.15} className={i === title.length - 1 ? "bg-gradient-to-r from-[#ff3d8b] via-[#ff9a3d] to-[#ffd23d] bg-clip-text text-transparent" : ""}>
+              {line}
+            </RevealLine>
+          ))}
+        </h1>
+        <FadeUp delay={0.45}>
+          <p className="mt-6 max-w-2xl text-base leading-7 text-white/75 sm:text-lg">{body}</p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a
+              href={primary.href}
+              data-track={primary.track}
+              data-track-placement="path_intro"
+              className="rounded-full bg-white px-8 py-3.5 font-display text-xl uppercase tracking-wide text-black transition hover:bg-[#ff3d8b] hover:text-white"
+            >
+              {primary.label}
+            </a>
+            <a
+              href={secondary.href}
+              data-track={secondary.track}
+              data-track-placement="path_intro"
+              className="rounded-full border border-white/40 px-8 py-3.5 font-display text-xl uppercase tracking-wide text-white transition hover:bg-white hover:text-black"
+            >
+              {secondary.label}
+            </a>
+          </div>
+        </FadeUp>
+      </div>
+    </section>
   );
 }
 
@@ -469,7 +517,7 @@ function CafeDashboardTour() {
 
 function KioskShowcase() {
   return (
-    <section className="relative overflow-hidden bg-black px-4 py-24 sm:px-8" aria-labelledby="kiosk-title">
+    <section id="kiosk" className="relative overflow-hidden bg-black px-4 py-24 sm:px-8" aria-labelledby="kiosk-title">
       <div
         className="pointer-events-none absolute -left-40 bottom-0 h-[520px] w-[520px] rounded-full bg-[#3b6bff]/20 blur-[140px]"
         aria-hidden="true"
@@ -626,7 +674,7 @@ function CalculatorTeaser() {
 
 function ForCafes() {
   return (
-    <section className="relative overflow-hidden bg-black px-4 py-28 sm:px-8" aria-labelledby="cafes-title">
+    <section id="fill-every-seat" className="relative overflow-hidden bg-black px-4 py-28 sm:px-8" aria-labelledby="cafes-title">
       <Parallax speed={0.3} scale className="absolute -inset-y-24 inset-x-0">
         <Image src="/gta6-miami-sunset.jpg" alt="" fill sizes="100vw" className="object-cover opacity-40" />
       </Parallax>
@@ -729,26 +777,68 @@ export default function Page() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
         />
       ))}
+      <script dangerouslySetInnerHTML={{ __html: PATH_BOOT_SCRIPT }} />
+      <PathGate cards={JOURNEYS} />
       <SmoothScroll />
       <ScrollProgress />
       <NavBar />
-      <Hero />
+
+      <div data-audience="gamer">
+        <Hero />
+      </div>
+      <div data-audience="cafe">
+        <PathIntro
+          eyebrow="For gaming cafe owners"
+          title={["More players.", "Less admin."]}
+          body="Hash sends gamers to your cafe, runs every PC with the kiosk app and puts bookings, consoles, customers and pricing on one dashboard."
+          primary={{ label: "List my cafe", href: SITE_ONBOARD_URL, track: "cafe_onboard_click" }}
+          secondary={{ label: "See the dashboard", href: "#for-cafes", track: "path_intro_click" }}
+        />
+      </div>
+      <div data-audience="franchise">
+        <PathIntro
+          eyebrow="Hash franchise"
+          title={["Open a cafe", "with Hash."]}
+          body="Start a Hash-branded gaming cafe with a setup plan, launch marketing, tournaments and the full Hash software stack from day one."
+          primary={{ label: "Get Hash franchise", href: SITE_FRANCHISE_URL, track: "franchise_enquiry_click" }}
+          secondary={{ label: "Compare options", href: "#franchise", track: "path_intro_click" }}
+        />
+      </div>
+
       <Ticker />
-      <FeatureGrid />
-      <ScrollBand top="Compete · Book · Win · Compete · Book · Win ·" bottom="Squad up · Earn HashCoins · Squad up · Earn HashCoins ·" />
-      <Games />
-      <AppShowcase />
-      <HowItWorks />
-      <Marketplace />
-      <ScrollBand top="Fill every seat · Host tournaments ·" bottom="Go live on Hash · Fill every seat ·" />
-      <CafeDashboardTour />
-      <KioskShowcase />
-      <CalculatorTeaser />
-      <ForCafes />
-      <FranchiseCompare />
+
+      <div data-audience="gamer">
+        <FeatureGrid />
+        <ScrollBand top="Compete · Book · Win · Compete · Book · Win ·" bottom="Squad up · Earn HashCoins · Squad up · Earn HashCoins ·" />
+        <Games />
+        <AppShowcase />
+        <HowItWorks />
+        <Marketplace />
+      </div>
+
+      <div data-audience="franchise">
+        <FranchiseCompare />
+      </div>
+      <div data-audience="cafe franchise">
+        <ScrollBand top="Fill every seat · Host tournaments ·" bottom="Go live on Hash · Fill every seat ·" />
+      </div>
+      <div data-audience="cafe">
+        <CafeDashboardTour />
+      </div>
+      <div data-audience="cafe franchise">
+        <KioskShowcase />
+        <CalculatorTeaser />
+      </div>
+      <div data-audience="cafe">
+        <ForCafes />
+      </div>
+
       <Faq />
-      <FinalCta />
-      <MobileDownloadBar />
+
+      <div data-audience="gamer">
+        <FinalCta />
+        <MobileDownloadBar />
+      </div>
     </AppShell>
   );
 }

@@ -1,6 +1,40 @@
 // Content for the home page. FAQ entries here also feed the FAQPage JSON-LD,
 // so the visible answers and the structured data never drift apart.
 
+// "Choose your path" cards under the hero: one entry point per audience.
+export const JOURNEYS = [
+  {
+    id: "gamer",
+    kicker: "Players",
+    title: "I'm a gamer",
+    body: "Join daily tournaments, book a PC or console near you and earn HashCoins.",
+    cta: "Join a tournament",
+    image: "/gta6-miami-sunset.jpg",
+    tint: "from-[#ff3d8b]/90",
+    curtain: "from-[#ff3d8b] to-[#ff9a3d]",
+  },
+  {
+    id: "cafe",
+    kicker: "Cafe owners",
+    title: "I own a gaming cafe",
+    body: "Get bookings, run every PC with the kiosk and manage it all from one dashboard.",
+    cta: "List my cafe",
+    image: "/images/dashboard/overview.webp",
+    tint: "from-[#ff9a3d]/90",
+    curtain: "from-[#ff9a3d] to-[#ffd23d]",
+  },
+  {
+    id: "franchise",
+    kicker: "Investors",
+    title: "I want a franchise",
+    body: "Open a Hash-branded cafe with setup help, launch marketing and tournaments.",
+    cta: "Explore the franchise",
+    image: "/images/kiosk/launcher.webp",
+    tint: "from-[#7c3aed]/90",
+    curtain: "from-[#7c3aed] to-[#ff3d8b]",
+  },
+];
+
 export const FEATURES = [
   {
     id: "tournaments",
@@ -75,6 +109,10 @@ export const STEPS = [
 ];
 
 export const TICKER = [
+  "10K+ users",
+  "4.7★ rated",
+  "35+ cafes",
+  "15+ tournaments",
   "Tournaments live daily",
   "Book gaming cafes near you",
   "Earn HashCoins",
