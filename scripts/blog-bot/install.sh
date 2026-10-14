@@ -23,7 +23,7 @@ done
 
 # 3. API key file (you fill it in).
 if [ ! -f "$BOT_HOME/.env" ]; then
-  printf '# Anthropic API key for the blog bot\nANTHROPIC_API_KEY=\n' > "$BOT_HOME/.env"
+  printf '# OpenAI API key for the blog bot\nOPENAI_API_KEY=\n' > "$BOT_HOME/.env"
   chmod 600 "$BOT_HOME/.env"
   echo "Add your key to $BOT_HOME/.env"
 fi

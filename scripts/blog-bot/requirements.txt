@@ -1,4 +1,4 @@
-anthropic>=1.14
+openai>=1.99
 pydantic>=2.14
 scrapling==0.4.15
 # HTTP fetcher dependencies (installed one by one; `scrapling[fetchers]` can stall pip's resolver)
