@@ -60,7 +60,7 @@ export default function ListYourCafePage() {
         </h2>
 
         <form
-          action="https://formsubmit.co/support@hashforgamers.com"
+          action="https://formsubmit.co/onboarding@hashforgamers.com"
           method="POST"
           className="space-y-4"
         >

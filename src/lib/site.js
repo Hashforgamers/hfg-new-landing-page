@@ -8,10 +8,9 @@ export const SITE_APP_STORE_URL = `https://apps.apple.com/in/app/hash-gaming-esp
 export const SITE_OG_IMAGE = "/images/og-home.jpg";
 // Self-serve onboarding for gaming cafe owners.
 export const SITE_ONBOARD_URL = "https://onboard.hashforgamers.com";
-export const SITE_EMAIL = "support@hashforgamers.com";
-// Cafe onboarding and franchise enquiries.
-export const SITE_ONBOARDING_EMAIL = "onboarding@hashforgamers.com";
-export const SITE_FRANCHISE_URL = `mailto:${SITE_ONBOARDING_EMAIL}?subject=${encodeURIComponent(
+export const SITE_EMAIL = "onboarding@hashforgamers.com";
+// Franchise enquiries go to the main contact inbox.
+export const SITE_FRANCHISE_URL = `mailto:${SITE_EMAIL}?subject=${encodeURIComponent(
   "Hash franchise enquiry"
 )}&body=${encodeURIComponent(
   "Hi Hash team,\n\nI'd like to know more about the Hash franchise.\n\nCity:\nPlanned number of PCs and consoles:\nBudget:\nPhone:\n"
