@@ -9,6 +9,7 @@ export const PATH_EVENT = 'hash:path';
 export const PATH_NAV = {
   gamer: [
     { href: '#tournaments', label: 'Tournaments' },
+    { href: '/mumbai-surfer', label: 'Mumbai Surfer' },
     { href: '#features', label: 'Features' },
     { href: '#how-it-works', label: 'How it works' },
     { href: '#marketplace', label: 'Marketplace' },
