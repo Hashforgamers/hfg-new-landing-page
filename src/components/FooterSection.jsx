@@ -23,6 +23,7 @@ const Footer = ({
         { label: 'Shop', href: '/shop' },
         { label: 'Tournaments', href: '/tournaments' },
         { label: 'Blog', href: '/blog' },
+        { label: 'Mumbai Surfer Game', href: '/mumbai-surfer' },
         { label: 'Download App', href: SITE_DOWNLOAD_URL }
       ]
     },

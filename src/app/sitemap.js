@@ -38,6 +38,11 @@ const routes = [
     priority: 0.8,
   },
   {
+    url: "/mumbai-surfer",
+    changeFrequency: "monthly",
+    priority: 0.8,
+  },
+  {
     url: "/privacy-policy",
     changeFrequency: "yearly",
     priority: 0.3,

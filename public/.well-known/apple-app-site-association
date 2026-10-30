@@ -78,6 +78,14 @@
           {
             "/": "/offer/*",
             "comment": "Offer detail"
+          },
+          {
+            "/": "/shop",
+            "comment": "Hash Shop home"
+          },
+          {
+            "/": "/shop/*",
+            "comment": "Shop product (/product/<id>), order (/order/<id>), cart and orders"
           }
         ]
       }
