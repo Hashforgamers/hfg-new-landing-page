@@ -10,7 +10,7 @@ import ScrollProgress from "@/components/landing/ScrollProgress";
 import { SITE_NAME, SITE_URL, buildPageMetadata } from "@/lib/site";
 
 const PATH = "/mumbai-surfer";
-const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
+const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT || "ca-pub-8804377047878009";
 // AdSense ad unit ids (AdSense > Ads > By ad unit); set once the account is approved.
 const AD_SLOTS = {
   left: process.env.NEXT_PUBLIC_ADSENSE_SLOT_LEFT,
