@@ -1,10 +1,12 @@
 import AppShell from "@/components/AppShell";
+import JsonLd from "@/components/JsonLd";
+import FaqSection from "@/components/landing/FaqSection";
 import InfoCards from "@/components/landing/InfoCards";
 import NavBar from "@/components/landing/NavBar";
 import PageHero from "@/components/landing/PageHero";
 import ScrollProgress from "@/components/landing/ScrollProgress";
 import StoreButtons from "@/components/landing/StoreButtons";
-import { buildPageMetadata } from "@/lib/site";
+import { breadcrumbLd, buildPageMetadata } from "@/lib/site";
 
 export const metadata = buildPageMetadata({
   title: "HashCoins Rewards",
@@ -27,13 +29,38 @@ const SPEND = [
   { title: "Gear", body: "Use coins towards gaming gear in the Hash Shop." },
 ];
 
+const FAQS = [
+  {
+    q: "What are HashCoins?",
+    a: "HashCoins are Hash's reward points. You earn them by playing, booking gaming cafes and bringing friends, and spend them on passes, offers and gear.",
+  },
+  {
+    q: "How do I earn HashCoins?",
+    a: "Play and finish tournament matches, book gaming cafe sessions through Hash, refer friends who join and play, and keep a streak by coming back regularly.",
+  },
+  {
+    q: "What can I spend HashCoins on?",
+    a: "Game passes (bundles of playtime at partner cafes), exclusive offers from cafes and partners, and gaming gear in the Hash Shop.",
+  },
+  {
+    q: "Where can I see my HashCoins balance?",
+    a: "Your balance and history are in the wallet in the Hash app.",
+  },
+  {
+    q: "How does the Hash referral reward work?",
+    a: "Share your referral link from the app. When a friend joins and plays, you both earn HashCoins.",
+  },
+];
+
 export default function RewardsPage() {
   return (
     <AppShell>
+      <JsonLd data={breadcrumbLd("HashCoins Rewards", "/rewards")} />
       <ScrollProgress />
       <NavBar />
       <PageHero
         eyebrow="HashCoins"
+        heading="HashCoins rewards"
         lines={["Play more.", "Earn more."]}
         body="HashCoins are Hash's reward points. Earn them by playing, booking and bringing friends, then spend them on passes, offers and gear."
         image="/gta6-miami-sunset.jpg"
@@ -50,6 +77,7 @@ export default function RewardsPage() {
           <StoreButtons className="mx-auto mt-8 justify-center" placement="rewards_bottom" />
         </div>
       </section>
+      <FaqSection id="rewards-faq" faqs={FAQS} />
     </AppShell>
   );
 }

@@ -6,7 +6,8 @@ import Reveal from "@/components/landing/Reveal";
 import ScrollProgress from "@/components/landing/ScrollProgress";
 import TiltCard from "@/components/landing/TiltCard";
 import { BLOG_CATEGORIES, formatDate, getAllPosts, readingMinutes } from "@/lib/blog";
-import { buildPageMetadata } from "@/lib/site";
+import { breadcrumbLd, buildPageMetadata } from "@/lib/site";
+import JsonLd from "@/components/JsonLd";
 
 export const metadata = buildPageMetadata({
   title: "Gaming News & Esports Blog",
@@ -21,6 +22,7 @@ export default function BlogIndex() {
   const [lead, ...rest] = posts;
   return (
     <AppShell>
+      <JsonLd data={breadcrumbLd("Blog", "/blog")} />
       <ScrollProgress />
       <NavBar />
       <PageHero

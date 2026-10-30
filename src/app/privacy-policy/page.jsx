@@ -4,7 +4,8 @@ import { FadeUp, RevealLine } from "@/components/landing/HeroParallax";
 import NavBar from "@/components/landing/NavBar";
 import Reveal from "@/components/landing/Reveal";
 import ScrollProgress from "@/components/landing/ScrollProgress";
-import { buildPageMetadata } from "@/lib/site";
+import { breadcrumbLd, buildPageMetadata } from "@/lib/site";
+import JsonLd from "@/components/JsonLd";
 
 export const metadata = buildPageMetadata({
   title: "Privacy Policy",
@@ -65,6 +66,7 @@ const SECTIONS = [
 export default function PrivacyPolicyPage() {
   return (
     <AppShell>
+      <JsonLd data={breadcrumbLd("Privacy Policy", "/privacy-policy")} />
       <ScrollProgress />
       <NavBar />
 

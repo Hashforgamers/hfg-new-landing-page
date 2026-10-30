@@ -1,5 +1,7 @@
 import Image from "next/image";
 import AppShell from "@/components/AppShell";
+import JsonLd from "@/components/JsonLd";
+import FaqSection from "@/components/landing/FaqSection";
 import InfoCards from "@/components/landing/InfoCards";
 import MaskHeading from "@/components/landing/MaskHeading";
 import NavBar from "@/components/landing/NavBar";
@@ -9,7 +11,7 @@ import Reveal from "@/components/landing/Reveal";
 import ScrollProgress from "@/components/landing/ScrollProgress";
 import StoreButtons from "@/components/landing/StoreButtons";
 import { GAMES } from "@/lib/landing";
-import { buildPageMetadata } from "@/lib/site";
+import { breadcrumbLd, buildPageMetadata } from "@/lib/site";
 
 export const metadata = buildPageMetadata({
   title: "Esports Tournaments in India",
@@ -26,13 +28,42 @@ const STEPS = [
   { title: "Climb the board", body: "Results post, rankings update and rewards land in your wallet." },
 ];
 
+const FAQS = [
+  {
+    q: "Which games have tournaments on Hash?",
+    a: "Hash runs tournaments for BGMI, Valorant, Free Fire, EA FC, Call of Duty Mobile, Clash Royale, Tekken and PC and console titles at partner cafes. The line-up changes every week, so check the Compete tab in the app for what is live.",
+  },
+  {
+    q: "Are Hash tournaments free to enter?",
+    a: "Some are free and some have an entry fee. Every tournament shows whether it is free or paid, along with the prize pool and number of slots, before you register.",
+  },
+  {
+    q: "Can I play solo or do I need a team?",
+    a: "Both. You can register solo, or create a squad and invite your teammates with a link from the app.",
+  },
+  {
+    q: "When do I get the room ID and match details?",
+    a: "Room details, the schedule and the bracket appear in the tournament page in the app before match time, so everyone in your squad sees them in one place.",
+  },
+  {
+    q: "How do I see results and get my rewards?",
+    a: "Results are posted in the app after each match, the leaderboard updates, and rewards go to your Hash wallet.",
+  },
+  {
+    q: "Do I earn HashCoins for playing tournaments?",
+    a: "Yes. Joining and finishing matches earns HashCoins on top of any prize, and you can spend them on game passes, offers and gear.",
+  },
+];
+
 export default function TournamentsPage() {
   return (
     <AppShell>
+      <JsonLd data={breadcrumbLd("Esports Tournaments", "/tournaments")} />
       <ScrollProgress />
       <NavBar />
       <PageHero
         eyebrow="Hash tournaments"
+        heading="Esports tournaments in India"
         lines={["Compete.", "Climb. Win."]}
         body="Daily esports tournaments with real brackets, live results and rankings. Register solo or bring your squad."
         image="/images/hero-poster.jpg"
@@ -93,6 +124,7 @@ export default function TournamentsPage() {
           </Parallax>
         </div>
       </section>
+      <FaqSection id="tournaments-faq" faqs={FAQS} />
     </AppShell>
   );
 }

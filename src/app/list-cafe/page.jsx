@@ -7,7 +7,8 @@ import NavBar from "@/components/landing/NavBar";
 import Reveal from "@/components/landing/Reveal";
 import ScrollProgress from "@/components/landing/ScrollProgress";
 import TiltCard from "@/components/landing/TiltCard";
-import { SITE_ONBOARD_URL, buildPageMetadata } from "@/lib/site";
+import { SITE_ONBOARD_URL, breadcrumbLd, buildPageMetadata } from "@/lib/site";
+import JsonLd from "@/components/JsonLd";
 
 export const metadata = buildPageMetadata({
   title: "List Your Gaming Cafe on Hash",
@@ -34,6 +35,7 @@ const STEPS = [
 export default function ListCafePage() {
   return (
     <AppShell>
+      <JsonLd data={breadcrumbLd("List Your Cafe", "/list-cafe")} />
       <ScrollProgress />
       <NavBar />
 

@@ -12,7 +12,12 @@
 - [List your cafe](https://www.hashforgamers.com/list-cafe): bookings, a kiosk on every PC, tournaments and one dashboard.
 - [Gaming cafe cost calculator](https://www.hashforgamers.com/gaming-cafe-cost-calculator): setup cost, monthly profit and break-even for a gaming cafe in India.
 
+## Company
+- [About Hash For Gamers](https://www.hashforgamers.com/about)
+- [Gaming news and guides](https://www.hashforgamers.com/blog)
+
 ## Help
 - [Support](https://www.hashforgamers.com/support)
 - [Privacy policy](https://www.hashforgamers.com/privacy-policy)
+- [Terms & Conditions](https://www.hashforgamers.com/terms)
 - [Get the app](https://onelink.to/85rrgg)
