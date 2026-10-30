@@ -101,6 +101,8 @@ export const metadata = {
     "color-scheme": "dark",
     "contact:email": SITE_EMAIL,
     "profile:same_as": SITE_SOCIALS.join(","),
+    // AdSense site ownership check (same publisher as the Mumbai Surfer app's AdMob).
+    "google-adsense-account": "ca-pub-8804377047878009",
   },
 };
 
