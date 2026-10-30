@@ -48,6 +48,8 @@ const Footer = ({
       links: [
         { label: 'Onboard Your Cafe', href: SITE_ONBOARD_URL },
         { label: 'Cafe Cost Calculator', href: '/gaming-cafe-cost-calculator' },
+        { label: 'Cafe Management Software', href: '/gaming-cafe-software' },
+        { label: 'Gaming Cafe Franchise', href: '/gaming-cafe-franchise' },
         { label: 'Request a Callback', href: '/list-cafe' },
         { label: 'Partner With Hash', action: 'partner' },
       ]

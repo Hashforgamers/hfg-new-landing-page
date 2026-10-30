@@ -294,13 +294,15 @@ function Games() {
         </Reveal>
         <ul className="mt-12 grid grid-cols-2 border-l border-t border-white/10 lg:grid-cols-4">
           {GAMES.map((g, i) => (
-            <li key={g.name} className="border-b border-r border-white/10">
+            <li key={g.name} className="relative border-b border-r border-white/10">
               <Reveal delay={(i % 4) * 0.06} y={20} className="group flex h-full flex-col justify-between gap-6 p-5 transition-colors duration-300 hover:bg-[#ff3d8b] sm:p-8">
                 <span className="font-tech text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 group-hover:text-black/70">
                   {String(i + 1).padStart(2, "0")} · {g.type}
                 </span>
                 <h3 className="font-display text-3xl uppercase leading-none text-white group-hover:text-black sm:text-5xl">
-                  {g.name}
+                  <Link href={g.slug ? `/tournaments/${g.slug}` : g.href} className="after:absolute after:inset-0">
+                    {g.name}
+                  </Link>
                 </h3>
               </Reveal>
             </li>

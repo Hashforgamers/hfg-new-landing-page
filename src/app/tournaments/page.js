@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import AppShell from "@/components/AppShell";
 import JsonLd from "@/components/JsonLd";
 import FaqSection from "@/components/landing/FaqSection";
@@ -14,11 +15,11 @@ import { GAMES } from "@/lib/landing";
 import { breadcrumbLd, buildPageMetadata } from "@/lib/site";
 
 export const metadata = buildPageMetadata({
-  title: "Esports Tournaments in India",
+  title: "Esports Tournament App in India",
   description:
-    "Join esports tournaments on the Hash app: BGMI, Valorant, Free Fire, EA FC and more. Register solo or with your squad, get room details and see results and rankings live.",
+    "Join esports tournaments on the Hash app: BGMI, Valorant, Free Fire, EA FC and more. Free and paid entry, squad registration, room details and live results.",
   path: "/tournaments",
-  keywords: ["esports tournaments India", "BGMI tournament", "Valorant tournament India", "Free Fire tournament", "online gaming tournament app"],
+  keywords: ["esports tournaments India", "esports tournament app", "online gaming tournaments in India", "gaming tournament app", "BGMI tournament app", "Free Fire tournament app", "Valorant tournament India", "free entry tournament"],
 });
 
 const STEPS = [
@@ -90,10 +91,12 @@ export default function TournamentsPage() {
           </MaskHeading>
           <ul className="mt-12 grid grid-cols-2 border-l border-t border-white/10 lg:grid-cols-4">
             {GAMES.map((g, i) => (
-              <li key={g.name} className="border-b border-r border-white/10">
+              <li key={g.name} className="relative border-b border-r border-white/10">
                 <Reveal delay={(i % 4) * 0.06} y={20} className="group flex h-full flex-col justify-between gap-6 p-5 transition-colors duration-300 hover:bg-[#ff3d8b] sm:p-8">
                   <span className="font-tech text-[10px] uppercase tracking-[0.2em] text-white/50 group-hover:text-black/70">{g.type}</span>
-                  <h3 className="font-display text-3xl uppercase leading-none text-white group-hover:text-black sm:text-5xl">{g.name}</h3>
+                  <h3 className="font-display text-3xl uppercase leading-none text-white group-hover:text-black sm:text-5xl">
+                    <Link href={g.slug ? `/tournaments/${g.slug}` : g.href} className="after:absolute after:inset-0">{g.name}</Link>
+                  </h3>
                 </Reveal>
               </li>
             ))}

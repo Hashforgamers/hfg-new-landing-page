@@ -128,14 +128,14 @@ export const TICKER = [
 ];
 
 export const GAMES = [
-  { name: "BGMI", type: "Battle royale" },
-  { name: "Valorant", type: "Tactical FPS" },
-  { name: "Free Fire", type: "Battle royale" },
-  { name: "EA FC", type: "Football" },
-  { name: "Call of Duty Mobile", type: "FPS" },
-  { name: "Clash Royale", type: "Strategy" },
-  { name: "Tekken", type: "Fighting" },
-  { name: "PC & console", type: "At gaming cafes" },
+  { name: "BGMI", slug: "bgmi", type: "Battle royale" },
+  { name: "Valorant", slug: "valorant", type: "Tactical FPS" },
+  { name: "Free Fire", slug: "free-fire", type: "Battle royale" },
+  { name: "EA FC", slug: "ea-fc", type: "Football" },
+  { name: "Call of Duty Mobile", slug: "cod-mobile", type: "FPS" },
+  { name: "Clash Royale", slug: "clash-royale", type: "Strategy" },
+  { name: "Tekken", slug: "tekken", type: "Fighting" },
+  { name: "PC & console", type: "At gaming cafes", href: "/gaming-cafes" },
 ];
 
 // Cafe dashboard tour. Customer names and phone numbers in the Gamers screenshot are sample data.

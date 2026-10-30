@@ -19,6 +19,20 @@ export async function generateMetadata({ params }) {
   return buildPageMetadata({ title: post.title, description: post.description, path: `/blog/${slug}`, keywords: post.tags });
 }
 
+// Turns "[text](/path)" in post text into links, so guides can link to other pages on the site.
+function Linked({ text }) {
+  return text.split(/(\[[^\]]+\]\(\/[^)\s]*\))/).map((part, i) => {
+    const m = part.match(/^\[([^\]]+)\]\((\/[^)\s]*)\)$/);
+    return m ? (
+      <Link key={i} href={m[2]} className="text-white underline decoration-[#ff3d8b] underline-offset-4 hover:text-[#ff9a3d]">
+        {m[1]}
+      </Link>
+    ) : (
+      part
+    );
+  });
+}
+
 function Block({ block }) {
   if (block.type === "h2") return <h2 className="mt-12 font-display text-3xl uppercase leading-none text-white sm:text-4xl">{block.text}</h2>;
   if (block.type === "ul")
@@ -27,12 +41,18 @@ function Block({ block }) {
         {block.items.map((it) => (
           <li key={it} className="flex gap-3 text-lg leading-8 text-white/80">
             <span className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-[#ff3d8b]" aria-hidden="true" />
-            {it}
+            <span>
+              <Linked text={it} />
+            </span>
           </li>
         ))}
       </ul>
     );
-  return <p className="mt-5 text-lg leading-8 text-white/80">{block.text}</p>;
+  return (
+    <p className="mt-5 text-lg leading-8 text-white/80">
+      <Linked text={block.text} />
+    </p>
+  );
 }
 
 export default async function BlogPost({ params }) {
