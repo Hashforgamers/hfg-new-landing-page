@@ -10,6 +10,8 @@ const DIR = path.join(process.cwd(), "content", "blog");
 export const BLOG_CATEGORIES = {
   esports: "Indian esports",
   gta: "GTA",
+  games: "Games & releases",
+  mobile: "Mobile gaming",
   industry: "Gaming industry",
   business: "Esports business",
   cafes: "Gaming cafes",
