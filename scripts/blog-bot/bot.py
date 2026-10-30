@@ -1,4 +1,4 @@
-"""Hash blog bot: finds trending gaming stories with Scrapling, has OpenAI write 2-3 original posts,
+"""Hash blog bot: finds trending gaming stories with Scrapling, has Claude write 2-3 original posts,
 and publishes them to the website repo (content/blog/*.json), which Vercel deploys.
 
 Run:   ~/.hash-blog-bot/venv/bin/python bot.py [--dry-run] [--count N]
@@ -23,7 +23,7 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-from openai import OpenAI
+import anthropic
 from scrapling.fetchers import Fetcher
 
 from sources import BING_NEWS_RSS, FEEDS, RELEVANT, SEARCHES
@@ -33,7 +33,7 @@ REPO_DIR = HOME / "repo"
 REPO_SLUG = "Hashforgamers/hfg-new-landing-page"
 BRANCH = "Main"
 POSTS_DIR = "content/blog"
-MODEL = "gpt-5"  # default; OPENAI_MODEL in .env overrides at runtime
+MODEL = "claude-opus-5-5"
 MAX_AGE_HOURS = 48
 SITE = "https://www.hashforgamers.com"
 # IndexNow tells Bing (and through it ChatGPT Search, Copilot, DuckDuckGo) about new posts at once.
@@ -200,7 +200,7 @@ def article_text(url: str, limit: int = 12000) -> str:
     return ""
 
 
-# ---------------------------------------------------------------- writing (OpenAI)
+# ---------------------------------------------------------------- writing (Claude)
 
 SYSTEM = """You write the daily news blog for Hash For Gamers (hashforgamers.com), India's tournament-first
 gaming app for players and gaming cafe owners. Readers are Indian gamers, esports fans and cafe owners.
@@ -260,17 +260,22 @@ POST_SCHEMA = {
 }
 
 
-def ask_json(client: OpenAI, system: str, prompt: str, schema: dict, max_tokens: int = 16000) -> dict:
-    response = client.responses.create(
-        model=os.environ.get("OPENAI_MODEL", MODEL),
-        instructions=system,
-        input=prompt,
-        max_output_tokens=max_tokens,
-        text={"format": {"type": "json_schema", "name": "output", "schema": schema, "strict": False}},
+def ask_json(client: anthropic.Anthropic, system: str, prompt: str, schema: dict, max_tokens: int = 16000) -> dict:
+    response = client.beta.messages.create(
+        model=MODEL,
+        max_tokens=max_tokens,
+        system=system,
+        betas=["server-side-fallback-2026-07-01"],
+        fallbacks="default",
+        output_config={"effort": "high", "format": {"type": "json_schema", "schema": schema}},
+        messages=[{"role": "user", "content": prompt}],
     )
-    if response.status == "incomplete":
-        raise RuntimeError(f"Response was cut off ({response.incomplete_details})")
-    return json.loads(response.output_text)
+    if response.stop_reason == "refusal":
+        raise RuntimeError("Claude declined this request")
+    if response.stop_reason == "max_tokens":
+        raise RuntimeError("Response was cut off (max_tokens)")
+    text = next(block.text for block in response.content if block.type == "text")
+    return json.loads(text)
 
 
 def pick_stories(client, candidates: list[dict], posted_titles: list[str], count: int) -> list[dict]:
@@ -337,7 +342,7 @@ Source article text:
         "tags": post["tags"][:6],
         "body": body,
         "sources": [{"title": story["title"], "url": story["url"], "publisher": story["publisher"]}],
-        "generated": {"by": "blog-bot", "model": os.environ.get("OPENAI_MODEL", MODEL)},
+        "generated": {"by": "blog-bot", "model": MODEL},
     }
 
 
@@ -402,7 +407,7 @@ def main() -> int:
     candidates = [c for c in candidates if c["url"] not in used_urls]
     posted_titles = [p["title"] for p in sorted(posts, key=lambda p: p.get("date", ""), reverse=True)]
 
-    client = OpenAI()
+    client = anthropic.Anthropic()
     picks = pick_stories(client, candidates[:120], posted_titles, args.count + 2)  # spares in case one can't be read
     written = []
     for story in picks:

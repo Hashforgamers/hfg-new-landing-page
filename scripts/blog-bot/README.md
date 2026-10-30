@@ -5,8 +5,8 @@ Publishes 2–3 original gaming news posts to hashforgamers.com/blog every day.
 1. **Discover**: [Scrapling](https://github.com/d4vinci/Scrapling) reads gaming and startup news feeds
    plus Bing News searches for Hash topics (Indian esports, GTA, Nazara and esports funding, gaming
    cafes, PC hardware). Sources and queries are in [`sources.py`](sources.py).
-2. **Pick**: OpenAI chooses the best 2–3 stories from the last 48 hours, skipping anything already posted.
-3. **Write**: Scrapling fetches each article; OpenAI writes an original 400–650 word post in its own words,
+2. **Pick**: Claude chooses the best 2–3 stories from the last 48 hours, skipping anything already posted.
+3. **Write**: Scrapling fetches each article; Claude writes an original 400–650 word post in its own words,
    citing the publisher, with a link back to the source.
 4. **Publish**: posts are saved as `content/blog/<date>-<slug>.json` and pushed to `Main`; Vercel deploys.
 
@@ -20,7 +20,7 @@ Run the installer from a checkout of this repo:
 scripts/blog-bot/install.sh
 ```
 
-Then add your OpenAI API key to `~/.hash-blog-bot/.env` (`OPENAI_API_KEY=sk-...`). Set `OPENAI_MODEL` there to change the model (default `gpt-5`).
+Then add your Anthropic API key to `~/.hash-blog-bot/.env` (`ANTHROPIC_API_KEY=sk-ant-...`).
 GitHub access comes from `gh` (run `gh auth login` first if needed).
 
 ## Run by hand
