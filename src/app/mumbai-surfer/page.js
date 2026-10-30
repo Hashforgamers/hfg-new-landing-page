@@ -11,11 +11,11 @@ import { SITE_NAME, SITE_URL, buildPageMetadata } from "@/lib/site";
 
 const PATH = "/mumbai-surfer";
 const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT || "ca-pub-8804377047878009";
-// AdSense ad unit ids (AdSense > Ads > By ad unit); set once the account is approved.
+// AdSense ad unit ids (AdSense > Ads > By ad unit > "Mumbai Surfer - left/right/bottom").
 const AD_SLOTS = {
-  left: process.env.NEXT_PUBLIC_ADSENSE_SLOT_LEFT,
-  right: process.env.NEXT_PUBLIC_ADSENSE_SLOT_RIGHT,
-  bottom: process.env.NEXT_PUBLIC_ADSENSE_SLOT_BOTTOM,
+  left: process.env.NEXT_PUBLIC_ADSENSE_SLOT_LEFT || "8418228172",
+  right: process.env.NEXT_PUBLIC_ADSENSE_SLOT_RIGHT || "7105146509",
+  bottom: process.env.NEXT_PUBLIC_ADSENSE_SLOT_BOTTOM || "7177745808",
 };
 const PLAY_URL ="https://play.google.com/store/apps/details?id=com.hashforgamers.mumbaisurfer";
 const DESCRIPTION =
