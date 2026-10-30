@@ -33,7 +33,7 @@ REPO_DIR = HOME / "repo"
 REPO_SLUG = "Hashforgamers/hfg-new-landing-page"
 BRANCH = "Main"
 POSTS_DIR = "content/blog"
-MODEL = "claude-opus-5-5"
+MODEL = "claude-sonnet-5-5"
 MAX_AGE_HOURS = 48
 SITE = "https://www.hashforgamers.com"
 # IndexNow tells Bing (and through it ChatGPT Search, Copilot, DuckDuckGo) about new posts at once.
