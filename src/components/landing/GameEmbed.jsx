@@ -7,7 +7,7 @@ import { useState } from "react";
 export default function GameEmbed({ src, poster, title }) {
   const [playing, setPlaying] = useState(false);
   return (
-    <div className="relative mx-auto aspect-[3/4] w-full max-w-[min(600px,calc((100svh-7rem)*3/4))] overflow-hidden rounded-2xl border border-white/10 bg-black">
+    <div className="relative mx-auto aspect-[9/16] w-full max-w-[calc((100svh-7rem)*9/16)] sm:aspect-[3/4] sm:max-w-[min(600px,calc((100svh-7rem)*3/4))] overflow-hidden rounded-2xl border border-white/10 bg-black">
       {playing ? (
         <iframe src={src} title={title} allow="fullscreen; autoplay; gamepad" className="absolute inset-0 h-full w-full" />
       ) : (

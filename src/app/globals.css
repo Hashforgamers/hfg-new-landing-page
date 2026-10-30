@@ -101,7 +101,9 @@ html[data-path="franchise"] [data-audience]:not([data-audience~="franchise"]) { 
   font-weight: 600;
 }
 
-/* AdSense marks units it couldn't fill (e.g. during site review); keep the dark frame instead of a white box. */
-ins.adsbygoogle[data-ad-status="unfilled"] {
+/* AdSense marks units it couldn't fill (e.g. during site review); hide the whole slot, label included,
+   instead of showing a white box or an empty "Advertisement" frame. */
+ins.adsbygoogle[data-ad-status="unfilled"],
+.ad-slot:has(ins.adsbygoogle[data-ad-status="unfilled"]) {
   display: none !important;
 }
