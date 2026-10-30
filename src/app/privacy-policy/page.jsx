@@ -94,6 +94,9 @@ export default function PrivacyPolicyPage() {
             <p className="mt-6 max-w-2xl text-base leading-7 text-white/75 sm:text-lg">
               Your privacy matters. Here&apos;s how we protect your data.
             </p>
+            <p className="font-tech mt-4 text-[11px] uppercase tracking-[0.3em] text-white/45">
+              Last updated <time dateTime="2026-10-15">15 October 2026</time>
+            </p>
           </FadeUp>
         </div>
       </section>

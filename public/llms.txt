@@ -1,0 +1,18 @@
+# Hash For Gamers
+
+> Hash For Gamers (Hash) is an Indian gaming app for Android and iOS: join esports tournaments, book gaming cafes near you, build a squad and earn HashCoins. Made by Hashforgamers Private Limited, Mumbai.
+
+## Players
+- [Esports tournaments](https://www.hashforgamers.com/tournaments): BGMI, Valorant, Free Fire, EA FC and more; register solo or with a squad, results and rankings in the app.
+- [Book gaming cafes](https://www.hashforgamers.com/gaming-cafes): find PC, PlayStation, Xbox, VR and racing setups near you and book a slot in advance.
+- [HashCoins rewards](https://www.hashforgamers.com/rewards): earn coins by playing, booking and referring; spend them on passes, offers and gear.
+- [Mumbai Surfer](https://www.hashforgamers.com/mumbai-surfer): free endless runner on Mumbai's Western Line local train route, playable in the browser and on Android.
+
+## Gaming cafe owners
+- [List your cafe](https://www.hashforgamers.com/list-cafe): bookings, a kiosk on every PC, tournaments and one dashboard.
+- [Gaming cafe cost calculator](https://www.hashforgamers.com/gaming-cafe-cost-calculator): setup cost, monthly profit and break-even for a gaming cafe in India.
+
+## Help
+- [Support](https://www.hashforgamers.com/support)
+- [Privacy policy](https://www.hashforgamers.com/privacy-policy)
+- [Get the app](https://onelink.to/85rrgg)

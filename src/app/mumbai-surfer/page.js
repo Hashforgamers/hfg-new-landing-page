@@ -19,10 +19,10 @@ const AD_SLOTS = {
 };
 const PLAY_URL ="https://play.google.com/store/apps/details?id=com.hashforgamers.mumbaisurfer";
 const DESCRIPTION =
-  "Play Mumbai Surfer free in your browser or on Android: an endless runner on Mumbai's Western Line local train route. Run from Churchgate to Dahanu Road, dodge locals, jump barriers and surf train roofs. No ads, no in-app purchases.";
+  "Play Mumbai Surfer free in your browser or on Android. Run the Western Line local train route from Churchgate to Dahanu, dodge trains and surf the roofs.";
 
 export const metadata = buildPageMetadata({
-  title: "Mumbai Surfer: Play the Local Train Runner Game Online",
+  title: "Mumbai Surfer: Play the Train Runner Game",
   description: DESCRIPTION,
   path: PATH,
   image: "/images/mumbai-surfer/og.jpg",

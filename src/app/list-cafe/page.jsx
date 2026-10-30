@@ -12,7 +12,7 @@ import { SITE_ONBOARD_URL, buildPageMetadata } from "@/lib/site";
 export const metadata = buildPageMetadata({
   title: "List Your Gaming Cafe on Hash",
   description:
-    "List your gaming cafe on Hash For Gamers to get advance bookings, run every PC with the Hash kiosk, host tournaments and manage it all from one dashboard. Request a callback or onboard yourself.",
+    "List your gaming cafe on Hash for advance bookings, a kiosk on every PC, tournaments and one dashboard. Request a callback or onboard yourself.",
   path: "/list-cafe",
   keywords: ["list gaming cafe", "gaming cafe software India", "gaming cafe booking system", "gaming cafe management"],
 });
