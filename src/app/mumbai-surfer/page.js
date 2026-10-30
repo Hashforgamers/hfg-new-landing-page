@@ -103,11 +103,11 @@ export default function MumbaiSurferPage() {
         />
       )}
       <section id="play" className="bg-black px-4 pb-20 sm:px-8" aria-label="Play Mumbai Surfer">
-        <div className="mx-auto grid max-w-[880px] items-start gap-10 xl:grid-cols-[160px_1fr_160px]">
+        <div className="mx-auto grid max-w-[1040px] items-start gap-10 xl:grid-cols-[160px_1fr_160px]">
           <AdSlot slot={AD_SLOTS.left} className="sticky top-28 hidden h-[620px] xl:flex" format="vertical" />
           <div>
             <GameEmbed src="/games/mumbai-surfer/index.html" poster="/images/mumbai-surfer/tc_chase.jpg" title="Mumbai Surfer" />
-            <p className="mx-auto mt-4 max-w-[440px] text-center text-sm text-white/55">
+            <p className="mx-auto mt-4 max-w-[600px] text-center text-sm text-white/55">
               Swipe or use the arrow keys: left and right to switch tracks, up to jump, down to roll.{" "}
               <a href="/games/mumbai-surfer/index.html" className="underline hover:text-white">Open full screen</a>
             </p>
