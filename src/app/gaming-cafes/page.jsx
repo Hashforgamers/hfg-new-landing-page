@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import AppShell from "@/components/AppShell";
+import JsonLd from "@/components/JsonLd";
+import FaqSection from "@/components/landing/FaqSection";
 import InfoCards from "@/components/landing/InfoCards";
 import MaskHeading from "@/components/landing/MaskHeading";
 import NavBar from "@/components/landing/NavBar";
@@ -8,7 +10,7 @@ import PageHero from "@/components/landing/PageHero";
 import Reveal from "@/components/landing/Reveal";
 import ScrollProgress from "@/components/landing/ScrollProgress";
 import StoreButtons from "@/components/landing/StoreButtons";
-import { buildPageMetadata } from "@/lib/site";
+import { breadcrumbLd, buildPageMetadata } from "@/lib/site";
 
 export const metadata = buildPageMetadata({
   title: "Book Gaming Cafes Near You",
@@ -27,13 +29,42 @@ const STEPS = [
 
 const SETUPS = ["Gaming PCs", "PlayStation", "Xbox", "VR", "Racing rigs", "Private rooms"];
 
+const FAQS = [
+  {
+    q: "How do I find a gaming cafe near me?",
+    a: "Open the Hash app to see gaming cafes near you with their setups, timings and photos, then pick the one that suits you.",
+  },
+  {
+    q: "What can I book at a gaming cafe on Hash?",
+    a: "Depending on the cafe, you can book a gaming PC, PlayStation, Xbox, VR setup or racing rig for the time slot you choose.",
+  },
+  {
+    q: "How do I pay for a gaming cafe booking?",
+    a: "Pay in advance with Hash Pay or pay at the cafe. Bookings are charged at the cafe's own rate.",
+  },
+  {
+    q: "What happens when I reach the cafe?",
+    a: "Your slot is held for you. Walk in, start your session on the cafe's Hash kiosk and play, with no waiting at the counter.",
+  },
+  {
+    q: "Do I earn rewards for booking a cafe?",
+    a: "Yes. Every cafe session booked through Hash earns HashCoins, which you can spend on game passes and offers.",
+  },
+  {
+    q: "I own a gaming cafe. Can I list it on Hash?",
+    a: "Yes. Hash sends players to your cafe, runs every PC with the kiosk and gives you one dashboard for bookings and earnings. Start on the list your cafe page.",
+  },
+];
+
 export default function GamingCafesPage() {
   return (
     <AppShell>
+      <JsonLd data={breadcrumbLd("Gaming Cafes", "/gaming-cafes")} />
       <ScrollProgress />
       <NavBar />
       <PageHero
         eyebrow="Gaming cafes on Hash"
+        heading="Book gaming cafes near you"
         lines={["Your next session,", "booked."]}
         body="Find gaming cafes near you, see which PCs and consoles they have, and lock your slot before you leave home."
         image="/gta6-miami-sunset.jpg"
@@ -87,6 +118,7 @@ export default function GamingCafesPage() {
           </Link>
         </div>
       </section>
+      <FaqSection id="gaming-cafes-faq" faqs={FAQS} />
     </AppShell>
   );
 }

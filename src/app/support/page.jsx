@@ -15,8 +15,10 @@ import {
   SITE_EMAIL,
   SITE_NAME,
   SITE_URL,
+  breadcrumbLd,
   buildPageMetadata,
 } from "@/lib/site";
+import JsonLd from "@/components/JsonLd";
 
 export const metadata = buildPageMetadata({
   title: "Support",
@@ -134,6 +136,16 @@ export default function SupportPage() {
 
   return (
     <AppShell>
+      <JsonLd
+        data={[
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqItems.map(({ question, answer }) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })),
+          },
+          breadcrumbLd("Support", "/support"),
+        ]}
+      />
       <NavBar />
       <main
       className="min-h-screen bg-[#050505] px-6 pb-16 pt-28 text-white sm:pt-32 md:px-12 lg:px-24"

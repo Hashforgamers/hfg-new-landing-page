@@ -14,8 +14,10 @@ import json
 import logging
 import os
 import re
+import socket
 import subprocess
 import sys
+import time
 import urllib.parse
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -131,6 +133,20 @@ def read_feed(url: str, publisher: str | None, category: str | None) -> list[dic
             }
         )
     return items
+
+
+def wait_for_network(timeout: int = 600) -> bool:
+    # launchd runs us right after the Mac wakes, often before Wi-Fi is back; without this every
+    # feed fails with "Could not resolve host" and the day is lost.
+    deadline = time.monotonic() + timeout
+    while True:
+        try:
+            socket.getaddrinfo("www.bing.com", 443)
+            return True
+        except OSError:
+            if time.monotonic() > deadline:
+                return False
+            time.sleep(15)
 
 
 def discover() -> list[dict]:
@@ -338,6 +354,9 @@ def main() -> int:
     )
     load_env()
 
+    if not wait_for_network():
+        log.error("No network after 10 minutes; nothing to publish")
+        return 1
     candidates = discover()
     log.info("%d fresh candidate stories", len(candidates))
     if args.discover_only:

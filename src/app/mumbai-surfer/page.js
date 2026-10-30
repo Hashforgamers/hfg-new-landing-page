@@ -1,13 +1,15 @@
 import Image from "next/image";
 import Script from "next/script";
 import AppShell from "@/components/AppShell";
+import JsonLd from "@/components/JsonLd";
+import FaqSection from "@/components/landing/FaqSection";
 import AdSlot from "@/components/landing/AdSlot";
 import GameEmbed from "@/components/landing/GameEmbed";
 import InfoCards from "@/components/landing/InfoCards";
 import NavBar from "@/components/landing/NavBar";
 import PageHero from "@/components/landing/PageHero";
 import ScrollProgress from "@/components/landing/ScrollProgress";
-import { SITE_NAME, SITE_URL, buildPageMetadata } from "@/lib/site";
+import { breadcrumbLd, buildPageMetadata, SITE_NAME, SITE_URL } from "@/lib/site";
 
 const PATH = "/mumbai-surfer";
 const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT || "ca-pub-8804377047878009";
@@ -70,14 +72,43 @@ const schema = {
   publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
 };
 
+const FAQS = [
+  {
+    q: "Is Mumbai Surfer free to play?",
+    a: "Yes. You can play Mumbai Surfer free in your browser on this page, or download it free from Google Play on Android.",
+  },
+  {
+    q: "Is Mumbai Surfer on iPhone?",
+    a: "An iOS version is on the way. Until then you can play it in the browser on this page.",
+  },
+  {
+    q: "How do you play Mumbai Surfer?",
+    a: "Swipe or use the arrow keys: left and right to switch tracks, up to jump and down to roll. Dodge oncoming local trains, barriers and trolleys, and collect cutting-chai coins and power-ups.",
+  },
+  {
+    q: "Which route does Mumbai Surfer follow?",
+    a: "The game follows Mumbai's Western Line from Churchgate to Dahanu Road, across 11 chapters and all 37 stations in order, including bridges over the Mithi River, Vasai Creek and the Vaitarna.",
+  },
+  {
+    q: "Does my progress save in the browser?",
+    a: "Yes. Your progress, coins and settings are saved in the browser you play in, so you can pick up where you left off on the same device.",
+  },
+  {
+    q: "Who made Mumbai Surfer?",
+    a: "Mumbai Surfer is made by Hash For Gamers, the team behind the Hash esports and gaming cafe app.",
+  },
+];
+
 export default function MumbaiSurferPage() {
   return (
     <AppShell>
+      <JsonLd data={breadcrumbLd("Mumbai Surfer", "/mumbai-surfer")} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <ScrollProgress />
       <NavBar />
       <PageHero
         eyebrow="A Hash game · Play free in your browser"
+        heading="Mumbai Surfer · Free local train runner game"
         lines={["Mumbai", "Surfer."]}
         body="Grab your tiffin crate and run the Western Line. Race Dabba Dada from Churchgate to Dahanu Road, station by station, with the ticket inspector right behind you."
         image="/images/mumbai-surfer/feature.jpg"
@@ -134,6 +165,7 @@ export default function MumbaiSurferPage() {
           ))}
         </ul>
       </section>
+      <FaqSection id="mumbai-surfer-faq" faqs={FAQS} />
     </AppShell>
   );
 }

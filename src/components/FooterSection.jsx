@@ -6,12 +6,10 @@ import { Instagram, Twitter, Linkedin, Youtube } from 'lucide-react';
 import { SITE_DOWNLOAD_URL, SITE_ONBOARD_URL } from '@/lib/site';
 
 const Footer = ({
-  openAbout,
   openContact,
   openPrivacy,
   openHelp,
-  openPartner,
-  openTerms // ✅ Added
+  openPartner
 }) => {
 
   const footerSections = [
@@ -30,7 +28,7 @@ const Footer = ({
     {
       title: 'Company',
       links: [
-        { label: 'About Us', action: 'about' },
+        { label: 'About Us', href: '/about' },
         { label: 'Contact Us', action: 'contact' },
         { label: 'Instagram', href: 'https://instagram.com/hashforgamers' },
         { label: 'LinkedIn', href: 'https://linkedin.com/company/hashforgamers' }
@@ -40,7 +38,7 @@ const Footer = ({
       title: 'Support',
       links: [
         { label: 'Help Center', href: '/support' },
-        { label: 'Terms & Conditions', action: 'terms' }, // ✅ Fixed
+        { label: 'Terms & Conditions', href: '/terms' },
         { label: "Privacy Policy", href: "/privacy-policy" },
         { label: "Delete Account", href: "/delete-account" },
       ]
@@ -65,8 +63,6 @@ const Footer = ({
 
   const handleAction = (action) => {
     switch (action) {
-      case 'about':
-        return openAbout?.();
       case 'contact':
         return openContact?.();
       case 'privacy':
@@ -75,8 +71,6 @@ const Footer = ({
         return openHelp?.();
       case 'partner':
         return openPartner?.();
-      case 'terms': // ✅ Added
-        return openTerms?.();
       default:
         return null;
     }
