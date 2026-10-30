@@ -34,7 +34,7 @@ BRANCH = "Main"
 POSTS_DIR = "content/blog"
 MODEL = "gpt-5"  # default; OPENAI_MODEL in .env overrides at runtime
 MAX_AGE_HOURS = 48
-CATEGORIES = ["esports", "gta", "industry", "business", "cafes", "hardware"]
+CATEGORIES = ["esports", "gta", "games", "mobile", "industry", "business", "cafes", "hardware"]
 
 log = logging.getLogger("blog-bot")
 
@@ -279,7 +279,8 @@ def pick_stories(client, candidates: list[dict], posted_titles: list[str], count
 
 Priorities, in order: Indian esports (BGMI, Valorant, Free Fire, teams, tournaments); GTA and Rockstar;
 esports and gaming business in India (Nazara Technologies, funding rounds, acquisitions); gaming cafes;
-PC and console hardware prices in India; major global gaming news.
+PC and console hardware prices in India; big game releases, updates and console news (PlayStation,
+Xbox, Nintendo, PC); mobile gaming; major global gaming industry news.
 
 Rules: each pick must be a different topic; skip anything already covered in the recent posts; skip
 pure deals/coupons, listicles, rumours with no source and anything older than two days; prefer stories
