@@ -2,11 +2,12 @@
   "slug": "bgmi-tournament-format-points-explained",
   "date": "2026-10-31T10:20:00+05:30",
   "category": "esports",
-  "title": "BGMI tournament formats explained: points, rounds and rules",
-  "description": "How BGMI tournaments work: squads, matches across maps, placement and finish points, and the rules to check before you register for one.",
+  "title": "BGMI tournament points table and format explained",
+  "description": "How BGMI tournaments work: squads, matches across maps, the placement and finish points table, qualifiers, and the rules to check before you register.",
   "tags": [
+    "BGMI points table",
     "BGMI tournament",
-    "BGMI points system",
+    "BGMI points table system",
     "BGMI esports",
     "BGMI tournament rules"
   ],
@@ -79,7 +80,7 @@
     },
     {
       "type": "p",
-      "text": "On the Hash app, every tournament shows its entry fee or free entry, prize pool, slots, registered teams, rules and leaderboard before you sign up. Register solo or invite your squad with a link, get room details in the app before match time, and see results and rankings update after each match. Playing also earns HashCoins on top of any prize."
+      "text": "On the Hash app, every [BGMI tournament](/tournaments/bgmi) shows its entry fee or free entry, prize pool, slots, registered teams, rules and leaderboard before you sign up. Register solo or invite your squad with a link, get room details in the app before match time, and see results and rankings update after each match. Playing also earns HashCoins on top of any prize."
     }
   ],
   "sources": []

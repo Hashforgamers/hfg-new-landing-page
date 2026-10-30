@@ -1,0 +1,78 @@
+{
+  "slug": "is-gaming-cafe-profitable-india",
+  "date": "2026-10-31T11:00:00+05:30",
+  "category": "cafes",
+  "title": "Is a gaming cafe profitable in India? Margins and revenue explained",
+  "description": "A gaming cafe's profit depends mostly on occupancy. At 45% a 12-station cafe makes about ₹64,000 a month; at 30% it barely breaks even. The numbers, explained.",
+  "tags": [
+    "is gaming cafe profitable in India",
+    "gaming cafe profit",
+    "gaming cafe profit margin",
+    "gaming cafe revenue",
+    "gaming cafe income"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "Yes, a gaming cafe can be profitable in India, but the margin depends far more on how full your stations are than on how much you spend on hardware. Here is how the numbers work, using the defaults in the Hash [gaming cafe cost calculator](/gaming-cafe-cost-calculator): 10 mid-range gaming PCs and 2 PS5s in a tier 2 city, open 14 hours a day at ₹70 an hour."
+    },
+    {
+      "type": "h2",
+      "text": "Revenue: hours sold, not stations owned"
+    },
+    {
+      "type": "p",
+      "text": "Monthly revenue is simply stations × hours open × days × occupancy × hourly rate. With 12 stations, 14 hours, 30 days and ₹70 an hour, every 15 percentage points of occupancy is worth about ₹57,000 a month."
+    },
+    {
+      "type": "h2",
+      "text": "Profit at different occupancy levels"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "30% occupancy: revenue about ₹1.15 lakh, running costs about ₹1.05 lakh, profit about ₹9,600 a month. The ₹24.5 lakh setup would take over 20 years to pay back.",
+        "45% occupancy: revenue about ₹1.72 lakh, profit about ₹64,000 a month (a 37% margin), paying back the setup in about 39 months.",
+        "60% occupancy: revenue about ₹2.29 lakh, profit about ₹1.19 lakh a month (a 52% margin), paying back in about 21 months."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Running costs barely move with occupancy (rent, staff and internet are fixed), so almost every extra hour you sell goes straight to profit."
+    },
+    {
+      "type": "h2",
+      "text": "Location changes the picture"
+    },
+    {
+      "type": "p",
+      "text": "Rent is the biggest monthly cost. The same cafe makes about ₹36,000 a month in a metro, where rent is higher, and about ₹81,000 in a tier 3 town, at 45% occupancy and the same ₹70 rate. Metro cafes usually charge more per hour to make up for it."
+    },
+    {
+      "type": "h2",
+      "text": "Pricing matters too"
+    },
+    {
+      "type": "p",
+      "text": "Raising the rate from ₹70 to ₹100 an hour at 45% occupancy lifts profit from about ₹64,000 to about ₹1.38 lakh a month, as long as players keep coming. Many cafes use peak and off-peak pricing, night passes and prepaid hour bundles instead of one flat rate."
+    },
+    {
+      "type": "h2",
+      "text": "How to push occupancy up"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Take advance bookings so players can reserve stations, especially for groups and weekends.",
+        "Host tournaments to fill quiet weekday hours and bring in new players.",
+        "Offer packages and passes that reward regulars.",
+        "Track which stations and time slots earn, and adjust prices to match."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Hash helps with all four: gamers nearby find and book your cafe in the app, the [Hash kiosk and dashboard](/gaming-cafe-software) run sessions and pricing, and cafes can host tournaments for the Hash community. Run your own scenario in the [gaming cafe cost calculator](/gaming-cafe-cost-calculator)."
+    }
+  ],
+  "sources": []
+}

@@ -1,4 +1,5 @@
 import { getAllPosts } from "@/lib/blog";
+import { TOURNAMENT_GAMES } from "@/lib/games";
 import { SITE_URL } from "@/lib/site";
 
 const routes = [
@@ -39,6 +40,21 @@ const routes = [
   },
   {
     url: "/mumbai-surfer",
+    changeFrequency: "monthly",
+    priority: 0.8,
+  },
+  ...TOURNAMENT_GAMES.map((g) => ({
+    url: `/tournaments/${g.slug}`,
+    changeFrequency: "weekly",
+    priority: 0.8,
+  })),
+  {
+    url: "/gaming-cafe-software",
+    changeFrequency: "monthly",
+    priority: 0.8,
+  },
+  {
+    url: "/gaming-cafe-franchise",
     changeFrequency: "monthly",
     priority: 0.8,
   },

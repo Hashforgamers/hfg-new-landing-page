@@ -24,7 +24,7 @@ const DESCRIPTION =
   "Play Mumbai Surfer free in your browser or on Android. Run the Western Line local train route from Churchgate to Dahanu, dodge trains and surf the roofs.";
 
 export const metadata = buildPageMetadata({
-  title: "Mumbai Surfer: Play the Train Runner Game",
+  title: "Mumbai Surfer: Local Train Game Online",
   description: DESCRIPTION,
   path: PATH,
   image: "/images/mumbai-surfer/og.jpg",
@@ -37,6 +37,10 @@ export const metadata = buildPageMetadata({
     "Western Line game",
     "offline runner game Android",
     "play Mumbai Surfer online",
+    "Mumbai local train game",
+    "Mumbai local train game online",
+    "Indian train running game",
+    "train game online free",
     "free browser runner game",
   ],
 });
@@ -92,6 +96,14 @@ const FAQS = [
   {
     q: "Does my progress save in the browser?",
     a: "Yes. Your progress, coins and settings are saved in the browser you play in, so you can pick up where you left off on the same device.",
+  },
+  {
+    q: "Is Mumbai Surfer like Subway Surfers?",
+    a: "Mumbai Surfer is an original game by Hash For Gamers and is not affiliated with Subway Surfers. If you enjoy endless runners like that, it plays in a similar way, but on Mumbai's real Western Line local train route with Indian stations, trains and festivals.",
+  },
+  {
+    q: "Can I play the Mumbai local train game online without downloading?",
+    a: "Yes. Tap Play now on this page to play Mumbai Surfer in your browser with no download. For the phone app, get it free on Google Play.",
   },
   {
     q: "Who made Mumbai Surfer?",
