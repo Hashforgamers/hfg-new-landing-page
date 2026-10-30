@@ -1,0 +1,86 @@
+{
+  "slug": "bgmi-tournament-format-points-explained",
+  "date": "2026-10-31T10:20:00+05:30",
+  "category": "esports",
+  "title": "BGMI tournament formats explained: points, rounds and rules",
+  "description": "How BGMI tournaments work: squads, matches across maps, placement and finish points, and the rules to check before you register for one.",
+  "tags": [
+    "BGMI tournament",
+    "BGMI points system",
+    "BGMI esports",
+    "BGMI tournament rules"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "Battlegrounds Mobile India (BGMI) is one of the biggest esports games in India, and there are tournaments for every level, from free community events to official competitions. If you are new to competitive BGMI, here is how most tournaments are structured and what to check before you join one."
+    },
+    {
+      "type": "h2",
+      "text": "Squads and team size"
+    },
+    {
+      "type": "p",
+      "text": "Most BGMI tournaments are played in squads of four, usually with one or two substitutes allowed. Some events run solo or duo formats, so check the team size in the tournament details before you register your squad."
+    },
+    {
+      "type": "h2",
+      "text": "Matches and maps"
+    },
+    {
+      "type": "p",
+      "text": "A tournament usually has several matches, often played across different maps such as Erangel, Miramar and Sanhok. Each match is a full battle royale, and your team's points from every match are added up."
+    },
+    {
+      "type": "h2",
+      "text": "How points work"
+    },
+    {
+      "type": "p",
+      "text": "Teams earn two kinds of points in each match:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Placement points, for how high your team finishes in the match. Winning the match earns the most, and points drop for each lower place.",
+        "Finish points, usually one point for every enemy your team eliminates."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "A widely used scoring table gives 10 points for 1st place, 6 for 2nd, 5 for 3rd, 4 for 4th, 3 for 5th, 2 for 6th and 1 each for 7th and 8th, plus 1 point per finish. Organisers can use their own table, so always read the scoring rules for the event you are in."
+    },
+    {
+      "type": "h2",
+      "text": "Rounds and qualifiers"
+    },
+    {
+      "type": "p",
+      "text": "Bigger tournaments split into stages: qualifiers or groups, then semi-finals and a final. The top teams on the points table from one stage move on to the next. Smaller community events often run as a single day of matches with one overall leaderboard."
+    },
+    {
+      "type": "h2",
+      "text": "Rules to check before you register"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Entry fee and prize pool, and how prizes are split between the top teams",
+        "Team size and substitute rules",
+        "Match schedule and when room details are shared",
+        "Scoring table and tie-breakers",
+        "Device and emulator rules, and the fair-play or anti-cheat policy",
+        "What proof is needed if there is a dispute, such as result screenshots"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Joining BGMI tournaments on Hash"
+    },
+    {
+      "type": "p",
+      "text": "On the Hash app, every tournament shows its entry fee or free entry, prize pool, slots, registered teams, rules and leaderboard before you sign up. Register solo or invite your squad with a link, get room details in the app before match time, and see results and rankings update after each match. Playing also earns HashCoins on top of any prize."
+    }
+  ],
+  "sources": []
+}

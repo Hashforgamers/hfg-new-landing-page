@@ -19,6 +19,7 @@ import subprocess
 import sys
 import time
 import urllib.parse
+import urllib.request
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
@@ -34,6 +35,10 @@ BRANCH = "Main"
 POSTS_DIR = "content/blog"
 MODEL = "gpt-5"  # default; OPENAI_MODEL in .env overrides at runtime
 MAX_AGE_HOURS = 48
+SITE = "https://www.hashforgamers.com"
+# IndexNow tells Bing (and through it ChatGPT Search, Copilot, DuckDuckGo) about new posts at once.
+# The same key is served at {SITE}/{INDEXNOW_KEY}.txt from public/.
+INDEXNOW_KEY = "1b9447e1c99de8c93fbce8c126f5c18a"
 CATEGORIES = ["esports", "gta", "games", "mobile", "industry", "business", "cafes", "hardware"]
 
 log = logging.getLogger("blog-bot")
@@ -339,6 +344,29 @@ Source article text:
 # ---------------------------------------------------------------- main
 
 
+def ping_indexnow(urls: list[str], wait: int = 900) -> None:
+    # Vercel deploys a minute or two after the push; ping only once the first new page is live.
+    deadline = time.monotonic() + wait
+    while True:
+        try:
+            if urllib.request.urlopen(urls[0], timeout=20).status == 200:
+                break
+        except OSError:
+            pass
+        if time.monotonic() > deadline:
+            log.warning("IndexNow skipped: %s not live after %ds", urls[0], wait)
+            return
+        time.sleep(20)
+    body = json.dumps({"host": "www.hashforgamers.com", "key": INDEXNOW_KEY,
+                       "keyLocation": f"{SITE}/{INDEXNOW_KEY}.txt", "urlList": urls}).encode()
+    req = urllib.request.Request("https://api.indexnow.org/indexnow", data=body,
+                                 headers={"Content-Type": "application/json; charset=utf-8"})
+    try:
+        log.info("IndexNow: HTTP %s for %d URLs", urllib.request.urlopen(req, timeout=30).status, len(urls))
+    except OSError as e:  # a failed ping must never fail the run; search engines still find the sitemap
+        log.warning("IndexNow failed: %s", e)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dry-run", action="store_true", help="write posts locally but do not commit or push")
@@ -404,6 +432,7 @@ def main() -> int:
     git("commit", "-m", f"Blog: {len(written)} new post(s)\n\n{titles}")
     git("push", "origin", BRANCH)
     log.info("Published %d posts: %s", len(written), titles)
+    ping_indexnow([f"{SITE}/blog/{p['slug']}" for p in written] + [f"{SITE}/blog"])
     return 0
 
 
