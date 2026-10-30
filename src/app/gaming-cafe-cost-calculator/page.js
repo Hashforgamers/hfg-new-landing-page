@@ -12,9 +12,9 @@ const PATH = "/gaming-cafe-cost-calculator";
 const example = calculate(DEFAULTS, DEFAULT_PRICES);
 
 export const metadata = buildPageMetadata({
-  title: "Gaming Cafe Cost Calculator India: Setup Cost, Profit and Break-even",
+  title: "Gaming Cafe Cost Calculator India",
   description:
-    "Free gaming cafe cost calculator for India. Pick your PCs, PS5s, Xbox, VR and racing rigs to see setup cost, monthly expenses, earnings and break-even, with Amazon and Flipkart price links.",
+    "Free gaming cafe cost calculator for India. Pick PCs, PS5s, VR and racing rigs to see setup cost, monthly profit and break-even.",
   path: PATH,
   keywords: [
     "gaming cafe cost calculator",

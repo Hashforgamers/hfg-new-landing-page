@@ -98,9 +98,9 @@ const Footer = ({
         <div className="mt-10 grid grid-cols-2 gap-10 border-t border-white/15 pt-10 md:grid-cols-4">
           {footerSections.map((section) => (
             <nav key={section.title} aria-label={section.title}>
-              <h2 className="font-tech mb-5 text-[11px] font-semibold uppercase tracking-[0.35em] text-[#ff9a3d]">
+              <p className="font-tech mb-5 text-[11px] font-semibold uppercase tracking-[0.35em] text-[#ff9a3d]">
                 {section.title}
-              </h2>
+              </p>
               <ul className="space-y-3">
                 {section.links.map((link) => (
                   <li key={link.label}>

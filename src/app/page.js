@@ -37,7 +37,7 @@ import {
 } from "@/lib/site";
 
 export const metadata = buildPageMetadata({
-  title: "Hash For Gamers: Esports Tournaments & Gaming Cafe Booking App in India",
+  title: "Hash For Gamers: Esports Tournaments & Gaming Cafes",
   description: SITE_DESCRIPTION,
   path: "/",
   keywords: ["gaming booking app India", "gaming cafe reservation app", "esports app India"],
@@ -306,6 +306,14 @@ function Games() {
             </li>
           ))}
         </ul>
+        <Link
+          href="/mumbai-surfer"
+          data-track="nav_click"
+          data-track-label="Mumbai Surfer (games section)"
+          className="mt-8 inline-flex items-center gap-2 font-display text-xl uppercase tracking-wide text-[#ff9a3d] transition hover:text-white"
+        >
+          New: play Mumbai Surfer free in your browser →
+        </Link>
         <p className="mt-6 text-xs leading-6 text-white/40">
           Game titles are trademarks of their respective owners. Tournament line-ups change weekly; check the app for
           what&apos;s live near you.

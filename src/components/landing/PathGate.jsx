@@ -110,7 +110,7 @@ function PathCard({ card, index, onEnter, onSelect, leaving }) {
         </span>
         <div>
           <h2 className="font-display uppercase leading-[0.9] text-white">
-            <span className="block text-2xl text-white/80 md:text-[clamp(1.25rem,2vw,1.9rem)]">{card.title}</span>
+            <span className="block text-2xl text-white/80 md:text-[clamp(1.25rem,2vw,1.9rem)]">{card.title}</span>{" "}
             <span
               className="shine-text block text-[2.6rem] transition-[filter] duration-300 group-hover:brightness-125 md:text-[clamp(2.2rem,4.6vw,4.6rem)]"
               style={{ '--shine-a': card.shine[0], '--shine-b': card.shine[1], animationDelay: `${index * 0.6}s` }}
