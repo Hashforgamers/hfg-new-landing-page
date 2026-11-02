@@ -1,0 +1,83 @@
+{
+  "slug": "2026-11-02-call-of-duty-mw4-switch-2-input-lag-multiplayer-disadvantage",
+  "title": "Call of Duty: MW4 on Switch 2 hit by heavy input lag in multiplayer",
+  "description": "Digital Foundry says Modern Warfare 4 on Switch 2 has far slower controller response than PS5 in multiplayer, according to IGN. Here are the numbers.",
+  "date": "2026-11-02T05:14:56+00:00",
+  "category": "games",
+  "tags": [
+    "Call of Duty",
+    "Modern Warfare 4",
+    "Nintendo Switch 2",
+    "input lag",
+    "Digital Foundry"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "Call of Duty: Modern Warfare 4 has reached a Nintendo console for the first time since 2013, but multiplayer players on Switch 2 may be starting every fight behind. According to IGN, which cites a Digital Foundry analysis, input lag on the Switch 2 version can be twice as long as on PS5 at 60fps. In a game where a split second decides a gunfight, that matters."
+    },
+    {
+      "type": "h2",
+      "text": "What the numbers show"
+    },
+    {
+      "type": "p",
+      "text": "Digital Foundry measured 81ms of input lag in docked mode and 100ms in portable mode on Switch 2. The PS5 figure was 49.1ms. In portable multiplayer the range was wide, from 83ms at best to 125ms at worst."
+    },
+    {
+      "type": "p",
+      "text": "Digital Foundry described the portable-mode delay as \"actually deleterious to performance,\" per IGN. In plain terms, however quick your reflexes are, the console takes longer to react to them."
+    },
+    {
+      "type": "h2",
+      "text": "Frame rate is mostly fine"
+    },
+    {
+      "type": "p",
+      "text": "The lag is not about a broken frame rate. Competitive multiplayer on Switch 2 targets 60fps, and Digital Foundry says it hits that most of the time. Some situations still cause dips, and IGN notes that looking through the transparent visor of a riot shield is one of them."
+    },
+    {
+      "type": "p",
+      "text": "Digital Foundry also reports that Variable Refresh Rate support helps smooth out drops on displays that have it. Portable mode is the tougher case for performance overall."
+    },
+    {
+      "type": "p",
+      "text": "The port was handled by Digital Legends with support from Infinity Ward. Digital Foundry is generally positive about the result, but IGN's takeaway is that multiplayer fans face a real handicap."
+    },
+    {
+      "type": "h2",
+      "text": "Campaign is a different story"
+    },
+    {
+      "type": "p",
+      "text": "Single-player fares better. The campaign runs at 30fps, and IGN's Simon Cardy said it ran smoothly at 4K while docked. He admitted the textures are far less detailed than on PC, PS5 and Xbox Series X, with smoothed-over faces that look plasticine. Even so, he felt it was as snappy as the series usually is for Nintendo owners who have been shut out of Call of Duty for over a decade."
+    },
+    {
+      "type": "h2",
+      "text": "Why Call of Duty is on Nintendo at all"
+    },
+    {
+      "type": "p",
+      "text": "The release traces back to Microsoft's $69 billion acquisition of Activision Blizzard. While Microsoft faced regulatory hurdles, it promised a 10-year commitment to bring Call of Duty to Nintendo platforms after the merger. IGN notes that then Xbox boss Phil Spencer spoke of bringing more games to more people in December 2022. Four years on, that promise has become a Switch 2 release."
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "The key question is whether a patch can bring the lag down. None of the source material mentions a fix, so for now any improvement is speculation. If you are mainly after the campaign, the Switch 2 version looks acceptable. If you care about ranked-style multiplayer or your K/D, the measured gap against PS5 is worth weighing, especially in portable mode. Watch for further comments from Infinity Ward or Digital Legends, and for follow-up testing after any update."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Input Lag Is So Bad in Call of Duty: Modern Warfare 4 on Nintendo Switch 2 That Players Suffer From a 'Competitive Disadvantage'",
+      "url": "https://www.ign.com/articles/input-lag-is-so-bad-in-call-of-duty-modern-warfare-4-on-nintendo-switch-2-that-players-suffer-from-a-competitive-disadvantage",
+      "publisher": "IGN"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}
