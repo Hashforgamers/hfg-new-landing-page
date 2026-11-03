@@ -1,0 +1,98 @@
+{
+  "slug": "2026-11-03-gpu-prices-climb-again-october-rtx-5080-5090",
+  "title": "GPU Prices Climb Again in October, With RTX 5080 and 5090 Hit Hardest",
+  "description": "TechSpot's Q4 2026 GPU pricing update shows another month of rising graphics card prices, with the RTX 5090 and RTX 5080 seeing the steepest jumps.",
+  "date": "2026-11-03T04:01:28+00:00",
+  "category": "hardware",
+  "tags": [
+    "GPU prices",
+    "RTX 5080",
+    "RTX 5090",
+    "Radeon RX 9000",
+    "PC gaming hardware"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "Graphics card prices rose again in October, according to TechSpot's latest quarterly pricing update. It follows a 7% month-over-month increase the site reported for September. For PC gamers planning a build or upgrade before the holidays, the trend is going the wrong way, and the high end is getting hit hardest."
+    },
+    {
+      "type": "h2",
+      "text": "How the numbers are calculated"
+    },
+    {
+      "type": "p",
+      "text": "TechSpot collected data from 10 countries, comparing October with September and with February 2026. The figures are not model averages. Each one is the single lowest price for a model that is actually in stock in that region, often a base-model card from just one retailer."
+    },
+    {
+      "type": "p",
+      "text": "Inflation is measured against the launch MSRP converted into local currency, including tax. Premium variants will cost more than the figures below."
+    },
+    {
+      "type": "h2",
+      "text": "Mainstream GeForce cards keep getting pricier"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "RTX 5050: up 9% month over month, or 6% without the US. In the US it went from $310 to $420, a 35% jump.",
+        "RTX 5060: up 6% on average and 40% above MSRP, so a $300 card now costs closer to $420.",
+        "RTX 5060 Ti 8GB: up 7%, and 24% above MSRP, the lowest inflation of any GeForce card. A $380 card is now about $470.",
+        "RTX 5060 Ti 16GB: also up 7%, but 69% above MSRP. A $430 card costs about $727, and it is 47% dearer than in February.",
+        "RTX 5070: up 8%, 48% above MSRP, turning a $550 card into roughly $814.",
+        "RTX 5070 Ti: up 8% and 60% above MSRP, a raw increase of about $450."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "TechSpot notes the 5070 Ti and 5060 Ti 16GB carry the same 16GB of GDDR7, yet the 5070 Ti has risen $150 more. In its view, memory costs alone cannot explain the hikes."
+    },
+    {
+      "type": "h2",
+      "text": "The high end has gone off the rails"
+    },
+    {
+      "type": "p",
+      "text": "TechSpot says reports that the RTX 5090 has effectively been discontinued, which Nvidia denies, have coincided with soaring prices on remaining stock. The card is up 32% in a month and sits 262% above MSRP, at a normalized average of $7,240. In the US the minimum is $9,400, or 370% inflation. In Australia, a card that should cost about $3,100 now costs $12,000."
+    },
+    {
+      "type": "p",
+      "text": "With the 5090 largely gone, the RTX 5080 is effectively Nvidia's top gaming option, and its price shows it. It rose 22% month over month and is now 77% above MSRP on average, a $770 increase. In the US it climbed 39% in one month, and the cheapest models are $2,200. Newegg had no 5080s sold directly at the time of data collection, only pricey third-party listings."
+    },
+    {
+      "type": "p",
+      "text": "TechSpot points to possible factors including price gouging, AI demand and the missing 5090. It also relays an unconfirmed rumor that Nvidia will replace the 16GB RTX 5080 with a 24GB version in the first quarter of 2027. Retail sources also told the site that wholesale prices have risen sharply and that retail prices could go higher."
+    },
+    {
+      "type": "h2",
+      "text": "Radeon is cheaper, but not immune"
+    },
+    {
+      "type": "p",
+      "text": "AMD cards are also climbing. The RX 9060 XT 8GB is up 10% on average, though TechSpot found no increase in Australia or India. The 16GB version is up 17% and 58% above MSRP, so a $350 card costs about $550. It is still 20% to 40% cheaper than the RTX 5060 Ti 16GB, making it the cheapest route to 16GB on a current-generation GPU."
+    },
+    {
+      "type": "p",
+      "text": "The RX 9070 and 9070 XT both rose 12%, ending up 28% and 36% above MSRP. The RX 9070 GRE, launched in June, now sells 8% above its original MSRP after a 9% monthly rise."
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "The big question is whether the rumored RTX 5080 24GB shows up in early 2027, and at what price. TechSpot's theory is that pushing current prices higher could make that launch price look more reasonable, but it stresses that nothing is confirmed. Also watch whether the $2,200 US price for the RTX 5080 spreads to other regions, as the site's retail sources suggest it could."
+    }
+  ],
+  "sources": [
+    {
+      "title": "GPU Prices Are Spiraling Out of Control: Q4 2026 Update",
+      "url": "https://www.techspot.com/article/3192-gpu-pricing-q4-2026/",
+      "publisher": "www.techspot.com"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}
