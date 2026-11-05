@@ -21,6 +21,7 @@ import { DEFAULT_PRICES as CALC_PRICES, DEFAULTS as CALC_DEFAULTS, calculate, in
 import GrowthVisual from "@/components/landing/GrowthVisual";
 import FranchiseCompare from "@/components/landing/FranchiseCompare";
 import MobileDownloadBar from "@/components/landing/MobileDownloadBar";
+import GamerSignupForm from "@/components/landing/GamerSignupForm";
 import {
   SITE_APP_STORE_URL,
   SITE_DESCRIPTION,
@@ -779,6 +780,26 @@ function FinalCta() {
   );
 }
 
+function GamerSignup() {
+  return (
+    <section id="gamer-signup" className="relative overflow-hidden bg-[#0b0414] px-4 py-24 sm:px-8" aria-labelledby="gamer-signup-title">
+      <div className="pointer-events-none absolute -left-40 top-10 h-96 w-96 rounded-full bg-[#ff3d8b]/15 blur-[120px]" aria-hidden="true" />
+      <div className="relative mx-auto grid max-w-[1400px] items-center gap-10 lg:grid-cols-[1fr_0.9fr]">
+        <Reveal>
+          <Eyebrow>For players, squads and fans</Eyebrow>
+          <MaskHeading id="gamer-signup-title" className="max-w-3xl font-display text-6xl uppercase leading-[0.9] text-white sm:text-8xl">
+            Your next match starts here
+          </MaskHeading>
+          <p className="mt-6 max-w-xl text-base leading-7 text-white/70">
+            Sign up for tournament alerts, new rewards and gaming spots opening near you.
+          </p>
+        </Reveal>
+        <Reveal delay={0.12}><GamerSignupForm /></Reveal>
+      </div>
+    </section>
+  );
+}
+
 export default function Page() {
   return (
     <AppShell>
@@ -849,6 +870,7 @@ export default function Page() {
 
       <div data-audience="gamer">
         <FinalCta />
+        <GamerSignup />
         <MobileDownloadBar />
       </div>
     </AppShell>
