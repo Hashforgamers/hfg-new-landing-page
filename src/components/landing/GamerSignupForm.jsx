@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CheckCircle2 } from 'lucide-react';
 import { track } from '@/lib/analytics';
 import { SITE_EMAIL, SITE_URL } from '@/lib/site';
@@ -11,6 +11,17 @@ const labelClass = 'font-tech mb-2 block text-[10px] uppercase tracking-[0.2em] 
 
 export default function GamerSignupForm() {
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('signup_submitted') !== '1') return;
+
+    setSubmitted(true);
+    params.delete('signup_submitted');
+    const query = params.toString();
+    const cleanUrl = `${window.location.pathname}${query ? `?${query}` : ''}${window.location.hash}`;
+    window.history.replaceState(window.history.state, '', cleanUrl);
+  }, []);
 
   if (submitted) {
     return (
@@ -32,7 +43,6 @@ export default function GamerSignupForm() {
           return;
         }
         track('gamer_signup_submit');
-        setSubmitted(true);
       }}
       className="rounded-2xl border border-white/15 bg-black/70 p-6 shadow-[0_40px_120px_rgba(255,61,139,0.2)] backdrop-blur-xl sm:p-8"
     >
