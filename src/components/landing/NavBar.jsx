@@ -14,6 +14,7 @@ const LINKS = [
   { href: '/#how-it-works', label: 'How it works' },
   { href: '/#marketplace', label: 'Marketplace' },
   { href: '/#for-cafes', label: 'For cafes' },
+  { href: '/gaming-cafe-software', label: 'Cafe software' },
   { href: '/gaming-cafe-cost-calculator', label: 'Cost calculator' },
   { href: '/blog', label: 'News' },
   { href: '/#faq', label: 'FAQ' },

@@ -9,6 +9,7 @@ export const SITE_OG_IMAGE = "/images/og-home.jpg";
 // Self-serve onboarding for gaming cafe owners.
 export const SITE_ONBOARD_URL = "https://onboard.hashforgamers.com";
 export const SITE_EMAIL = "onboarding@hashforgamers.com";
+export const SITE_SUPPORT_WHATSAPP_URL = "https://wa.me/919137757935?text=Hi%20Hash%20support%2C%20I%27m%20a%20gaming%20cafe%20owner%20and%20have%20a%20question.";
 // Franchise enquiries go to the main contact inbox.
 export const SITE_FRANCHISE_URL = `mailto:${SITE_EMAIL}?subject=${encodeURIComponent(
   "Hash franchise enquiry"

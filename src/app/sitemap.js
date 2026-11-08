@@ -54,6 +54,16 @@ const routes = [
     priority: 0.8,
   },
   {
+    url: "/gaming-cafe-billing-software",
+    changeFrequency: "monthly",
+    priority: 0.8,
+  },
+  {
+    url: "/gaming-cafe-customer-management",
+    changeFrequency: "monthly",
+    priority: 0.8,
+  },
+  {
     url: "/gaming-cafe-franchise",
     changeFrequency: "monthly",
     priority: 0.8,
@@ -81,11 +91,8 @@ const routes = [
 ];
 
 export default function sitemap() {
-  const lastModified = new Date();
-
   const pages = routes.map((route) => ({
     url: `${SITE_URL}${route.url}`,
-    lastModified,
     changeFrequency: route.changeFrequency,
     priority: route.priority,
   }));
