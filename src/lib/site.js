@@ -74,10 +74,13 @@ export function buildPageMetadata({
   const url = `${SITE_URL}${canonicalPath}`;
   const resolvedTitle = title || SITE_NAME;
   const fullTitle = resolvedTitle === SITE_NAME ? SITE_NAME : `${resolvedTitle} | ${SITE_NAME}`;
+  // Google cuts titles near 60 chars; drop the brand suffix rather than the keywords.
+  const fitsWithBrand = fullTitle.length <= 60;
 
   return {
-    title: resolvedTitle,
-    description,
+    title: fitsWithBrand ? resolvedTitle : { absolute: resolvedTitle },
+    // Snippets cut near 160 chars; trim at a word so it never ends mid-word.
+    description: description.length > 160 ? `${description.slice(0, 157).replace(/\s+\S*$/, "")}…` : description,
     keywords: [...SITE_KEYWORDS, ...keywords],
     alternates: {
       canonical: path,
