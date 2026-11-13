@@ -19,16 +19,20 @@ export async function generateMetadata({ params }) {
   return buildPageMetadata({ title: post.title, description: post.description, path: `/blog/${slug}`, keywords: post.tags });
 }
 
-// Turns "[text](/path)" in post text into links, so guides can link to other pages on the site.
+// Turns "[text](/path)" or "[text](https://...)" in post text into links (external ones open in a new tab).
 function Linked({ text }) {
-  return text.split(/(\[[^\]]+\]\(\/[^)\s]*\))/).map((part, i) => {
-    const m = part.match(/^\[([^\]]+)\]\((\/[^)\s]*)\)$/);
-    return m ? (
-      <Link key={i} href={m[2]} className="text-white underline decoration-[#ff3d8b] underline-offset-4 hover:text-[#ff9a3d]">
+  return text.split(/(\[[^\]]+\]\((?:\/|https:\/\/)[^)\s]*\))/).map((part, i) => {
+    const m = part.match(/^\[([^\]]+)\]\(((?:\/|https:\/\/)[^)\s]*)\)$/);
+    if (!m) return part;
+    const cls = "text-white underline decoration-[#ff3d8b] underline-offset-4 hover:text-[#ff9a3d]";
+    return m[2].startsWith("/") ? (
+      <Link key={i} href={m[2]} className={cls}>
         {m[1]}
       </Link>
     ) : (
-      part
+      <a key={i} href={m[2]} target="_blank" rel="noopener noreferrer" className={cls}>
+        {m[1]}
+      </a>
     );
   });
 }
