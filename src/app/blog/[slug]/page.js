@@ -25,12 +25,13 @@ function Linked({ text }) {
     const m = part.match(/^\[([^\]]+)\]\(((?:\/|https:\/\/)[^)\s]*)\)$/);
     if (!m) return part;
     const cls = "text-white underline decoration-[#ff3d8b] underline-offset-4 hover:text-[#ff9a3d]";
-    return m[2].startsWith("/") ? (
+    // Files (e.g. /downloads/x.jpg) need a plain <a>; next/link would route them as pages and 404.
+    return m[2].startsWith("/") && !/\.\w+$/.test(m[2]) ? (
       <Link key={i} href={m[2]} className={cls}>
         {m[1]}
       </Link>
     ) : (
-      <a key={i} href={m[2]} target="_blank" rel="noopener noreferrer" className={cls}>
+      <a key={i} href={m[2]} target="_blank" rel="noopener noreferrer" download={m[2].startsWith("/") || undefined} className={cls}>
         {m[1]}
       </a>
     );
