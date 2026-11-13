@@ -1,0 +1,100 @@
+{
+  "slug": "2026-11-13-digital-fairness-act-games-loot-boxes-virtual-currency",
+  "title": "Digital Fairness Act games: what changes for loot boxes",
+  "description": "The Digital Fairness Act games rules from the EU would hit loot boxes, virtual currencies and pay-to-win for minors, according to GamesIndustry.biz.",
+  "date": "2026-11-13T07:05:08+00:00",
+  "category": "industry",
+  "tags": [
+    "digital fairness act games",
+    "eu loot box ban",
+    "virtual currency rules",
+    "pay to win minors",
+    "gaming regulation europe"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "The European Commission has formally presented its draft, and Digital Fairness Act games rules could reshape loot boxes, virtual currencies and engagement mechanics, according to GamesIndustry.biz. It is only a draft for now, and it is an EU law, so it would apply to the European market rather than India. Still, big publishers sell the same games worldwide, so what Europe forces them to change is worth watching."
+    },
+    {
+      "type": "h2",
+      "text": "Digital Fairness Act games: what changes for virtual currency and loot boxes"
+    },
+    {
+      "type": "p",
+      "text": "GamesIndustry.biz says the Act would be a Regulation, so it applies directly in every EU member state without national laws needed to pass it. It would also partly override existing national rules on unfair commercial practices."
+    },
+    {
+      "type": "p",
+      "text": "The most immediate hit is on paid virtual currencies (Article 14). Companies would have to show the real-money value of those currencies. For products aimed at minors, paid currencies would be switched off by default and only unlocked with parental or guardian approval. The publication notes it is still unclear whether that covers only the purchase step or the in-game feature itself."
+    },
+    {
+      "type": "p",
+      "text": "Loot boxes (Article 15) follow a similar logic. They could not be offered to minors at all. For adults, studios would need to disclose which items can drop and the odds of getting them, and give players an effective way to turn the system off."
+    },
+    {
+      "type": "h2",
+      "text": "Pay-to-win, login rewards and compulsive use"
+    },
+    {
+      "type": "p",
+      "text": "Article 16 bans pay-to-progress and pay-to-win mechanics for minors. It covers purchases that are necessary, or presented as necessary, to progress or succeed. GamesIndustry.biz calls this one of the harder rules to apply in practice."
+    },
+    {
+      "type": "p",
+      "text": "A big open question is what happens in mixed-age games. If adults can still buy items that give a competitive edge, could they end up with an advantage over kids in the same match? The draft does not settle that, per the report."
+    },
+    {
+      "type": "p",
+      "text": "Article 17 would make companies let users disable features that push compulsive use. The listed examples are:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Autoplay and uninterrupted content consumption",
+        "Push notifications not directly triggered by user activity",
+        "Mechanics that reward regular engagement, such as login rewards and streaks",
+        "Features that simulate personal relationships to keep people coming back"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "The Commission could extend that list later by delegated act, so the scope is not fixed at adoption. The same goes for the dark patterns blacklist under Article 10, whose contents are not yet known."
+    },
+    {
+      "type": "h2",
+      "text": "Subscriptions, age ratings and fines"
+    },
+    {
+      "type": "p",
+      "text": "For subscription games and services, free trials could only turn into paid contracts with the user's express agreement. Companies would also need clearer information on trial endings, termination and renewals. Online contracts would need a cancellation function and a withdrawal function, so quitting is as easy as signing up. On request, support must also let users reach a human."
+    },
+    {
+      "type": "p",
+      "text": "Fines could reach 6% of worldwide annual turnover, and the rules would apply 12 months after entry into force, according to the report."
+    },
+    {
+      "type": "p",
+      "text": "Minors means anyone under 18, and whether a product is aimed at or used by minors is judged on objective indicators, with age ratings explicitly named. GamesIndustry.biz points out that an 18+ game could face fewer restrictions than an all-ages title, which may tempt developers toward higher ratings."
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "The draft still has to be adopted, and the publication describes it as hard to digest for both industry and regulators. Studios argue the Commission misunderstands how games work and overlooks what PEGI and USK already do. Watch for changes to the Article 16 pay-to-win wording, the final dark patterns blacklist, and whether publishers start adjusting rating strategies or storefront designs before the rules land."
+    }
+  ],
+  "sources": [
+    {
+      "title": "What the Digital Fairness Act means for the games industry",
+      "url": "https://www.gamesindustry.biz/what-the-digital-fairness-act-means-for-the-games-industry",
+      "publisher": "GamesIndustry.biz"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

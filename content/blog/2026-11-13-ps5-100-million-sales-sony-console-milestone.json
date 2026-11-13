@@ -1,0 +1,88 @@
+{
+  "slug": "2026-11-13-ps5-100-million-sales-sony-console-milestone",
+  "title": "PS5 100 million sales: Sony's console hits milestone",
+  "description": "PS5 100 million sales milestone reached on 10 November, but Sony's console is selling slower, with the lowest Q2 since launch, according to Eurogamer.",
+  "date": "2026-11-13T07:04:23+00:00",
+  "category": "hardware",
+  "tags": [
+    "PS5 100 million sales",
+    "PS5 sales decline",
+    "PS5 vs PS4 sales",
+    "PS5 price hike",
+    "GTA 6 PS5"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "The PS5 100 million sales mark is official. According to Eurogamer, Sony's updated sales data shows the console passed 100 million units on 10 November, almost exactly six years after launch. It is a big number, but the same data shows the pace of sales has slowed sharply, and that matters for anyone planning to buy a console or run a gaming setup."
+    },
+    {
+      "type": "h2",
+      "text": "PS5 100 million sales: what the number really means"
+    },
+    {
+      "type": "p",
+      "text": "The 100 million figure counts sell-in units, meaning consoles shipped to retailers. It does not track sell-through, which is consoles actually bought by players. So the number of PS5s sitting in homes is lower than 100 million."
+    },
+    {
+      "type": "p",
+      "text": "Even so, Eurogamer calls it an impressive achievement. The PS5 is now close to the original PlayStation, which sold 102.4 million units. The PS4 is still ahead at 117 million, a figure it reached by June 2022."
+    },
+    {
+      "type": "h2",
+      "text": "PS5 sales decline: the quarterly numbers"
+    },
+    {
+      "type": "p",
+      "text": "Eurogamer points out that sales have been falling, and Sony has been open about it in its earnings reports. Here is what the latest figures show:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Q2 of FY2026: 2.6 million PS5 consoles sold, well below the 4 million sold in the same quarter a year earlier.",
+        "That makes it the lowest second quarter on record since the PS5 launched.",
+        "Q1 of FY2026: 1.6 million, the second-lowest single quarter ever.",
+        "Q4 of FY2025: 1.5 million, the lowest single quarter."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "There is a small bright spot. The Q2 result of 2.6 million is higher than Q1's 1.6 million, so sales did tick up from the previous quarter."
+    },
+    {
+      "type": "h2",
+      "text": "Why PS5 sales are slowing"
+    },
+    {
+      "type": "p",
+      "text": "Eurogamer says the Q2 boost can be linked to high anticipation for Grand Theft Auto 6. The wider downturn, it argues, is largely down to price. Sony has raised the cost of the PS5 and PS5 Pro on several occasions since 2020."
+    },
+    {
+      "type": "p",
+      "text": "Fewer consoles sold has not hurt Sony's bottom line much, according to the report. The company's plan to earn more revenue from its already-engaged audience continues to work. In other words, Sony is making money from the players it already has, even as new hardware buyers thin out."
+    },
+    {
+      "type": "p",
+      "text": "If sales do not recover in the third and fourth quarters, Eurogamer notes this could become the PS5's lowest year ever in units sold. That is a projection, not a confirmed result."
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "The next Sony earnings report will show whether Q3 can lift the full-year total. Keep an eye on any further price changes, since pricing is the main reason given for the slowdown, and on how Grand Theft Auto 6 anticipation affects console demand. The PS4's 117 million is the next target for the PS5, but at the current pace that gap looks like it will take a while to close."
+    }
+  ],
+  "sources": [
+    {
+      "title": "As of this week, PlayStation 5 has surpassed 100 million consoles sold",
+      "url": "https://www.eurogamer.net/playstation-5-100-million-sales-november-2026",
+      "publisher": "Eurogamer"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}
