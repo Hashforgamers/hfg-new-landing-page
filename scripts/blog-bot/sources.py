@@ -23,6 +23,12 @@ FEEDS = [
 # (category, query). Categories must match BLOG_CATEGORIES in src/lib/blog.js.
 SEARCHES = [
     ("gta", "GTA 6 Rockstar"),
+    ("gta", "GTA 6 leak"),
+    ("gta", "GTA 6 trailer"),
+    ("gta", "GTA 6 release date"),
+    ("gta", "GTA 6 price India"),
+    ("gta", "GTA Online update"),
+    ("gta", "GTA 5"),
     ("esports", "Indian esports"),
     ("esports", "BGMI tournament"),
     ("esports", "Valorant India esports"),
