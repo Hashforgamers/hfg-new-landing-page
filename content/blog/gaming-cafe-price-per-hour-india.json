@@ -125,5 +125,24 @@
       "url": "https://gamingnation.in/best-gaming-cafe-in-indore/",
       "publisher": "gamingnation.in"
     }
-  ]
+  ],
+  "faqs": [
+    {
+      "q": "What is the price of a gaming cafe per hour in India?",
+      "a": "About ₹40-120 an hour for a PC and ₹100-200 for a PS5, based on rates published by cafes in 2026. Premium setups cost more."
+    },
+    {
+      "q": "Why do some cafes charge more for PS5?",
+      "a": "Many cafes bill a PS5 per controller or per screen, and console setups with big TVs cost more per station. Playing with a friend can double the cost where billing is per controller."
+    },
+    {
+      "q": "How can I play at a gaming cafe for less?",
+      "a": "Play on weekdays or off-peak hours, buy multi-hour packs or memberships, and earn HashCoins on every booking through the Hash app."
+    },
+    {
+      "q": "How do I book a gaming cafe near me?",
+      "a": "Open the Hash app, compare nearby cafes by setup and per-slot rate, and reserve your slot in advance. See [book gaming cafes near you](/gaming-cafes)."
+    }
+  ],
+  "updated": "2026-11-13T18:30:00+05:30"
 }

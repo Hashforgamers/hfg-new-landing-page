@@ -6,7 +6,32 @@ import NavBar from "@/components/landing/NavBar";
 import ScrollProgress from "@/components/landing/ScrollProgress";
 import StoreButtons from "@/components/landing/StoreButtons";
 import { BLOG_CATEGORIES, formatDate, getAllPosts, getPost, readingMinutes } from "@/lib/blog";
+import JsonLd from "@/components/JsonLd";
 import { SITE_LOGO, SITE_NAME, SITE_URL, buildPageMetadata } from "@/lib/site";
+
+// Where each category's readers should go next on Hash (internal links help those pages rank too).
+const NEXT_STEP = {
+  esports: { href: "/tournaments", label: "Join esports tournaments on Hash" },
+  mobile: { href: "/tournaments", label: "Join mobile esports tournaments on Hash" },
+  gta: { href: "/blog/play-gta-6-for-less-gaming-cafe-slot", label: "Play GTA 6 for less at a gaming cafe" },
+  games: { href: "/gaming-cafes", label: "Book a gaming cafe near you" },
+  hardware: { href: "/gaming-cafes", label: "Play on high-end PCs at a gaming cafe near you" },
+  cafes: { href: "/gaming-cafe-cost-calculator", label: "Try the gaming cafe cost calculator" },
+  business: { href: "/gaming-cafe-cost-calculator", label: "Try the gaming cafe cost calculator" },
+  industry: { href: "/tournaments", label: "Join esports tournaments on Hash" },
+};
+
+// Same category first, then shared tags, then newest.
+function related(post, all) {
+  const tags = new Set((post.tags || []).map((t) => t.toLowerCase()));
+  const score = (p) => (p.category === post.category ? 2 : 0) + (p.tags || []).filter((t) => tags.has(t.toLowerCase())).length;
+  return all
+    .filter((p) => p.slug !== post.slug)
+    .map((p, i) => ({ p, s: score(p), i }))
+    .sort((a, b) => b.s - a.s || a.i - b.i)
+    .slice(0, 3)
+    .map((x) => x.p);
+}
 
 export function generateStaticParams() {
   return getAllPosts().map((p) => ({ slug: p.slug }));
@@ -64,14 +89,15 @@ export default async function BlogPost({ params }) {
   const { slug } = await params;
   const post = getPost(slug);
   if (!post) notFound();
-  const more = getAllPosts().filter((p) => p.slug !== slug).slice(0, 3);
+  const more = related(post, getAllPosts());
+  const next = NEXT_STEP[post.category] ?? NEXT_STEP.games;
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: post.title,
     description: post.description,
     datePublished: post.date,
-    dateModified: post.date,
+    dateModified: post.updated || post.date,
     mainEntityOfPage: `${SITE_URL}/blog/${slug}`,
     author: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
     publisher: { "@type": "Organization", name: SITE_NAME, logo: { "@type": "ImageObject", url: `${SITE_URL}${SITE_LOGO}` } },
@@ -80,7 +106,29 @@ export default async function BlogPost({ params }) {
 
   return (
     <AppShell>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <JsonLd
+        data={[
+          jsonLd,
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+              { "@type": "ListItem", position: 2, name: "News", item: `${SITE_URL}/blog` },
+              { "@type": "ListItem", position: 3, name: post.title, item: `${SITE_URL}/blog/${slug}` },
+            ],
+          },
+          ...(post.faqs?.length
+            ? [
+                {
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  mainEntity: post.faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+                },
+              ]
+            : []),
+        ]}
+      />
       <ScrollProgress />
       <NavBar />
       <article className="relative overflow-hidden bg-black px-4 pb-24 pt-32 sm:px-8 sm:pt-40">
@@ -101,6 +149,27 @@ export default async function BlogPost({ params }) {
               <Block key={i} block={b} />
             ))}
           </div>
+          {post.faqs?.length > 0 && (
+            <section className="mt-12">
+              <h2 className="font-display text-3xl uppercase leading-none text-white sm:text-4xl">FAQs</h2>
+              <dl className="mt-6 space-y-6">
+                {post.faqs.map((f) => (
+                  <div key={f.q}>
+                    <dt className="text-lg font-semibold text-white">{f.q}</dt>
+                    <dd className="mt-2 text-lg leading-8 text-white/80">
+                      <Linked text={f.a} />
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+          )}
+          <p className="mt-12 text-lg text-white/80">
+            Next:{" "}
+            <Link href={next.href} className="text-white underline decoration-[#ff3d8b] underline-offset-4 hover:text-[#ff9a3d]">
+              {next.label} →
+            </Link>
+          </p>
           {post.sources?.length > 0 && (
             <aside className="mt-14 rounded-2xl border border-white/10 bg-white/[0.03] p-6">
               <p className="font-tech text-[10px] uppercase tracking-[0.25em] text-white/50">Sources</p>
@@ -126,7 +195,7 @@ export default async function BlogPost({ params }) {
         </div>
         {more.length > 0 && (
           <div className="relative mx-auto mt-20 max-w-[1100px]">
-            <p className="font-tech text-[10px] uppercase tracking-[0.25em] text-white/50">More news</p>
+            <p className="font-tech text-[10px] uppercase tracking-[0.25em] text-white/50">Related news</p>
             <ul className="mt-4 grid gap-4 md:grid-cols-3">
               {more.map((p) => (
                 <li key={p.slug}>

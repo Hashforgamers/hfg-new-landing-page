@@ -108,5 +108,28 @@
       "text": "If you go ahead, you can [list your cafe on Hash](/list-cafe) to get bookings from players nearby, run every PC with the [Hash kiosk](/gaming-cafe-software) and manage sessions and earnings from one dashboard."
     }
   ],
-  "sources": []
+  "sources": [],
+  "faqs": [
+    {
+      "q": "How much does it cost to open a gaming cafe in India?",
+      "a": "About ₹24.5 lakh for a 10-PC, 2-PS5 cafe in a tier 2 city with standard interiors. Budget PCs or fewer stations bring this down; a premium metro cafe with VR and racing rigs can cost several times more."
+    },
+    {
+      "q": "What is the monthly running cost of a gaming cafe?",
+      "a": "About ₹1.08 lakh a month for the example cafe: rent ₹38,500, staff ₹30,000, electricity about ₹23,800, internet and software ₹5,800 and repairs about ₹9,800."
+    },
+    {
+      "q": "How long does a gaming cafe take to break even?",
+      "a": "At ₹70 an hour, 14 hours a day and 45% occupancy, the example cafe makes about ₹64,000 a month and pays back its setup cost in about 39 months. Higher occupancy shortens this a lot."
+    },
+    {
+      "q": "How much do gaming cafes charge per hour?",
+      "a": "The example uses ₹70 an hour for a PC. Real rates vary by city and hardware; see our guide to [gaming cafe price per hour in India](/blog/gaming-cafe-price-per-hour-india)."
+    },
+    {
+      "q": "Can I calculate the cost for my own cafe?",
+      "a": "Yes. The free [gaming cafe cost calculator](/gaming-cafe-cost-calculator) lets you set your own PCs, consoles, city and hourly rate to see setup cost, monthly profit and break-even."
+    }
+  ],
+  "updated": "2026-11-13T18:30:00+05:30"
 }

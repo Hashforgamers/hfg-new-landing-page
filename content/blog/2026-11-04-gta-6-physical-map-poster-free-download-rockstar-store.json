@@ -138,5 +138,24 @@
   "generated": {
     "by": "blog-bot",
     "model": "claude-sonnet-5-5"
-  }
+  },
+  "faqs": [
+    {
+      "q": "How do I get the GTA 6 map?",
+      "a": "Rockstar is releasing a free printable Leonida map and cover art poster on the official GTA 6 website on November 19, launch day."
+    },
+    {
+      "q": "Can I buy a physical GTA 6 map?",
+      "a": "Rockstar has announced a double-size physical poster on the Rockstar Store shortly after launch for 99 cents, or free with any store order. Physical copies of GTA 6 contain a download code, not a disc or a map."
+    },
+    {
+      "q": "Where can I download GTA 6 wallpapers in 4K?",
+      "a": "Download official 4K GTA 6 wallpapers free from the list above, or see our [GTA 6 wallpapers 4K page](/blog/gta-6-wallpapers-4k-free-download)."
+    },
+    {
+      "q": "Can I play GTA 6 without a PS5?",
+      "a": "Yes, at a gaming cafe. [Book a console slot on Hash](/blog/play-gta-6-for-less-gaming-cafe-slot) and pay only for the time you play."
+    }
+  ],
+  "updated": "2026-11-13T18:30:00+05:30"
 }

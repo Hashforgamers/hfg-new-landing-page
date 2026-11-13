@@ -75,5 +75,24 @@
       "text": "Pro players practise for many hours a day, look after their health and handle the pressure of losing. Have a plan for education or a backup career, because only a small number of players make it to the top tier."
     }
   ],
-  "sources": []
+  "sources": [],
+  "faqs": [
+    {
+      "q": "How do I become a BGMI esports player in India?",
+      "a": "Focus on BGMI, climb ranked, find a committed squad, play tournaments and scrims, and keep a record of your results so teams can find you. You can join [BGMI tournaments on Hash](/tournaments/bgmi) with your squad."
+    },
+    {
+      "q": "Which game is best for an esports career in India?",
+      "a": "BGMI, Valorant and Free Fire have the largest competitive communities in India, with growing scenes in Call of Duty Mobile, EA FC and Tekken."
+    },
+    {
+      "q": "Do I need an expensive phone or PC to go pro?",
+      "a": "No. A stable internet connection matters more than an expensive device; skill, practice and team play matter most."
+    },
+    {
+      "q": "How do esports players get noticed?",
+      "a": "Win tournaments, keep a record of results and rankings, stream or post highlights, network in Discord communities and try out when teams announce open slots."
+    }
+  ],
+  "updated": "2026-11-13T18:30:00+05:30"
 }

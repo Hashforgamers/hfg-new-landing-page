@@ -241,6 +241,16 @@ POST_SCHEMA = {
         "slug": {"type": "string", "description": "lowercase-words-with-hyphens, max 70 characters"},
         "description": {"type": "string", "description": "One-sentence summary for search results, 140-160 characters"},
         "tags": {"type": "array", "items": {"type": "string"}, "description": "3-6 search keywords"},
+        "faqs": {
+            "type": "array",
+            "description": "3 questions people would Google about this story, each answered in 1-2 sentences using only facts from the source",
+            "items": {
+                "type": "object",
+                "properties": {"q": {"type": "string"}, "a": {"type": "string"}},
+                "required": ["q", "a"],
+                "additionalProperties": False,
+            },
+        },
         "body": {
             "type": "array",
             "items": {
@@ -255,7 +265,7 @@ POST_SCHEMA = {
             },
         },
     },
-    "required": ["title", "slug", "description", "tags", "body"],
+    "required": ["title", "slug", "description", "tags", "body", "faqs"],
     "additionalProperties": False,
 }
 
@@ -391,6 +401,7 @@ Source article text:
         "category": story["category"],
         "tags": post["tags"][:6],
         "body": body,
+        "faqs": [f for f in post["faqs"][:4] if f["q"].strip() and f["a"].strip()],
         "sources": [{"title": story["title"], "url": story["url"], "publisher": story["publisher"]}],
         "generated": {"by": "blog-bot", "model": MODEL},
     }

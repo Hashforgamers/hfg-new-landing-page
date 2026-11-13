@@ -74,5 +74,24 @@
       "text": "Hash helps with all four: gamers nearby find and book your cafe in the app, the [Hash kiosk and dashboard](/gaming-cafe-software) run sessions and pricing, and cafes can host tournaments for the Hash community. Run your own scenario in the [gaming cafe cost calculator](/gaming-cafe-cost-calculator)."
     }
   ],
-  "sources": []
+  "sources": [],
+  "faqs": [
+    {
+      "q": "Is a gaming cafe profitable in India?",
+      "a": "Yes, if it stays busy. A 12-station cafe at ₹70 an hour makes about ₹64,000 a month at 45% occupancy, but only about ₹9,600 at 30%."
+    },
+    {
+      "q": "What is the profit margin of a gaming cafe?",
+      "a": "About 37% at 45% occupancy and 52% at 60% occupancy in our example, because rent, staff and internet stay the same however busy you are."
+    },
+    {
+      "q": "Does location affect gaming cafe profit?",
+      "a": "Yes. The same cafe makes about ₹36,000 a month in a metro, where rent is higher, and about ₹81,000 in a tier 3 town at 45% occupancy."
+    },
+    {
+      "q": "How can a gaming cafe earn more?",
+      "a": "Take advance bookings, host tournaments to fill quiet hours, offer packages and passes, and use peak and off-peak pricing. Raising the rate from ₹70 to ₹100 an hour lifts profit from about ₹64,000 to ₹1.38 lakh a month if players keep coming."
+    }
+  ],
+  "updated": "2026-11-13T18:30:00+05:30"
 }

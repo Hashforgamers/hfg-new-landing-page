@@ -3,7 +3,7 @@ import path from "node:path";
 
 // Blog posts are JSON files in content/blog/, written by the daily blog bot (scripts/blog-bot/).
 // Shape: { slug, title, description, date (ISO), category, tags[], body[], sources[] }
-// body blocks: { type: "p" | "h2", text } or { type: "ul", items: [] }.
+// body blocks: { type: "p" | "h2", text } or { type: "ul", items: [] }. Optional: faqs [{ q, a }], updated (ISO).
 
 const DIR = path.join(process.cwd(), "content", "blog");
 
