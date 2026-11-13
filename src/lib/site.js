@@ -61,6 +61,11 @@ export const SITE_SOCIALS = [
   SITE_YOUTUBE,
 ];
 
+// Every official profile, for Organization "sameAs" (helps Google tie brand searches to this site).
+export const SITE_SAME_AS = [...SITE_SOCIALS, SITE_PLAY_STORE_URL, SITE_APP_STORE_URL];
+// Names people search for the brand.
+export const SITE_ALT_NAMES = ["Hash", "Hash Gaming", "HashForGamers", "Hash Gaming: Esports Network"];
+
 export function buildPageMetadata({
   title,
   description = SITE_DESCRIPTION,
