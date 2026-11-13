@@ -9,6 +9,7 @@ export const SITE_OG_IMAGE = "/images/og-home.jpg";
 // Self-serve onboarding for gaming cafe owners.
 export const SITE_ONBOARD_URL = "https://onboard.hashforgamers.com";
 export const SITE_EMAIL = "onboarding@hashforgamers.com";
+export const SITE_SUPPORT_WHATSAPP_URL = "https://wa.me/919137757935?text=Hi%20Hash%20support%2C%20I%27m%20a%20gaming%20cafe%20owner%20and%20have%20a%20question.";
 // Franchise enquiries go to the main contact inbox.
 export const SITE_FRANCHISE_URL = `mailto:${SITE_EMAIL}?subject=${encodeURIComponent(
   "Hash franchise enquiry"
@@ -73,10 +74,13 @@ export function buildPageMetadata({
   const url = `${SITE_URL}${canonicalPath}`;
   const resolvedTitle = title || SITE_NAME;
   const fullTitle = resolvedTitle === SITE_NAME ? SITE_NAME : `${resolvedTitle} | ${SITE_NAME}`;
+  // Google cuts titles near 60 chars; drop the brand suffix rather than the keywords.
+  const fitsWithBrand = fullTitle.length <= 60;
 
   return {
-    title: resolvedTitle,
-    description,
+    title: fitsWithBrand ? resolvedTitle : { absolute: resolvedTitle },
+    // Snippets cut near 160 chars; trim at a word so it never ends mid-word.
+    description: description.length > 160 ? `${description.slice(0, 157).replace(/\s+\S*$/, "")}…` : description,
     keywords: [...SITE_KEYWORDS, ...keywords],
     alternates: {
       canonical: path,
