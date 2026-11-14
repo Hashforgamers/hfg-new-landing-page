@@ -1,0 +1,107 @@
+{
+  "slug": "2026-11-14-amd-driver-ssd-bug-fix-adrenalin-26-11-1",
+  "title": "AMD Driver SSD Bug Fix: Adrenalin 26.11.1 Is Out",
+  "description": "The AMD driver SSD bug fix is here: Adrenalin 26.11.1 targets excessive idle drive writes on Radeon RX 7000 series and newer, according to PC Gamer.",
+  "date": "2026-11-14T04:02:45+00:00",
+  "category": "hardware",
+  "tags": [
+    "AMD driver SSD bug fix",
+    "Adrenalin 26.11.1",
+    "AMD SSD writes bug",
+    "Radeon RX 7000 driver update",
+    "AMD Adrenalin download",
+    "Phantom Blade Zero AMD"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "The AMD driver SSD bug fix has arrived. AMD has released Adrenalin Edition 26.11.1, an optional update that, according to PC Gamer, addresses \"excessive writes to the system drive\" while a PC sits idle. It matters because some Radeon owners reported their SSD health dropping by as much as 1% per month, and replacing a drive isn't cheap."
+    },
+    {
+      "type": "h2",
+      "text": "What was the SSD bug?"
+    },
+    {
+      "type": "p",
+      "text": "PC Gamer's Andy Edser had earlier reported on a problem inside AMD's GPU driver suite. A misfiring utility was accused of causing huge amounts of unnecessary storage writes. Affected users pointed to their SSD health slipping at a worrying pace, which is the kind of wear nobody wants on a gaming rig."
+    },
+    {
+      "type": "h2",
+      "text": "AMD driver SSD bug fix: what the update changes"
+    },
+    {
+      "type": "p",
+      "text": "Per the headline notes PC Gamer cites, version 26.11.1 stops the excessive idle writes to the system drive. Because it is an optional release, Windows won't push it automatically. You'll need to grab the installer from AMD yourself."
+    },
+    {
+      "type": "p",
+      "text": "PC Gamer calls the \"optional\" label a slightly odd choice given how serious some of the reports were. It adds that this is a common way for AMD to ship fixes between its full driver releases."
+    },
+    {
+      "type": "h2",
+      "text": "Which Radeon cards are covered?"
+    },
+    {
+      "type": "p",
+      "text": "AMD's notes name Radeon RX 7000-series graphics cards and above. That wording hints that older GPUs may not be hit by the bug. However, PC Gamer points out that some user reports mention RX 6000-series cards. Whether a fix for those older models is still coming is unclear, and AMD hasn't said otherwise in the material PC Gamer cites."
+    },
+    {
+      "type": "h2",
+      "text": "Known issues still in the driver"
+    },
+    {
+      "type": "p",
+      "text": "This interim driver isn't spotless. PC Gamer says AMD lists several potential game problems, including:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Crashes and driver timeouts in Assassin's Creed Black Flag Resynced",
+        "Similar issues in War Thunder",
+        "Problems in Cyberpunk 2077 with FSR enabled",
+        "Visual corruption on character hair in Phantom Blade Zero on Radeon RX 9000-series cards"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "According to PC Gamer, these issues match the previous driver release and are fewer in number, with the Phantom Blade Zero bug being the exception. The site suggests the driver may need more work before it is folded into the next full release."
+    },
+    {
+      "type": "h2",
+      "text": "Should you install it?"
+    },
+    {
+      "type": "p",
+      "text": "If you run a Radeon RX 7000-series card or newer and you've seen your SSD health fall quickly, PC Gamer's view is that the update is worth installing. Anything that cuts needless wear on existing hardware is welcome when a replacement drive costs real money. That goes for home builds and for any shared gaming PCs that run Radeon cards and stay powered on for long stretches, though the source doesn't address those setups directly."
+    },
+    {
+      "type": "p",
+      "text": "What to watch next: whether AMD confirms anything for RX 6000-series owners, whether the Phantom Blade Zero hair corruption gets sorted, and how the fix lands in the next full Adrenalin release."
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Has AMD fixed the SSD writes bug in its GPU driver?",
+      "a": "According to PC Gamer, AMD's optional Adrenalin Edition 26.11.1 update fixes \"excessive writes to the system drive\" at idle for Radeon RX 7000-series graphics cards and above."
+    },
+    {
+      "q": "Do I need to download the AMD Adrenalin 26.11.1 update manually?",
+      "a": "Yes. PC Gamer reports that it is an optional update, so you have to download the installer yourself."
+    },
+    {
+      "q": "Are Radeon RX 6000 cards affected by the SSD bug?",
+      "a": "It is unclear. PC Gamer notes that AMD's wording suggests older GPUs may not be affected, but some user reports mention RX 6000-series cards, so it is not known if a fix for them is coming."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AMD has patched its SSD-eating GPU driver bug with an optional Adrenalin update for RX 7000-series graphics cards and above",
+      "url": "https://www.pcgamer.com/hardware/graphics-cards/amd-has-patched-its-ssd-eating-gpu-driver-bug-with-an-optional-adrenalin-update-for-rx-7000-series-graphics-cards-and-above/",
+      "publisher": "PC Gamer"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}
