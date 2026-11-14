@@ -1,0 +1,84 @@
+{
+  "slug": "2026-11-13-id-software-new-game-hugo-martin-direct",
+  "title": "id Software New Game Confirmed, Hugo Martin to Direct",
+  "description": "The id Software new game is confirmed: Xbox says the Doom studio is on its next project with Hugo Martin directing, plus Slaughter Mode arrives November 16.",
+  "date": "2026-11-13T07:05:25+00:00",
+  "category": "games",
+  "tags": [
+    "id Software new game",
+    "new Doom game",
+    "Hugo Martin",
+    "Doom The Dark Ages Slaughter Mode",
+    "Quake",
+    "Bethesda Xbox"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "The id Software new game is official. According to IGN, the Doom studio confirmed at Xbox's 25th anniversary Fan Fest in Seattle that it is already working on its next project, with Hugo Martin directing again. It matters because id has delivered three well-received shooters in a row, and Indian Doom fans now know the studio has more coming, even if it is a long way off."
+    },
+    {
+      "type": "h2",
+      "text": "What we know about the id Software new game"
+    },
+    {
+      "type": "p",
+      "text": "Not much, and id says so itself. Xbox CEO Asha Sharma announced it on X, noting that the team is already working on its next game. id then posted that the project comes from its teams in Texas and Frankfurt, with game direction once again by Hugo Martin."
+    },
+    {
+      "type": "p",
+      "text": "The studio added that it will be some time before it is ready to share more. There is no title, genre, platform or release window in the announcement."
+    },
+    {
+      "type": "h2",
+      "text": "Will the new game be Doom, Quake or something else?"
+    },
+    {
+      "type": "p",
+      "text": "That is still open. IGN points out that the project could be another Doom, a return to Quake, or something entirely new. None of that is confirmed, so treat any specific claim you see online as speculation for now."
+    },
+    {
+      "type": "p",
+      "text": "IGN does flag one piece of context. id sits under Bethesda, part of Xbox, and Bethesda boss Jill Braff recently told development teams that the company is shifting toward a planning model focused on its strongest franchises and the content roadmap that best serves players. Based on that, IGN suggests Quake or a fourth Doom game may be the likelier options. That is the publication's reading, not an announcement."
+    },
+    {
+      "type": "h2",
+      "text": "Slaughter Mode lands on November 16"
+    },
+    {
+      "type": "p",
+      "text": "The news came alongside a date for Doom: The Dark Ages' Slaughter Mode, which arrives on November 16. It is an endless single-player mode, and IGN says it will be a free update for players who own the Doom: The Dark Ages - Revelations DLC. IGN reviewed that DLC and loved it."
+    },
+    {
+      "type": "p",
+      "text": "Sharma's post frames Slaughter Mode as the wrap-up for last year's game, which suggests the team is moving on to what comes next."
+    },
+    {
+      "type": "h2",
+      "text": "Why Hugo Martin's return matters"
+    },
+    {
+      "type": "p",
+      "text": "IGN's take is that Martin and the id team have a strong run. Doom (2016) rebooted a dormant franchise, Doom Eternal built on it, and Doom: The Dark Ages brought the focus back to the ground. IGN calls all three excellent."
+    },
+    {
+      "type": "p",
+      "text": "Keeping the same director suggests continuity in how the studio approaches fast, aggressive first-person combat, though nothing about the new game's design has been shared."
+    },
+    {
+      "type": "p",
+      "text": "What to watch next: the November 16 Slaughter Mode release, any hint from id or Xbox about whether the next project is Doom, Quake or a new IP, and how Bethesda's franchise-first approach shapes its roadmap. Do not expect details soon, since id says it will be a while before it shows more."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Doom Developer id Software Confirms Work on New Game, Will Be Directed by Hugo Martin",
+      "url": "https://www.ign.com/articles/doom-developer-id-software-confirms-work-on-new-game-will-be-directed-by-hugo-martin",
+      "publisher": "IGN"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

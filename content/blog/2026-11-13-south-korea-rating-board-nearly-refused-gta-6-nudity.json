@@ -1,0 +1,83 @@
+{
+  "slug": "2026-11-13-south-korea-rating-board-nearly-refused-gta-6-nudity",
+  "title": "South Korea's Rating Board Nearly Refused GTA 6 Over Nudity Concerns",
+  "description": "South Korea's GCRB needed three reviews before giving GTA 6 an Adults Only rating, after some members wanted to refuse it over nudity, per PC Gamer.",
+  "date": "2026-11-13T06:53:38+00:00",
+  "category": "gta",
+  "tags": [
+    "GTA 6",
+    "South Korea",
+    "GCRB",
+    "age rating",
+    "Rockstar Games"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "GTA 6 has received an Adults Only rating from South Korea's Game Content Rating Board (GCRB), but it was a closer call than the result suggests. According to PC Gamer, citing meeting minutes that Korean outlet Inven obtained (via Kotaku), some board members seriously considered refusing a rating altogether. In South Korea, that would have left the game unable to go on sale there."
+    },
+    {
+      "type": "h2",
+      "text": "Three reviews, not one"
+    },
+    {
+      "type": "p",
+      "text": "PC Gamer reports that the game needed three separate review meetings. The first took place on September 10, and members argued over whether what they called \"out-of-context genital nudity\" justified a refusal."
+    },
+    {
+      "type": "p",
+      "text": "The rules matter here. Per the report, the GCRB used to reject games with exposed genitalia automatically, but relaxed that standard in 2025. An Adults Only rating is now possible where suggestive bodily exposure is shown directly, as long as it doesn't extend to graphic sexual acts."
+    },
+    {
+      "type": "p",
+      "text": "Even so, members pushing for refusal said the amount of exposure went beyond acceptable limits, even allowing for narrative justification. Others pointed out that the scenes with heavy exposure weren't especially sexual, and that the sexual scenes showed limited exposure. The vote ended 3-3, so the board postponed its decision and recommended that Rockstar modify the game."
+    },
+    {
+      "type": "h2",
+      "text": "A playable build changed the picture"
+    },
+    {
+      "type": "p",
+      "text": "PC Gamer notes that the first meeting happened before the board had a playable build. It suggests members' impressions may have been shaped by leaked developer-build footage, including a nudist colony area, that circulated online from a leaker called Cyberleek. That is the publication's reading, not something the minutes are reported to confirm."
+    },
+    {
+      "type": "p",
+      "text": "The GCRB got a playable build on September 28, days before a second meeting on October 2. A researcher's initial report said exposure mostly appeared as one-off mission backdrops that didn't lead to sexual interaction. Even so, the committee postponed again, because the game is so large it couldn't be sure it had seen every relevant case. One member still argued the exposure was explicit and excessive enough to meet the standard for refusal."
+    },
+    {
+      "type": "h2",
+      "text": "The final vote"
+    },
+    {
+      "type": "p",
+      "text": "At the third meeting on October 16, the board voted 8-1 to grant the Adults Only rating. PC Gamer says the decision was informed partly by the fact that 10 other institutions, including the ESRB and PEGI, had already issued their own ratings. Researchers concluded that full-frontal scenes didn't allow sexual interaction, and that cutscenes with sex between protagonists Jason and Lucia didn't expose genitalia."
+    },
+    {
+      "type": "p",
+      "text": "Researchers also reportedly couldn't reproduce the full-undress ability seen in the leaked videos. That hints the retail version may not let players strip the protagonists completely, though it's an inference from the minutes, not a statement from Rockstar."
+    },
+    {
+      "type": "p",
+      "text": "The lone dissenter voted to refuse a rating partly out of concern about precedent. They feared that background genital exposure would become common in future RPGs."
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "The story concerns South Korea only, and the source says nothing about how other regions handled ratings beyond the 10 institutions it mentions. Keep an eye on whether Rockstar comments on any changes made during review, and on whether the GCRB's 2025 standards get tested again by other big releases. For now, the Adults Only rating clears the way for GTA 6 in one of Asia's major gaming markets."
+    }
+  ],
+  "sources": [
+    {
+      "title": "South Korean game rating board almost blocked GTA 6's release, fearing its 'out-of-context genital nudity' would 'disrupt social order'",
+      "url": "https://www.pcgamer.com/games/grand-theft-auto/south-korean-game-rating-board-almost-blocked-gta-6s-release-fearing-its-out-of-context-genital-nudity-would-disrupt-social-order/",
+      "publisher": "PC Gamer"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

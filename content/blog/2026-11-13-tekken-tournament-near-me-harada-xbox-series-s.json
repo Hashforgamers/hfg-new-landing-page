@@ -1,0 +1,92 @@
+{
+  "slug": "2026-11-13-tekken-tournament-near-me-harada-xbox-series-s",
+  "title": "Tekken tournament near me: Harada slams Xbox Series S",
+  "description": "Looking for a Tekken tournament near me? Ex-Tekken director Katsuhiro Harada says he wishes the Xbox Series S wouldn't be released, per Eurogamer.",
+  "date": "2026-11-13T07:04:45+00:00",
+  "category": "games",
+  "tags": [
+    "tekken tournament near me",
+    "Xbox Series S",
+    "Katsuhiro Harada",
+    "Xbox Helix",
+    "Tekken",
+    "console development"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "If you search for a Tekken tournament near me, chances are the games are running on a console, and former Tekken director Katsuhiro Harada has just used a public stage to criticise one of them. According to Eurogamer, Harada said he wished hardware like the Xbox Series S \"wouldn't be released\" while a senior Xbox representative sat in the audience. It matters because it shows how developers feel about the gap between Microsoft's two consoles."
+    },
+    {
+      "type": "h2",
+      "text": "What Harada said at the panel"
+    },
+    {
+      "type": "p",
+      "text": "Eurogamer, citing Inven Global, reports that the comments came at the Console Game Developers Conference 2026 in South Korea. The panel was moderated by former Sony president Shuhei Yoshida. Alongside Harada, who now leads the newly formed VS Studio, were representatives from Shift Up, Too Kyo Games, CD Projekt Red and Ludeon Studios."
+    },
+    {
+      "type": "p",
+      "text": "Asked about the strengths and challenges of console development, Harada first praised consoles for fighting games. Then he said he had something to add, pointed out that a senior Xbox official was present, and took aim at the Series S."
+    },
+    {
+      "type": "h2",
+      "text": "Why consoles matter for a Tekken tournament near me"
+    },
+    {
+      "type": "p",
+      "text": "Harada's opening point was that console hardware suits fighting game developers because it works well for tournaments and esports events. That is the same reason offline brackets, local meetups and gaming cafe setups lean on consoles: fixed hardware means predictable performance for every player."
+    },
+    {
+      "type": "p",
+      "text": "His complaint about the Series S is the flip side of that. He described it as a machine so close to the Series X, yet noticeably weaker, that it feels like extra work for a slightly weaker sibling. He also said low memory is a problem."
+    },
+    {
+      "type": "h2",
+      "text": "The developer pushback on Series S"
+    },
+    {
+      "type": "p",
+      "text": "Harada asked CD Projekt Red's Paweł Sasko whether the Series S upset him inside. Sasko laughed, according to Inven Global, and said the console keeps posing challenges that force his team to keep their code very clean."
+    },
+    {
+      "type": "p",
+      "text": "Harada also made a market point. He said that in places like the US there are more Series S owners than Series X owners, so studios cannot ignore it. After launch, he added, Series S players tend to blame developers rather than Microsoft when textures look worse on their console."
+    },
+    {
+      "type": "p",
+      "text": "Sasko offered a defence. Working for weaker hardware, he argued, made games run significantly better on every platform. He cited Cyberpunk 2077, where optimisation done for the Switch 2 version was applied across platforms. He also said the lower price of the Series S helps widen the market."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Harada's view: the Series S is awkwardly close to the Series X but weaker, and developers take the blame for the gap.",
+        "Sasko's view: optimising for it improves performance everywhere, and the lower price grows the audience.",
+        "Shift Up's DongKi Lee: he is looking forward to the next-gen Xbox, codenamed Helix, and asked for early dev kits in Korea."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Harada joked that Sasko's defence might encourage Microsoft to release a Series S-style successor for Helix."
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "Eurogamer notes that Harada founded VS Studio earlier this year with SNK's backing, and that other veterans of Bandai Namco's Tekken team have joined. His studio's project has not been detailed in this report. On the hardware side, Eurogamer says the Xbox Helix consoles are reportedly looking expensive because of high RAM and component costs, and it speculates that a cheaper Series S-style model could be on the table. That is speculation, not a confirmed plan. Watch for any word from Microsoft on whether the next generation will again split into two tiers, since that choice will shape how games, including fighting games, are built and played."
+    }
+  ],
+  "sources": [
+    {
+      "title": "\"I wish hardware like the Xbox Series S wouldn't be released\" - former Tekken director Katsuhiro Harada trashes Microsoft's console in front of senior Xbox staff",
+      "url": "https://www.eurogamer.net/katsuhiro-harada-xbox-series-s-wish-it-wouldnt-release",
+      "publisher": "Eurogamer"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "slug": "free-up-space-on-mac-for-games-tune-x",
+  "date": "2026-11-13T16:00:00+05:30",
+  "category": "hardware",
+  "title": "How to Free Up Space on Mac for Games (Free)",
+  "description": "Mac out of space for games? Tune X, a free Mac cleaner, finds caches, old build files, emulators and large files you can safely remove. No subscription.",
+  "tags": [
+    "free up space on Mac",
+    "Mac cleaner free",
+    "Mac storage full",
+    "Tune X",
+    "Mac running hot while gaming"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "Modern games and their updates take up a lot of storage, and a Mac fills up fast. If you keep seeing \"startup disk almost full\" or your Mac runs hot during long sessions, [Tune X](https://tunex.vercel.app/#install) is a free Mac cleaner and system monitor that shows you what is taking space and what you can safely delete."
+    },
+    {
+      "type": "h2",
+      "text": "What Tune X cleans"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "App caches, logs, temp files and old downloads, grouped and explained so you know what is safe.",
+        "Large files and duplicates, which you choose yourself; nothing is pre-selected.",
+        "Old project build files, node_modules, Xcode DerivedData, Unity Library folders, Android emulators, Docker and Homebrew leftovers.",
+        "Apps you uninstall, together with the caches and support files they leave behind."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "A space map shows your home folder as tiles sized by space used, so you can click in and see exactly where the gigabytes went."
+    },
+    {
+      "type": "h2",
+      "text": "Check if your Mac is throttling"
+    },
+    {
+      "type": "p",
+      "text": "Tune X shows live CPU and chip temperature graphs and gives a straight answer to whether your Mac is slowing itself down to cool off. It also shows memory pressure, the apps using the most memory and battery health, and lives in your menu bar with alerts when space runs low or the Mac starts throttling."
+    },
+    {
+      "type": "h2",
+      "text": "Safe by design"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Files go to the Trash first, so you can put them back.",
+        "Nothing leaves your Mac: no account, no analytics, no network access.",
+        "No fake RAM boosts, ads or upsells."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Download Tune X"
+    },
+    {
+      "type": "p",
+      "text": "Tune X is free, about 1 MB, and runs on macOS 13 or later on Apple Silicon and Intel Macs. [Download Tune X for Mac](https://tunex.vercel.app/#install)."
+    },
+    {
+      "type": "p",
+      "text": "Want to play the big releases without filling up your own machine? [Book a gaming cafe slot on Hash](/blog/play-gta-6-for-less-gaming-cafe-slot) and play on the cafe's PC or console."
+    }
+  ],
+  "sources": []
+}

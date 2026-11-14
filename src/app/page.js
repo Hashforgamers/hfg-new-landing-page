@@ -33,6 +33,8 @@ import {
   SITE_ONBOARD_URL,
   SITE_PLAY_STORE_URL,
   SITE_SOCIALS,
+  SITE_SAME_AS,
+  SITE_ALT_NAMES,
   SITE_URL,
   buildPageMetadata,
 } from "@/lib/site";
@@ -67,7 +69,8 @@ const jsonLd = [
     url: SITE_URL,
     logo: `${SITE_URL}${SITE_LOGO}`,
     email: SITE_EMAIL,
-    sameAs: SITE_SOCIALS,
+    alternateName: SITE_ALT_NAMES,
+    sameAs: SITE_SAME_AS,
   },
   {
     "@context": "https://schema.org",

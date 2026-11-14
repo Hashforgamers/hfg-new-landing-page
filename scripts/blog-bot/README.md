@@ -56,3 +56,14 @@ launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.hashforgamers.blogbot.
 
 Posts publish without human review. Spot-check the blog regularly, and delete or edit a post by
 changing its JSON file in `content/blog/`.
+
+## Google Search Console (optional)
+
+The bot reads the site's top 40 search queries from the last 28 days and prefers stories that match them.
+To set it up:
+1. In Google Cloud, enable the **Search Console API** and create a service account, then download a JSON key for it.
+2. Save the key as `~/.hash-blog-bot/gsc-service-account.json` (or set `GSC_CREDENTIALS=/path` in `.env`).
+3. In Search Console → Settings → Users and permissions, add the service account email as a **Restricted** user.
+4. If the property is a URL-prefix property rather than a domain property, set `GSC_SITE=https://www.hashforgamers.com/` in `.env`.
+
+Without the key the bot runs as before, just without query data.

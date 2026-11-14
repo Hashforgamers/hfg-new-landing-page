@@ -19,7 +19,7 @@ export const metadata = buildPageMetadata({
   description:
     "Join esports tournaments on the Hash app: BGMI, Valorant, Free Fire, EA FC and more. Free and paid entry, squad registration, room details and live results.",
   path: "/tournaments",
-  keywords: ["esports tournaments India", "esports tournament app", "online gaming tournaments in India", "gaming tournament app", "BGMI tournament app", "Free Fire tournament app", "Valorant tournament India", "free entry tournament"],
+  keywords: ["esports tournaments India", "esports tournament app", "online gaming tournaments in India", "gaming tournament app", "BGMI tournament app", "Free Fire tournament app", "Valorant tournament India", "free entry tournament", "free entry tournaments India", "esports tournament today", "online tournament today", "gaming tournament near me", "tournament app to earn rewards"],
 });
 
 const STEPS = [
@@ -49,6 +49,18 @@ const FAQS = [
   {
     q: "How do I see results and get my rewards?",
     a: "Results are posted in the app after each match, the leaderboard updates, and rewards go to your Hash wallet.",
+  },
+  {
+    q: "Are there esports tournaments today?",
+    a: "New tournaments open every week across BGMI, Free Fire, Valorant, COD Mobile and more. Open the Compete tab in the Hash app to see what is live today and register before slots fill.",
+  },
+  {
+    q: "Is there a gaming tournament near me?",
+    a: "Gaming cafes on Hash host tournaments at their venues as well as online events. Check the Compete tab for events in your city, or book a PC or console at a gaming cafe near you to practise.",
+  },
+  {
+    q: "Can I earn by streaming tournaments?",
+    a: "Yes. Streamers earn HashCoins by streaming tournaments on the Hash app. You can redeem them on passes, offers and gear.",
   },
   {
     q: "Do I earn HashCoins for playing tournaments?",

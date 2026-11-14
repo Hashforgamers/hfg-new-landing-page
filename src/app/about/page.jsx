@@ -5,7 +5,7 @@ import InfoCards from "@/components/landing/InfoCards";
 import NavBar from "@/components/landing/NavBar";
 import PageHero from "@/components/landing/PageHero";
 import ScrollProgress from "@/components/landing/ScrollProgress";
-import { SITE_EMAIL, SITE_LOGO, SITE_NAME, SITE_SOCIALS, SITE_URL, breadcrumbLd, buildPageMetadata } from "@/lib/site";
+import { SITE_EMAIL, SITE_LOGO, SITE_NAME, SITE_SOCIALS, SITE_SAME_AS, SITE_ALT_NAMES, SITE_URL, breadcrumbLd, buildPageMetadata } from "@/lib/site";
 
 export const metadata = buildPageMetadata({
   title: "About Hash For Gamers",
@@ -43,7 +43,8 @@ export default function AboutPage() {
               url: SITE_URL,
               logo: `${SITE_URL}${SITE_LOGO}`,
               email: SITE_EMAIL,
-              sameAs: SITE_SOCIALS,
+              alternateName: SITE_ALT_NAMES,
+              sameAs: SITE_SAME_AS,
               address: { "@type": "PostalAddress", addressLocality: "Mira Road, Mumbai", addressRegion: "Maharashtra", addressCountry: "IN" },
             },
           },

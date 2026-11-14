@@ -1,0 +1,103 @@
+{
+  "slug": "2026-11-14-gta-6-30fps-new-clips-look-stunning-ign",
+  "title": "GTA 6 30fps: New Clips Look Stunning, Says IGN",
+  "description": "GTA 6 30fps on PS5 Pro has been confirmed, but new clips are impressing IGN's Jackie Thomas with textures, reflections and shadows. Here is what stands out.",
+  "date": "2026-11-14T04:03:33+00:00",
+  "category": "gta",
+  "tags": [
+    "gta 6 30fps",
+    "gta 6 ps5 pro",
+    "gta 6 graphics",
+    "gta 6 gameplay clips",
+    "gta 6 pc release"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "GTA 6 30fps is now official for consoles, and some early clips are making the frame rate feel like a small trade-off. According to IGN, Rockstar confirmed this week that the game will run at 30fps on every console, including the PS5 Pro. In an opinion piece, IGN Senior Tech Editor Jackie Thomas argues that the footage circulating online looks good enough that she doesn't mind."
+    },
+    {
+      "type": "h2",
+      "text": "GTA 6 30fps: what Rockstar has confirmed"
+    },
+    {
+      "type": "p",
+      "text": "The headline detail is the frame rate: 30fps across all consoles. IGN also points to a Rockstar blog post saying the PS5 Pro will get PSSR upscaling and ray traced shadows that are exclusive to that console."
+    },
+    {
+      "type": "p",
+      "text": "Thomas says the frame rate didn't surprise her. After watching the clips, she believes 60fps was probably out of the question on current-generation hardware, given the level of detail on show."
+    },
+    {
+      "type": "h2",
+      "text": "What the new GTA 6 clips show"
+    },
+    {
+      "type": "p",
+      "text": "The clips come from an Instagram account called onlyindade. They don't say which platform they were captured on, but Thomas would put her money on the PS5 Pro. She says the soft car shadows and the lack of jagged edges on distant buildings suggest PSSR is doing real work. That is her read, not something confirmed."
+    },
+    {
+      "type": "p",
+      "text": "Here is what impressed her most:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Road textures detailed enough to show bumps in the asphalt and small bits of debris at the roadside.",
+        "Reflections in car paint that make it look like a real material.",
+        "Shadows that fall away from the sun the way you would expect.",
+        "Shadows from a palm tree in which individual leaves are visible.",
+        "A character on his phone whose shadow moves smoothly with him."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "She notes that this comes from consoles running on graphics hardware that is nearly seven years old, paired with equally old CPUs. Even so, she thinks it looks better than any other game on the market right now."
+    },
+    {
+      "type": "h2",
+      "text": "Why compression is a caveat"
+    },
+    {
+      "type": "p",
+      "text": "Thomas is upfront that the clips are heavily compressed. That can hide flaws, and it can also make sharp details look wobbly. In large open worlds with long draw distances, detail on faraway objects is usually the first thing to drop, she says."
+    },
+    {
+      "type": "p",
+      "text": "Her worry is jagged edges on distant streetlights and buildings at launch. Nothing in the clips points that way, but she admits she could be fooled by the footage quality. Treat all of this as early impressions, not a final verdict."
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "Thomas is already thinking about the PC version, wondering how the game would look on high-end hardware. She says she hopes rumours of a PC port next year are true, but that is unconfirmed. For now, keep an eye out for official footage from Rockstar, which should give a cleaner look than compressed social clips. It should also show whether the PS5 Pro's extras make a visible difference."
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Will GTA 6 run at 30fps on PS5 and Xbox?",
+      "a": "According to IGN, Rockstar confirmed that GTA 6 will run at 30fps on all consoles, including the PS5 Pro."
+    },
+    {
+      "q": "What extra features does the PS5 Pro get in GTA 6?",
+      "a": "IGN says Rockstar's blog mentioned PSSR upscaling and ray traced shadows that are exclusive to the PS5 Pro."
+    },
+    {
+      "q": "Is the GTA 6 PC version confirmed?",
+      "a": "No. IGN's writer only says she hopes the rumours about a PC port arriving next year are true, so it remains unconfirmed."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Some of These GTA 6 Clips Look So Good That I Don't Care if It's Running at 30fps",
+      "url": "https://www.ign.com/articles/some-of-these-gta-6-clips-look-so-good-that-i-dont-care-if-its-running-at-30-fps",
+      "publisher": "IGN"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "slug": "2026-11-13-jensen-huang-resigns-nvidia-ceo-colette-kress-interim",
+  "title": "Jensen Huang resigns as Nvidia CEO; Colette Kress named interim chief",
+  "description": "Nvidia says Jensen Huang has stepped down as CEO and board member, with CFO Colette Kress taking over as interim chief while a search begins.",
+  "date": "2026-11-13T06:53:59+00:00",
+  "category": "industry",
+  "tags": [
+    "Nvidia",
+    "Jensen Huang",
+    "Colette Kress",
+    "GPU industry",
+    "tech news"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "Nvidia has announced that co-founder Jensen Huang has resigned as president, CEO and board member, effective immediately, according to PC Gamer, which cites the company's own newsroom statement. CFO Colette Kress will step in as interim CEO. Nvidia's GeForce cards sit inside countless gaming PCs and cafe setups, so a sudden leadership change at the company is worth following even if nothing about products has been announced."
+    },
+    {
+      "type": "h2",
+      "text": "What Nvidia has confirmed"
+    },
+    {
+      "type": "p",
+      "text": "Per the statement quoted by PC Gamer, the board said Huang's resignation covers his roles as president, chief executive and director. Kress, currently Executive Vice President and Chief Financial Officer, has agreed to lead the company in the interim."
+    },
+    {
+      "type": "p",
+      "text": "She will keep her CFO job while acting as interim CEO, until a permanent successor is named. The board is starting a search and says it will look at both internal and external candidates."
+    },
+    {
+      "type": "p",
+      "text": "PC Gamer also points out that Huang leaving the board matters. There had been concern in recent days that his large stake and influence would make it hard for the board to move him aside, and his exit from the board may ease that worry."
+    },
+    {
+      "type": "h2",
+      "text": "The scandals behind the exit"
+    },
+    {
+      "type": "p",
+      "text": "The statement as quoted does not give a reason. PC Gamer describes Huang as \"seemingly ousted\" after two controversies over the past few weeks, so the link between them and the resignation is the outlet's reading, not something Nvidia has spelled out."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "The first concerns an affair that Huang later admitted. PC Gamer says it was suggested to be with an executive at a datacentre company who is suspected of working for Chinese intelligence. That suspicion is unconfirmed.",
+        "The second is another alleged affair, this time with an Nvidia executive. PC Gamer presents it as an allegation."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Markets and the interim plan"
+    },
+    {
+      "type": "p",
+      "text": "PC Gamer notes that Huang founded Nvidia in 1993, which makes him the longest-serving CEO of a major tech firm, and that he led the company through its biggest run of success. Investors may not take the news calmly."
+    },
+    {
+      "type": "p",
+      "text": "The share price had already dropped to its lowest level since June 2025 after a report that the board was weighing Huang's removal. According to PC Gamer, the stock was down around 12% in pre-market trading after today's announcement."
+    },
+    {
+      "type": "p",
+      "text": "Naming the long-time CFO as interim CEO was an expected step to smooth the handover, PC Gamer says, comparing it to what Intel did when it ousted its CEO in 2018."
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "The big question is who becomes the permanent CEO and how long the search takes. PC Gamer says it could be a while. Watch whether the board picks an insider or goes outside, and how the share price behaves once trading opens fully. The report says nothing about GPU launches or pricing, so any word from Nvidia on its product plans under Kress would be the next thing gamers should look for. Details on the allegations may also develop, and until they are confirmed they should be treated with caution."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Jensen Huang resigns, CFO Colette Kress appointed interim CEO at Nvidia",
+      "url": "https://www.pcgamer.com/hardware/graphics-cards/jensen-huang-resigns-cfo-colette-kress-appointed-interim-ceo-at-nvidia/",
+      "publisher": "PC Gamer"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

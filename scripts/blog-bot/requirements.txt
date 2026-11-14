@@ -10,3 +10,4 @@ browserforge
 apify-fingerprint-datapoints
 playwright
 patchright
+google-auth[requests]
