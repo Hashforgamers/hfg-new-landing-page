@@ -8,7 +8,7 @@ import NavBar from "@/components/landing/NavBar";
 import PageHero from "@/components/landing/PageHero";
 import ScrollProgress from "@/components/landing/ScrollProgress";
 import { DASHBOARD_SCREENS, KIOSK_POINTS } from "@/lib/landing";
-import { SITE_NAME, SITE_ONBOARD_URL, SITE_URL, breadcrumbLd, buildPageMetadata } from "@/lib/site";
+import { SITE_NAME, SITE_ONBOARD_URL, SITE_SUPPORT_WHATSAPP_URL, SITE_URL, breadcrumbLd, buildPageMetadata } from "@/lib/site";
 
 const PATH = "/gaming-cafe-software";
 
@@ -75,6 +75,9 @@ export default function GamingCafeSoftwarePage() {
             <Link href="/list-cafe" className="rounded-full border border-white/40 px-8 py-3 font-display text-lg uppercase tracking-wide text-white transition hover:bg-white hover:text-black">
               Request a callback
             </Link>
+            <a href={SITE_SUPPORT_WHATSAPP_URL} target="_blank" rel="noopener noreferrer" data-track="whatsapp_click" data-track-placement="cafe_software_hero" className="rounded-full border border-[#25d366]/60 px-8 py-3 font-display text-lg uppercase tracking-wide text-white transition hover:bg-[#25d366] hover:text-black">
+              WhatsApp Hash
+            </a>
           </div>
         }
       />

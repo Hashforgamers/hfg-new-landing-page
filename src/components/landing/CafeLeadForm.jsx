@@ -27,9 +27,14 @@ const label = 'font-tech mb-2 block text-[10px] uppercase tracking-[0.2em] text-
 export default function CafeLeadForm() {
   const [status, setStatus] = useState('running');
   const [done, setDone] = useState(false);
-
   useEffect(() => {
-    if (new URLSearchParams(window.location.search).get('submitted') === '1') setDone(true);
+    if (new URLSearchParams(window.location.search).get('submitted') === '1') {
+      setDone(true);
+      if (!sessionStorage.getItem('hfg_cafe_lead_tracked')) {
+        track('generate_lead', { lead_type: 'cafe_callback', form_name: 'cafe_callback' });
+        sessionStorage.setItem('hfg_cafe_lead_tracked', '1');
+      }
+    }
   }, []);
 
   return (
@@ -58,7 +63,9 @@ export default function CafeLeadForm() {
             key="form"
             action={`https://formsubmit.co/${SITE_EMAIL}`}
             method="POST"
-            onSubmit={() => track('cafe_lead_submit', { status })}
+            onSubmit={() => {
+              track('cafe_lead_form_start', { status, form_name: 'cafe_callback' });
+            }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="space-y-5"
