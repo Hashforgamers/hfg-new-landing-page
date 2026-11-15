@@ -1,0 +1,110 @@
+{
+  "slug": "2026-11-15-steam-review-backlog-delays-indie-game-releases",
+  "title": "Steam review backlog delays indie game releases",
+  "description": "The Steam review backlog is pushing indie launches back, with Valve now citing roughly 12 business days for approval, and AI submissions blamed by some.",
+  "date": "2026-11-15T04:03:03+00:00",
+  "category": "industry",
+  "tags": [
+    "steam review backlog",
+    "steam game release delay",
+    "valve steam review time",
+    "ai generated games steam",
+    "indie game launch delay"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "The Steam review backlog is forcing indie developers to push back their launch dates, according to Dexerto. Valve says submissions have surged, and review times have stretched well beyond the usual window. Some developers believe AI-generated games are clogging the queue, though that is a suspicion and not a confirmed cause. For anyone waiting on an indie release, or planning to publish one, the delays matter."
+    },
+    {
+      "type": "h2",
+      "text": "What Valve has said about the Steam review backlog"
+    },
+    {
+      "type": "p",
+      "text": "On November 3, Valve acknowledged a significant increase in submissions for store page and build review over recent months. The company normally aims to get through reviews in three to five business days."
+    },
+    {
+      "type": "p",
+      "text": "That target has slipped. Valve now says reviews may take around 12 business days, which is more than double the usual range. The company says further improvements to the process are in development, but it has not said when approval times will return to normal."
+    },
+    {
+      "type": "h2",
+      "text": "Which indie games have been delayed?"
+    },
+    {
+      "type": "p",
+      "text": "Dexerto points to developer Rami Ismail as one example. His upcoming game, Australia Did It: End-of-the-World Railway Defense Business, was scheduled to launch on November 10."
+    },
+    {
+      "type": "p",
+      "text": "The build's assessment flagged a minor controller input issue, which was fixed the same day. Even so, the game stayed in the queue and was only approved on November 14, four days after the planned launch."
+    },
+    {
+      "type": "p",
+      "text": "Studio Daimon also missed a planned early access launch for its game Food Devils. Game director Alfred Kamon, as quoted by MakeTechEasier, said the team could only assume the queue was jammed with low-quality AI-made games."
+    },
+    {
+      "type": "h2",
+      "text": "Is AI really behind the delays?"
+    },
+    {
+      "type": "p",
+      "text": "Not confirmed. Valve has pointed to a rise in submissions overall and has not blamed AI-generated titles. The AI theory comes from developers affected by the wait, and it should be treated as an assumption for now."
+    },
+    {
+      "type": "p",
+      "text": "The concern is not new, though. Dexerto's article links to related stories, including a publisher blaming AI-made content on Steam after its game drew only 15 players at launch, and itch.io saying it deleted a couple of terabytes of AI-generated junk."
+    },
+    {
+      "type": "h2",
+      "text": "New pre-release checklist for developers"
+    },
+    {
+      "type": "p",
+      "text": "Valve has tightened its checklist for developers before they submit a build. The aim appears to be catching basic problems before they reach a reviewer. The changes include:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Launching the game through Steam and playing it for at least five minutes before submitting a build",
+        "Checking that achievement configurations are set up correctly",
+        "Making sure required software such as DirectX and Visual C++ is installed",
+        "Confirming that Steam Cloud saves work, where the game uses them"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "Keep an eye on whether Valve gives a timeline for getting reviews back to the three to five day range, and whether the checklist changes reduce the number of failed builds. If you follow indie games, expect some release dates to slip in the coming weeks. For developers, the practical lesson is to submit early and test the basics first, because a single missed item could cost days in a queue that is already running long."
+    }
+  ],
+  "faqs": [
+    {
+      "q": "How long does Steam take to review a game now?",
+      "a": "According to Dexerto, Valve says reviews may now take around 12 business days, more than twice its usual target of three to five business days."
+    },
+    {
+      "q": "Why is the Steam review queue backed up?",
+      "a": "Valve said it has seen a significant increase in submissions for store page and build review in recent months. Some developers suspect AI-generated games are adding to the load, but that is speculation and not something Valve has confirmed."
+    },
+    {
+      "q": "What has Valve changed for developers submitting games?",
+      "a": "Valve updated its pre-release checklist. Developers must now launch their game through Steam and play it for at least five minutes before submitting a build, and also check achievements, required software and Steam Cloud saves."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Steam review backlog forces indie developers to delay game releases as AI submissions reportedly clog queue",
+      "url": "https://www.dexerto.com/gaming/steam-review-backlog-forces-indie-developers-to-delay-game-releases-as-ai-submissions-reportedly-clog-queue-3428233/",
+      "publisher": "Dexerto"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

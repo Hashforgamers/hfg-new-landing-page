@@ -1,0 +1,106 @@
+{
+  "slug": "2026-11-15-league-of-legends-new-dawn-2027-overhaul",
+  "title": "League of Legends New Dawn: 2027 Overhaul Explained",
+  "description": "League of Legends New Dawn is Riot's 2027 overhaul with a new client and refreshed Summoner's Rift; here is what's confirmed and what's still unknown.",
+  "date": "2026-11-15T04:02:45+00:00",
+  "category": "esports",
+  "tags": [
+    "league of legends new dawn",
+    "league of legends 2027",
+    "riot games",
+    "worlds 2026",
+    "summoner's rift update",
+    "league of legends new client"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "League of Legends New Dawn is the name Riot Games has given to a major update planned for 2027, unveiled between matches at the 2026 World Championship, according to Polygon. It promises a new game client and a refreshed Summoner's Rift for a game that is 17 years old, but the details of what changes in actual gameplay are still under wraps. For the large Indian League community, it signals that Riot is planning a big reset for the MOBA."
+    },
+    {
+      "type": "h2",
+      "text": "What League of Legends New Dawn confirms so far"
+    },
+    {
+      "type": "p",
+      "text": "Riot showed New Dawn through a cinematic trailer and short gameplay clips. The trailer featured renders of Blitzcrank, Lux, Leona, Sett, Poppy, Volibear, Riven, Jhin and Ahri. The gameplay snippets showed Master Yi and Morgana in action, per Polygon."
+    },
+    {
+      "type": "p",
+      "text": "Two concrete points came out of the reveal:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "A brand-new game client is coming in 2027. Polygon notes that Riot last overhauled the client's architecture in 2016.",
+        "A refreshed version of the Summoner's Rift map was promised in the reveal reel."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Riot also spoke about reworked gameplay and fresh ways to play favourite champions, but did not explain what that means in practice."
+    },
+    {
+      "type": "h2",
+      "text": "What we still don't know"
+    },
+    {
+      "type": "p",
+      "text": "Almost everything about the core of the update is unannounced. Riot says it will reveal more in January, so any talk of specific rule changes, champion reworks or new modes before then is speculation."
+    },
+    {
+      "type": "p",
+      "text": "Polygon points to the wider context. Riot appears to be aiming at long-time players and also at newer fans who may know League only through Arcane or the Riftbound trading card game. At a press event before the Finals, executive producer Paul Bellezza described the game as multi-generational and said Riot would like it to last 100 years, according to the publication. Other big live-service games are chasing renewed attention too, with World of Warcraft: Forever mentioned as an example."
+    },
+    {
+      "type": "h2",
+      "text": "The 2027 esports calendar is changing"
+    },
+    {
+      "type": "p",
+      "text": "Riot paired the gameplay teaser with a reminder that League is still a major esports title. Polygon reports the following plans for 2027:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "The season opens in China with an expanded First Stand tournament.",
+        "The Mid-Season Invitational will be played in Valencia, Spain.",
+        "Worlds 2027 will be split between Japan and South Korea. Nagoya will host Japan's first-ever World Championship matches, and the event will end in Seoul.",
+        "Riot is considering replacing the traditional Worlds Play-In Stage with a Demacia Cup, which could allow more teams to compete."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "The Demacia Cup idea is only under consideration, not a confirmed change."
+    },
+    {
+      "type": "p",
+      "text": "The next thing to watch is Riot's January presentation, where the studio has said it will lay out what New Dawn actually changes. Look for details on how the new client works, what the Summoner's Rift refresh looks like and whether the Worlds format shifts. Until then, treat the trailer as a promise of scale rather than a list of features."
+    }
+  ],
+  "faqs": [
+    {
+      "q": "What is League of Legends New Dawn?",
+      "a": "According to Polygon, New Dawn is the title of a large-scale update coming to League of Legends in 2027, revealed at the 2026 World Championship. Riot has promised a new game client, a refreshed Summoner's Rift and changes to gameplay."
+    },
+    {
+      "q": "When will Riot reveal more about League of Legends New Dawn?",
+      "a": "Polygon reports that Riot says it will share more details about New Dawn in January. Until then, most specifics of the update remain unannounced."
+    },
+    {
+      "q": "Where will Worlds 2027 be held?",
+      "a": "According to Polygon, Worlds 2027 will take place across Japan and South Korea. Nagoya will host Japan's first-ever World Championship matches, and the tournament will finish in Seoul."
+    }
+  ],
+  "sources": [
+    {
+      "title": "League of Legends: New Dawn Revealed, Major Overhaul Set for 2027",
+      "url": "https://www.polygon.com/league-of-legends-with-new-dawn-reveal-worlds-2026/",
+      "publisher": "Polygon"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}
