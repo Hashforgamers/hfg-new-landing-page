@@ -1,0 +1,103 @@
+{
+  "slug": "2026-11-16-xbox-project-helix-plays-pc-games-but-is-not-a-pc",
+  "title": "Xbox Project Helix Plays PC Games but Isn't a PC",
+  "description": "Xbox Project Helix will play PC games but isn't a PC, says Xbox VP Jason Ronald. Here's what Microsoft's next-gen console means for gamers in India.",
+  "date": "2026-11-16T04:03:12+00:00",
+  "category": "games",
+  "tags": [
+    "Xbox Project Helix",
+    "Xbox Project Helix PC games",
+    "Xbox Project Helix Steam",
+    "Xbox next generation console",
+    "Jason Ronald Xbox",
+    "Xbox 25th anniversary"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "Xbox Project Helix will be able to play PC games, but Microsoft is firm that it is not a PC in disguise. According to TweakTown, Xbox VP of Next Generation Jason Ronald says the next-gen machine is a console first, with the ability to run games from your PC library. For anyone in India deciding between a console and a gaming rig, that distinction shapes what the box is meant to be."
+    },
+    {
+      "type": "h2",
+      "text": "What Xbox Project Helix is, according to Microsoft"
+    },
+    {
+      "type": "p",
+      "text": "The comments come from a special digital Xbox 25th Anniversary Magazine, which Microsoft is releasing as the platform marks 25 years this month, TweakTown reports. Ronald describes the aim as an \"ultimate gaming machine\" that removes the barriers of play that have existed in the past."
+    },
+    {
+      "type": "p",
+      "text": "His clearest line is also the most useful one: Helix is a console that can play PC games, and not a PC that can play console games. The focus is on making it easy and instant to get into your games."
+    },
+    {
+      "type": "p",
+      "text": "There is still room for tinkerers. Ronald says hardcore gamers and power users who want deeper customisation of settings and performance can do that."
+    },
+    {
+      "type": "h2",
+      "text": "Xbox library, Steam and the rumour mill"
+    },
+    {
+      "type": "p",
+      "text": "TweakTown notes that Project Helix is meant to cover the whole Xbox library: the original Xbox, Xbox 360, Xbox One and the current Xbox Series X|S generation. Microsoft also wants to remove what Ronald calls the arbitrary constraints between console and PC games."
+    },
+    {
+      "type": "p",
+      "text": "Years of rumours and official hints suggested Helix would reach rival storefronts such as Steam and the Epic Games Store. TweakTown reads the latest interview as pointing to Xbox and Steam libraries sitting together on the console. That is the publication's interpretation, not a full list of confirmed stores."
+    },
+    {
+      "type": "p",
+      "text": "Some earlier talk also claimed Microsoft would license the hardware to companies like ASUS so they could make their own Helix boxes. That remained a rumour in the source, and nothing in this interview confirms it."
+    },
+    {
+      "type": "h2",
+      "text": "A custom OS, not Windows"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "TweakTown says the comments match recent rumours that Xbox wants a custom operating system rather than a Windows machine.",
+        "That system would share technology and even code with Windows but be tuned purely for gaming.",
+        "Ronald confirmed that Helix's interface \"will be its own\", while learning from the ROG Xbox Ally and Xbox mode for Windows and bringing multiple libraries together.",
+        "The mention of deeper customisation suggests players may be able to adjust graphics and performance settings much like on PC, inside a console environment, according to TweakTown."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Xbox Project Helix release date and price in India"
+    },
+    {
+      "type": "p",
+      "text": "TweakTown's report does not give a release date, a price or any details on Indian availability, so treat any numbers you see floating around as unconfirmed for now."
+    },
+    {
+      "type": "p",
+      "text": "What to watch next: more detail on which storefronts Helix will support, how much control players get over performance settings, and whether partner hardware ever becomes real. The full interview is in the Xbox 25th Anniversary Magazine, and further Microsoft announcements should clarify how this console-PC hybrid will work day to day."
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Is Xbox Project Helix a PC?",
+      "a": "No. Xbox VP of Next Generation Jason Ronald says Helix is designed as a console that can also play games from your PC, not a PC that can also play console games, according to TweakTown."
+    },
+    {
+      "q": "Will Xbox Project Helix play older Xbox games?",
+      "a": "According to TweakTown's report on the interview, the goal is access to the entire Xbox library, from the original console through Xbox 360, Xbox One and the current Xbox Series X|S generation."
+    },
+    {
+      "q": "Will Xbox Project Helix run Windows?",
+      "a": "Not in the traditional sense. TweakTown says recent rumours point to a custom, gaming-focused operating system that shares technology and code with Windows, and Ronald confirmed the interface will be its own."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Microsoft confirms Xbox Project Helix will play PC games, but it's not a PC",
+      "url": "https://www.tweaktown.com/news/114694/microsoft-confirms-xbox-project-helix-will-play-pc-games-but-its-not-a-pc/index.html",
+      "publisher": "www.tweaktown.com"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}
