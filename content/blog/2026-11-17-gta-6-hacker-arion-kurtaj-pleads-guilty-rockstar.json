@@ -1,0 +1,111 @@
+{
+  "slug": "2026-11-17-gta-6-hacker-arion-kurtaj-pleads-guilty-rockstar",
+  "title": "GTA 6 hacker Arion Kurtaj pleads guilty to Rockstar hack",
+  "description": "The GTA 6 hacker Arion Kurtaj has pleaded guilty to attacks on Rockstar, Uber, Revolut and BT/EE. Here is what he admitted and what happens next.",
+  "date": "2026-11-17T06:15:57+00:00",
+  "category": "gta",
+  "tags": [
+    "gta 6 hacker",
+    "gta 6 leak",
+    "arion kurtaj",
+    "rockstar games hack",
+    "lapsus$",
+    "gta 6 leaked footage"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "The GTA 6 hacker behind the huge 2022 gameplay leak has admitted his crimes in court. Arion Kurtaj, now 21, pleaded guilty to cyberattacks on Rockstar Games, Uber, Revolut and BT/EE, according to Hindustan Times. The case closes a long-running chapter for GTA fans, who watched unfinished footage of the most anticipated game in the world spread online, and it shows how much damage a small group of attackers can do."
+    },
+    {
+      "type": "h2",
+      "text": "What the GTA 6 hacker pleaded guilty to"
+    },
+    {
+      "type": "p",
+      "text": "According to The Independent, Kurtaj appeared at Woolwich Crown Court and admitted six charges:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Three counts of an unauthorized act to impair the operation of a computer",
+        "One count of fraud",
+        "One count of securing unauthorized access to computer material with intent",
+        "One count of possessing a mobile phone in prison"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "The Crown Prosecution Service (CPS) said he belonged to the cybercrime group Lapsus$ and carried out the attacks between August 2021 and September 2022. The BBC reports he was just 16 and 17 at the time and went by the name TeaPotUberHacker."
+    },
+    {
+      "type": "h2",
+      "text": "How the Rockstar hack happened"
+    },
+    {
+      "type": "p",
+      "text": "The BBC's account of the Rockstar breach is striking. Kurtaj was on bail and under police protection, staying at a Travelodge hotel in Bicester for his own safety. His computer had been seized, so he reportedly used an Amazon Fire Stick plugged into the hotel TV, plus a Bluetooth keyboard and mouse."
+    },
+    {
+      "type": "p",
+      "text": "He took 90 clips covering nearly an hour of gameplay from the unfinished game, according to the BBC. He also got into Rockstar's Slack and sent a message demanding contact on Telegram within 24 hours, or he would start releasing the source code."
+    },
+    {
+      "type": "p",
+      "text": "Rockstar did not respond. Kurtaj then posted the clips and source code on an online forum. The company said it spent $5 million (£3.79 million) and thousands of hours of staff time dealing with the fallout. The leak also revealed that a female character would be playable, a detail Rockstar had kept hidden for marketing reasons."
+    },
+    {
+      "type": "h2",
+      "text": "Uber, Revolut and BT/EE were hit too"
+    },
+    {
+      "type": "p",
+      "text": "The attacks were not limited to gaming. In the Uber hack, Kurtaj sent an obscene image to staff, took confidential records and deleted internal files, causing more than $2.8 million (£2.1 million) in damage, per The Independent. He also broke into Revolut's systems and exposed details of thousands of customers."
+    },
+    {
+      "type": "p",
+      "text": "His BT/EE attack led to a rise in unauthorized Sim swaps. The CPS explained that Sim swapping tricks providers into moving a phone number to a new Sim card, giving criminals control of calls and texts and a route into bank or social media accounts."
+    },
+    {
+      "type": "p",
+      "text": "The BBC says the hacks caused around £10 million of damage overall. It adds that the gang used stolen data to target crypto investors, and prosecutors said they stole at least $300,000 from individual victims."
+    },
+    {
+      "type": "h2",
+      "text": "What prosecutors said and what comes next"
+    },
+    {
+      "type": "p",
+      "text": "CPS specialist prosecutor Robert Hutchinson described a sustained campaign using sophisticated techniques that seriously disrupted major international businesses and put sensitive data at risk. He said the offending was calculated, and that Kurtaj kept targeting organizations even after he was charged."
+    },
+    {
+      "type": "p",
+      "text": "The next date to watch is November 23, when Kurtaj will be sentenced at Woolwich Crown Court, according to The Independent. The sentence will show how the court weighs his age at the time of the offences against the scale of the harm. For GTA 6 fans, the legal side is nearly done, and the focus can return to what Rockstar chooses to show officially."
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Who is the GTA 6 hacker Arion Kurtaj?",
+      "a": "According to The Independent, Kurtaj is a 21-year-old from Oxfordshire, England, and the Crown Prosecution Service said he was a member of the cybercrime group Lapsus$. The BBC reports he used the online name TeaPotUberHacker."
+    },
+    {
+      "q": "What did the GTA 6 hacker steal from Rockstar?",
+      "a": "According to the BBC, he stole 90 clips showing nearly an hour of gameplay from the unfinished game, then posted them with source code on an online forum. Rockstar said it spent $5 million and thousands of staff hours dealing with the hack."
+    },
+    {
+      "q": "When will Arion Kurtaj be sentenced?",
+      "a": "According to The Independent, he will be sentenced at Woolwich Crown Court on November 23. He pleaded guilty there on Monday to six charges, including fraud and possessing a mobile phone in prison."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Arion Kurtaj, GTA 6 hacker, pleads guilty to cyberattacks on Rockstar Games, Uber and Revolut",
+      "url": "https://www.hindustantimes.com/world-news/arion-kurtaj-gta-6-hacker-pleads-guilty-to-cyberattacks-on-rockstar-games-uber-and-revolut-101794859864750.html",
+      "publisher": "www.hindustantimes.com"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}
