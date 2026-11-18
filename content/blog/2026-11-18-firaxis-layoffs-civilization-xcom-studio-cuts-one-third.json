@@ -1,0 +1,106 @@
+{
+  "slug": "2026-11-18-firaxis-layoffs-civilization-xcom-studio-cuts-one-third",
+  "title": "Firaxis layoffs: 1/3 of Civilization studio cut",
+  "description": "Firaxis layoffs hit about 60 people at the Civilization and XCOM studio, as 2K confirms cuts and a new XCOM game reportedly faces development struggles.",
+  "date": "2026-11-18T07:37:04+00:00",
+  "category": "industry",
+  "tags": [
+    "firaxis layoffs",
+    "new xcom game",
+    "civilization vii",
+    "take-two layoffs",
+    "2k games layoffs",
+    "heather hazen"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "The Firaxis layoffs have hit the studio behind Civilization and XCOM hard. According to GameSpot, Take-Two's 2K division has confirmed that one third of Firaxis Games staff is being let go, which Bloomberg says affects around 60 people. Studio head Heather Hazen is also leaving. It matters because it is another round of cuts in an industry that keeps shrinking its teams, and because a long-awaited XCOM game is reportedly caught up in it."
+    },
+    {
+      "type": "h2",
+      "text": "What we know about the Firaxis layoffs"
+    },
+    {
+      "type": "p",
+      "text": "GameSpot says Bloomberg confirmed the cuts. A Firaxis spokesperson told Bloomberg the restructuring is part of an effort to \"focus on design, technology, and player experience.\""
+    },
+    {
+      "type": "p",
+      "text": "The spokesperson also said these decisions are never easy, but are essential to build the next chapter of Firaxis. Hazen's departure comes as part of the same downsizing."
+    },
+    {
+      "type": "p",
+      "text": "The source does not say which teams or roles were affected, so we can't say yet how the cuts are split across the studio."
+    },
+    {
+      "type": "h2",
+      "text": "New XCOM game: development struggles reported"
+    },
+    {
+      "type": "p",
+      "text": "The most notable detail is about what Firaxis is building. Per GameSpot's summary of Bloomberg's sources, the studio is working on a new XCOM game. That project has reportedly faced \"development struggles\" and missed a major milestone this past summer."
+    },
+    {
+      "type": "p",
+      "text": "The game is still going ahead, according to those sources. They also said it \"may face a shakeup\" because of the layoffs. That is based on unnamed sources, not an official statement from 2K or Firaxis, so treat the details as reported rather than confirmed."
+    },
+    {
+      "type": "p",
+      "text": "For XCOM fans the gap has already been long. The last entry from Firaxis was 2020's XCOM: Chimera Squad, and before that came 2016's XCOM 2."
+    },
+    {
+      "type": "h2",
+      "text": "Civilization VII and a 30-year-old studio"
+    },
+    {
+      "type": "p",
+      "text": "Firaxis's most recent release is Sid Meier's Civilization VII, which launched in February 2025. GameSpot notes it had numerous technical issues at launch, though updates have improved the experience since then. The wider Civilization series has sold more than 80 million units."
+    },
+    {
+      "type": "p",
+      "text": "The timing also stands out. Sid Meier co-founded Firaxis in 1996, so 2026 marks the studio's 30th anniversary. Take-Two bought the company in 2005 and placed the studio and its franchises under the 2K banner."
+    },
+    {
+      "type": "h2",
+      "text": "What this means for players"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Civilization VII has been patched since launch, but the source doesn't say how the layoffs could affect future updates.",
+        "The new XCOM game is reportedly still in development, with no release date or details given in the report.",
+        "Hazen's exit means Firaxis will be heading into its next phase under new leadership, though no successor was named in the source."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "What to watch next: whether 2K says anything official about the new XCOM game and its schedule, who takes over leadership at Firaxis, and how the studio plans to support Civilization VII after the cuts. Any confirmation of a shakeup to the XCOM project would be the clearest sign of how deep the impact goes. We'll update as more reporting comes in."
+    }
+  ],
+  "faqs": [
+    {
+      "q": "How many people were laid off in the Firaxis layoffs?",
+      "a": "According to GameSpot, citing Bloomberg, one third of Firaxis staff is being laid off, which affects around 60 people."
+    },
+    {
+      "q": "Is the new XCOM game cancelled?",
+      "a": "No. GameSpot reports that Bloomberg's sources say the game is still going ahead, though it \"may face a shakeup\" because of the layoffs."
+    },
+    {
+      "q": "Who is leaving Firaxis?",
+      "a": "Studio head Heather Hazen is leaving as part of the downsizing, according to GameSpot's report on Bloomberg's confirmation."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Civilization Dev Lays Off 1/3 Of Staff, New XCOM Game Facing “Development Struggles” – Report",
+      "url": "https://www.gamespot.com/articles/civilization-dev-lays-off-1-3-of-staff-new-xcom-game-facing-development-struggles-report/",
+      "publisher": "GameSpot"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

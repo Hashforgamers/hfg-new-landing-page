@@ -1,0 +1,103 @@
+{
+  "slug": "2026-11-18-gta-6-30-fps-why-digital-foundry-says-it-makes-sense",
+  "title": "GTA 6 30 FPS: Why Digital Foundry Says It Makes Sense",
+  "description": "GTA 6 30 FPS is locked in after Rockstar's confirmation, and Digital Foundry says the frame time maths explains why 60 FPS is such a tall order.",
+  "date": "2026-11-18T07:05:15+00:00",
+  "category": "gta",
+  "tags": [
+    "gta 6 30 fps",
+    "gta 6 60 fps",
+    "gta 6 ps5 pro",
+    "digital foundry gta 6",
+    "gta 6 frame rate",
+    "gta 6 performance"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "GTA 6 will run at 30 FPS, and Digital Foundry says that is the sensible call. According to Dexerto, Rockstar confirmed the frame rate in its preload trailer, which disappointed some fans hoping for 40 or 60 FPS. Richard Leadbetter of Digital Foundry argued on DF Direct Weekly that trying to go higher would be \"asking for trouble\" in a game this dense."
+    },
+    {
+      "type": "h2",
+      "text": "Why GTA 6 30 FPS makes sense on frame time"
+    },
+    {
+      "type": "p",
+      "text": "Leadbetter's explanation comes down to the time budget for each frame. At 30 FPS, Rockstar has 33.3 milliseconds to process the game world, the simulation and everything else. He called that a fair amount of time, but said the studio decided from a design perspective that it needs all of it."
+    },
+    {
+      "type": "p",
+      "text": "Moving to 60 FPS would cut that budget in half. The same job would have to be done in half the time, which Leadbetter described as not viable."
+    },
+    {
+      "type": "h2",
+      "text": "What about 40 FPS and PS5 Pro?"
+    },
+    {
+      "type": "p",
+      "text": "A 40 FPS mode sounds like an easy compromise, since it is only 10 frames above 30. Leadbetter said it does not work that way. Hitting 40 FPS means fitting into a 25 millisecond frame time, and he said that would take a huge amount of optimization or cutbacks."
+    },
+    {
+      "type": "p",
+      "text": "He also touched on PS5 Pro. There is no word yet on whether QSSR will come to PlayStation 5, he said, so fans will have to wait and see. He noted that the \"world was crying out\" for PS5 Pro features. Nothing here confirms any Pro upgrade."
+    },
+    {
+      "type": "p",
+      "text": "His broader point was about the game itself. GTA 6 is already rich and dense, and anything can happen because of its systems-driven design. In his words, \"30 FPS makes sense.\" Digital Foundry had previously called 60 FPS \"like a bridge too far,\" according to Dexerto."
+    },
+    {
+      "type": "h2",
+      "text": "Launch-day frenzy around the game"
+    },
+    {
+      "type": "p",
+      "text": "Dexerto reports that fans are hours away from booting up the game. The hype is spilling into real life too. The outlet says GTA 6 is estimated to cause $1 billion worth of disruption to the US economy, with around 1.5 million people calling in sick."
+    },
+    {
+      "type": "p",
+      "text": "In Australia, KFC is hosting a funeral for a fake person so customers have a valid reason to take the day off, per the same report."
+    },
+    {
+      "type": "h2",
+      "text": "What this means for players"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Rockstar has confirmed 30 FPS, and Dexerto notes this matches how its games have launched before.",
+        "Digital Foundry says the design needs the full 33.3 millisecond frame budget.",
+        "A 40 FPS mode would require major optimization or cutbacks, according to Leadbetter.",
+        "PS5 Pro and QSSR support remains unconfirmed."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "What to watch next: how the game actually performs once players get hands-on time. Indian gamers on console should keep an eye on Digital Foundry's technical breakdowns and any word from Rockstar on PS5 Pro enhancements. Until then, expect a cinematic 30 FPS experience rather than a high frame rate one."
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Does GTA 6 run at 30 FPS?",
+      "a": "Yes. According to Dexerto, Rockstar confirmed in its preload trailer that GTA 6 will run at 30 FPS."
+    },
+    {
+      "q": "Why can't GTA 6 run at 60 FPS?",
+      "a": "Digital Foundry's Richard Leadbetter told DF Direct Weekly that 60 FPS would leave half the frame time to do the same work, which he called not viable. Dexerto reports he added that even 40 FPS would need a huge amount of optimization or cutbacks."
+    },
+    {
+      "q": "Will GTA 6 get PS5 Pro features?",
+      "a": "That is not confirmed. Leadbetter said there are no comments on whether QSSR will be on PlayStation 5, so players will have to wait and see, according to Dexerto."
+    }
+  ],
+  "sources": [
+    {
+      "title": "GTA 6 running at 30 FPS “makes sense” experts say after Rockstar’s confirmation",
+      "url": "https://www.dexerto.com/gta/gta-6-running-at-30-fps-makes-sense-experts-say-after-rockstars-confirmation-3428936/",
+      "publisher": "Dexerto"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}
