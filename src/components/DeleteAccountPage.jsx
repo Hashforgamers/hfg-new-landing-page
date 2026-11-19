@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { AlertTriangle, CheckCircle2, Trash2 } from "lucide-react";
+import { track } from "@/lib/analytics";
 
 const theme = {
   primary: "#ff3d8b",
@@ -51,6 +52,7 @@ export default function DeleteAccountPage({ initialToken = "" }) {
             : "We could not delete your account."),
       });
 
+      track('delete_account_result', { success: response.ok, status: response.status });
       if (response.ok) {
         setConfirmText("");
         setConsentChecked(false);

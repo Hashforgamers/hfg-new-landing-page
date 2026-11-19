@@ -17,6 +17,7 @@ export default function GamerSignupForm() {
     if (params.get('signup_submitted') !== '1') return;
 
     setSubmitted(true);
+    track('sign_up', { method: 'gamer_signup_form' });
     params.delete('signup_submitted');
     const query = params.toString();
     const cleanUrl = `${window.location.pathname}${query ? `?${query}` : ''}${window.location.hash}`;
