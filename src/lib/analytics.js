@@ -21,11 +21,23 @@ export function initFirebaseAnalytics() {
   return firebase;
 }
 
+// Attributes that segment every later event, e.g. { visitor_type: 'cafe' }.
+export function setUserProps(props) {
+  if (typeof window === 'undefined') return;
+  if (!FIREBASE_CONFIG) return window.gtag?.('set', 'user_properties', props);
+  initFirebaseAnalytics()?.then(async (fb) => {
+    if (fb) (await import('firebase/analytics')).setUserProperties(fb.analytics, props);
+  });
+}
+
 function sendGa(name, params) {
   if (!FIREBASE_CONFIG) return window.gtag?.('event', name, params);
   if (!firebase) return queue.push([name, params]);
   firebase.then((fb) => fb?.logEvent(fb.analytics, name, params));
 }
+
+// Diagnostics that are useless as ad signals.
+const GA_ONLY = new Set(['web_vitals', 'exception', 'scroll_depth', 'form_validation_error']);
 
 export function track(name, params = {}) {
   if (typeof window === 'undefined') return;
@@ -34,7 +46,7 @@ export function track(name, params = {}) {
     // Page views map to Meta's standard event; everything else stays custom so
     // Meta/GA conversion reporting does not inflate actual customer conversions.
     if (name === 'page_view') window.fbq?.('track', 'PageView');
-    else window.fbq?.('trackCustom', name, params);
+    else if (!GA_ONLY.has(name)) window.fbq?.('trackCustom', name, params);
   } catch {
     // Analytics must never break the page.
   }

@@ -3,7 +3,9 @@
 import { useEffect } from 'react';
 import Script from 'next/script';
 import { usePathname } from 'next/navigation';
-import { initFirebaseAnalytics, track, trackFromElement } from '@/lib/analytics';
+import { useReportWebVitals } from 'next/web-vitals';
+import { initFirebaseAnalytics, setUserProps, track, trackFromElement } from '@/lib/analytics';
+import { PATH_EVENT, getPath } from '@/lib/paths';
 import { FIREBASE_CONFIG, GA_MEASUREMENT_ID, META_PIXEL_ID } from '@/lib/site';
 
 const IS_PROD = process.env.NODE_ENV === 'production';
@@ -17,7 +19,29 @@ export default function Analytics() {
 
   useEffect(() => {
     if (IS_PROD) initFirebaseAnalytics();
+    // Gamer vs cafe-owner path, so every report can be split by audience.
+    const path = getPath();
+    if (path) setUserProps({ visitor_type: path });
+    const onPath = () => {
+      const next = getPath();
+      setUserProps({ visitor_type: next || 'none' });
+      track('path_selected', { visitor_type: next || 'none' });
+    };
+    const onError = (e) => track('exception', { description: String(e.message || e.reason || 'unknown').slice(0, 150), fatal: false });
+    window.addEventListener(PATH_EVENT, onPath);
+    window.addEventListener('error', onError);
+    window.addEventListener('unhandledrejection', onError);
+    return () => {
+      window.removeEventListener(PATH_EVENT, onPath);
+      window.removeEventListener('error', onError);
+      window.removeEventListener('unhandledrejection', onError);
+    };
   }, []);
+
+  // Core Web Vitals (LCP, CLS, INP, FCP, TTFB) per page, to spot slow pages.
+  useReportWebVitals((m) => {
+    track('web_vitals', { metric_name: m.name, value: Math.round(m.name === 'CLS' ? m.value * 1000 : m.value), rating: m.rating, page_path: window.location.pathname });
+  });
 
   useEffect(() => {
     track('page_view', { page_path: pathname, page_location: window.location.href, page_title: document.title });
