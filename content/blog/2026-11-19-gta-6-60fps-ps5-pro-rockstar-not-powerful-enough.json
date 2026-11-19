@@ -1,0 +1,102 @@
+{
+  "slug": "2026-11-19-gta-6-60fps-ps5-pro-rockstar-not-powerful-enough",
+  "title": "GTA 6 60FPS on PS5 Pro: Rockstar Says Not Powerful Enough",
+  "description": "GTA 6 60FPS on PS5 Pro isn't happening, says Rockstar, as the console's CPU can't handle the game's simulation at higher frame rates, per Eurogamer.",
+  "date": "2026-11-19T05:15:25+00:00",
+  "category": "gta",
+  "tags": [
+    "GTA 6 60FPS on PS5 Pro",
+    "GTA 6 FPS",
+    "GTA 6 performance mode",
+    "GTA 6 PS5 Pro",
+    "GTA 6 Digital Foundry",
+    "GTA 6 review"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "If you were hoping for a performance mode, GTA 6 60FPS on PS5 Pro is off the table. According to Eurogamer, Rockstar has explained that even Sony's most powerful console can't run the game at 40FPS or 60FPS. That matters because GTA 6 is aiming for 30FPS on every console it launches on, and some players were already unhappy about it."
+    },
+    {
+      "type": "h2",
+      "text": "Why GTA 6 60FPS on PS5 Pro isn't possible"
+    },
+    {
+      "type": "p",
+      "text": "Last week, players reacted badly to the news that GTA 6 targets 30FPS on PS5 Pro, PS5, Xbox Series X and Xbox Series S. Many big games this generation offer separate quality and performance modes, so people expected the same here."
+    },
+    {
+      "type": "p",
+      "text": "Rockstar's technology production director, Marc Chambers, gave Kotaku a direct answer. He said the PS5 Pro's central processor is only slightly better than the base PS5's, and that it is not powerful enough to run the game's complex simulation at higher frame rates."
+    },
+    {
+      "type": "p",
+      "text": "In plain terms, the limit is the CPU workload of the simulated world, not just how good the graphics look."
+    },
+    {
+      "type": "h2",
+      "text": "What the PS5 Pro does improve"
+    },
+    {
+      "type": "p",
+      "text": "The Pro isn't left out entirely. Chambers said the base presentation already uses ray-traced reflections and global illumination. On the PS5 Pro, Rockstar adds ray-traced shadows and extra clarity through PlayStation Spectral Super Resolution (PSSR)."
+    },
+    {
+      "type": "p",
+      "text": "He said the console's upgraded graphics processor and upscaling technology are used to raise the game's visual fidelity. So the Pro buys you a sharper, better-lit image rather than a faster one."
+    },
+    {
+      "type": "h2",
+      "text": "Digital Foundry and the 30FPS history"
+    },
+    {
+      "type": "p",
+      "text": "Eurogamer points to Digital Foundry's analysis of the game on current-gen machines. The team called it a \"technical tour de force\", but noted that it can dip below 30FPS on PS5 and Xbox Series X during busier chase scenes and explosive shootouts. That makes higher frame rates look unrealistic for now."
+    },
+    {
+      "type": "p",
+      "text": "A 30FPS launch isn't new for Rockstar either. Eurogamer notes that GTA 5 also ran at an unsteady 30FPS when it arrived on Xbox 360 and PS3. Support for 60FPS only came with the PC port more than a year later."
+    },
+    {
+      "type": "p",
+      "text": "The frame rate hasn't hurt the critical response so far. In Eurogamer's review, Chris Tapsell called GTA 6 a \"game of opposites and awe, minute detail and impossible scale\"."
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "Eurogamer's report only covers current-generation consoles, and Rockstar hasn't announced any plans for a higher frame rate mode. Keep an eye on patch notes for performance fixes, especially in heavy action scenes where Digital Foundry saw dips below 30FPS. The GTA 5 precedent suggests a smoother version, if one comes, may arrive on different hardware later. Until Rockstar says otherwise, treat that as speculation, not a promise."
+    },
+    {
+      "type": "p",
+      "text": "Eurogamer also flags two launch-day notes. You can't replay GTA 6's missions without multiple save files, and some Ultimate Edition content is only available in the first chapter."
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Can GTA 6 run at 60FPS on PS5 Pro?",
+      "a": "No. According to Eurogamer, Rockstar says the PS5 Pro is not powerful enough to run the game's complex simulation at 40FPS or 60FPS."
+    },
+    {
+      "q": "What frame rate does GTA 6 target on consoles?",
+      "a": "Eurogamer reports that GTA 6 targets 30FPS on all its launch platforms: PS5 Pro, PS5, Xbox Series X and Xbox Series S."
+    },
+    {
+      "q": "What does the PS5 Pro improve in GTA 6?",
+      "a": "Rockstar told Kotaku that the PS5 Pro adds ray-traced shadows on top of the base ray-traced reflections and global illumination, plus extra clarity through PlayStation Spectral Super Resolution (PSSR)."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Even the PS5 Pro is \"not powerful enough\" to run GTA 6 at 60FPS or 40FPS, Rockstar says",
+      "url": "https://www.eurogamer.net/ps5-pro-not-powerful-enough-gta-6-60fps",
+      "publisher": "Eurogamer"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

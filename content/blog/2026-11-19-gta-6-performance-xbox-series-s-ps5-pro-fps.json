@@ -1,0 +1,106 @@
+{
+  "slug": "2026-11-19-gta-6-performance-xbox-series-s-ps5-pro-fps",
+  "title": "GTA 6 Performance: Xbox Series S Dips Below 20FPS",
+  "description": "GTA 6 performance is mostly stable at 30fps on PS5 Pro and Series X, but Digital Foundry saw Xbox Series S fall to 18fps, according to Kotaku.",
+  "date": "2026-11-19T05:17:48+00:00",
+  "category": "gta",
+  "tags": [
+    "GTA 6 performance",
+    "GTA 6 Xbox Series S",
+    "GTA 6 PS5 Pro",
+    "GTA 6 FPS",
+    "GTA 6 PC release",
+    "Digital Foundry"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "GTA 6 performance is mostly stable on the stronger consoles, but the Xbox Series S struggles badly. According to Kotaku, which cites Digital Foundry's technical breakdown, the PS5 Pro and Xbox Series X mostly hold 30fps, while the Series S can fall under 20fps in the busiest moments. With consoles now six years old and Rockstar's world so large, this matters for anyone deciding where to play."
+    },
+    {
+      "type": "h2",
+      "text": "GTA 6 performance on PS5 Pro and Xbox Series X"
+    },
+    {
+      "type": "p",
+      "text": "Kotaku's reviewer played on a PS5 Pro, the most powerful console available right now. The game ran at 30fps most of the time, with some noticeable frame drops in crowded areas."
+    },
+    {
+      "type": "p",
+      "text": "Digital Foundry then stress tested the game. According to its video, the PS5 Pro stays fairly solid at 30fps unless you blow up a lot of cars at once. In those moments the framerate fell to around 24fps at its lowest."
+    },
+    {
+      "type": "p",
+      "text": "The Xbox Series X appears to be about as stable as the PS5 Pro. It shows the same drops during car chases, crowded scenes and firefights when the screen gets busy."
+    },
+    {
+      "type": "h2",
+      "text": "Base PS5 has a harder time"
+    },
+    {
+      "type": "p",
+      "text": "The standard PS5 fares worse. Per Kotaku's summary of Digital Foundry's findings, it struggles to maintain 30fps even in the best of cases. If you cause heavy on-screen destruction, the dips are sustained until you leave the area."
+    },
+    {
+      "type": "h2",
+      "text": "Xbox Series S: lower resolution, lower framerate"
+    },
+    {
+      "type": "p",
+      "text": "The Series S launched in 2020 as a cheaper, lower-powered option, and it takes the biggest hit. Digital Foundry reports a resolution of 720p, against 1440p on the Series X. Some details are less prevalent or use lower-res textures."
+    },
+    {
+      "type": "p",
+      "text": "The framerate is where it gets rough. The target is 30fps, but even typical play affects it. Here is what Digital Foundry reported:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Standard combat encounters and car chases: around 25fps",
+        "More demanding carnage: around 20fps",
+        "An explosive shootout: a few seconds at 18 and 19fps"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Kotaku's advice for Series S owners is to avoid too much mayhem. The site also notes that developers have voiced frustration about supporting the console. Tekken director Katsuhiro Harada compared it to having to do extra work for a slightly weaker child."
+    },
+    {
+      "type": "h2",
+      "text": "Is there a 60fps option?"
+    },
+    {
+      "type": "p",
+      "text": "Not on consoles, it seems. Kotaku says Rockstar apparently has no plans to add a Performance Mode. A PC version is rumored for sometime next year, and Kotaku expects players with high-end builds to get smoother 60fps there. That is a rumor, not an announcement."
+    },
+    {
+      "type": "p",
+      "text": "Watch for any official word from Rockstar on patches or a PC release. Any update that eases the frame drops, especially on the base PS5 and Series S, would be the biggest news for console players."
+    }
+  ],
+  "faqs": [
+    {
+      "q": "What is GTA 6 performance like on Xbox Series S?",
+      "a": "According to Kotaku, citing Digital Foundry, the Series S targets 30fps but drops to around 25fps in typical combat and car chases, around 20fps in heavy chaos, and briefly to 18-19fps in an explosive shootout. It also runs at 720p, compared to 1440p on Series X."
+    },
+    {
+      "q": "Does GTA 6 run at 30fps on PS5 Pro?",
+      "a": "Kotaku reports that the PS5 Pro holds a fairly solid 30fps most of the time. Digital Foundry saw it dip to around 24fps at its lowest when many cars were blown up at once."
+    },
+    {
+      "q": "Will GTA 6 have a Performance Mode or 60fps?",
+      "a": "Kotaku says Rockstar apparently has no plans to add a Performance Mode on consoles. A PC version is rumored to launch next year, but that is unconfirmed."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Grand Theft Auto 6 Performance Is Mostly Stable, Except On Xbox Series S Where It Can Hit Sub-20FPS",
+      "url": "https://kotaku.com/grand-theft-auto-6-gta6-performance-framerate-ps5-xbox-series-x-s-2000758096",
+      "publisher": "Kotaku"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

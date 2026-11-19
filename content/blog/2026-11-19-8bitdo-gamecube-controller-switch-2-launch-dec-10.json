@@ -1,0 +1,113 @@
+{
+  "slug": "2026-11-19-8bitdo-gamecube-controller-switch-2-launch-dec-10",
+  "title": "8BitDo GameCube Controller for Switch 2 Launches Dec 10",
+  "description": "The 8BitDo GameCube controller works with Switch, Switch 2 and PC, costs $49.99 and ships Dec. 10, 2026, according to Polygon. Here is what to know.",
+  "date": "2026-11-19T05:17:00+00:00",
+  "category": "hardware",
+  "tags": [
+    "8BitDo GameCube controller",
+    "8BitDo GC Bluetooth Gamepad",
+    "Switch 2 controller",
+    "GameCube controller release date",
+    "Smash Bros Melee controller"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "The 8BitDo GameCube controller is official. The peripheral maker has revealed the GC Bluetooth Gamepad, a wireless take on the classic GameCube pad for Switch, Switch 2 and Windows PC, according to Polygon. It costs $49.99 and ships on Dec. 10, 2026. It matters because it is a cheaper, more flexible alternative to Nintendo's own wireless GameCube controller, and Smash fans and PC emulation players are the obvious audience."
+    },
+    {
+      "type": "h2",
+      "text": "8BitDo GameCube controller: price and release date"
+    },
+    {
+      "type": "p",
+      "text": "Polygon reports that the GC Bluetooth Gamepad is priced at $49.99 and will ship on Dec. 10, 2026. The source does not mention Indian pricing or availability, so we don't yet know what it will cost here or how you can buy it."
+    },
+    {
+      "type": "p",
+      "text": "The design follows the original. It comes in the GameCube's purple-and-orange colour scheme and keeps what 8BitDo's product description calls the classic GC design and iconic button layout."
+    },
+    {
+      "type": "h2",
+      "text": "Connections and compatibility"
+    },
+    {
+      "type": "p",
+      "text": "The controller offers three ways to connect:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Bluetooth 5.0 wireless",
+        "A 2.4 GHz wireless adapter",
+        "Wired play over a USB-C cable"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "All three work with the original Switch and Switch 2. On PC, only wired and 2.4 GHz wireless connections are supported, not Bluetooth."
+    },
+    {
+      "type": "h2",
+      "text": "How it compares with Nintendo's version"
+    },
+    {
+      "type": "p",
+      "text": "Nintendo released its own wireless GameCube controller for the Switch 2 last year, per Polygon. It stuck closely to the original, with a few extra buttons for better Switch 2 compatibility. Reviews called it faithful, but players found it did not work with the original Switch or Windows by default."
+    },
+    {
+      "type": "p",
+      "text": "8BitDo's pad covers both of those platforms. Polygon also notes it costs $20 less than Nintendo's release, which is a meaningful gap for a third-party alternative."
+    },
+    {
+      "type": "h2",
+      "text": "Why GameCube controllers still matter"
+    },
+    {
+      "type": "p",
+      "text": "Part of the reason is software. Polygon points out that Switch 2 supports certain GameCube games through a Nintendo Switch Online subscription, including The Legend of Zelda: The Wind Waker and F-Zero GX."
+    },
+    {
+      "type": "p",
+      "text": "The bigger reason is Super Smash Bros. Many players came to the series through Melee on the GameCube, which still has an active tournament circuit, according to Polygon. Nintendo has backed that loyalty before by re-releasing the wired GameCube controller for the Wii U as a Smash 4 tie-in. It later released a USB adapter so the original pad could work with the original Switch for games like Super Smash Bros. Ultimate."
+    },
+    {
+      "type": "p",
+      "text": "Another draw is PC. Polygon says many players likely want a modern wireless GameCube pad for emulated games, and 8BitDo's controller supports that."
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "The big unknown is feel. Specs and price look good on paper, but the real test is whether the 8BitDo pad matches the original's sticks, triggers and buttons. Polygon says we will find out when it launches next month. Watch for early reviews around Dec. 10, and for any word on Indian pricing and availability."
+    }
+  ],
+  "faqs": [
+    {
+      "q": "When does the 8BitDo GameCube controller release?",
+      "a": "According to Polygon, the 8BitDo GC Bluetooth Gamepad ships on Dec. 10, 2026, and it costs $49.99."
+    },
+    {
+      "q": "Does the 8BitDo GameCube controller work on Switch 2 and PC?",
+      "a": "Yes. Polygon reports it works with Switch, Switch 2 and Windows PC. All three connection types work on the Switch consoles, while PC supports only wired and 2.4 GHz wireless."
+    },
+    {
+      "q": "How is the 8BitDo GameCube controller different from Nintendo's?",
+      "a": "Polygon says it costs $20 less than Nintendo's official Switch 2 GameCube controller and works with the original Switch and Windows. Nintendo's version reportedly did not support those by default."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Switch 2 Is Getting an All-new Gamecube Controller",
+      "url": "https://www.polygon.com/nintendo-switch-2-wireless-game-cube-controller-8bitdo/",
+      "publisher": "Polygon"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "slug": "2026-11-19-gta-6-livestream-record-6-38m-viewers",
+  "title": "GTA 6 livestream record: 6.38M viewers before global launch",
+  "description": "GTA 6 livestream record broken: Streams Charts says the game hit 6.38 million live viewers across Twitch, YouTube and Kick before its global launch.",
+  "date": "2026-11-19T05:16:00+00:00",
+  "category": "gta",
+  "tags": [
+    "GTA 6 livestream record",
+    "GTA 6 viewers",
+    "GTA 6 Twitch",
+    "GTA 6 launch time",
+    "Valorant closed beta record",
+    "Streams Charts"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "The GTA 6 livestream record has been broken before most of the world can even play the game. According to Eurogamer, citing analytics site Streams Charts, Grand Theft Auto 6 reached 6.38 million live viewers across Twitch, YouTube and Kick at 12:30 UTC today. That makes it the most-watched game ever on livestreaming platforms, and it shows how much attention the launch is pulling, even from people who cannot play yet."
+    },
+    {
+      "type": "h2",
+      "text": "What the GTA 6 livestream record means"
+    },
+    {
+      "type": "p",
+      "text": "The number comes from Streams Charts, which tracks viewership across multiple platforms. At the moment of the peak, the game had only been officially available for a few hours in New Zealand. Players elsewhere were getting in by using a region-switch trick, according to Eurogamer."
+    },
+    {
+      "type": "p",
+      "text": "In other words, this peak was reached while access was limited. The wider rollout has not happened yet, so the total audience is still building."
+    },
+    {
+      "type": "h2",
+      "text": "How it compares with Valorant's old record"
+    },
+    {
+      "type": "p",
+      "text": "The previous record belonged to Valorant, Riot Games' tactical shooter, which pulled in 1.74 million live viewers during its closed beta. Eurogamer notes that the Valorant figure came with an asterisk: viewers were offered a chance to get beta access by watching a stream."
+    },
+    {
+      "type": "p",
+      "text": "GTA 6 had no such incentive, according to the report. Even so, it has more than tripled Valorant's number. For Indian fans who remember how big Valorant streams were in its early days, that gap says a lot."
+    },
+    {
+      "type": "h2",
+      "text": "Twitch leads, and the climb may not be over"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Twitch is the biggest platform for GTA 6 streams, per Streams Charts.",
+        "The game is already the 6th biggest category in Twitch history.",
+        "Eurogamer expects the viewer count to rise as the game launches in more regions."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "The key thing to follow is whether the 6.38 million peak holds or gets pushed higher as more regions go live. Streams Charts data should show that over the coming hours and days. Eurogamer has not said what the final peak might be, so treat any big predictions as guesswork for now."
+    },
+    {
+      "type": "p",
+      "text": "If you want to know exactly when GTA 6 unlocks where you are, Eurogamer has published a GTA 6 launch time guide with an accurate list by country. It also has an Everything We Know about Grand Theft Auto 6 guide covering the details ahead of launch. Check those before you plan your play session, and be careful with region-switch workarounds, since the source only describes them and does not vouch for them."
+    }
+  ],
+  "faqs": [
+    {
+      "q": "How many people watched GTA 6 live when it broke the record?",
+      "a": "According to Streams Charts, via Eurogamer, GTA 6 had 6.38 million live viewers across Twitch, YouTube and Kick at 12:30 UTC. That is the highest figure recorded across livestreaming platforms."
+    },
+    {
+      "q": "What was the previous livestream viewer record?",
+      "a": "Eurogamer reports the previous record was set by Valorant during its closed beta, with 1.74 million live viewers. That beta had a promotion that rewarded viewers with a chance at access, which GTA 6 did not have."
+    },
+    {
+      "q": "Where can I find out when GTA 6 releases in my country?",
+      "a": "Eurogamer points readers to its GTA 6 launch time guide, which lists release times by country. It also has an Everything We Know about Grand Theft Auto 6 guide for the wider details."
+    }
+  ],
+  "sources": [
+    {
+      "title": "GTA 6 breaks the all-time livestream viewer record hours before it's available to play for most of the world",
+      "url": "https://www.eurogamer.net/grand-theft-auto-6-streaming-record-broken",
+      "publisher": "Eurogamer"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}
