@@ -25,6 +25,18 @@ export const SITE_YOUTUBE = "https://youtube.com/@hashforgamers";
 export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || "G-B1QNYHZ26Z";
 export const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || "3210237032478677";
 
+// Firebase web app config (Firebase console → Project settings → Your apps → Web). These values
+// are public by design. Unset = plain gtag with GA_MEASUREMENT_ID.
+export const FIREBASE_CONFIG = process.env.NEXT_PUBLIC_FIREBASE_APP_ID
+  ? {
+      apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+      authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+      projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+      appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+      measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || GA_MEASUREMENT_ID,
+    }
+  : null;
+
 export const SITE_NAME = "Hash For Gamers";
 export const SITE_TITLE_TEMPLATE = `%s | ${SITE_NAME}`;
 
