@@ -25,17 +25,15 @@ export const SITE_YOUTUBE = "https://youtube.com/@hashforgamers";
 export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || "G-B1QNYHZ26Z";
 export const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || "3210237032478677";
 
-// Firebase web app config (Firebase console → Project settings → Your apps → Web). These values
-// are public by design. Unset = plain gtag with GA_MEASUREMENT_ID.
-export const FIREBASE_CONFIG = process.env.NEXT_PUBLIC_FIREBASE_APP_ID
-  ? {
-      apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-      authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-      projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-      appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-      measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || GA_MEASUREMENT_ID,
-    }
-  : null;
+// Firebase web app "Hash-website" (project hash-ee6fc). These values are public by design;
+// env vars override them per environment.
+export const FIREBASE_CONFIG = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyDn7PK85lkDCRZcxEQngQ52Q_vV-DgSpVQ",
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "hash-ee6fc.firebaseapp.com",
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "hash-ee6fc",
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:376797794992:web:cb520a9732e34cdbd82175",
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "G-JNCCB2E1RH",
+};
 
 export const SITE_NAME = "Hash For Gamers";
 export const SITE_TITLE_TEMPLATE = `%s | ${SITE_NAME}`;
