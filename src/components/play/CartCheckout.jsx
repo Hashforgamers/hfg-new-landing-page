@@ -229,7 +229,7 @@ export default function CartCheckout() {
           </Panel>
         </div>
 
-        <div className="lg:sticky lg:top-[136px] lg:self-start">
+        <div className="lg:sticky lg:top-28 lg:self-start">
           <Panel id="order-total">
             <p className="text-xs font-medium uppercase tracking-[0.14em] text-white/45">Order total</p>
             <div className="mt-4 space-y-2 text-sm">

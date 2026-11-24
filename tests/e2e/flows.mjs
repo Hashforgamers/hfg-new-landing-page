@@ -291,6 +291,42 @@ try {
     }
     await ctx.close();
   }
+  // ---- Site header at every desktop width: nothing wraps, nothing touches the logo.
+  if (!only || only.includes("header")) {
+    for (const width of [1024, 1280, 1440, 1920]) {
+      const ctx = await newContext(browser, { width, height: 900 });
+      const page = await ctx.newPage();
+      for (const url of ["/blog", "/book", "/marketplace"]) {
+        await page.goto(`${BASE}${url}`, { waitUntil: "networkidle" });
+        await page.waitForTimeout(400);
+        const file = `header-${width}${url.replace(/\//g, "_")}.png`;
+        await page.screenshot({ path: path.join(out, file), clip: { x: 0, y: 0, width, height: 110 } });
+        const issues = await page.evaluate(() => {
+          const nav = document.querySelector('header nav[aria-label="Main"]');
+          if (!nav) return ["no main nav"];
+          const out = [];
+          const items = [...nav.querySelectorAll("a, button")].filter((el) => el.getBoundingClientRect().width > 0 && getComputedStyle(el).display !== "none");
+          for (const el of items) {
+            const r = el.getBoundingClientRect();
+            const lh = parseFloat(getComputedStyle(el).lineHeight) || 16;
+            if (r.height > lh * 1.8 && !el.querySelector("img, svg")) out.push(`wraps: "${el.innerText.trim()}"`);
+          }
+          for (let i = 0; i < items.length; i++)
+            for (let j = i + 1; j < items.length; j++) {
+              const a = items[i].getBoundingClientRect(), b = items[j].getBoundingClientRect();
+              if (items[i].contains(items[j]) || items[j].contains(items[i])) continue;
+              const gap = Math.max(a.left, b.left) - Math.min(a.right, b.right);
+              const sameRow = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 4;
+              if (sameRow && gap < 8) out.push(`too close: "${items[i].innerText.trim() || items[i].getAttribute("aria-label")}" / "${items[j].innerText.trim() || items[j].getAttribute("aria-label")}" (${Math.round(gap)}px)`);
+            }
+          if (document.documentElement.scrollWidth > document.documentElement.clientWidth + 1) out.push("page scrolls sideways");
+          return out;
+        });
+        report.push({ viewport: `header-${width}`, step: file, url, issues, errors: [] });
+      }
+      await ctx.close();
+    }
+  }
 } catch (err) {
   console.error("FLOW FAILED:", err.message);
   report.push({ fatal: err.message });

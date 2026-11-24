@@ -177,7 +177,7 @@ export default async function CafePage({ params, searchParams }) {
             </dl>
           </div>
 
-          <aside className="min-w-0 scroll-mt-32 lg:sticky lg:top-[136px] lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start" id="book">
+          <aside className="min-w-0 scroll-mt-32 lg:sticky lg:top-28 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start" id="book">
             <CafeBooking vendorId={cafe.id} initial={data} cafeUrl={canonical} />
           </aside>
 

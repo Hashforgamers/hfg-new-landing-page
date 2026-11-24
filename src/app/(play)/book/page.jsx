@@ -46,7 +46,6 @@ export default async function BookPage() {
   } catch {
     cafes = [];
   }
-  const states = new Set(cafes.map((c) => c.state).filter(Boolean));
   const crumbs = [
     { name: "Home", href: "/" },
     { name: "Book a gaming cafe", href: BOOK.root },
@@ -85,22 +84,7 @@ export default async function BookPage() {
         kicker="Hash Book"
         lines={["Book a gaming", "cafe near you."]}
         body="Live slots and prices for PC, PlayStation, Xbox, VR and racing setups at Hash partner cafes. Book in under a minute."
-      >
-        <div className="mt-10 flex flex-wrap gap-x-10 gap-y-4 text-white">
-          <div>
-            <p className="text-3xl font-semibold tracking-tight">{cafes.length || "—"}</p>
-            <p className="text-sm text-white/45">partner cafes</p>
-          </div>
-          <div>
-            <p className="text-3xl font-semibold tracking-tight">{states.size || "—"}</p>
-            <p className="text-sm text-white/45">states</p>
-          </div>
-          <div>
-            <p className="text-3xl font-semibold tracking-tight">14 days</p>
-            <p className="text-sm text-white/45">bookable ahead</p>
-          </div>
-        </div>
-      </VerticalHero>
+      />
 
       <section id="cafes" className="scroll-mt-32">
         <Container className="py-14 sm:py-20">

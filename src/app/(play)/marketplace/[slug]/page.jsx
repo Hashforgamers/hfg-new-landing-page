@@ -102,7 +102,7 @@ export default async function ProductPage({ params, searchParams }) {
 
       <Container className="pb-16 pt-6">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16">
-          <div className="min-w-0 lg:sticky lg:top-[136px] lg:self-start">
+          <div className="min-w-0 lg:sticky lg:top-28 lg:self-start">
             <ProductGallery images={images} title={product.title} />
           </div>
 

@@ -5,7 +5,7 @@ import Link from "next/link";
 export const GRADIENT_TEXT = "bg-gradient-to-r from-[#ff3d8b] via-[#ff9a3d] to-[#ffd23d] bg-clip-text text-transparent";
 
 export function Container({ className = "", children }) {
-  return <div className={`mx-auto w-full max-w-[1280px] px-4 sm:px-8 ${className}`}>{children}</div>;
+  return <div className={`mx-auto w-full max-w-[1600px] px-4 sm:px-8 ${className}`}>{children}</div>;
 }
 
 /** Vertical landing hero: Orbitron kicker, Anton two-line headline (second line in the brand gradient), Inter intro. */
