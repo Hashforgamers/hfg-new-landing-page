@@ -17,9 +17,9 @@ export function cx(...parts) {
   return parts.filter(Boolean).join(" ");
 }
 
-export function Panel({ className = "", children, as: Tag = "div", ...rest }) {
+export function Panel({ className = "", children, as: Tag = "div", padded = true, ...rest }) {
   return (
-    <Tag className={cx("rounded-[28px] border border-white/[0.08] bg-[#0e0e12] p-6 md:p-8", className)} {...rest}>
+    <Tag className={cx("rounded-[28px] border border-white/[0.08] bg-[#0e0e12]", padded && "p-6 md:p-8", className)} {...rest}>
       {children}
     </Tag>
   );
@@ -67,6 +67,16 @@ export function Button({ children, variant = "primary", size = "md", loading = f
       {loading && <Loader2 className="h-4 w-4 animate-spin" aria-hidden />}
       {children}
     </button>
+  );
+}
+
+/** A link that looks like Button (never wrap a Button in a Link: nested controls break focus). */
+export function buttonClass({ variant = "primary", size = "md", className = "" } = {}) {
+  return cx(
+    "font-body inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-colors duration-200",
+    size === "lg" ? "min-h-[52px] px-8 text-base" : size === "sm" ? "min-h-[36px] px-4 text-sm" : "min-h-[46px] px-6 text-[15px]",
+    BUTTON[variant],
+    className,
   );
 }
 
@@ -137,17 +147,21 @@ export function Notice({ tone = "error", children, action }) {
   );
 }
 
-export function Empty({ title, children }) {
+export function Empty({ title, children, bare = false }) {
   return (
-    <div className="font-body rounded-[28px] border border-dashed border-white/15 px-6 py-16 text-center">
+    <div className={cx("font-body px-6 text-center", bare ? "py-10" : "rounded-[28px] border border-dashed border-white/15 py-16")}>
       <p className="text-lg font-semibold text-white">{title}</p>
       {children && <div className="mt-2 text-sm text-white/55">{children}</div>}
     </div>
   );
 }
 
-export const inr = (value) =>
-  new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 2 }).format(Number(value || 0));
+/** ₹1,499 for whole rupees, ₹1,499.50 otherwise. */
+export const inr = (value) => {
+  const n = Number(value || 0);
+  const whole = Math.abs(n - Math.round(n)) < 0.005;
+  return new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", minimumFractionDigits: whole ? 0 : 2, maximumFractionDigits: whole ? 0 : 2 }).format(n);
+};
 
 export function formatTime(hhmmss) {
   if (!hhmmss) return "";

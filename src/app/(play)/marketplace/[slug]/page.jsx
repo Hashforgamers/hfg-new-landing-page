@@ -10,7 +10,11 @@ import { loadProduct, loadProducts } from "@/lib/server/ops/store";
 import { SITE_LOGO, SITE_URL, buildPageMetadata } from "@/lib/site";
 import { STORE, productIdFromSlug, productPath } from "@/lib/verticals";
 
-const inr = (n) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 2 }).format(Number(n || 0));
+const inr = (n) => {
+  const v = Number(n || 0);
+  const digits = Math.abs(v - Math.round(v)) < 0.005 ? 0 : 2;
+  return new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", minimumFractionDigits: digits, maximumFractionDigits: digits }).format(v);
+};
 const plain = (text, max) => {
   const s = String(text || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
   return s.length > max ? `${s.slice(0, max - 1).replace(/\s+\S*$/, "")}…` : s;
@@ -98,7 +102,7 @@ export default async function ProductPage({ params, searchParams }) {
 
       <Container className="pb-16 pt-6">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16">
-          <div className="min-w-0 lg:sticky lg:top-[136px] lg:self-start">
+          <div className="min-w-0 lg:sticky lg:top-28 lg:self-start">
             <ProductGallery images={images} title={product.title} />
           </div>
 

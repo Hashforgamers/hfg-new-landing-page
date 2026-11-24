@@ -49,7 +49,7 @@ export async function openRazorpay(checkout) {
       name: checkout.name,
       description: checkout.description,
       prefill: checkout.prefill,
-      theme: { color: "#16FF00", backdrop_color: "#000000" },
+      theme: { color: "#ff3d8b", backdrop_color: "#000000" },
       retry: { enabled: true, max_count: 3 },
       modal: {
         confirm_close: true,

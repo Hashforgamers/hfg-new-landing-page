@@ -7,7 +7,7 @@ import { secureCall } from "@/lib/secure/client";
 import { track } from "@/lib/analytics-client";
 import { openRazorpay } from "@/lib/razorpay-client";
 import { useAuth, useRequireLogin } from "./PlayShell";
-import { Button, Chip, Label, Notice, Panel, SecureBadge, Spinner, Title, cx, formatTime, inr } from "./ui";
+import { Button, Chip, Label, Notice, Panel, SecureBadge, Spinner, Title, buttonClass, cx, formatTime, inr } from "./ui";
 
 const MAX_SLOTS = 12;
 const DRAFT_KEY = "hfg_booking_draft";
@@ -49,6 +49,7 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
   const [wallet, setWallet] = useState(null);
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState(null);
+  const [booked, setBooked] = useState(null);
   const [flowError, setFlowError] = useState("");
 
   const restoreDraft = useCallback(
@@ -142,6 +143,18 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
     });
   }
 
+  function startOver() {
+    setResult(null);
+    setBooked(null);
+    setPicked([]);
+    setQuote(null);
+    setFlowError("");
+    // Fresh availability for the same console and day.
+    setSlots(null);
+    if (consoleSel) secureCall("slots.list", { vendorId, gameId: consoleSel.gameId, date }).then((d) => setSlots(d.slots)).catch((e) => setSlotError(e.message));
+    document.getElementById("book")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   async function onBook() {
     setFlowError("");
     if (!user) {
@@ -152,6 +165,14 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
       return;
     }
     setBusy(true);
+    const summary = {
+      console: consoleSel.name,
+      date,
+      dateText: new Date(`${date}T12:00:00+05:30`).toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" }),
+      times: (slots || []).filter((s) => picked.includes(s.id)).map((s) => `${formatTime(s.start)} – ${formatTime(s.end)}`),
+      total: quote?.total,
+      method,
+    };
     try {
       const created = await secureCall("booking.create", {
         vendorId,
@@ -161,6 +182,7 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
         paymentMethod: method,
       });
       if (created.status !== "payment_required") {
+        setBooked(summary);
         setResult(created);
         return;
       }
@@ -176,6 +198,7 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
         intent: created.intent,
         razorpay: { paymentId: payment.paymentId, orderId: payment.orderId, signature: payment.signature },
       });
+      setBooked(summary);
       setResult(confirmed);
     } catch (err) {
       setFlowError(err.message);
@@ -201,24 +224,46 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
 
   if (result) {
     const tone = result.status === "needs_attention" ? "warn" : "success";
+    const ids = result.bookingIds || [];
     return (
-      <Panel className="text-center">
-        <CheckCircle2 className="mx-auto h-12 w-12 text-emerald-300" aria-hidden />
-        <Title className="mt-4 text-2xl md:text-2xl">
-          {result.status === "confirmed" && "You're booked."}
-          {result.status === "pending_acceptance" && "Booking requested."}
-          {result.status === "needs_attention" && "Payment received."}
-        </Title>
-        <div className="mt-4 text-left">
+      <Panel>
+        <div className="text-center">
+          <CheckCircle2 className="mx-auto h-12 w-12 text-emerald-300" aria-hidden />
+          <Title className="mt-4 text-2xl md:text-2xl">
+            {result.status === "confirmed" && "You're booked."}
+            {result.status === "pending_acceptance" && "Booking requested."}
+            {result.status === "needs_attention" && "Payment received."}
+          </Title>
+        </div>
+        {booked && (
+          <dl className="mt-6 divide-y divide-white/[0.06] rounded-2xl border border-white/[0.08] px-4 text-sm">
+            {[
+              ["Cafe", detail.cafe.name],
+              ["Console", booked.console],
+              ["Date", booked.dateText],
+              ["Time", booked.times.join(", ")],
+              ["Total", booked.total != null ? `${inr(result.total ?? booked.total)}${booked.method === "pay_at_cafe" ? " at the cafe" : " paid"}` : ""],
+              ids.length ? [ids.length > 1 ? "Booking IDs" : "Booking ID", ids.map((id) => `#${id}`).join(", ")] : null,
+            ]
+              .filter((row) => row && row[1])
+              .map(([k, v]) => (
+                <div key={k} className="flex justify-between gap-4 py-3">
+                  <dt className="text-white/50">{k}</dt>
+                  <dd className="text-right text-white">{v}</dd>
+                </div>
+              ))}
+          </dl>
+        )}
+        <div className="mt-4">
           <Notice tone={tone}>
-            {result.status === "confirmed" && `See you at ${detail.cafe.name}. Show this booking in the Hash app or under My bookings at the counter.`}
-            {result.status === "pending_acceptance" && `The cafe will accept your booking shortly. Pay ${inr(result.total)} at the counter when you arrive.`}
+            {result.status === "confirmed" && "Show this booking at the counter from the Hash app or My bookings."}
+            {result.status === "pending_acceptance" && "The cafe will accept your booking shortly. You'll pay at the counter when you arrive."}
             {result.status === "needs_attention" && result.message}
           </Notice>
         </div>
         <div className="mt-6 grid gap-2">
-          <Link href="/account#bookings"><Button className="w-full">View my bookings</Button></Link>
-          <Link href={cafeUrl}><Button variant="subtle" className="w-full">Book another slot</Button></Link>
+          <Link href="/account#bookings" className={buttonClass({ className: "w-full" })}>View my bookings</Link>
+          <button type="button" onClick={startOver} className={buttonClass({ variant: "subtle", className: "w-full" })}>Book another slot</button>
         </div>
       </Panel>
     );
@@ -230,7 +275,7 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
   const visibleSlots = (slots || []).filter((s) => !isPast(date, s.start));
 
   return (
-    <Panel className="p-0 md:p-0">
+    <Panel padded={false} className="overflow-hidden">
       <div className="flex items-center justify-between gap-3 px-6 pt-6">
         <Title as="h2" className="text-xl md:text-xl">Book a slot</Title>
         <SecureBadge />
@@ -299,9 +344,17 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
             {slots && visibleSlots.length > 0 && (
               <div className="grid grid-cols-3 gap-2">
                 {visibleSlots.map((s) => (
-                  <Chip key={s.id} active={picked.includes(s.id)} disabled={!s.available} onClick={() => toggleSlot(s)} className="w-full px-2">
+                  <Chip
+                    key={s.id}
+                    active={picked.includes(s.id)}
+                    disabled={!s.available}
+                    onClick={() => toggleSlot(s)}
+                    aria-label={`${formatTime(s.start)}${s.available ? "" : ", full"}`}
+                    className="flex min-h-[52px] w-full flex-col items-center justify-center whitespace-nowrap rounded-2xl px-1 text-[13px] leading-tight"
+                  >
                     {formatTime(s.start)}
-                    {s.available && s.left <= 2 && !picked.includes(s.id) && <span className="block text-[10px] text-amber-300">{s.left} left</span>}
+                    {s.available && s.left <= 2 && !picked.includes(s.id) && <span className="mt-0.5 text-[10px] font-normal text-amber-300">{s.left} left</span>}
+                    {!s.available && <span className="mt-0.5 text-[10px] font-normal">Full</span>}
                   </Chip>
                 ))}
               </div>
@@ -373,7 +426,7 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
               disabled={!quote || quoting || !quote.allBookable || walletShort || !ready}
               onClick={onBook}
             >
-              {!user ? "Sign in to book" : method === "online" ? `Pay ${quote ? inr(quote.total) : ""}` : "Confirm booking"}
+              {!user ? `Sign in to book${quote ? ` · ${inr(quote.total)}` : ""}` : method === "online" ? `Pay ${quote ? inr(quote.total) : ""}` : "Confirm booking"}
             </Button>
             {quote && !quote.allBookable && <p className="mt-2 text-xs text-amber-200">One of these slots just filled up. Pick another.</p>}
           </>
