@@ -15,16 +15,16 @@ function BookingRow({ b }) {
   return (
     <li className="flex flex-wrap items-center justify-between gap-3 py-4">
       <div>
-        <p className="text-sm font-bold uppercase tracking-[0.1em]">{b.cafe_name || b.vendor_name || b.vendorName || "Gaming cafe"}</p>
-        <p className="font-sans text-xs text-white/60">
+        <p className="text-[15px] font-medium">{b.cafe_name || b.vendor_name || b.vendorName || "Gaming cafe"}</p>
+        <p className="text-xs text-white/60">
           {[b.game_name || b.console_type, bookingDate(b), b.start_time && `${formatTime(b.start_time)}${b.end_time ? ` – ${formatTime(b.end_time)}` : ""}`]
             .filter(Boolean)
             .join(" · ")}
         </p>
       </div>
       <div className="text-right">
-        {status && <span className="rounded-full border border-white/15 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-white/70">{status}</span>}
-        {(b.amount || b.total_amount) && <p className="mt-1 font-sans text-xs text-white/50">{inr(b.amount || b.total_amount)}</p>}
+        {status && <span className="rounded-full bg-white/[0.06] px-3 py-1 text-xs text-white/70">{status}</span>}
+        {(b.amount || b.total_amount) && <p className="mt-1 text-xs text-white/50">{inr(b.amount || b.total_amount)}</p>}
       </div>
     </li>
   );
@@ -66,7 +66,7 @@ export default function AccountView() {
         <div>
           <Eyebrow>My Account</Eyebrow>
           <Title className="mt-3">{user.handle || user.name || "Player"}</Title>
-          <p className="mt-2 font-sans text-sm text-white/50">{[user.name, user.phone, user.email].filter(Boolean).join(" · ")}</p>
+          <p className="mt-2 text-sm text-white/50">{[user.name, user.phone, user.email].filter(Boolean).join(" · ")}</p>
         </div>
         <div className="flex items-center gap-3">
           <SecureBadge />
@@ -87,7 +87,7 @@ export default function AccountView() {
             {bookings === null && <Spinner label="Loading bookings" />}
             {bookings?.length === 0 && (
               <Empty title="No bookings yet">
-                <Link href="/book" className="text-[#16FF00] underline">Book your first slot</Link>
+                <Link href="/book" className="text-white underline underline-offset-2">Book your first slot</Link>
               </Empty>
             )}
             {bookings?.length > 0 && (
@@ -105,21 +105,21 @@ export default function AccountView() {
             {orders === null && <Spinner label="Loading orders" />}
             {orders?.length === 0 && (
               <Empty title="No orders yet">
-                <Link href="/marketplace" className="text-[#16FF00] underline">Visit the marketplace</Link>
+                <Link href="/marketplace" className="text-white underline underline-offset-2">Visit the marketplace</Link>
               </Empty>
             )}
             {orders?.length > 0 && (
               <ul className="divide-y divide-white/10">
                 {orders.map((o) => (
                   <li key={o.id}>
-                    <Link href={`/account/orders/${o.id}`} className="flex flex-wrap items-center justify-between gap-3 py-4 hover:text-[#16FF00]">
+                    <Link href={`/account/orders/${o.id}`} className="flex flex-wrap items-center justify-between gap-3 py-4 hover:text-white">
                       <div>
-                        <p className="text-sm font-bold uppercase tracking-[0.1em]">Order #{o.displayId}</p>
-                        <p className="font-sans text-xs text-white/60">
+                        <p className="text-[15px] font-medium">Order #{o.displayId}</p>
+                        <p className="text-xs text-white/60">
                           {o.items.map((i) => `${i.title} ×${i.quantity}`).join(", ").slice(0, 80)}
                         </p>
                       </div>
-                      <div className="text-right font-sans text-sm">
+                      <div className="text-right text-sm">
                         <p>{inr(o.total)}</p>
                         <p className="text-xs text-white/50">{new Date(o.createdAt).toLocaleDateString("en-IN")}</p>
                       </div>

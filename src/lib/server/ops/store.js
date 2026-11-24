@@ -12,7 +12,7 @@ import { hit } from "@/lib/secure/store";
  */
 
 let configCache = null;
-async function storeConfig(requestId) {
+export async function storeConfig(requestId) {
   if (configCache && configCache.exp > Date.now()) return configCache.value;
   const { data } = await upstream("medusa", "/hash-store/config", { requestId, headers: { "X-Client-Source": "app" } });
   if (data?.version !== 1 || !String(data.publishable_api_key || "").startsWith("pk_") || !data.region_id || !data.sales_channel_id) {
@@ -90,7 +90,7 @@ async function customerToken(ctx) {
 }
 
 /* -------------------------------------------------------- shaping */
-function productCard(p) {
+export function productCard(p) {
   return {
     id: p.product_id,
     variantId: p.variant_id,
@@ -188,6 +188,57 @@ async function loadCart(ctx) {
 }
 
 /* ------------------------------------------------------------- ops */
+/* ------------------------------------------------------- catalogue */
+const catalogCache = new Map();
+async function cachedCatalog(key, ttlMs, loader) {
+  const entry = catalogCache.get(key);
+  if (entry && entry.exp > Date.now()) return entry.value;
+  const value = await loader();
+  catalogCache.set(key, { value, exp: Date.now() + ttlMs });
+  if (catalogCache.size > 300) catalogCache.delete(catalogCache.keys().next().value);
+  return value;
+}
+
+/** Every listed product (public), for the server-rendered store pages and the sitemap. */
+export async function loadProducts(requestId) {
+  return cachedCatalog("products", 5 * 60_000, async () => {
+    const ctx = { requestId };
+    const all = [];
+    for (let offset = 0; offset < 1000; offset += 100) {
+      const data = await medusa(ctx, `/store/hash/products?limit=100&offset=${offset}`);
+      const page = (data?.products || []).map(productCard);
+      all.push(...page);
+      if (page.length < 100 || all.length >= Number(data?.count || 0)) break;
+    }
+    return all;
+  });
+}
+
+/** One product with its gallery and full description, or null. */
+export async function loadProduct(productId, requestId) {
+  if (!/^prod_[A-Za-z0-9]+$/.test(productId)) return null;
+  return cachedCatalog(`product:${productId}`, 2 * 60_000, async () => {
+    const ctx = { requestId };
+    const config = await storeConfig(requestId);
+    const [detail, list] = await Promise.all([
+      medusa(ctx, `/store/products/${productId}?region_id=${encodeURIComponent(config.region_id)}`).catch(() => null),
+      loadProducts(requestId),
+    ]);
+    const card = list.find((p) => p.id === productId);
+    if (!card) return null;
+    const p = detail?.product || {};
+    return {
+      ...card,
+      description: p.description || card.description,
+      images: (p.images || []).map((i) => i.url).filter((u) => typeof u === "string" && u.startsWith("https://")).slice(0, 8),
+      subtitle: p.subtitle || "",
+      category: p.categories?.[0]?.name || p.type?.value || "",
+      brand: p.metadata?.brand || "",
+      handle: p.handle || "",
+    };
+  });
+}
+
 export const storeOps = {
   "store.products": {
     auth: "none",
@@ -207,27 +258,14 @@ export const storeOps = {
     limit: { perIp: 120 },
     async run(ctx, args) {
       const productId = v.str(args.productId, "productId", { max: 60, pattern: /^prod_[A-Za-z0-9]+$/ });
-      const config = await storeConfig(ctx.requestId);
-      const [detail, list] = await Promise.all([
-        medusa(ctx, `/store/products/${productId}?region_id=${encodeURIComponent(config.region_id)}`),
-        medusa(ctx, `/store/hash/products?limit=100&offset=0`),
-      ]);
-      const card = (list?.products || []).map(productCard).find((p) => p.id === productId);
-      if (!card) {
+      const product = await loadProduct(productId, ctx.requestId);
+      if (!product) {
         const e = new Error("This product is not available right now.");
         e.status = 404;
         throw e;
       }
-      const p = detail?.product || {};
-      ctx.track("Product Viewed", { product_id: productId, vendor_id: card.vendorId, price: card.price });
-      return {
-        product: {
-          ...card,
-          description: p.description || card.description,
-          images: (p.images || []).map((i) => i.url).filter((u) => typeof u === "string" && u.startsWith("https://")).slice(0, 8),
-          subtitle: p.subtitle || "",
-        },
-      };
+      ctx.track("Product Viewed", { product_id: productId, vendor_id: product.vendorId, price: product.price });
+      return { product };
     },
   },
 

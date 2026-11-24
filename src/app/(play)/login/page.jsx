@@ -1,3 +1,4 @@
+import { Container } from "@/components/play/parts";
 import { Suspense } from "react";
 import { buildPageMetadata } from "@/lib/site";
 import LoginView from "@/components/play/LoginView";
@@ -12,7 +13,9 @@ export const metadata = buildPageMetadata({
 export default function LoginPage() {
   return (
     <Suspense>
-      <LoginView />
+      <Container className="py-10">
+        <LoginView />
+      </Container>
     </Suspense>
   );
 }

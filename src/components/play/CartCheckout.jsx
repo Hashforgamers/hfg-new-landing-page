@@ -110,7 +110,7 @@ export default function CartCheckout() {
     return (
       <Panel className="mx-auto max-w-xl text-center">
         <Title as="h2" className="text-xl">Login to see your cart</Title>
-        <p className="mt-3 font-sans text-sm text-white/60">Your cart is saved to your Hash account.</p>
+        <p className="mt-3 text-sm text-white/60">Your cart is saved to your Hash account.</p>
         <Button className="mt-6" onClick={requireLogin}>Login</Button>
       </Panel>
     );
@@ -119,9 +119,9 @@ export default function CartCheckout() {
   if (order) {
     return (
       <Panel className="mx-auto max-w-2xl text-center">
-        <CheckCircle2 className="mx-auto h-14 w-14 text-[#16FF00]" aria-hidden />
+        <CheckCircle2 className="mx-auto h-12 w-12 text-emerald-300" aria-hidden />
         <Title as="h2" className="mt-4 text-xl md:text-2xl">Order placed</Title>
-        <p className="mt-3 font-sans text-sm text-white/70">Order #{order.displayId || order.orderId}. The seller will accept and ship it soon.</p>
+        <p className="mt-3 text-sm text-white/70">Order #{order.displayId || order.orderId}. The seller will accept and ship it soon.</p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <Link href={`/account/orders/${order.orderId}`}><Button>Track order</Button></Link>
           <Link href="/marketplace"><Button variant="subtle">Keep shopping</Button></Link>
@@ -137,7 +137,7 @@ export default function CartCheckout() {
     return (
       <div className="mx-auto max-w-xl">
         <Empty title="Your cart is empty">
-          <Link href="/marketplace" className="text-[#16FF00] underline">Browse the marketplace</Link>
+          <Link href="/marketplace" className="text-white underline underline-offset-2">Browse the marketplace</Link>
         </Empty>
       </div>
     );
@@ -169,8 +169,8 @@ export default function CartCheckout() {
                     {item.thumbnail && <img src={item.thumbnail} alt="" className="h-full w-full object-cover" />}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-bold uppercase tracking-[0.08em]">{item.title}</p>
-                    <p className="font-sans text-xs text-white/50">{inr(item.unitPrice)} each</p>
+                    <p className="truncate text-[15px] font-medium">{item.title}</p>
+                    <p className="text-xs text-white/50">{inr(item.unitPrice)} each</p>
                   </div>
                   <select
                     aria-label="Quantity"
@@ -192,7 +192,7 @@ export default function CartCheckout() {
           </Panel>
 
           <Panel>
-            <p className="text-xs font-bold uppercase tracking-[0.28em] text-white/60">Delivery address</p>
+            <p className="text-xs font-medium uppercase tracking-[0.14em] text-white/45">Delivery address</p>
             <form onSubmit={onPrepare} className="mt-4 grid gap-4 sm:grid-cols-2">
               <Field label="First name"><Input required value={address.first_name} onChange={set("first_name")} autoComplete="given-name" /></Field>
               <Field label="Last name"><Input value={address.last_name} onChange={set("last_name")} autoComplete="family-name" /></Field>
@@ -218,10 +218,10 @@ export default function CartCheckout() {
 
         <div className="lg:sticky lg:top-24 lg:self-start">
           <Panel>
-            <p className="text-xs font-bold uppercase tracking-[0.28em] text-white/60">Order total</p>
-            <div className="mt-4 space-y-2 font-sans text-sm">
+            <p className="text-xs font-medium uppercase tracking-[0.14em] text-white/45">Order total</p>
+            <div className="mt-4 space-y-2 text-sm">
               <div className="flex justify-between text-white/80"><span>Items</span><span>{inr(cart.subtotal)}</span></div>
-              {cart.discount > 0 && <div className="flex justify-between text-[#16FF00]"><span>Discount</span><span>−{inr(cart.discount)}</span></div>}
+              {cart.discount > 0 && <div className="flex justify-between text-emerald-300"><span>Discount</span><span>−{inr(cart.discount)}</span></div>}
               <div className="flex justify-between text-white/80">
                 <span>Delivery</span>
                 <span>{prepared ? (prepared.delivery.payer === "seller" ? "Paid by seller" : inr(cart.shipping)) : "Add address"}</span>
@@ -233,7 +233,7 @@ export default function CartCheckout() {
             <Button className="mt-5 w-full" disabled={!prepared} loading={busy === "pay" || busy === "complete"} onClick={onPay}>
               {busy === "complete" ? "Confirming payment" : `Pay ${inr(cart.total)}`}
             </Button>
-            <p className="mt-3 font-sans text-[11px] leading-5 text-white/40">
+            <p className="mt-3 text-[11px] leading-5 text-white/40">
               One seller per order. You&apos;ll get a completion code in My Orders to share with the seller only after delivery.
             </p>
           </Panel>
