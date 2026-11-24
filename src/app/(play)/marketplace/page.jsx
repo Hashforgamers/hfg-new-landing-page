@@ -1,6 +1,6 @@
 import JsonLd from "@/components/JsonLd";
 import MarketplaceGrid from "@/components/play/MarketplaceGrid";
-import { Container, CrossSell, FaqList, SectionHeading, VerticalHero, breadcrumbsLd, faqLd } from "@/components/play/parts";
+import { Container, CrossSell, FaqList, VerticalHero, breadcrumbsLd, faqLd } from "@/components/play/parts";
 import { loadProducts } from "@/lib/server/ops/store";
 import { SITE_URL, buildPageMetadata } from "@/lib/site";
 import { STORE, productPath } from "@/lib/verticals";
@@ -12,12 +12,6 @@ export const metadata = buildPageMetadata({
   path: STORE.root,
   keywords: ["buy gaming gear online India", "gaming accessories", "gaming headset price", "controller online", "Hash marketplace"],
 });
-
-const PROMISES = [
-  { title: "Verified sellers", body: "Every seller is a Hash partner, reviewed before their listings go live." },
-  { title: "Secure checkout", body: "Pay with UPI, cards or netbanking through Razorpay. Every request is encrypted." },
-  { title: "Tracked delivery", body: "Follow your order to your door. Share a one-time code only when it arrives." },
-];
 
 const FAQS = [
   { q: "Who sells on the Hash Marketplace?", a: "Gaming cafes, stores and service providers that partner with Hash. Each seller sets their own prices and ships the order." },
@@ -55,51 +49,40 @@ export default async function MarketplacePage() {
       />
 
       <VerticalHero
-        kicker="Hash Marketplace"
-        lines={["Gear up.", "Play better."]}
-        body="Gaming gear and services from verified Hash partners, with secure checkout and tracked delivery across India."
-        glow="#ff9a3d"
-      />
+        title="Gear up."
+        accent="Play better."
+        subtitle="Gaming gear and services from verified Hash partners."
+        image="/images/retro-car.jpg"
+      >
+        <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/70">
+          {["Verified sellers", "Secure UPI and card checkout", "Tracked delivery across India"].map((t) => (
+            <li key={t} className="flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#ff9a3d]" aria-hidden /> {t}
+            </li>
+          ))}
+        </ul>
+      </VerticalHero>
 
-      <section id="shop" className="scroll-mt-32">
-        <Container className="py-14 sm:py-20">
-          <SectionHeading kicker="Shop" title="All products." />
-          <div className="mt-8">
-            {products.length ? (
-              <MarketplaceGrid products={products} />
-            ) : (
-              <p className="rounded-[28px] border border-white/[0.08] p-10 text-center text-white/55">
-                New partner listings are on their way. Check back soon.
-              </p>
-            )}
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-t border-white/[0.06] bg-[#060608]">
-        <Container className="py-16 sm:py-24">
-          <SectionHeading kicker="Why Hash" title="Shop with confidence." />
-          <ul className="mt-10 grid gap-5 md:grid-cols-3">
-            {PROMISES.map((p) => (
-              <li key={p.title} className="rounded-[28px] border border-white/[0.08] bg-[#0e0e12] p-7">
-                <h3 className="text-xl font-semibold tracking-tight text-white">{p.title}</h3>
-                <p className="mt-2 text-[15px] leading-7 text-white/55">{p.body}</p>
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </section>
-
-      <section className="border-t border-white/[0.06]">
-        <Container className="py-16 sm:py-20">
-          <SectionHeading kicker="FAQ" title="Questions, answered." />
-          <div className="mt-8">
-            <FaqList items={FAQS} />
-          </div>
+      <section id="shop" className="scroll-mt-28" aria-label="Products">
+        <Container className="py-8 sm:py-10">
+          {products.length ? (
+            <MarketplaceGrid products={products} />
+          ) : (
+            <p className="rounded-[28px] border border-white/[0.08] p-10 text-center text-white/55">
+              New partner listings are on their way. Check back soon.
+            </p>
+          )}
         </Container>
       </section>
 
       <CrossSell to="book" />
+
+      <section className="border-t border-white/[0.06]">
+        <Container className="grid gap-8 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:gap-20">
+          <h2 className="text-xl font-semibold tracking-tight text-white">Questions</h2>
+          <FaqList items={FAQS} />
+        </Container>
+      </section>
     </>
   );
 }

@@ -160,7 +160,7 @@ export function createMockBackends() {
             opening_time: "10:00:00",
             closing_time: "23:00:00",
             amenities: [{ name: "AC", available: true }],
-            images: [{ url: "https://res.cloudinary.com/x/neon.jpg" }],
+            images: process.env.MOCK_RICH ? [1, 2, 3, 4, 5, 6].map((i) => ({ url: `https://res.cloudinary.com/x/neon${i}.jpg` })) : [{ url: "https://res.cloudinary.com/x/neon.jpg" }],
             accepted_payment_methods: { pay_in_cafe: true },
           },
           ...(process.env.MOCK_RICH ? RICH_CAFES : []),
@@ -280,7 +280,38 @@ export function createMockBackends() {
         count: process.env.MOCK_RICH ? 2 + RICH_PRODUCTS.length : 2,
       });
     }
-    if ((match = m(/^\/store\/products\/(prod_\w+)$/))) return send(200, { product: { id: match[1], description: "Great", images: [{ url: "https://res.cloudinary.com/x/h2.jpg" }] } });
+    if ((match = m(/^\/store\/products\/(prod_\w+)$/))) {
+      if (!process.env.MOCK_RICH || match[1] !== "prod_1") return send(200, { product: { id: match[1], description: "Great", images: [{ url: "https://res.cloudinary.com/x/h2.jpg" }] } });
+      // Visual checks: a product with colours, sizes, a gallery and specs.
+      const colour = { id: "opt_c", title: "Color", values: [{ value: "Black" }, { value: "White" }, { value: "Pink" }] };
+      const size = { id: "opt_s", title: "Edition", values: [{ value: "Standard" }, { value: "Pro" }] };
+      const variants = [];
+      let n = 0;
+      for (const c of colour.values)
+        for (const e of size.values)
+          variants.push({
+            id: n === 0 ? "variant_1" : `variant_1${n}`,
+            title: `${c.value} / ${e.value}`,
+            options: [{ value: c.value, option: { title: "Color" } }, { value: e.value, option: { title: "Edition" } }],
+            calculated_price: { calculated_amount: e.value === "Pro" ? 3299 : 2499 },
+            manage_inventory: true,
+            inventory_quantity: n++ === 3 ? 0 : 7,
+          });
+      return send(200, {
+        product: {
+          id: "prod_1",
+          description: "Wireless gaming headset with 7.1 surround sound.\nUp to 40 hours of battery and a detachable boom mic.",
+          images: [1, 2, 3, 4, 5].map((i) => ({ url: `https://res.cloudinary.com/x/h${i}.jpg` })),
+          options: [colour, size],
+          variants,
+          metadata: { brand: "Gear Co", connectivity: "2.4 GHz wireless, Bluetooth 5.3", battery_life: "40 hours", driver_size: "50 mm", hash_vendor_id: "hv_a" },
+          weight: 280,
+          material: "Aluminium and memory foam",
+          origin_country: "in",
+          categories: [{ name: "Headsets" }],
+        },
+      });
+    }
     if (path.startsWith("/store/") && !actor()) return send(401, { message: "Unauthorized" });
     const cartFor = (id) => {
       const c = state.carts.get(id);

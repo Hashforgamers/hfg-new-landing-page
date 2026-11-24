@@ -15,6 +15,19 @@ function openNow(cafe) {
   return o <= c ? now >= o && now < c : now >= o || now < c;
 }
 
+/** "Open now" / "Closed now", worked out in the browser (IST) so cached pages stay right. */
+export function OpenBadge({ opens, closes }) {
+  const [open, setOpen] = useState(null);
+  useEffect(() => setOpen(openNow({ opens, closes })), [opens, closes]);
+  if (open === null) return null;
+  return (
+    <span className={cx("inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium", open ? "bg-emerald-500/15 text-emerald-200" : "bg-white/[0.06] text-white/60")}>
+      <span className={cx("h-1.5 w-1.5 rounded-full", open ? "bg-emerald-300" : "bg-white/40")} aria-hidden />
+      {open ? "Open now" : "Closed now"}
+    </span>
+  );
+}
+
 export function CafeCard({ cafe, priority = false }) {
   const [open, setOpen] = useState(null);
   useEffect(() => setOpen(openNow(cafe)), [cafe]);
@@ -24,7 +37,7 @@ export function CafeCard({ cafe, priority = false }) {
       href={cafePath(cafe)}
       className="group flex flex-col overflow-hidden rounded-[28px] border border-white/[0.08] bg-[#0e0e12] transition duration-300 hover:-translate-y-0.5 hover:border-white/20"
     >
-      <div className="relative aspect-[16/9] overflow-hidden sm:aspect-[4/3] bg-gradient-to-br from-[#2a0838] via-black to-[#3b1a0a]">
+      <div className="relative aspect-[16/9] overflow-hidden sm:aspect-[16/10] bg-gradient-to-br from-[#2a0838] via-black to-[#3b1a0a]">
         {cafe.images?.[0] ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -101,8 +114,8 @@ export default function CafeDirectory({ cafes }) {
 
   return (
     <div>
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <label className="relative block w-full lg:max-w-md">
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-4">
+        <label className="relative block w-full lg:w-[420px] lg:shrink-0">
           <span className="sr-only">Search cafes</span>
           <Search className="pointer-events-none absolute left-4 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-white/40" aria-hidden />
           <input
@@ -127,15 +140,16 @@ export default function CafeDirectory({ cafes }) {
         )}
       </div>
 
-      <p className="mt-6 text-sm text-white/45" aria-live="polite">
+      <p className="mt-5 text-sm text-white/45" aria-live="polite">
         {visible.length} {visible.length === 1 ? "cafe" : "cafes"}
+        {area ? ` in ${area}` : ""}
       </p>
 
       {visible.length ? (
-        <ul className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-4 grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
           {visible.map((cafe, i) => (
             <li key={cafe.id}>
-              <CafeCard cafe={cafe} priority={i < 3} />
+              <CafeCard cafe={cafe} priority={i < 4} />
             </li>
           ))}
         </ul>

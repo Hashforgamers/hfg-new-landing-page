@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { CheckCircle2 } from "lucide-react";
+import { Car, CheckCircle2, Gamepad2, Glasses, Monitor, Moon, Sun, Sunrise, Sunset } from "lucide-react";
 import { secureCall } from "@/lib/secure/client";
 import { track } from "@/lib/analytics-client";
 import { openRazorpay } from "@/lib/razorpay-client";
@@ -15,6 +15,35 @@ const DRAFT_KEY = "hfg_booking_draft";
 function istDate(offsetDays) {
   const d = new Date(Date.now() + offsetDays * 86400000);
   return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kolkata" }).format(d);
+}
+
+function consoleIcon(c) {
+  const k = `${c.family || ""} ${c.name || ""}`.toLowerCase();
+  if (/vr|virtual/.test(k)) return Glasses;
+  if (/rac|sim|wheel/.test(k)) return Car;
+  if (/pc|computer|desktop/.test(k)) return Monitor;
+  return Gamepad2;
+}
+
+const DAY_PARTS = [
+  { id: "morning", label: "Morning", icon: Sunrise, from: 5, to: 12 },
+  { id: "afternoon", label: "Afternoon", icon: Sun, from: 12, to: 17 },
+  { id: "evening", label: "Evening", icon: Sunset, from: 17, to: 21 },
+  { id: "night", label: "Night", icon: Moon, from: 21, to: 29 },
+];
+function dayPart(start) {
+  let h = Number(String(start).slice(0, 2));
+  if (h < 5) h += 24;
+  return DAY_PARTS.find((p) => h >= p.from && h < p.to)?.id || "night";
+}
+
+function dateParts(iso, index) {
+  const d = new Date(`${iso}T12:00:00+05:30`);
+  return {
+    top: index === 0 ? "Today" : index === 1 ? "Tmrw" : d.toLocaleDateString("en-IN", { weekday: "short" }),
+    day: d.toLocaleDateString("en-IN", { day: "numeric" }),
+    month: d.toLocaleDateString("en-IN", { month: "short" }),
+  };
 }
 
 function dateLabel(iso, index) {
@@ -286,9 +315,10 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
         {!consoles.length ? (
           <p className="mt-3 text-sm text-white/55">This cafe hasn&apos;t opened consoles for online booking yet.</p>
         ) : (
-          <div className="mt-3 grid gap-2">
+          <div className="mt-3 grid grid-cols-2 gap-2">
             {consoles.map((c) => {
               const active = consoleSel?.gameId === c.gameId;
+              const Icon = consoleIcon(c);
               return (
                 <button
                   key={c.gameId}
@@ -300,15 +330,18 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
                     track("Cafe Console Selected", { cafe_id: vendorId, console: c.name });
                   }}
                   className={cx(
-                    "flex items-center justify-between rounded-2xl border px-4 py-3.5 text-left transition",
-                    active ? "border-white bg-white/[0.06]" : "border-white/10 hover:border-white/30",
+                    "flex min-w-0 flex-col gap-3 rounded-2xl border p-3.5 text-left transition",
+                    active ? "border-white bg-white/[0.08]" : "border-white/10 hover:border-white/30",
                   )}
                 >
-                  <span>
-                    <span className="block text-[15px] font-medium text-white">{c.name}</span>
-                    {c.units ? <span className="block text-xs text-white/45">{c.units} {c.units === 1 ? "station" : "stations"}</span> : null}
+                  <span className="flex items-center justify-between gap-2">
+                    <Icon className={cx("h-5 w-5", active ? "text-white" : "text-white/55")} aria-hidden />
+                    {c.pricePerSlot > 0 && <span className="text-sm font-semibold text-white">{inr(c.pricePerSlot)}</span>}
                   </span>
-                  {c.pricePerSlot > 0 && <span className="text-sm text-white/70">{inr(c.pricePerSlot)}<span className="text-white/40">/slot</span></span>}
+                  <span className="min-w-0">
+                    <span className="block truncate text-[14px] font-medium text-white">{c.name}</span>
+                    <span className="block text-xs text-white/45">{c.units ? `${c.units} ${c.units === 1 ? "station" : "stations"} · ` : ""}per slot</span>
+                  </span>
                 </button>
               );
             })}
@@ -320,20 +353,31 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
         <section className="border-b border-white/[0.06] px-6 py-6" aria-label="Date and time">
           <Label>Date</Label>
           <div className="-mx-6 mt-3 flex gap-2 overflow-x-auto px-6 pb-1 [scrollbar-width:none]">
-            {dates.map((d, i) => (
-              <Chip
-                key={d}
-                active={d === date}
-                className="shrink-0"
-                onClick={() => {
-                  setDate(d);
-                  setPicked([]);
-                  track("Date Selected", { days_ahead: i });
-                }}
-              >
-                {dateLabel(d, i)}
-              </Chip>
-            ))}
+            {dates.map((d, i) => {
+              const p = dateParts(d, i);
+              const active = d === date;
+              return (
+                <button
+                  key={d}
+                  type="button"
+                  aria-pressed={active}
+                  aria-label={dateLabel(d, i)}
+                  onClick={() => {
+                    setDate(d);
+                    setPicked([]);
+                    track("Date Selected", { days_ahead: i });
+                  }}
+                  className={cx(
+                    "flex w-[60px] shrink-0 flex-col items-center rounded-2xl py-2.5 transition",
+                    active ? "bg-white text-black" : "bg-white/[0.06] text-white/80 hover:bg-white/[0.12]",
+                  )}
+                >
+                  <span className={cx("text-[11px] font-medium uppercase tracking-wide", active ? "text-black/60" : "text-white/45")}>{p.top}</span>
+                  <span className="text-lg font-semibold leading-tight">{p.day}</span>
+                  <span className={cx("text-[11px]", active ? "text-black/60" : "text-white/45")}>{p.month}</span>
+                </button>
+              );
+            })}
           </div>
 
           <Label className="mt-6">Time</Label>
@@ -342,21 +386,35 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
             {!slots && !slotError && <Spinner label="Checking availability" />}
             {slots && !visibleSlots.length && <p className="text-sm text-white/55">No slots left on this day. Try another date.</p>}
             {slots && visibleSlots.length > 0 && (
-              <div className="grid grid-cols-3 gap-2">
-                {visibleSlots.map((s) => (
-                  <Chip
-                    key={s.id}
-                    active={picked.includes(s.id)}
-                    disabled={!s.available}
-                    onClick={() => toggleSlot(s)}
-                    aria-label={`${formatTime(s.start)}${s.available ? "" : ", full"}`}
-                    className="flex min-h-[52px] w-full flex-col items-center justify-center whitespace-nowrap rounded-2xl px-1 text-[13px] leading-tight"
-                  >
-                    {formatTime(s.start)}
-                    {s.available && s.left <= 2 && !picked.includes(s.id) && <span className="mt-0.5 text-[10px] font-normal text-amber-300">{s.left} left</span>}
-                    {!s.available && <span className="mt-0.5 text-[10px] font-normal">Full</span>}
-                  </Chip>
-                ))}
+              <div className="space-y-5">
+                {DAY_PARTS.map((part) => {
+                  const list = visibleSlots.filter((x) => dayPart(x.start) === part.id);
+                  if (!list.length) return null;
+                  const PartIcon = part.icon;
+                  return (
+                    <div key={part.id}>
+                      <p className="mb-2 flex items-center gap-1.5 text-xs text-white/45">
+                        <PartIcon className="h-3.5 w-3.5" aria-hidden /> {part.label}
+                      </p>
+                      <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-3">
+                        {list.map((x) => (
+                          <Chip
+                            key={x.id}
+                            active={picked.includes(x.id)}
+                            disabled={!x.available}
+                            onClick={() => toggleSlot(x)}
+                            aria-label={`${formatTime(x.start)}${x.available ? "" : ", full"}`}
+                            className="flex min-h-[50px] w-full flex-col items-center justify-center whitespace-nowrap rounded-2xl px-1 text-[13px] leading-tight"
+                          >
+                            {formatTime(x.start)}
+                            {x.available && x.left <= 2 && !picked.includes(x.id) && <span className="mt-0.5 text-[10px] font-normal text-amber-300">{x.left} left</span>}
+                            {!x.available && <span className="mt-0.5 text-[10px] font-normal">Full</span>}
+                          </Chip>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             )}
             {picked.length >= MAX_SLOTS && <p className="mt-3 text-xs text-white/50">You can book up to {MAX_SLOTS} slots at once.</p>}

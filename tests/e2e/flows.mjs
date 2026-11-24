@@ -57,7 +57,8 @@ const VIEWPORTS = [
   ["phone", { width: 390, height: 844 }],
   ["tablet", { width: 820, height: 1180 }],
   ["desktop", { width: 1440, height: 900 }],
-];
+  ["wide", { width: 1920, height: 1080 }],
+].filter(([name]) => !process.env.VIEWPORTS || process.env.VIEWPORTS.split(",").includes(name));
 const tomorrowLabel = "Tomorrow";
 const report = [];
 

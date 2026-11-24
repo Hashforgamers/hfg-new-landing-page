@@ -80,8 +80,8 @@ export default function MarketplaceGrid({ products }) {
 
   return (
     <div>
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <label className="relative block w-full lg:max-w-md">
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-4">
+        <label className="relative block w-full lg:w-[420px] lg:shrink-0">
           <span className="sr-only">Search the marketplace</span>
           <Search className="pointer-events-none absolute left-4 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-white/40" aria-hidden />
           <input
@@ -92,6 +92,7 @@ export default function MarketplaceGrid({ products }) {
             className="w-full rounded-full border border-white/10 bg-white/[0.05] py-3.5 pl-11 pr-5 text-[15px] text-white outline-none transition placeholder:text-white/35 focus:border-white/40"
           />
         </label>
+        <div className="flex items-center justify-between gap-3 lg:contents">
         {hasServices && (
           <div className="flex flex-wrap items-center gap-2">
             {[
@@ -105,13 +106,7 @@ export default function MarketplaceGrid({ products }) {
             ))}
           </div>
         )}
-      </div>
-
-      <div className="mt-6 flex items-center justify-between gap-3">
-        <p className="text-sm text-white/45" aria-live="polite">
-          {visible.length} {visible.length === 1 ? "item" : "items"}
-        </p>
-        <label className="flex items-center gap-2 text-sm text-white/45">
+        <label className="flex items-center gap-2 text-sm text-white/45 lg:ml-auto">
           <span className="sr-only sm:not-sr-only">Sort by</span>
           <select
             value={sort}
@@ -123,10 +118,15 @@ export default function MarketplaceGrid({ products }) {
             <option value="high">Price: high to low</option>
           </select>
         </label>
+        </div>
       </div>
 
+      <p className="mt-5 text-sm text-white/45" aria-live="polite">
+        {visible.length} {visible.length === 1 ? "item" : "items"}
+      </p>
+
       {visible.length ? (
-        <ul className="mt-4 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 xl:grid-cols-4">
+        <ul className="mt-4 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {visible.map((p, i) => (
             <li key={p.id}>
               <ProductCard product={p} priority={i < 4} />
