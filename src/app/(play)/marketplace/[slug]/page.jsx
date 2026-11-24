@@ -3,7 +3,7 @@ import { notFound, permanentRedirect } from "next/navigation";
 import { Star } from "lucide-react";
 import JsonLd from "@/components/JsonLd";
 import { withQuery } from "@/lib/verticals";
-import BuyBox, { ProductGallery } from "@/components/play/ProductDetail";
+import { ProductHero } from "@/components/play/ProductDetail";
 import { ProductCard } from "@/components/play/MarketplaceGrid";
 import { Breadcrumbs, Container, CrossSell, SectionHeading, breadcrumbsLd } from "@/components/play/parts";
 import { loadProduct, loadProducts } from "@/lib/server/ops/store";
@@ -61,6 +61,7 @@ export default async function ProductPage({ params, searchParams }) {
   } catch {}
 
   const images = product.images?.length ? product.images : product.thumbnail ? [product.thumbnail] : [];
+  const specLd = (product.specs || []).map((r) => ({ "@type": "PropertyValue", name: r.label, value: r.value }));
   const crumbs = [
     { name: "Home", href: "/" },
     { name: "Marketplace", href: STORE.root },
@@ -79,6 +80,7 @@ export default async function ProductPage({ params, searchParams }) {
     description: plain(product.description || product.subtitle || product.title, 5000),
     ...(product.brand ? { brand: { "@type": "Brand", name: product.brand } } : {}),
     ...(product.category ? { category: product.category } : {}),
+    ...(specLd.length ? { additionalProperty: specLd } : {}),
     offers: {
       "@type": "Offer",
       url,
@@ -100,43 +102,58 @@ export default async function ProductPage({ params, searchParams }) {
         <Breadcrumbs items={crumbs} />
       </Container>
 
-      <Container className="pb-16 pt-6">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16">
-          <div className="min-w-0 lg:sticky lg:top-28 lg:self-start">
-            <ProductGallery images={images} title={product.title} />
-          </div>
-
-          <div>
-            <p className="font-tech text-[11px] uppercase tracking-[0.3em] text-[#ff9a3d]">
-              {product.kind === "service" ? "Service" : product.category || "Gaming gear"}
-            </p>
-            <h1 className="mt-4 text-[clamp(2rem,4vw,3rem)] font-semibold leading-[1.08] tracking-tight text-white">{product.title}</h1>
-            {product.subtitle && <p className="mt-3 text-lg text-white/60">{product.subtitle}</p>}
-            <p className="mt-3 text-[15px] text-white/50">
-              Sold by <span className="text-white/80">{product.vendorName}</span>
-              {product.rating?.count > 0 && (
-                <span className="ml-3 inline-flex items-center gap-1">
-                  <Star className="h-3.5 w-3.5 fill-[#ffd23d] text-[#ffd23d]" aria-hidden />
-                  {product.rating.average.toFixed(1)} ({product.rating.count})
+      <Container className="pb-12 pt-6">
+        <ProductHero
+          product={product}
+          images={images}
+          header={
+            <>
+              <p className="font-tech text-[11px] uppercase tracking-[0.3em] text-[#ff9a3d]">
+                {product.kind === "service" ? "Service" : product.category || "Gaming gear"}
+              </p>
+              <h1 className="mt-4 text-[clamp(1.9rem,3.4vw,2.75rem)] font-semibold leading-[1.1] tracking-tight text-white">{product.title}</h1>
+              {product.subtitle && <p className="mt-3 text-lg text-white/60">{product.subtitle}</p>}
+              <p className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[15px] text-white/50">
+                <span>
+                  Sold by <span className="text-white/85">{product.vendorName}</span>
                 </span>
-              )}
-            </p>
-            <p className="mt-8 text-[32px] font-semibold tracking-tight text-white">{inr(product.price)}</p>
-            <p className="text-sm text-white/40">Inclusive of all taxes</p>
-
-            <div className="mt-8">
-              <BuyBox product={product} />
-            </div>
-
-            {product.description && (
-              <section className="mt-12 border-t border-white/[0.08] pt-8" aria-labelledby="about-title">
-                <h2 id="about-title" className="text-xl font-semibold tracking-tight text-white">About this {product.kind === "service" ? "service" : "product"}</h2>
-                <div className="mt-4 whitespace-pre-line text-[15px] leading-7 text-white/65">{plain(product.description, 5000)}</div>
-              </section>
-            )}
-          </div>
-        </div>
+                {product.rating?.count > 0 && (
+                  <span className="inline-flex items-center gap-1">
+                    <Star className="h-3.5 w-3.5 fill-[#ffd23d] text-[#ffd23d]" aria-hidden />
+                    {product.rating.average.toFixed(1)} ({product.rating.count} {product.rating.count === 1 ? "review" : "reviews"})
+                  </span>
+                )}
+              </p>
+            </>
+          }
+        />
       </Container>
+
+      {(product.description || product.specs?.length > 0) && (
+        <section className="border-t border-white/[0.06]">
+          <Container className="grid gap-12 py-12 sm:py-16 lg:grid-cols-2 lg:gap-20">
+            {product.description && (
+              <div aria-labelledby="about-title">
+                <h2 id="about-title" className="text-2xl font-semibold tracking-tight text-white">About this {product.kind === "service" ? "service" : "product"}</h2>
+                <div className="mt-5 whitespace-pre-line text-[15px] leading-7 text-white/65">{plain(product.description, 5000)}</div>
+              </div>
+            )}
+            {product.specs?.length > 0 && (
+              <div aria-labelledby="specs-title">
+                <h2 id="specs-title" className="text-2xl font-semibold tracking-tight text-white">Specifications</h2>
+                <dl className="mt-5 divide-y divide-white/[0.08] overflow-hidden rounded-2xl border border-white/[0.08]">
+                  {product.specs.map((row) => (
+                    <div key={row.label} className="grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-4 px-5 py-3.5 text-[15px] odd:bg-white/[0.02]">
+                      <dt className="text-white/50">{row.label}</dt>
+                      <dd className="text-white/90">{row.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            )}
+          </Container>
+        </section>
+      )}
 
       {related.length > 0 && (
         <section className="border-t border-white/[0.06]">

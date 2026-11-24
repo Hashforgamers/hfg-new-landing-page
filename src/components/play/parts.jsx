@@ -8,25 +8,23 @@ export function Container({ className = "", children }) {
   return <div className={`mx-auto w-full max-w-[1600px] px-4 sm:px-8 ${className}`}>{children}</div>;
 }
 
-/** Vertical landing hero: Orbitron kicker, Anton two-line headline (second line in the brand gradient), Inter intro. */
-export function VerticalHero({ kicker, lines, body, children, glow = "#ff3d8b" }) {
+/**
+ * Compact page header for the Book and Marketplace landings: a full-width image band
+ * (same art direction as the home hero), one Anton headline, one line of copy, and an
+ * optional row of children. Short on purpose so listings start above the fold.
+ */
+export function VerticalHero({ title, accent, subtitle, image = "/images/hero-poster.jpg", children }) {
   return (
-    <section className="relative overflow-hidden border-b border-white/[0.06]">
-      <div
-        className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2 rounded-full opacity-25 blur-[140px]"
-        style={{ background: glow }}
-        aria-hidden="true"
-      />
-      <Container className="relative pb-16 pt-16 sm:pb-20 sm:pt-24">
-        <p className="font-tech text-[11px] uppercase tracking-[0.3em] text-[#ff9a3d]">{kicker}</p>
-        <h1 className="mt-5 font-display text-[clamp(3rem,9vw,7.5rem)] uppercase leading-[0.88] text-white">
-          {lines.map((line, i) => (
-            <span key={line} className={`block ${i === lines.length - 1 ? GRADIENT_TEXT : ""}`}>
-              {line}
-            </span>
-          ))}
+    <section className="relative isolate overflow-hidden border-b border-white/[0.06]">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={image} alt="" aria-hidden="true" className="absolute inset-0 -z-20 h-full w-full object-cover opacity-45" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-black via-black/80 to-black/30" aria-hidden="true" />
+      <div className="absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-t from-black to-transparent" aria-hidden="true" />
+      <Container className="py-10 sm:py-14 lg:py-16">
+        <h1 className="font-display text-[clamp(2.4rem,5.2vw,4.75rem)] uppercase leading-[0.92] text-white">
+          {title} {accent && <span className={GRADIENT_TEXT}>{accent}</span>}
         </h1>
-        {body && <p className="mt-6 max-w-2xl text-lg leading-8 text-white/65 sm:text-xl">{body}</p>}
+        {subtitle && <p className="mt-4 max-w-3xl text-base leading-7 text-white/70 sm:text-lg">{subtitle}</p>}
         {children}
       </Container>
     </section>
@@ -110,37 +108,22 @@ export function breadcrumbsLd(items, siteUrl) {
   };
 }
 
-/** Cross-link band between the two verticals (and back to Hash). */
+/** Slim cross-link between the two verticals. */
 export function CrossSell({ to }) {
   const book = to === "book";
   return (
-    <section className="border-t border-white/[0.06]">
-      <Container className="py-16 sm:py-20">
-        <Link
-          href={book ? "/book" : "/marketplace"}
-          className="group relative block overflow-hidden rounded-[32px] border border-white/[0.08] bg-[#0e0e12] p-8 transition hover:border-white/20 sm:p-12"
-        >
-          <div
-            className={`pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full blur-[120px] ${book ? "bg-[#ff3d8b]/30" : "bg-[#ff9a3d]/30"}`}
-            aria-hidden
-          />
-          <p className="font-tech text-[11px] uppercase tracking-[0.3em] text-[#ff9a3d]">{book ? "Hash Book" : "Hash Marketplace"}</p>
-          <p className="mt-4 font-display text-[clamp(2.2rem,5vw,4rem)] uppercase leading-[0.9] text-white">
-            {book ? "Play at a cafe near you." : "Gear up before you play."}
-          </p>
-          <p className="mt-4 max-w-xl text-[17px] leading-7 text-white/60">
-            {book
-              ? "Find gaming cafes, compare consoles and prices, and lock in your slot in under a minute."
-              : "Headsets, controllers, accessories and services from verified Hash partners, with tracked delivery."}
-          </p>
-          <span className="mt-8 inline-flex items-center gap-2 text-[15px] font-semibold text-white">
-            {book ? "Find a cafe" : "Shop the marketplace"}
-            <span className="transition group-hover:translate-x-1" aria-hidden>
-              →
-            </span>
-          </span>
-        </Link>
-      </Container>
-    </section>
+    <Container className="py-10 sm:py-14">
+      <Link
+        href={book ? "/book" : "/marketplace"}
+        className="group flex flex-col gap-4 rounded-[28px] border border-white/[0.08] bg-[#0e0e12] px-6 py-6 transition hover:border-white/20 sm:flex-row sm:items-center sm:justify-between sm:px-8"
+      >
+        <span className="font-display text-[clamp(1.6rem,3vw,2.4rem)] uppercase leading-none text-white">
+          {book ? "Play at a cafe near you" : "Gear up before you play"}
+        </span>
+        <span className="inline-flex shrink-0 items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black transition group-hover:bg-[#ff3d8b] group-hover:text-white">
+          {book ? "Book a cafe" : "Shop the marketplace"} <span aria-hidden>→</span>
+        </span>
+      </Link>
+    </Container>
   );
 }

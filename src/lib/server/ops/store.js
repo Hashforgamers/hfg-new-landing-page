@@ -215,26 +215,112 @@ export async function loadProducts(requestId) {
 }
 
 /** One product with its gallery and full description, or null. */
+const DETAIL_FIELDS = [
+  "*images",
+  "*options",
+  "*options.values",
+  "*variants",
+  "*variants.options",
+  "*variants.calculated_price",
+  "+variants.inventory_quantity",
+  "+variants.manage_inventory",
+  "+variants.allow_backorder",
+  "*categories",
+  "*type",
+  "*tags",
+  "+metadata",
+  "+weight",
+  "+length",
+  "+width",
+  "+height",
+  "+material",
+  "+origin_country",
+].join(",");
+
+// Metadata keys that are internal plumbing, not product facts.
+const HIDDEN_META = /^(hash|vendor|seller|listing|approval|review|cloudinary|_|sku$|brand$|spec)/i;
+
+function titleCase(key) {
+  return String(key)
+    .replace(/[_-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/^./, (c) => c.toUpperCase());
+}
+
+/** Spec rows from the product's own fields and its public metadata. */
+function specRows(p) {
+  const rows = [];
+  const push = (label, value) => {
+    const text = typeof value === "number" ? String(value) : typeof value === "string" ? value.trim() : "";
+    if (text && text.length <= 200 && !rows.some((r) => r.label === label)) rows.push({ label, value: text });
+  };
+  push("Brand", p.metadata?.brand);
+  // Structured specs if the seller supplied them: {"specs": {"DPI": "26000"}} or [{label, value}].
+  const specs = p.metadata?.specs || p.metadata?.specifications;
+  if (Array.isArray(specs)) specs.forEach((s) => s && push(titleCase(s.label || s.name || ""), s.value));
+  else if (specs && typeof specs === "object") Object.entries(specs).forEach(([k, v]) => push(titleCase(k), v));
+  for (const [k, v] of Object.entries(p.metadata || {})) {
+    if (!HIDDEN_META.test(k) && (typeof v === "string" || typeof v === "number")) push(titleCase(k), v);
+  }
+  if (p.material) push("Material", p.material);
+  if (p.weight) push("Weight", `${p.weight} g`);
+  if (p.length && p.width && p.height) push("Dimensions", `${p.length} × ${p.width} × ${p.height} mm`);
+  if (p.origin_country) push("Country of origin", String(p.origin_country).toUpperCase());
+  if (p.categories?.length) push("Category", p.categories.map((c) => c.name).join(", "));
+  return rows.slice(0, 24);
+}
+
+function variantView(variant, card) {
+  const price = Number(variant.calculated_price?.calculated_amount ?? NaN);
+  const managed = variant.manage_inventory !== false;
+  const stock = managed && typeof variant.inventory_quantity === "number" ? Math.max(0, variant.inventory_quantity) : null;
+  return {
+    id: variant.id,
+    title: variant.title || "",
+    options: Object.fromEntries((variant.options || []).filter((o) => o?.option?.title || o?.option_id).map((o) => [o.option?.title || o.option_id, o.value])),
+    price: Number.isFinite(price) && price > 0 ? price : card.price,
+    // The listing's own variant uses the Hash listing stock; others use Medusa inventory.
+    available: variant.id === card.variantId ? card.available : stock ?? (variant.allow_backorder ? 10 : card.available),
+    image: typeof variant.metadata?.image === "string" && variant.metadata.image.startsWith("https://") ? variant.metadata.image : "",
+  };
+}
+
 export async function loadProduct(productId, requestId) {
   if (!/^prod_[A-Za-z0-9]+$/.test(productId)) return null;
   return cachedCatalog(`product:${productId}`, 2 * 60_000, async () => {
     const ctx = { requestId };
     const config = await storeConfig(requestId);
+    const base = `/store/products/${productId}?region_id=${encodeURIComponent(config.region_id)}`;
     const [detail, list] = await Promise.all([
-      medusa(ctx, `/store/products/${productId}?region_id=${encodeURIComponent(config.region_id)}`).catch(() => null),
+      medusa(ctx, `${base}&fields=${encodeURIComponent(DETAIL_FIELDS)}`)
+        // Older Medusa builds reject some fields: fall back to the default shape.
+        .catch(() => medusa(ctx, base))
+        .catch(() => null),
       loadProducts(requestId),
     ]);
     const card = list.find((p) => p.id === productId);
     if (!card) return null;
     const p = detail?.product || {};
+    const images = [...(p.images || []).map((i) => i.url), p.thumbnail, card.thumbnail].filter(
+      (u, i, all) => typeof u === "string" && u.startsWith("https://") && all.indexOf(u) === i,
+    );
+    const variants = (p.variants || []).map((v) => variantView(v, card)).filter((v) => v.id);
+    const options = (p.options || [])
+      .map((o) => ({ title: o.title, values: [...new Set((o.values || []).map((x) => x.value).filter(Boolean))] }))
+      .filter((o) => o.title && o.values.length > 1);
     return {
       ...card,
       description: p.description || card.description,
-      images: (p.images || []).map((i) => i.url).filter((u) => typeof u === "string" && u.startsWith("https://")).slice(0, 8),
+      images: images.slice(0, 12),
       subtitle: p.subtitle || "",
       category: p.categories?.[0]?.name || p.type?.value || "",
       brand: p.metadata?.brand || "",
       handle: p.handle || "",
+      // Only offer a picker when there is a real choice.
+      options: variants.length > 1 ? options : [],
+      variants: variants.length > 1 ? variants : [],
+      specs: specRows(p),
     };
   });
 }
