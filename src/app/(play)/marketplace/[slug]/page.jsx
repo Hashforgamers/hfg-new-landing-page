@@ -10,7 +10,11 @@ import { loadProduct, loadProducts } from "@/lib/server/ops/store";
 import { SITE_LOGO, SITE_URL, buildPageMetadata } from "@/lib/site";
 import { STORE, productIdFromSlug, productPath } from "@/lib/verticals";
 
-const inr = (n) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 2 }).format(Number(n || 0));
+const inr = (n) => {
+  const v = Number(n || 0);
+  const digits = Math.abs(v - Math.round(v)) < 0.005 ? 0 : 2;
+  return new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", minimumFractionDigits: digits, maximumFractionDigits: digits }).format(v);
+};
 const plain = (text, max) => {
   const s = String(text || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
   return s.length > max ? `${s.slice(0, max - 1).replace(/\s+\S*$/, "")}…` : s;

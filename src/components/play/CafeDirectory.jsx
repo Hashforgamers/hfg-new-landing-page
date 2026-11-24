@@ -24,7 +24,7 @@ export function CafeCard({ cafe, priority = false }) {
       href={cafePath(cafe)}
       className="group flex flex-col overflow-hidden rounded-[28px] border border-white/[0.08] bg-[#0e0e12] transition duration-300 hover:-translate-y-0.5 hover:border-white/20"
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-[#2a0838] via-black to-[#3b1a0a]">
+      <div className="relative aspect-[16/9] overflow-hidden sm:aspect-[4/3] bg-gradient-to-br from-[#2a0838] via-black to-[#3b1a0a]">
         {cafe.images?.[0] ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img

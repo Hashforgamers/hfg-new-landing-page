@@ -43,10 +43,12 @@ export function ProductGallery({ images, title }) {
   );
 }
 
-/** Quantity + Add to bag / Buy now. Product data comes from the server-rendered page. */
+const PENDING_KEY = "hfg_pending_cart_add";
+
+/** Quantity + Add to cart / Buy now. Product data comes from the server-rendered page. */
 export default function BuyBox({ product }) {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, ready } = useAuth();
   const requireLogin = useRequireLogin();
   const [qty, setQty] = useState(1);
   const [busy, setBusy] = useState("");
@@ -58,18 +60,35 @@ export default function BuyBox({ product }) {
     track("Product Viewed", { product_id: product.id, vendor_id: product.vendorId, price: product.price });
   }, [product.id, product.vendorId, product.price]);
 
-  async function add(goToCart) {
+  // After sign-in, finish the add the player started.
+  useEffect(() => {
+    if (!ready || !user) return;
+    try {
+      const pending = JSON.parse(sessionStorage.getItem(PENDING_KEY) || "null");
+      if (pending?.variantId === product.variantId) {
+        sessionStorage.removeItem(PENDING_KEY);
+        setQty(pending.qty || 1);
+        add(Boolean(pending.goToCart), pending.qty || 1);
+      }
+    } catch {}
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, user, product.variantId]);
+
+  async function add(goToCart, quantity = qty) {
     if (!user) {
+      try {
+        sessionStorage.setItem(PENDING_KEY, JSON.stringify({ variantId: product.variantId, qty, goToCart }));
+      } catch {}
       requireLogin();
       return;
     }
     setBusy(goToCart ? "buy" : "add");
     setNotice(null);
     try {
-      await secureCall("store.cart.add", { variantId: product.variantId, quantity: qty });
-      track("Product Added", { product_id: product.id, quantity: qty, price: product.price });
+      await secureCall("store.cart.add", { variantId: product.variantId, quantity });
+      track("Product Added", { product_id: product.id, quantity, price: product.price });
       if (goToCart) router.push("/marketplace/cart");
-      else setNotice({ tone: "success", text: "Added to your bag." });
+      else setNotice({ tone: "success", text: "Added to your cart." });
     } catch (err) {
       setNotice({ tone: "error", text: err.message, mixed: err.code === "mixed_vendor" });
     } finally {
@@ -95,11 +114,11 @@ export default function BuyBox({ product }) {
       </div>
 
       <div className="mt-4 grid gap-3">
-        <Button size="lg" disabled={soldOut} loading={busy === "buy"} onClick={() => add(true)}>
+        <Button size="lg" disabled={soldOut || !ready} loading={busy === "buy"} onClick={() => add(true)}>
           Buy now
         </Button>
-        <Button size="lg" variant="ghost" disabled={soldOut} loading={busy === "add"} onClick={() => add(false)}>
-          Add to bag
+        <Button size="lg" variant="ghost" disabled={soldOut || !ready} loading={busy === "add"} onClick={() => add(false)}>
+          Add to cart
         </Button>
       </div>
 
@@ -110,7 +129,7 @@ export default function BuyBox({ product }) {
             action={
               notice.mixed || notice.tone === "success" ? (
                 <Link href="/marketplace/cart" className="text-sm font-semibold underline underline-offset-2">
-                  View bag
+                  View cart
                 </Link>
               ) : null
             }

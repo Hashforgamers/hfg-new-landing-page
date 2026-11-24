@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
-import { Clock, MapPin, Navigation, Wallet } from "lucide-react";
+import { Clock, CreditCard, Navigation, Wallet } from "lucide-react";
 import JsonLd from "@/components/JsonLd";
 import { withQuery } from "@/lib/verticals";
 import CafeBooking from "@/components/play/CafeBooking";
@@ -154,17 +154,12 @@ export default async function CafePage({ params, searchParams }) {
       </Container>
 
       <Container className="pb-16 pt-6">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_420px] lg:gap-14">
-          <div className="min-w-0">
+        {/* Phone/tablet order: header, booking, details. Desktop: header + details on the left, booking sticky on the right. */}
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_420px] lg:grid-rows-[auto_1fr] lg:gap-x-14 lg:gap-y-0">
+          <div className="min-w-0 lg:col-start-1 lg:row-start-1">
             <p className="font-tech text-[11px] uppercase tracking-[0.3em] text-[#ff9a3d]">Gaming cafe{locality ? ` · ${locality}` : ""}</p>
             <h1 className="mt-4 font-display text-[clamp(2.6rem,6.5vw,5.5rem)] uppercase leading-[0.9] text-white">{cafe.name}</h1>
             {cafe.area && <p className="mt-4 text-lg text-white/60">{cafe.area}</p>}
-            <a
-              href="#book"
-              className="mt-6 inline-flex rounded-full bg-white px-6 py-3 text-[15px] font-semibold text-black transition hover:bg-[#ff3d8b] hover:text-white lg:hidden"
-            >
-              Book a slot{range ? ` · from ${inr(range.min)}` : ""}
-            </a>
 
             <dl className="mt-8 grid gap-px overflow-hidden rounded-[24px] border border-white/[0.08] bg-white/[0.06] sm:grid-cols-3">
               <div className="bg-black p-5">
@@ -176,13 +171,19 @@ export default async function CafePage({ params, searchParams }) {
                 <dd className="mt-2 text-[15px] text-white">{range ? `From ${inr(range.min)} / slot` : "Shown at booking"}</dd>
               </div>
               <div className="bg-black p-5">
-                <dt className="flex items-center gap-2 text-xs uppercase tracking-[0.14em] text-white/40"><MapPin className="h-3.5 w-3.5" aria-hidden /> Payment</dt>
+                <dt className="flex items-center gap-2 text-xs uppercase tracking-[0.14em] text-white/40"><CreditCard className="h-3.5 w-3.5" aria-hidden /> Payment</dt>
                 <dd className="mt-2 text-[15px] text-white">{cafe.payAtCafe ? "Online or at the cafe" : "Pay online"}</dd>
               </div>
             </dl>
+          </div>
 
+          <aside className="min-w-0 scroll-mt-32 lg:sticky lg:top-[136px] lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start" id="book">
+            <CafeBooking vendorId={cafe.id} initial={data} cafeUrl={canonical} />
+          </aside>
+
+          <div className="min-w-0 lg:col-start-1 lg:row-start-2 [&>section:first-child]:mt-0 lg:[&>section:first-child]:mt-14">
             {cafe.images?.length > 0 && (
-              <div className="mt-8 grid grid-cols-4 gap-2 sm:gap-3">
+              <div className="grid grid-cols-4 gap-2 sm:gap-3 lg:mt-8">
                 {cafe.images.slice(0, 5).map((src, i) => (
                   <div
                     key={src}
@@ -244,10 +245,6 @@ export default async function CafePage({ params, searchParams }) {
               </div>
             </section>
           </div>
-
-          <aside className="min-w-0 scroll-mt-32 lg:sticky lg:top-[136px] lg:self-start" id="book">
-            <CafeBooking vendorId={cafe.id} initial={data} cafeUrl={canonical} />
-          </aside>
         </div>
       </Container>
 

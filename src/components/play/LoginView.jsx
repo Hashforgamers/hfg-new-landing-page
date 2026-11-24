@@ -12,7 +12,7 @@ import { Button, Field, Input, Notice, SecureBadge, cx } from "./ui";
 
 function safeNext(raw) {
   // Only same-site relative paths; blocks open redirects like //evil.com.
-  if (typeof raw === "string" && /^\/(?!\/)[A-Za-z0-9/_\-?=&.%]*$/.test(raw) && !raw.startsWith("/login")) return raw;
+  if (typeof raw === "string" && /^\/(?!\/)[A-Za-z0-9/_\-?=&.%#]*$/.test(raw) && !raw.startsWith("/login")) return raw;
   return "/book";
 }
 

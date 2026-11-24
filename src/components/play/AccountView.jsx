@@ -33,7 +33,21 @@ function BookingRow({ b }) {
 export default function AccountView() {
   const { user, ready, logout } = useAuth();
   const requireLogin = useRequireLogin();
-  const [tab, setTab] = useState("bookings");
+  const [tab, setTabState] = useState("bookings");
+
+  // The tab follows the URL hash, so "My bookings" and "Orders" links land on the right list.
+  useEffect(() => {
+    const sync = () => setTabState(window.location.hash === "#orders" ? "orders" : "bookings");
+    sync();
+    window.addEventListener("hashchange", sync);
+    return () => window.removeEventListener("hashchange", sync);
+  }, []);
+  const setTab = (next) => {
+    setTabState(next);
+    try {
+      window.history.replaceState(null, "", `#${next}`);
+    } catch {}
+  };
   const [bookings, setBookings] = useState(null);
   const [orders, setOrders] = useState(null);
   const [error, setError] = useState("");
@@ -62,19 +76,17 @@ export default function AccountView() {
 
   return (
     <div>
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <Eyebrow>My Account</Eyebrow>
-          <Title className="mt-3">{user.handle || user.name || "Player"}</Title>
+      <div className="flex items-start justify-between gap-4">
+        <div className="min-w-0">
+          <Eyebrow>My account</Eyebrow>
+          <Title className="mt-3 truncate">{user.handle || user.name || "Player"}</Title>
           <p className="mt-2 text-sm text-white/50">{[user.name, user.phone, user.email].filter(Boolean).join(" · ")}</p>
+          <SecureBadge className="mt-3" />
         </div>
-        <div className="flex items-center gap-3">
-          <SecureBadge />
-          <Button variant="subtle" onClick={logout}>Logout</Button>
-        </div>
+        <Button variant="subtle" size="sm" className="shrink-0" onClick={logout}>Sign out</Button>
       </div>
 
-      <div className="mt-8 flex gap-2">
+      <div className="mt-8 flex gap-2" role="tablist" aria-label="Account">
         <Chip active={tab === "bookings"} onClick={() => setTab("bookings")}>Cafe bookings</Chip>
         <Chip active={tab === "orders"} onClick={() => setTab("orders")}>Marketplace orders</Chip>
       </div>
@@ -86,7 +98,7 @@ export default function AccountView() {
           <>
             {bookings === null && <Spinner label="Loading bookings" />}
             {bookings?.length === 0 && (
-              <Empty title="No bookings yet">
+              <Empty bare title="No bookings yet">
                 <Link href="/book" className="text-white underline underline-offset-2">Book your first slot</Link>
               </Empty>
             )}
@@ -104,7 +116,7 @@ export default function AccountView() {
           <>
             {orders === null && <Spinner label="Loading orders" />}
             {orders?.length === 0 && (
-              <Empty title="No orders yet">
+              <Empty bare title="No orders yet">
                 <Link href="/marketplace" className="text-white underline underline-offset-2">Visit the marketplace</Link>
               </Empty>
             )}

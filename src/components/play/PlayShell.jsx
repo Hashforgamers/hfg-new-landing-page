@@ -24,7 +24,9 @@ export function useRequireLogin() {
   const router = useRouter();
   const pathname = usePathname();
   return useCallback(() => {
-    router.push(`/login?next=${encodeURIComponent(pathname || BOOK.root)}`);
+    // Keep the query and #section (e.g. /account#orders) so people land exactly where they were.
+    const here = typeof window !== "undefined" ? `${window.location.pathname}${window.location.search}${window.location.hash}` : pathname;
+    router.push(`/login?next=${encodeURIComponent(here || BOOK.root)}`);
   }, [router, pathname]);
 }
 
@@ -42,6 +44,7 @@ const LOCAL_NAV = {
   ],
   store: [
     { href: STORE.root, label: "Shop", exact: true },
+    { href: "/marketplace/cart", label: "Cart" },
     { href: "/account#orders", label: "Orders" },
   ],
 };
@@ -159,14 +162,17 @@ function TopBar() {
                   </li>
                 );
               })}
-              <li>
-                <Link
-                  href={vertical.id === "store" ? "/marketplace/cart" : BOOK.root + "#cafes"}
-                  className="rounded-full bg-white px-3.5 py-1 text-[13px] font-semibold text-black transition hover:bg-[#ff3d8b] hover:text-white"
-                >
-                  {vertical.id === "store" ? "Cart" : "Book now"}
-                </Link>
-              </li>
+              {vertical.id === "book" && (
+                <li>
+                  {/* On a cafe page this jumps to its booking panel; elsewhere to the cafe list. */}
+                  <Link
+                    href={pathname.length > BOOK.root.length + 1 ? "#book" : `${BOOK.root}#cafes`}
+                    className="rounded-full bg-white px-3.5 py-1 text-[13px] font-semibold text-black transition hover:bg-[#ff3d8b] hover:text-white"
+                  >
+                    {pathname.length > BOOK.root.length + 1 ? "Book a slot" : "Book now"}
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>
@@ -241,7 +247,7 @@ export default function PlayShell({ children }) {
         <div className="font-body relative min-h-screen bg-black text-white">
           <TopBar />
           <Analytics />
-          <main id="main" className="relative">{children}</main>
+          <div className="relative">{children}</div>
         </div>
       </AppShell>
     </AuthContext.Provider>

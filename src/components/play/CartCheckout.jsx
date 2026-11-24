@@ -7,7 +7,7 @@ import { secureCall } from "@/lib/secure/client";
 import { track } from "@/lib/analytics-client";
 import { openRazorpay } from "@/lib/razorpay-client";
 import { useAuth, useRequireLogin } from "./PlayShell";
-import { Button, Empty, Eyebrow, Field, Input, Notice, Panel, SecureBadge, Spinner, Title, inr } from "./ui";
+import { Button, Empty, Eyebrow, Field, Input, Notice, Panel, SecureBadge, Spinner, Title, buttonClass, inr } from "./ui";
 
 const EMPTY_ADDRESS = { first_name: "", last_name: "", address_1: "", address_2: "", city: "", province: "", postal_code: "", phone: "" };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -40,6 +40,14 @@ export default function CartCheckout() {
     if (ready && user) load();
   }, [ready, user, load]);
 
+  // Start the address from the Hash profile.
+  useEffect(() => {
+    if (!user) return;
+    const [first = "", ...rest] = String(user.name || "").split(" ");
+    const phone = String(user.phone || "").replace(/[^\d+]/g, "");
+    setAddress((a) => ({ ...a, first_name: a.first_name || first, last_name: a.last_name || rest.join(" "), phone: a.phone || (phone.includes("•") ? "" : phone) }));
+  }, [user]);
+
   async function changeQty(item, quantity) {
     setBusy(`item:${item.id}`);
     setPrepared(null);
@@ -61,6 +69,10 @@ export default function CartCheckout() {
       const data = await secureCall("store.checkout.prepare", { address, email: email || undefined });
       setCart(data.cart);
       setPrepared(data);
+      // On phones the total sits below the form: bring the Pay button into view.
+      if (window.matchMedia("(max-width: 1023px)").matches) {
+        setTimeout(() => document.getElementById("order-total")?.scrollIntoView({ behavior: "smooth", block: "center" }), 50);
+      }
       track("Checkout Address Entered", { delivery_payer: data.delivery.payer });
     } catch (err) {
       setFlowError(err.message);
@@ -109,9 +121,9 @@ export default function CartCheckout() {
   if (ready && !user) {
     return (
       <Panel className="mx-auto max-w-xl text-center">
-        <Title as="h2" className="text-xl">Login to see your cart</Title>
+        <Title as="h2" className="text-xl">Sign in to see your cart</Title>
         <p className="mt-3 text-sm text-white/60">Your cart is saved to your Hash account.</p>
-        <Button className="mt-6" onClick={requireLogin}>Login</Button>
+        <Button className="mt-6" onClick={requireLogin}>Sign in</Button>
       </Panel>
     );
   }
@@ -123,8 +135,8 @@ export default function CartCheckout() {
         <Title as="h2" className="mt-4 text-xl md:text-2xl">Order placed</Title>
         <p className="mt-3 text-sm text-white/70">Order #{order.displayId || order.orderId}. The seller will accept and ship it soon.</p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
-          <Link href={`/account/orders/${order.orderId}`}><Button>Track order</Button></Link>
-          <Link href="/marketplace"><Button variant="subtle">Keep shopping</Button></Link>
+          <Link href={`/account/orders/${order.orderId}`} className={buttonClass()}>Track order</Link>
+          <Link href="/marketplace" className={buttonClass({ variant: "subtle" })}>Keep shopping</Link>
         </div>
       </Panel>
     );
@@ -193,6 +205,7 @@ export default function CartCheckout() {
 
           <Panel>
             <p className="text-xs font-medium uppercase tracking-[0.14em] text-white/45">Delivery address</p>
+            <p className="mt-2 text-sm text-white/50">We&apos;ll work out delivery for this address before you pay.</p>
             <form onSubmit={onPrepare} className="mt-4 grid gap-4 sm:grid-cols-2">
               <Field label="First name"><Input required value={address.first_name} onChange={set("first_name")} autoComplete="given-name" /></Field>
               <Field label="Last name"><Input value={address.last_name} onChange={set("last_name")} autoComplete="family-name" /></Field>
@@ -208,23 +221,23 @@ export default function CartCheckout() {
                 </div>
               )}
               <div className="sm:col-span-2">
-                <Button type="submit" variant="ghost" loading={busy === "prepare"} className="w-full">
-                  {prepared ? "Update delivery" : "Calculate delivery"}
+                <Button type="submit" variant={prepared ? "ghost" : "primary"} loading={busy === "prepare"} className="w-full">
+                  {prepared ? "Update address" : "Save address and continue"}
                 </Button>
               </div>
             </form>
           </Panel>
         </div>
 
-        <div className="lg:sticky lg:top-24 lg:self-start">
-          <Panel>
+        <div className="lg:sticky lg:top-[136px] lg:self-start">
+          <Panel id="order-total">
             <p className="text-xs font-medium uppercase tracking-[0.14em] text-white/45">Order total</p>
             <div className="mt-4 space-y-2 text-sm">
               <div className="flex justify-between text-white/80"><span>Items</span><span>{inr(cart.subtotal)}</span></div>
               {cart.discount > 0 && <div className="flex justify-between text-emerald-300"><span>Discount</span><span>−{inr(cart.discount)}</span></div>}
               <div className="flex justify-between text-white/80">
                 <span>Delivery</span>
-                <span>{prepared ? (prepared.delivery.payer === "seller" ? "Paid by seller" : inr(cart.shipping)) : "Add address"}</span>
+                <span>{prepared ? (prepared.delivery.payer === "seller" ? "Free" : inr(cart.shipping)) : "After address"}</span>
               </div>
               {cart.tax > 0 && <div className="flex justify-between text-white/60"><span>Tax</span><span>{inr(cart.tax)}</span></div>}
               <div className="flex justify-between border-t border-white/10 pt-3 text-base font-bold text-white"><span>Total</span><span>{inr(cart.total)}</span></div>
@@ -233,6 +246,7 @@ export default function CartCheckout() {
             <Button className="mt-5 w-full" disabled={!prepared} loading={busy === "pay" || busy === "complete"} onClick={onPay}>
               {busy === "complete" ? "Confirming payment" : `Pay ${inr(cart.total)}`}
             </Button>
+            {!prepared && <p className="mt-3 text-center text-xs text-white/50">Add your delivery address to continue.</p>}
             <p className="mt-3 text-[11px] leading-5 text-white/40">
               One seller per order. You&apos;ll get a completion code in My Orders to share with the seller only after delivery.
             </p>
