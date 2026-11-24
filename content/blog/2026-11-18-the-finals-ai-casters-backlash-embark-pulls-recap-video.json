@@ -1,0 +1,109 @@
+{
+  "slug": "2026-11-18-the-finals-ai-casters-backlash-embark-pulls-recap-video",
+  "title": "The Finals AI casters backlash: Embark pulls recap video",
+  "description": "The Finals AI casters sparked backlash after Embark Studios replaced human talent in a Grand Major recap; the video is down and two more are scrapped, per IGN.",
+  "date": "2026-11-18T07:35:42+00:00",
+  "category": "esports",
+  "tags": [
+    "the finals ai casters",
+    "embark studios ai commentary",
+    "the finals grand major",
+    "esports casters ai",
+    "the finals dynamic commentary"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "The Finals AI casters have become the centre of an esports row. According to IGN, Embark Studios deleted a highlight reel for The Grand Major's APAC Closed Qualifiers after fans and casters objected that the human commentators were replaced by the game's AI voices, Scotty and June. It matters because working casters say it could be a warning sign for esports talent everywhere."
+    },
+    {
+      "type": "h2",
+      "text": "What happened with The Finals AI casters"
+    },
+    {
+      "type": "p",
+      "text": "The video was posted on The Finals' official social accounts and recapped the APAC qualifiers. Scotty and June narrated it instead of the casters who actually called those matches. IGN reports the video has since been removed."
+    },
+    {
+      "type": "p",
+      "text": "Some players linked it to Dynamic Commentary, a feature announced in October. It lets the in-game commentators use players' screen names and call out specific moments. IGN notes that human voice actors, paid by Embark, recorded the voices, but the lines are produced by text-to-speech and an AI model trained on them."
+    },
+    {
+      "type": "h2",
+      "text": "What the casters said"
+    },
+    {
+      "type": "p",
+      "text": "Commentator Proto / Kai wrote on X that he and two other casters put in time, effort and emotion across four cycles, only to be replaced by AI casters who even quote them. Caster Bluepanda said she had been told for nearly seven years that her work was valued, then was told the team was going in a different direction."
+    },
+    {
+      "type": "p",
+      "text": "Casters from other games joined in. Marvel Rivals caster LemonKiwi called the move appalling, and fighting game commentator Damascus pointed to the growing amount of AI-made content."
+    },
+    {
+      "type": "p",
+      "text": "Proto told IGN that organisers described the process: staff chose clips to tell a story, wrote a script, and generated the lines. They did not feed the VOD into the AI, he said, but they still lifted things the casters had said, which is why the quotes appeared."
+    },
+    {
+      "type": "h2",
+      "text": "Embark's response"
+    },
+    {
+      "type": "p",
+      "text": "In a statement to IGN, Embark said it used Scotty and June because players know the characters and wanted to draw more people to the game's esports. It admitted that leaving out the casters and talent was not the right call. The video is down, and the AMER and EMEA recaps in the same format will not be released."
+    },
+    {
+      "type": "p",
+      "text": "Oscar Lundberg, who works on competitive experience and community for Embark and The Finals, apologised on X, calling it a mistake. He said the three planned recaps are being rethought."
+    },
+    {
+      "type": "p",
+      "text": "Bluepanda was not convinced. She told IGN that the response suggests Embark is not really sorry, and said she is done with the game and esports as a whole."
+    },
+    {
+      "type": "h2",
+      "text": "What Proto wants to change"
+    },
+    {
+      "type": "p",
+      "text": "Proto says esports talent, including casters, producers, broadcasters and camera operators, needs collective protection such as a union. He floated contracts that ban the use of their voices in generative AI. He also called for a wider talent pool at major events, a more streamlined version of next year's competitive events, and support for local communities."
+    },
+    {
+      "type": "p",
+      "text": "IGN adds that Embark also uses AI voice lines in Arc Raiders, with voice actors contracted for it. The outlet says many fans accept AI for NPC and character dialogue but draw a line at replacing real commentators."
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "Embark says it is rethinking all three recaps, but has not said what will replace them. Watch for whether The Grand Major's broadcast credits its human talent, whether other studios attempt similar AI commentary, and whether casters organise as Proto suggests. For Indian esports organisers, this debate is relevant for any future plans around production budgets and broadcast talent."
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Why are people angry about The Finals AI casters?",
+      "a": "Embark Studios published a recap of The Grand Major's APAC Closed Qualifiers narrated by the game's AI characters Scotty and June, leaving out the human casters who worked the matches. Casters said the AI even quoted them, according to IGN."
+    },
+    {
+      "q": "Did Embark Studios delete the Grand Major recap video?",
+      "a": "Yes. Embark said it took the video down and that the planned AMER and EMEA recaps in the same format will not be released, per IGN."
+    },
+    {
+      "q": "What is Dynamic Commentary in The Finals?",
+      "a": "It is a feature announced in October that lets the fictional commentators Scotty and June call players by their screen names and react to specific moments in a match. Their voices come from paid human voice actors, but the lines are generated by text-to-speech and an AI model trained on those voices, IGN reports."
+    }
+  ],
+  "sources": [
+    {
+      "title": "'It's Been a Sh*tshow' — Esports Casters Call for Change After Embark Studios Replaces Talent for The Finals' Grand Major Qualifier Highlight Reel With Game's AI Commentators",
+      "url": "https://www.ign.com/articles/its-been-a-shtshow-esports-casters-call-for-change-after-embark-studios-replaces-talent-for-the-finals-grand-major-qualifier-highlight-reel-with-games-ai-commentators",
+      "publisher": "IGN"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

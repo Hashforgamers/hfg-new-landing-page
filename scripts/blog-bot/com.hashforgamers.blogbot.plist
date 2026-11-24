@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Runs the Hash blog bot every day at 09:30 local time. If the Mac is asleep then, macOS runs it
+     when it next wakes. Installed by install.sh into ~/Library/LaunchAgents. -->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.hashforgamers.blogbot</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>__HOME__/.hash-blog-bot/venv/bin/python</string>
+    <string>__HOME__/.hash-blog-bot/repo/scripts/blog-bot/bot.py</string>
+  </array>
+  <key>WorkingDirectory</key>
+  <string>__HOME__/.hash-blog-bot/repo/scripts/blog-bot</string>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>9</integer>
+    <key>Minute</key>
+    <integer>30</integer>
+  </dict>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>__HOME__/.hash-blog-bot/logs/launchd.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>__HOME__/.hash-blog-bot/logs/launchd.err.log</string>
+</dict>
+</plist>

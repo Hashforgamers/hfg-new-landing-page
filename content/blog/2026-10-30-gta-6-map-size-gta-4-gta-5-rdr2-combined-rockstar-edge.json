@@ -1,0 +1,89 @@
+{
+  "slug": "2026-10-30-gta-6-map-size-gta-4-gta-5-rdr2-combined-rockstar-edge",
+  "title": "GTA 6 map equals GTA 4, GTA 5 and RDR2 combined, Rockstar tells EDGE",
+  "description": "Rockstar tells EDGE that GTA 6's Leonida map roughly equals GTA 4, GTA 5 and Red Dead Redemption 2 combined, with far more enterable interiors than GTA V.",
+  "date": "2026-10-30T23:17:50+00:00",
+  "category": "gta",
+  "tags": [
+    "GTA 6",
+    "GTA 6 map size",
+    "Rockstar Games",
+    "Leonida",
+    "Red Dead Redemption 2",
+    "GTA Online"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "After years of guesswork, Rockstar Games has finally put a number on GTA 6's world. According to FRVR, which cites a new interview in EDGE Magazine, the studio says the state of Leonida covers roughly the same ground as the maps of GTA 4, GTA V and Red Dead Redemption 2 put together. Rockstar also claims the game has \"an order of magnitude more interiors\" than GTA V. For a series whose fans have argued about map size since the jump to 3D, this is the clearest answer yet. It also tells players how much there will be to explore once the game lands."
+    },
+    {
+      "type": "h2",
+      "text": "How big is Leonida?"
+    },
+    {
+      "type": "p",
+      "text": "Rockstar's comparison is the confirmed part. The exact figure is not. FRVR works out that the combined total would land somewhere around 166 square kilometres. That is the outlet's own estimate built from the three older maps, not a number Rockstar has published."
+    },
+    {
+      "type": "p",
+      "text": "Either way, it is a big step up. GTA V has held the record for the series' largest map until now. FRVR points out that Leonida's main city looks denser than anything Rockstar has built before, and the state spans more biomes than earlier games. That variety helps explain why the footprint has grown so much."
+    },
+    {
+      "type": "h2",
+      "text": "Interiors are the bigger story"
+    },
+    {
+      "type": "p",
+      "text": "Raw size is only half of it. Speaking to EDGE, head of development Aaron Garbut said the team has packed in far more enterable spaces than GTA V offered. He described every alley as getting the same care as the main streets and said a random corner of the map should still feel deliberately designed. According to FRVR, Garbut added that developers, himself included, keep stumbling onto spots in the game they had not seen before."
+    },
+    {
+      "type": "p",
+      "text": "There is a catch that has annoyed some fans. FRVR notes that a portion of the interiors is reserved for the game's Ultimate Edition, so not every door will open for players on the standard version."
+    },
+    {
+      "type": "h2",
+      "text": "Big, but not the biggest"
+    },
+    {
+      "type": "p",
+      "text": "For perspective, FRVR says Leonida is larger than Crimson Desert's world but nowhere close to Just Cause 2, which is still in a league of its own for sheer area. Rockstar's pitch is clearly about density and detail rather than chasing the largest landmass."
+    },
+    {
+      "type": "h2",
+      "text": "What it means for your storage"
+    },
+    {
+      "type": "p",
+      "text": "All of this fits into what FRVR describes as a 210GB single-player package. That figure covers the single-player game only, not multiplayer. For Indian players on 512GB consoles or modest PC SSDs, that is a serious chunk of space. Gaming cafe owners planning multiple stations should think about drive space and download time early, especially on slower connections."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Map size: roughly GTA 4 + GTA V + RDR2 combined, per Rockstar via EDGE",
+        "Around 166 sq km: FRVR's estimate, not an official Rockstar figure",
+        "Interiors: \"an order of magnitude more\" than GTA V, some locked to the Ultimate Edition",
+        "Install size: about 210GB for single-player only, according to FRVR"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "Multiplayer is still the big unknown. FRVR says there is no confirmed launch window for GTA 6's online component, though some claims point to early 2027. Treat that as unconfirmed for now. A PC version is also expected to arrive sooner than many assumed, but that is not official either. GTA Online is reportedly being shaped around user-generated content, so the real test is how much freedom players get to build within a world this size. We will update once Rockstar shares more."
+    }
+  ],
+  "sources": [
+    {
+      "title": "GTA 6 map size is as big as GTA 4 plus GTA 5 plus Red Dead Redemption 2 with “an order of magnitude more interiors”, Rockstar confirms",
+      "url": "https://frvr.com/blog/news/gta-6-map-size-confirmed-more-interiors-than-ever/",
+      "publisher": "frvr.com"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-opus-5-5"
+  }
+}

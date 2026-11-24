@@ -1,21 +1,54 @@
-export const SITE_URL = "https://hashforgamers.co.in";
+export const SITE_URL = "https://www.hashforgamers.com";
 export const SITE_LOGO = "/images/hash-logo.png?v=20260311-0146";
 export const SITE_DOWNLOAD_URL = "https://onelink.to/85rrgg";
-export const SITE_OG_IMAGE = "/images/hash-logo.png?v=20260311-0146";
-export const SITE_EMAIL = "support@hashforgamers.com";
+export const SITE_ANDROID_PACKAGE = "com.hfg.hash";
+export const SITE_PLAY_STORE_URL = `https://play.google.com/store/apps/details?id=${SITE_ANDROID_PACKAGE}`;
+export const SITE_APP_STORE_ID = "6750488424";
+export const SITE_APP_STORE_URL = `https://apps.apple.com/in/app/hash-gaming-esports-network/id${SITE_APP_STORE_ID}`;
+export const SITE_OG_IMAGE = "/images/og-home.jpg";
+// Self-serve onboarding for gaming cafe owners.
+export const SITE_ONBOARD_URL = "https://onboard.hashforgamers.com";
+export const SITE_EMAIL = "onboarding@hashforgamers.com";
+export const SITE_SUPPORT_WHATSAPP_URL = "https://wa.me/919137757935?text=Hi%20Hash%20support%2C%20I%27m%20a%20gaming%20cafe%20owner%20and%20have%20a%20question.";
+// Franchise enquiries go to the main contact inbox.
+export const SITE_FRANCHISE_URL = `mailto:${SITE_EMAIL}?subject=${encodeURIComponent(
+  "Hash franchise enquiry"
+)}&body=${encodeURIComponent(
+  "Hi Hash team,\n\nI'd like to know more about the Hash franchise.\n\nCity:\nPlanned number of PCs and consoles:\nBudget:\nPhone:\n"
+)}`;
 export const SITE_INSTAGRAM = "https://instagram.com/hashforgamers";
 export const SITE_TWITTER = "https://twitter.com/hashforgamers";
 export const SITE_LINKEDIN = "https://linkedin.com/company/hashforgamers";
 export const SITE_YOUTUBE = "https://youtube.com/@hashforgamers";
 
+// Analytics IDs carried over from the previous site; override per environment if needed.
+export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || "G-B1QNYHZ26Z";
+export const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || "3210237032478677";
+
+// Firebase web app "Hash-website" (project hash-ee6fc). These values are public by design;
+// env vars override them per environment.
+export const FIREBASE_CONFIG = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyDn7PK85lkDCRZcxEQngQ52Q_vV-DgSpVQ",
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "hash-ee6fc.firebaseapp.com",
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "hash-ee6fc",
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:376797794992:web:cb520a9732e34cdbd82175",
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "G-JNCCB2E1RH",
+};
+
 export const SITE_NAME = "Hash For Gamers";
 export const SITE_TITLE_TEMPLATE = `%s | ${SITE_NAME}`;
 
 export const SITE_DESCRIPTION =
-  "Hash For Gamers is the premium gaming platform for players who want elite cafes, faster bookings, stronger identity, and a better gaming lifestyle in India.";
+  "Join esports tournaments, book gaming cafes near you, build your squad and earn HashCoins. Hash For Gamers is India's tournament-first gaming app for Android and iOS.";
 
 export const SITE_KEYWORDS = [
   "Hash For Gamers",
+  "esports tournaments India",
+  "online gaming tournaments India",
+  "BGMI tournament app",
+  "Valorant tournaments India",
+  "gaming tournament app",
+  "gaming cafe near me",
   "gaming cafes India",
   "book gaming cafe",
   "book gaming cafe in India",
@@ -39,6 +72,11 @@ export const SITE_SOCIALS = [
   SITE_YOUTUBE,
 ];
 
+// Every official profile, for Organization "sameAs" (helps Google tie brand searches to this site).
+export const SITE_SAME_AS = [...SITE_SOCIALS, SITE_PLAY_STORE_URL, SITE_APP_STORE_URL];
+// Names people search for the brand.
+export const SITE_ALT_NAMES = ["Hash", "Hash Gaming", "HashForGamers", "Hash Gaming: Esports Network"];
+
 export function buildPageMetadata({
   title,
   description = SITE_DESCRIPTION,
@@ -51,10 +89,13 @@ export function buildPageMetadata({
   const url = `${SITE_URL}${canonicalPath}`;
   const resolvedTitle = title || SITE_NAME;
   const fullTitle = resolvedTitle === SITE_NAME ? SITE_NAME : `${resolvedTitle} | ${SITE_NAME}`;
+  // Google cuts titles near 60 chars; drop the brand suffix rather than the keywords.
+  const fitsWithBrand = fullTitle.length <= 60;
 
   return {
-    title: resolvedTitle,
-    description,
+    title: fitsWithBrand ? resolvedTitle : { absolute: resolvedTitle },
+    // Snippets cut near 160 chars; trim at a word so it never ends mid-word.
+    description: description.length > 160 ? `${description.slice(0, 157).replace(/\s+\S*$/, "")}…` : description,
     keywords: [...SITE_KEYWORDS, ...keywords],
     alternates: {
       canonical: path,
@@ -103,5 +144,17 @@ export function buildPageMetadata({
             "max-video-preview": -1,
           },
         },
+  };
+}
+
+// BreadcrumbList schema for a page one level below home.
+export function breadcrumbLd(name, path) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name, item: `${SITE_URL}${path}` },
+    ],
   };
 }

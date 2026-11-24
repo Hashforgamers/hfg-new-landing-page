@@ -1,0 +1,110 @@
+{
+  "slug": "2026-11-19-rockstar-union-vote-gta-6-workers",
+  "title": "Rockstar union vote: 1,600 GTA 6 workers decide",
+  "description": "Rockstar union vote: over 1,600 UK workers are deciding on unionization as GTA 6 launches, according to PC Gamer. Here is what is at stake for the studio.",
+  "date": "2026-11-19T05:15:42+00:00",
+  "category": "industry",
+  "tags": [
+    "rockstar union vote",
+    "GTA 6",
+    "Rockstar Games Workers Union",
+    "game industry layoffs",
+    "Rockstar crunch",
+    "video game unionization"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "The Rockstar union vote is under way just as GTA 6 reaches players. According to PC Gamer, over 1,600 Rockstar employees in the UK are voting on whether to form a union, with the ballot closing on November 26. If it succeeds, the Rockstar Games Workers Union would be the largest in the UK games sector, at one of the most high-profile studios in the industry."
+    },
+    {
+      "type": "h2",
+      "text": "Why the Rockstar union vote matters"
+    },
+    {
+      "type": "p",
+      "text": "PC Gamer notes that GTA 6 preorders alone have already brought in over $1.6 billion. Reviews are live and the game is set to earn millions more over its launch weekend."
+    },
+    {
+      "type": "p",
+      "text": "Against that backdrop, Rockstar animation programmer and union representative Nestor Uriarte wrote an op-ed for The Guardian. He argued that recognition would help ensure everyone, across every department, gets a fair share of the success. In his words, the studio's games are industry-leading, and its wages, conditions and bonuses should be too."
+    },
+    {
+      "type": "h2",
+      "text": "A long history of workplace concerns"
+    },
+    {
+      "type": "p",
+      "text": "Rockstar was one of the early flashpoints in the games industry's unionization push, according to PC Gamer. Employee accounts of a \"death march\" crunch culture and allegations of sexual assault drew attention to the studio."
+    },
+    {
+      "type": "p",
+      "text": "PC Gamer says the studio has taken steps toward a healthier workplace since then. Even so, employees have reported continuing concerns, including:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Gender pay gaps",
+        "Crunch",
+        "Vague bonus conditions"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Layoffs, AI and a tribunal in the background"
+    },
+    {
+      "type": "p",
+      "text": "The vote is not happening in isolation. PC Gamer reports that a Glasgow tribunal is currently weighing testimonies in an ongoing legal fight over Rockstar's alleged union-busting and the firing of employees involved in organizing."
+    },
+    {
+      "type": "p",
+      "text": "Meanwhile, Rockstar's parent company 2K reportedly laid off a third of the staff at Firaxis, the studio behind XCOM and Civilization, just days before the GTA 6 launch. Uriarte said it says a lot about the industry that even people working on the biggest game of all time worry about being laid off."
+    },
+    {
+      "type": "p",
+      "text": "Uriarte also pointed to AI. He said union recognition would give developers more power to negotiate how it spreads through game development, which he sees as another threat to workers in an industry where, per PC Gamer, one third of the labor force has been laid off in the last two years."
+    },
+    {
+      "type": "h2",
+      "text": "Answering the outsider worry"
+    },
+    {
+      "type": "p",
+      "text": "Uriarte acknowledged that some colleagues are nervous the union is an outside force that could threaten the company. He rejected that framing. In his words, the organizers are hundreds of studio employees who live for Rockstar, its output and its players, and they want to see it succeed."
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "The key date is November 26, when the ballot closes and the result of the Rockstar union vote becomes clear. Keep an eye on the Glasgow tribunal too, since its outcome could shape how the union push is read. For Indian players diving into GTA 6 this weekend, this is a reminder that the people behind a record-breaking launch are weighing in on how the industry treats them."
+    }
+  ],
+  "faqs": [
+    {
+      "q": "When does the Rockstar union vote close?",
+      "a": "According to PC Gamer, the ballot closes on November 26. If the union wins recognition, the Rockstar Games Workers Union would be the largest in the UK games sector."
+    },
+    {
+      "q": "How many Rockstar employees are voting on unionization?",
+      "a": "PC Gamer reports that over 1,600 Rockstar employees in the UK are voting on whether to form a union."
+    },
+    {
+      "q": "Why do Rockstar workers want a union?",
+      "a": "Animation programmer and union representative Nestor Uriarte cites fair pay, conditions and bonuses, protection against layoffs, and a say in how AI is used in game development, as quoted by PC Gamer."
+    }
+  ],
+  "sources": [
+    {
+      "title": "'We need to come together': On the eve of GTA 6, 1,600 Rockstar workers are voting on unionization",
+      "url": "https://www.pcgamer.com/gaming-industry/we-need-to-come-together-on-the-eve-of-gta-6-1-600-rockstar-workers-are-voting-on-unionization/",
+      "publisher": "PC Gamer"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

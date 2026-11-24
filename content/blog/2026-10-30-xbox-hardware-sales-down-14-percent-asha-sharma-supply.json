@@ -1,0 +1,87 @@
+{
+  "slug": "2026-10-30-xbox-hardware-sales-down-14-percent-asha-sharma-supply",
+  "title": "Xbox says demand outstrips supply as hardware sales fall 14%",
+  "description": "Microsoft's latest results show Xbox hardware sales down 14%, while Xbox chief Asha Sharma says console supply, not demand, is the main problem.",
+  "date": "2026-10-30T23:20:38+00:00",
+  "category": "hardware",
+  "tags": [
+    "Xbox",
+    "Asha Sharma",
+    "Microsoft earnings",
+    "console sales",
+    "Game Pass"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "Microsoft's latest quarterly results show Xbox revenue down two percent year on year, with hardware sales falling 14 percent, according to Eurogamer. Xbox leader Asha Sharma says console sales \"remain constrained by supply\" and that there is more demand than consoles available. Whether that is a supply story or a demand story matters to anyone planning to buy an Xbox this season."
+    },
+    {
+      "type": "h2",
+      "text": "What the numbers say"
+    },
+    {
+      "type": "p",
+      "text": "Eurogamer reports that the hardware drop was driven by a \"lower volume of consoles sold\". Microsoft chief financial officer Amy Hood added that the dip in overall Xbox revenue came from declines in third-party content and Xbox Game Pass. Growth in first-party content partly offset those losses."
+    },
+    {
+      "type": "p",
+      "text": "So the picture is mixed: fewer consoles sold, softer subscription and third-party income, and some help from Microsoft's own games."
+    },
+    {
+      "type": "h2",
+      "text": "Sharma's response"
+    },
+    {
+      "type": "p",
+      "text": "Sharma posted her take on X and leaned on the positives. She pointed to record-breaking performances for Minecraft and World of Warcraft: Forever, praised Call of Duty's \"most acclaimed release in more than a decade\", and noted double-digit revenue growth on PC."
+    },
+    {
+      "type": "p",
+      "text": "On hardware, she said Xbox is working to get more consoles to players, including through an expanded refurbishment program. Her words: progress is being made, \"with a lot more work ahead\"."
+    },
+    {
+      "type": "h2",
+      "text": "Holiday lineup, and a notable omission"
+    },
+    {
+      "type": "p",
+      "text": "On the earnings call, as transcribed by Seeking Alpha, CEO Satya Nadella highlighted a \"record quarter\" for Minecraft and the largest beta in World of Warcraft's history. He also described one of the strongest first- and third-party holiday lineups in years, naming Call of Duty: Modern Warfare 4 and GTA 6."
+    },
+    {
+      "type": "p",
+      "text": "Eurogamer points out that Gears of War: E-Day was not mentioned, even though its 6 October release date falls inside that holiday window."
+    },
+    {
+      "type": "h2",
+      "text": "Restructuring and the wider backdrop"
+    },
+    {
+      "type": "p",
+      "text": "The results follow Sharma's claim that Xbox has \"started to return to growth\" after a drastic restructuring. According to Eurogamer, that overhaul has cost more than 1,800 jobs so far, with more layoffs expected soon. Microsoft is also offering voluntary redundancy to many thousands of staff."
+    },
+    {
+      "type": "p",
+      "text": "Microsoft as a whole appears to be doing well, with cloud services driving notable gains in revenue and profit. Eurogamer notes those same services have prompted calls to boycott Microsoft products over their use by the Israeli military. It adds that this led Big Walk developer House House to refuse to sell its game on Xbox."
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "The source does not say anything about console availability in India, so Indian players should not assume the supply comments apply directly here. The key things to track are whether the refurbishment program actually puts more consoles on shelves, how the holiday releases perform, and whether Gears of War: E-Day gets more attention from Microsoft. The next wave of layoffs will also show how settled the division really is."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Xbox leader Asha Sharma says there's \"more demand than consoles available\" as Xbox hardware sales dip by 14%",
+      "url": "https://www.eurogamer.net/xbox-financials-sales-asha-sharma-microsoft",
+      "publisher": "Eurogamer"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

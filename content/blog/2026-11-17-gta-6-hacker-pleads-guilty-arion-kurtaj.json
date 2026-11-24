@@ -1,0 +1,104 @@
+{
+  "slug": "2026-11-17-gta-6-hacker-pleads-guilty-arion-kurtaj",
+  "title": "GTA 6 hacker pleads guilty: Arion Kurtaj admits charges",
+  "description": "GTA 6 hacker pleads guilty: Arion Kurtaj admitted attacks on Rockstar, Uber, Revolut and BT/EE at Woolwich Crown Court and faces sentencing on November 23.",
+  "date": "2026-11-17T06:17:42+00:00",
+  "category": "gta",
+  "tags": [
+    "gta 6 hacker pleads guilty",
+    "gta 6 leak hacker",
+    "arion kurtaj sentencing",
+    "rockstar hack gta 6 footage",
+    "lapsus$ hacker guilty",
+    "gta 6 leaks"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "The GTA 6 hacker pleads guilty: Arion Kurtaj, 21, admitted a string of cyberattacks at Woolwich Crown Court on Monday, November 16, according to Firstpost. The charges cover the Rockstar Games breach that leaked nearly an hour of unfinished GTA 6 footage, along with attacks on Uber, Revolut and BT/EE. Sentencing is set for November 23."
+    },
+    {
+      "type": "h2",
+      "text": "Why the GTA 6 hacker pleads guilty now matters"
+    },
+    {
+      "type": "p",
+      "text": "Kurtaj was once ruled unfit to stand trial because of the severity of his autism, and was held indefinitely in a secure psychiatric hospital. A later mental health assessment found him fit to face a criminal trial, and he was moved to a regular prison in January 2026. The guilty pleas now bring the prosecution of his cyberattacks closer to its end, the UK's Crown Prosecution Service (CPS) confirmed, per Firstpost."
+    },
+    {
+      "type": "p",
+      "text": "According to the CPS, he admitted:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Three counts of unauthorised acts to impair the operation of computers",
+        "One count of fraud",
+        "One count of securing unauthorised access to computer material with intent",
+        "One count of possessing a mobile phone in prison",
+        "Assaulting staff while in custody"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "How the Rockstar and GTA 6 leak happened"
+    },
+    {
+      "type": "p",
+      "text": "Firstpost reports that in September 2022, Kurtaj was staying at a hotel under police protection and on bail for earlier hacking offences. He used an Amazon Fire TV Stick connected to the hotel television, plus a mobile phone and a keyboard, to breach Rockstar's internal systems."
+    },
+    {
+      "type": "p",
+      "text": "He got into the company's internal Slack communications and took 90 video clips with nearly an hour of unfinished GTA 6 gameplay. The footage showed gameplay mechanics, characters and early development work."
+    },
+    {
+      "type": "p",
+      "text": "Kurtaj threatened to release the game's source code unless Rockstar contacted him within 24 hours. When the company did not cooperate, he posted the footage online under the username 'TeaPotUberHacker'. Rockstar later said the breach cost it around $5 million (£3.8 million) in recovery expenses and thousands of hours of staff time."
+    },
+    {
+      "type": "h2",
+      "text": "Uber, Revolut and BT/EE attacks"
+    },
+    {
+      "type": "p",
+      "text": "Kurtaj also acted as a member of the Lapsus$ hacking group. The CPS says he targeted BT/EE between August and November 2021, and the breach was linked to a rise in unauthorised SIM swaps among the telecom firm's customers. SIM swapping is when criminals trick a mobile provider into moving a victim's number to another SIM, which can let them intercept calls and messages and potentially reach bank and social media accounts."
+    },
+    {
+      "type": "p",
+      "text": "He also hacked fintech company Revolut, compromising information belonging to thousands of customers. In the Uber attack, he accessed confidential data, deleted internal files and accounts, and tried to pressure the company into paying a ransom. Prosecutors put the losses at more than $2.8 million. The wider damage from the group's activity was estimated in the millions of pounds."
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "All eyes are on Woolwich Crown Court on November 23, when Kurtaj will be sentenced. His earlier case included a 2023 trial of the facts and a December 2023 order to remain in a secure hospital, so the court will have a long history to weigh. For GTA 6 fans, the case is a reminder that leaked clips from 2022 came from a serious crime, and that an official look at the game should come from Rockstar itself."
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Who is the GTA 6 hacker who pleaded guilty?",
+      "a": "He is 21-year-old Arion Kurtaj, who pleaded guilty at Woolwich Crown Court on November 16, according to Firstpost. He is responsible for leaking nearly an hour of unfinished GTA 6 footage."
+    },
+    {
+      "q": "When will the GTA 6 hacker be sentenced?",
+      "a": "Kurtaj is scheduled to be sentenced at Woolwich Crown Court on November 23, according to the Crown Prosecution Service as reported by Firstpost."
+    },
+    {
+      "q": "How much did the GTA 6 hack cost Rockstar?",
+      "a": "Rockstar said the September 2022 breach cost it around $5 million (£3.8 million) in recovery expenses, plus thousands of hours of staff time, according to Firstpost."
+    }
+  ],
+  "sources": [
+    {
+      "title": "GTA 6 hacker, who also targeted Uber, Revolut and Nvidia, pleads guilty",
+      "url": "https://www.firstpost.com/world/gta-6-hacker-who-also-targeted-uber-revolut-and-nvidia-pleads-guilty-14060444.html",
+      "publisher": "www.firstpost.com"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

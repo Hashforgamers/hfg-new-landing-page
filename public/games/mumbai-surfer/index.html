@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://www.hashforgamers.com/mumbai-surfer">
+  <title>Mumbai Surfer | Hash For Gamers</title>
+  <style>
+    html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+    canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+    #load { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; color: #fff; font: 12px/1 system-ui, sans-serif; letter-spacing: .2em; text-transform: uppercase; }
+    #bar { width: 60%; max-width: 260px; height: 4px; border-radius: 4px; background: rgba(255,255,255,.12); overflow: hidden; }
+    #fill { width: 0; height: 100%; background: linear-gradient(90deg, #ff3d8b, #ff9a3d, #ffd23d); }
+  </style>
+</head>
+<body>
+  <canvas id="game" tabindex="-1"></canvas>
+  <div id="load"><span id="msg">Loading Mumbai Surfer</span><div id="bar"><div id="fill"></div></div></div>
+  <script src="Build/WebGL.loader.js"></script>
+  <script>
+    const canvas = document.getElementById("game");
+    createUnityInstance(canvas, {
+      dataUrl: "Build/WebGL.data.unityweb",
+      frameworkUrl: "Build/WebGL.framework.js.unityweb",
+      codeUrl: "Build/WebGL.wasm.unityweb",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "Hashforgamers",
+      productName: "Mumbai Surfer",
+      productVersion: "1.0.8",
+      // Phones: native resolution costs too much frame rate for a runner.
+      devicePixelRatio: /iPhone|iPad|Android/i.test(navigator.userAgent) ? 1 : undefined,
+      autoSyncPersistentDataPath: true,
+    }, (p) => { document.getElementById("fill").style.width = p * 100 + "%"; })
+      .then(() => { document.getElementById("load").remove(); canvas.focus(); })
+      .catch((e) => { document.getElementById("msg").textContent = "Could not start the game on this browser"; console.error(e); });
+  </script>
+</body>
+</html>

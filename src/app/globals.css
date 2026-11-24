@@ -1,5 +1,32 @@
 @import "tailwindcss";
 
+@theme inline {
+  --font-display: var(--font-anton), Impact, "Arial Narrow", sans-serif;
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-ticker {
+  animation: ticker 40s linear infinite;
+}
+
+@keyframes scroll-cue {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(200%); }
+}
+
+.animate-scroll-cue {
+  animation: scroll-cue 1.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-ticker,
+  .animate-scroll-cue { animation: none; }
+}
+
 body {
   font-family: 'Orbitron', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: #000;
@@ -14,4 +41,69 @@ body {
 
 section {
   scroll-margin-top: 24px;
+}
+
+/* Readable body text for the landing page; display headings keep Anton via .font-display. */
+.font-body {
+  font-family: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* Audience paths on the home page (src/lib/paths.js). The entry gate shows until a path is set;
+   once html[data-path] is present, sections tagged for other audiences are hidden. */
+html.has-gate:not([data-path]) body { overflow: hidden; }
+html[data-path] #path-gate { display: none; }
+html:not(.has-gate) #path-gate { display: none; }
+html[data-path="gamer"] [data-audience]:not([data-audience~="gamer"]),
+html[data-path="cafe"] [data-audience]:not([data-audience~="cafe"]),
+html[data-path="franchise"] [data-audience]:not([data-audience~="franchise"]) { display: none; }
+
+/* Shiny gradient keyword: card colours with a bright sheen sweeping across, plus a soft glow. */
+.shine-text {
+  background-image: linear-gradient(
+    110deg,
+    var(--shine-a) 0%,
+    var(--shine-b) 38%,
+    #ffffff 47%,
+    #fff8e6 50%,
+    var(--shine-b) 60%,
+    var(--shine-a) 100%
+  );
+  background-size: 260% 100%;
+  background-position: 120% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--shine-a) 55%, transparent))
+    drop-shadow(0 2px 2px rgba(0, 0, 0, 0.45));
+  animation: shine-sweep 3.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes shine-sweep {
+  0% { background-position: 120% 0; }
+  45%, 100% { background-position: -20% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shine-text { animation: none; background-position: 60% 0; }
+}
+
+/* Orbitron for HUD-style detail text: labels, kickers, nav, stat captions. Headlines stay Anton,
+   paragraphs stay Inter. */
+.font-tech {
+  font-family: var(--font-orbitron), "Arial Narrow", sans-serif;
+  font-weight: 600;
+}
+
+/* AdSense marks units it couldn't fill (e.g. during site review); hide the whole slot, label included,
+   instead of showing a white box or an empty "Advertisement" frame. */
+ins.adsbygoogle[data-ad-status="unfilled"],
+.ad-slot:has(ins.adsbygoogle[data-ad-status="unfilled"]) {
+  display: none !important;
 }

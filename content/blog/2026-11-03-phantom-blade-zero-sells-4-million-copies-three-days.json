@@ -1,0 +1,95 @@
+{
+  "slug": "2026-11-03-phantom-blade-zero-sells-4-million-copies-three-days",
+  "title": "Phantom Blade Zero Sells 4 Million Copies in Three Days",
+  "description": "S-Game says Phantom Blade Zero passed 4 million sales in 72 hours and hit a Steam peak of 833,921 players, the biggest Steam launch of the year so far.",
+  "date": "2026-11-03T04:01:39+00:00",
+  "category": "games",
+  "tags": [
+    "Phantom Blade Zero",
+    "Steam",
+    "S-Game",
+    "action games",
+    "Black Myth Wukong"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "Phantom Blade Zero has sold more than 4 million copies in its first 72 hours, according to developer S-Game, as reported by Eurogamer. The third-person action game also holds the title of Steam's biggest launch of 2026 so far. For anyone watching how premium single-player games perform on PC, it's a strong signal that big action releases can still pull huge crowds."
+    },
+    {
+      "type": "h2",
+      "text": "What S-Game announced"
+    },
+    {
+      "type": "p",
+      "text": "The studio shared the milestone on the game's official X account with a thank-you message to players. It did not break the 4 million figure down by platform, according to Eurogamer."
+    },
+    {
+      "type": "p",
+      "text": "The game is on Steam and PlayStation 5. The total also counts sales on Tencent WeGame, a PC launcher that is exclusive to China. So the number is not a Steam-only figure, which is worth remembering when comparing it with other games."
+    },
+    {
+      "type": "h2",
+      "text": "The Steam numbers"
+    },
+    {
+      "type": "p",
+      "text": "Eurogamer, citing SteamDB, says the game opened with more than 431,000 concurrent players on Steam. That count kept climbing through the weekend and settled at a peak of 833,921."
+    },
+    {
+      "type": "p",
+      "text": "That makes it Steam's biggest launch this year, according to Eurogamer. The outlet says it beat Forza Horizon 6 and far outpaced other major releases, including:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Onimusha: Way of the Sword",
+        "The Blood of Dawnwalker",
+        "Ace Combat 8"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Sales were also expected to be strong. Before launch, Alinea Analytics analyst Rhys Elliott estimated the game had already sold over 1 million copies, per Eurogamer."
+    },
+    {
+      "type": "h2",
+      "text": "Not at Black Myth: Wukong levels yet"
+    },
+    {
+      "type": "p",
+      "text": "Eurogamer points out that Phantom Blade Zero hasn't matched Black Myth: Wukong, another Chinese-developed AAA action game from 2024. That title peaked at 2,415,714 concurrent players on Steam at launch and is estimated to have sold 30 million copies since."
+    },
+    {
+      "type": "p",
+      "text": "Put simply, 833,921 is a big number, but Wukong's launch peak was roughly three times higher. The comparison also shows how much room these games have to grow after their first weekend."
+    },
+    {
+      "type": "h2",
+      "text": "Reception is more mixed"
+    },
+    {
+      "type": "p",
+      "text": "Sales don't tell the whole story. In Eurogamer's review, Emma Kent praised the animations, the environments and the flow of combat when it works. She was critical of the underwhelming narrative and the lack of consistency, and said boss battles can drain the sense of power."
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "Keep an eye on how well Steam player counts hold in the coming weeks, since launch-weekend peaks tend to fade. It will also be interesting to see whether S-Game releases a platform-by-platform sales split, and whether the game's pace of sales can keep going beyond the first week. For Indian players on PC, the game's strong Steam showing suggests it will stay a talking point in action-game circles for some time."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Phantom Blade Zero is Steam's biggest launch of the year so far, selling over 4 million copies in three days",
+      "url": "https://www.eurogamer.net/phantom-blade-zero-4-million-copies-steam-biggest-launch",
+      "publisher": "Eurogamer"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "slug": "2026-11-13-gaming-cafe-setup-cost-cheaper-gaming-monitors",
+  "title": "Gaming Cafe Setup Cost: Monitors Get Cheaper, GPUs Don't",
+  "description": "Gaming cafe setup cost depends on screens and GPUs, and Rock Paper Shotgun says monitors are cheap while graphics cards are not. The sweet spot is 1440p.",
+  "date": "2026-11-13T07:06:19+00:00",
+  "category": "hardware",
+  "tags": [
+    "gaming cafe setup cost",
+    "gaming monitor price",
+    "best gaming monitor",
+    "1440p gaming monitor",
+    "OLED gaming monitor",
+    "RTX 5070 price"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "Anyone working out gaming cafe setup cost has a rare piece of good news: gaming monitors are getting cheaper, even as PC parts get pricier. According to Rock Paper Shotgun, the AI-driven chip crunch has pushed up graphics cards and memory, but screens have mostly escaped it. The report doesn't cover cafes or Indian pricing, and its prices are in pounds and dollars, but the trend matters for anyone buying displays in bulk or building a rig."
+    },
+    {
+      "type": "h2",
+      "text": "Gaming cafe setup cost: why monitors are cheap"
+    },
+    {
+      "type": "p",
+      "text": "Rock Paper Shotgun gives a few reasons. AI data centres are packed with GPUs, memory chips and NAND flash, not monitors. Their servers are \"headless\", managed remotely with no screens attached."
+    },
+    {
+      "type": "p",
+      "text": "Supply is also high. The publication says Chinese companies built huge LCD panel capacity over the past decade, and factories are now underused. OLED is arguably oversupplied too. It adds that Samsung and LG have been shifting large OLED production from TV panels to PC monitors because the margins are better. Meanwhile, it says, research houses point to weaker PC sales because of higher component costs."
+    },
+    {
+      "type": "p",
+      "text": "The prices quoted are striking. The author mentions entry-level 1080p panels with high refresh rates at about £60 / $60, and high-refresh 4K under £200 / $250. OLED monitors now start at around £200 / $200 levels, he says."
+    },
+    {
+      "type": "h2",
+      "text": "What to look for in a gaming monitor"
+    },
+    {
+      "type": "p",
+      "text": "The author offers some rules of thumb for LCD monitors:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "At least 300 nits of brightness and a 1ms response time.",
+        "144Hz is plenty for most games. For esports titles like Counter-Strike, he suggests a refresh rate in the high 200s.",
+        "Favour IPS over VA panels, though some Rapid VA and Samsung models are quick.",
+        "Don't trust HDR claims much. Without local dimming a monitor isn't truly HDR-capable."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "The GPU problem and the 1440p sweet spot"
+    },
+    {
+      "type": "p",
+      "text": "The catch is that cheap 4K screens need a powerful GPU. Rock Paper Shotgun says the cheapest RTX 5090 on Newegg is over $6,500. An RTX 5070 launched at £539 / $549, but now costs roughly £800 / $900, according to the article."
+    },
+    {
+      "type": "p",
+      "text": "Its answer is 1440p, which it calls the value sweet spot. A roughly 200Hz IPS 1440p panel can be had for about £179 / $150. Big-brand 27-inch 1440p OLEDs start around £290 in the UK and $270 in the US, with what it calls proper OLED panels near £300 / $300."
+    },
+    {
+      "type": "h2",
+      "text": "Where monitors are still expensive"
+    },
+    {
+      "type": "p",
+      "text": "Not everything is cheap. The author says 34-inch ultrawide OLEDs carry a big premium, at $629 for an Asus model and £648 for an MSI. A 1,000Hz LG 25-inch 1080p panel costs £800 / $1,000, which he calls poor value for most people. For non-pros, he suggests a larger, higher-resolution monitor with a windowed 1080p mode at around 500Hz."
+    },
+    {
+      "type": "p",
+      "text": "He also says mini-LED monitors have become more accessible, with 27-inch 1440p models starting just over $250, though he has reservations about the technology."
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "Rock Paper Shotgun says a follow-up on OLED is coming, covering the compromises of entry-level panels and burn-in risk. Indian pricing may differ from the UK and US figures, so check local listings before budgeting. The bigger question is whether the GPU and memory shortage eases. Until then, the report suggests spending on the screen and being careful about the graphics card."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Amid soaring PC hardware prices, gaming monitors are getting cheaper and cheaper. Here's why, and what to buy",
+      "url": "https://www.rockpapershotgun.com/amid-soaring-pc-hardware-prices-gaming-monitors-are-getting-cheaper-and-cheaper-heres-why-and-what-to-buy",
+      "publisher": "Rock Paper Shotgun"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

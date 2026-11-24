@@ -1,0 +1,106 @@
+{
+  "slug": "2026-10-30-timi-capcom-monster-hunter-outlanders-mobile-launch",
+  "title": "Tencent's TiMi explains how it built Monster Hunter Outlanders with Capcom",
+  "description": "Monster Hunter Outlanders is out on mobile. TiMi's development director explains the Capcom partnership, the control modes and the free-to-play model.",
+  "date": "2026-10-30T23:20:55+00:00",
+  "category": "mobile",
+  "tags": [
+    "Monster Hunter Outlanders",
+    "Tencent",
+    "TiMi Studio Group",
+    "Capcom",
+    "mobile gaming"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "Monster Hunter Outlanders, a mobile take on Capcom's long-running franchise built by Tencent's TiMi Studio Group, launches today, according to GamesIndustry.biz. In an interview with the outlet, development director Bryan Li explained how the team adapted the series for phones and how the working relationship with Capcom runs. It matters because Monster Hunter is now getting several different mobile treatments, and this one aims to deliver the core hunting experience rather than an AR spin-off."
+    },
+    {
+      "type": "h2",
+      "text": "Not the same as Monster Hunter Now"
+    },
+    {
+      "type": "p",
+      "text": "GamesIndustry.biz points out that Niantic's earlier Monster Hunter Now was an AR game in the mould of Pokémon Go. Outlanders takes a different route and tries to bring the core Monster Hunter experience to mobile. The publication also notes that Capcom has just brought the console game Monster Hunter Rise to mobile through Netflix, so TiMi has competition from the franchise owner itself."
+    },
+    {
+      "type": "p",
+      "text": "Li said his team has little direct contact with Niantic. Instead, knowledge about what players want from Monster Hunter on mobile, and what they dislike, is shared through Capcom's wider ecosystem."
+    },
+    {
+      "type": "h2",
+      "text": "Controls, story and shorter sessions"
+    },
+    {
+      "type": "p",
+      "text": "According to Li, the biggest early challenge was balancing an authentic Monster Hunter feel with controls that feel native to touchscreens. The team's answer is two control schemes:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Classic Mode, aimed at players already comfortable with mobile action games.",
+        "Adventure Mode, a simplified option for people less familiar with the franchise."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Outlanders also has a brand-new main storyline. Li said level designers spent hours shaping the routes players take to major quest objectives, with rewards placed along the way. There is no riding system, but gadgets such as zip lines and ballistas are meant to make getting around more interesting."
+    },
+    {
+      "type": "p",
+      "text": "On shorter mobile play sessions, Li said cutting session length is the obvious move but finding the right length is hard. TiMi relies on several rounds of playtests and live tests, and invites players to judge its ideas."
+    },
+    {
+      "type": "h2",
+      "text": "How the Capcom partnership works"
+    },
+    {
+      "type": "p",
+      "text": "Li described a regular back-and-forth with Capcom, which owns the IP. TiMi pitches its design ideas to Capcom and the two sides aim to reach agreement. He called Capcom collaborative and supportive. He said the project began when a small TiMi team made a pitch to Capcom, and that trust has built up over time through a string of successes."
+    },
+    {
+      "type": "p",
+      "text": "Each side brings something different, per Li. Capcom teaches TiMi how to define core combat and how to design believable creatures. Tencent contributes experience with long-running free-to-play live services, including plans for the post-launch roadmap."
+    },
+    {
+      "type": "h2",
+      "text": "Free to play, with three kinds of purchases"
+    },
+    {
+      "type": "p",
+      "text": "Outlanders is free to play. Li said players can get through all the storylines, core modules and key systems without spending anything. Monetisation falls into three categories, as he described them:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Ways to unlock additional hunting styles, which Li said are not more powerful than the others.",
+        "Customisation and vanity items for self-expression, with no intention to sell power.",
+        "Time-saving and convenience options, so players can choose how to spend their time."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "These are Li's own statements about the model. How it feels in practice will only be clear once players have spent time with the live game."
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "The first thing to watch is how players respond to Classic and Adventure modes, and whether the session lengths hold up. The second is whether TiMi's promise to keep purchases away from raw power survives the post-launch roadmap. With Capcom's own Monster Hunter Rise arriving on mobile via Netflix at the same time, the coming weeks should show how much room there is for different versions of the franchise on phones."
+    }
+  ],
+  "sources": [
+    {
+      "title": "\"We are very eager to learn from the real veterans\" – How Tencent's TiMi Studio Group collaborated with Capcom on Monster Hunter Outlanders",
+      "url": "https://www.gamesindustry.biz/we-are-very-eager-to-learn-from-the-real-veterans-how-tencents-timi-studio-group-collaborated-with-capcom-on-monster-hunter-outlanders",
+      "publisher": "GamesIndustry.biz"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

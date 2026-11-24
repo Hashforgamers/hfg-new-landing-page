@@ -1,0 +1,102 @@
+{
+  "slug": "2026-11-02-gta-6-preload-november-12-210gb-ps5-storage",
+  "title": "GTA 6 preload opens November 12: PS5 size listed at 210GB",
+  "description": "GTA 6 preloading opens November 12 ahead of the November 19 launch, and a listing points to about 210GB on PS5. Here's how to free up console space.",
+  "date": "2026-11-02T04:32:36+00:00",
+  "category": "gta",
+  "tags": [
+    "GTA 6",
+    "GTA VI preload",
+    "PS5 storage",
+    "Xbox Series X|S",
+    "Rockstar Games"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "Grand Theft Auto VI launches on PS5 and Xbox Series X|S on November 19, and Rockstar will let buyers download it a week early. Preloading opens on November 12. According to applescoop.org, the PS5 version is listed at around 210GB, which means many players will need to clear space well before launch night."
+    },
+    {
+      "type": "h2",
+      "text": "What we know about the preload"
+    },
+    {
+      "type": "p",
+      "text": "Rockstar's pre-order announcement says digital pre-order customers can preload from November 12 and play from November 19. Boxed copies follow the same schedule. The physical edition contains a download code rather than a disc, and Rockstar says the box will be available from November 12 so buyers can preload."
+    },
+    {
+      "type": "p",
+      "text": "There is also a bonus. Per Rockstar, every pre-order or purchase before November 20 includes the Vintage Vice City Pack."
+    },
+    {
+      "type": "h2",
+      "text": "Treat 210GB as an estimate"
+    },
+    {
+      "type": "p",
+      "text": "The number comes from PlayStation Game Size, an account that tracks PlayStation Store listings before release, as reported by applescoop.org. Rockstar has not published an official file size, so this is a well-sourced estimate and not a confirmed figure. A leaker had earlier claimed a development build of more than 200GB, which fits, but outlets repeating the number are all citing the same listing."
+    },
+    {
+      "type": "p",
+      "text": "There is no Xbox Series figure yet. Game Rant notes that Rockstar's console versions have differed before: Red Dead Redemption 2 needed 99GB on PS4 and 107GB on Xbox One at launch. A similar gap is possible here, so check the store listing once your preload is live."
+    },
+    {
+      "type": "p",
+      "text": "Download size is also not the space you need. Consoles want working room to install, and big games often get patches at or soon after launch. Rockstar has not announced a day-one update, so any specific patch size is a guess. Leave a healthy margin beyond 210GB."
+    },
+    {
+      "type": "h2",
+      "text": "How to check and free up space"
+    },
+    {
+      "type": "p",
+      "text": "Advertised capacity is not usable capacity, because system software takes a share. Check your real free space before you plan anything:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "PS5: open Settings, then Storage, then Console Storage.",
+        "Xbox: open My games & apps, then Manage, then Storage devices."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "According to applescoop.org, the PS5 Pro with its 2TB drive has the most comfortable margin. Owners of earlier, smaller PS5 models and of the Xbox Series S will feel this download most. On a Series S, a game this size could take a majority of the space available for games."
+    },
+    {
+      "type": "p",
+      "text": "Start with games you have finished or rarely play. Saves usually live in the cloud or on the console separately from game files, but check before deleting if you play offline or without a subscription that includes cloud saves. Old 4K captures can also take up more room than you expect."
+    },
+    {
+      "type": "h2",
+      "text": "USB drives will not run the game"
+    },
+    {
+      "type": "p",
+      "text": "On PS5, you can keep PS5 games on a USB drive while you are not playing them, but you cannot play them from it. GTA 6 has to sit on the internal SSD or a compatible M.2 expansion drive. On Xbox Series X|S, current-generation games need the internal drive or an official Storage Expansion Card. A regular USB drive only works for storage or for older Xbox One titles."
+    },
+    {
+      "type": "p",
+      "text": "If GTA 6 and a couple of other games are all you play, deleting old titles is the cheapest fix. If you keep many large games installed, have a slow connection or face a data cap, extra fast storage may be worth it over the long run, according to the source."
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "Keep an eye out for an official file size from Rockstar, an Xbox Series figure, and any word on a day-one update. Whatever the final numbers, the practical advice stands: clear space before November 12, not at midnight on launch day when everyone else is downloading too."
+    }
+  ],
+  "sources": [
+    {
+      "title": "GTA 6 preload starts November 12: make room for 210GB",
+      "url": "https://applescoop.org/story/gta-6-preload-november-12-file-size-210gb-storage-ps5-xbox",
+      "publisher": "applescoop.org"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

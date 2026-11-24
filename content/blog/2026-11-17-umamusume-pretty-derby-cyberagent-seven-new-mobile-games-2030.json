@@ -1,0 +1,107 @@
+{
+  "slug": "2026-11-17-umamusume-pretty-derby-cyberagent-seven-new-mobile-games-2030",
+  "title": "Umamusume Pretty Derby maker plans seven new mobile games",
+  "description": "Umamusume Pretty Derby's parent CyberAgent plans seven major mobile releases by 2030 and claims an 88 percent hit rate, according to Eurogamer.",
+  "date": "2026-11-17T06:16:52+00:00",
+  "category": "mobile",
+  "tags": [
+    "Umamusume Pretty Derby",
+    "CyberAgent",
+    "Cygames",
+    "mobile games 2030",
+    "Umamusume Pretty Derby news",
+    "mobile game hit rate"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "Umamusume Pretty Derby's parent company, CyberAgent, plans to ship seven major mobile games by 2030, according to Eurogamer. The company also claims an 88 percent hit rate on its mobile releases so far. For mobile-first markets like India, it is a useful look at how a big Japanese publisher judges success in live-service games."
+    },
+    {
+      "type": "h2",
+      "text": "What CyberAgent announced about its mobile roadmap"
+    },
+    {
+      "type": "p",
+      "text": "The plans came out of a quarterly earnings presentation, which Eurogamer says was covered by Automaton. CyberAgent is the parent of Cygames, the developer of Umamusume Pretty Derby."
+    },
+    {
+      "type": "p",
+      "text": "The company laid out seven \"major releases\" for mobile ahead of 2030. One is scheduled for 2027 and two more for 2028. Eurogamer notes there is no word on what these games will be, so any guesses about franchises are just that."
+    },
+    {
+      "type": "h2",
+      "text": "Behind the 88 percent hit rate"
+    },
+    {
+      "type": "p",
+      "text": "CyberAgent says seven of its eight mobile releases have been hits. According to Eurogamer, those seven had development budgets of around a billion yen and have reached the point where they earn that amount back every month from their playerbases."
+    },
+    {
+      "type": "p",
+      "text": "The games named include:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Umamusume: Pretty Derby",
+        "Final Fantasy Ever Crisis",
+        "Hololive Dreams",
+        "Jujutsu Kaisen Phantom Parade"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "CEO Takahiro Yamauchi struck a cautious note. He said it is still hard to predict whether a mobile game will succeed before launch. He also claimed that experience from its large releases has given the company a clearer view of profitability and sustainability."
+    },
+    {
+      "type": "h2",
+      "text": "A busy month for Umamusume Pretty Derby"
+    },
+    {
+      "type": "p",
+      "text": "The presentation follows an eventful month for Cygames and its flagship game. Per Eurogamer, the developer refunded hotels and flights after suddenly cancelling an LA live show for the game last month."
+    },
+    {
+      "type": "p",
+      "text": "Shortly after, Cygames became a major sponsor of the Japanese Formula 1 Grand Prix. The game was also briefly taken offline because of a major PHP vulnerability that was exposed last month. Eurogamer says that outage was short-lived."
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "The big unknown is what the seven games actually are. Watch for the first title, due in 2027, and whether CyberAgent reveals genres, licences or platforms before then. The source does not mention regional availability, so there is nothing confirmed on whether Indian players will get these games at launch."
+    },
+    {
+      "type": "p",
+      "text": "Also keep an eye on whether the 88 percent figure holds as the company releases more games. Yamauchi himself admits that predicting a mobile hit is still hard, and the company has only claimed results for its past releases, not its future ones."
+    }
+  ],
+  "faqs": [
+    {
+      "q": "How many new mobile games is CyberAgent planning?",
+      "a": "According to Eurogamer, CyberAgent plans to launch seven major mobile releases by 2030. One is due in 2027 and two more in 2028."
+    },
+    {
+      "q": "What is CyberAgent's hit rate on mobile games?",
+      "a": "The company claims an 88 percent hit rate. Seven of its eight releases had a development budget of around a billion yen and now earn that amount back every month, per Eurogamer."
+    },
+    {
+      "q": "Has CyberAgent said which games are coming?",
+      "a": "No. Eurogamer reports there is no word yet on what the seven games will be."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Umamusume: Pretty Derby parent company plans to release seven new games by 2030 as it boasts an \"88 percent hit rate\" on its mobile titles",
+      "url": "https://www.eurogamer.net/umamusume-dev-seven-new-games-2030",
+      "publisher": "Eurogamer"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

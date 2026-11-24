@@ -1,0 +1,92 @@
+{
+  "slug": "2026-11-01-krafton-india-incubator-picks-8-indie-studios-igdc-2026",
+  "title": "KRAFTON India incubator picks 8 indie studios at IGDC 2026 PitchFest",
+  "description": "KRAFTON India's incubator picked eight indie studios from 300+ applications at IGDC 2026 in Chennai, with funding of $50,000 to $150,000 on offer.",
+  "date": "2026-11-01T06:46:54+00:00",
+  "category": "mobile",
+  "tags": [
+    "KRAFTON India",
+    "KIGI",
+    "IGDC 2026",
+    "Indian indie games",
+    "game incubator",
+    "BGMI"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "KRAFTON India's Gaming Incubator (KIGI) has wrapped up the fourth edition of its PitchFest at the Indian Game Developers Conference (IGDC) 2026 in Chennai. According to The Week, eight Indian indie studios, selected from more than 300 applications, pitched original games to a 12-member jury. It matters because it shows where homegrown game development is heading, and how much support a small Indian team can realistically find."
+    },
+    {
+      "type": "h2",
+      "text": "How the PitchFest worked"
+    },
+    {
+      "type": "p",
+      "text": "The jury was drawn from India, South Korea and the United States. Each of the eight teams got 10 minutes to present its game and gameplay, followed by another 10 minutes of questions from the jury."
+    },
+    {
+      "type": "p",
+      "text": "The Week describes the event as less about glamour and more about grit, contrasting it with the big-budget showcases of North America. The article frames the real test as whether Indian studios can turn strong ideas and early builds into IPs that can actually sell."
+    },
+    {
+      "type": "h2",
+      "text": "What the selected studios can get"
+    },
+    {
+      "type": "p",
+      "text": "According to the report, KIGI offers selected projects the following:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Funding in the range of $50,000 to $150,000",
+        "Mentorship from the incubator programme",
+        "Possible routes to publishing or investment"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "KRAFTON India, the Indian arm of the PUBG maker, said it favoured teams that showed playable builds, clear pitch decks and strong founder-team alignment. In plain terms, a working prototype and a team that pulls in the same direction counted for more than a slide full of promises. The source article did not include the names of the eight shortlisted studios in the text provided, so we are not listing them here."
+    },
+    {
+      "type": "h2",
+      "text": "Demand was high"
+    },
+    {
+      "type": "p",
+      "text": "Anuj Sahani, head of the KRAFTON India Incubator Programme, said the programme received over 300 applications within just 30 days of opening. He also said the shortlisted teams bring games across diverse genres and platforms, and called it encouraging to see India's indie community building momentum."
+    },
+    {
+      "type": "h2",
+      "text": "A previous cohort success story"
+    },
+    {
+      "type": "p",
+      "text": "The report points to EvolX Studio, part of KIGI's third cohort, as proof the model can produce results. Its turn-based roguelike deckbuilder Ludaro drew attention at IGDC this year and in gaming circles. Ludaro also won Upcoming Mobile Game of the Year at the India Game Awards 2026, according to The Week."
+    },
+    {
+      "type": "p",
+      "text": "For indie developers watching from the sidelines, that is the pitch behind the programme: a small team with a sharp concept can get noticed on a national stage."
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "The key question is what happens after the cheque and the mentorship. Watch for which of the eight studios are formally absorbed into the KIGI cohort, how their games progress from pre-alpha builds, and whether any of them land publishing or investment deals. The source does not say how many teams will receive funding or in what amounts, so those details will need to be confirmed by KRAFTON India. If a few of these titles reach players, especially on mobile, the Chennai pitch room could be remembered as an early step for India's next wave of original games."
+    }
+  ],
+  "sources": [
+    {
+      "title": "BGMI maker’s gaming incubator identifies 8 promising Indian indie studios at IDGC 2026",
+      "url": "https://www.theweek.in/news/sci-tech/2026/10/31/krafton-india-gaming-incubator-indie-studios-igdc-nsj.html",
+      "publisher": "www.theweek.in"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

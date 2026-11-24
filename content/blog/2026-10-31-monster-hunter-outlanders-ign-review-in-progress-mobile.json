@@ -1,0 +1,79 @@
+{
+  "slug": "2026-10-31-monster-hunter-outlanders-ign-review-in-progress-mobile",
+  "title": "Monster Hunter Outlanders: IGN's First Take on the Mobile Spinoff",
+  "description": "IGN's early impressions of Monster Hunter Outlanders say it packs World's loop into a phone, but the grind and gacha systems raise some early concerns.",
+  "date": "2026-10-31T04:00:53+00:00",
+  "category": "mobile",
+  "tags": [
+    "Monster Hunter Outlanders",
+    "mobile gaming",
+    "Capcom",
+    "gacha games",
+    "IGN review"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "IGN has published its review-in-progress of Monster Hunter Outlanders, Capcom's mobile spinoff, after about six hours of play. According to IGN, the game manages to squeeze much of the Monster Hunter World experience onto a phone, and it is more capable than expected. The reviewer also flags worries about the grind and the gacha systems. A final verdict has not been published yet."
+    },
+    {
+      "type": "h2",
+      "text": "A World-style hunt on mobile"
+    },
+    {
+      "type": "p",
+      "text": "IGN says Outlanders does not water down the core Monster Hunter structure the way many mobile spinoffs do. You still take hunts, track monsters in instanced maps, harvest materials and craft better gear. There is also a moderately sized open world to explore."
+    },
+    {
+      "type": "p",
+      "text": "The story is set on an island called Aesoland, home to Radiant monsters empowered by a mineral called Radiantite. IGN notes this gives the game a reason to redesign familiar monsters and adjust their abilities. Pukei-Pukei, for example, leans more on head and tail attacks, which suit the simpler lock-on system."
+    },
+    {
+      "type": "p",
+      "text": "World staples return too, according to IGN: scoutfly trails, buildable towers and ziplines, and monsters that fight each other. On an iPhone 14 Plus, the reviewer reports stable frame rates with very few dips and describes the environments as stunning."
+    },
+    {
+      "type": "h2",
+      "text": "Controls: Adventure Mode versus Classic Mode"
+    },
+    {
+      "type": "p",
+      "text": "Combat has been streamlined for touchscreens. Adventure Mode, aimed at newcomers, boils things down to three buttons: Attack, React and Burst. The game handles much of the rest contextually, so React can dodge or block depending on timing."
+    },
+    {
+      "type": "p",
+      "text": "Classic Mode gives full manual control, including traditional combos. IGN found it too cumbersome on touch alone. Adventure Mode feels good but removes some of the series' friction. The reviewer's conclusion is that the best way to play is Classic Mode with a controller, which raises the question of why not just play a console Monster Hunter. Controller support is available."
+    },
+    {
+      "type": "h2",
+      "text": "Gacha party and a heavy progression system"
+    },
+    {
+      "type": "p",
+      "text": "Outlanders lets you recruit distinct Adventurers as NPC companions through gacha pulls using a currency called Rutacoins. Each has a moveset built around one weapon type. IGN built a full four-person party easily using the currency earned early on, and says the Adventurers make solo play viable, though you can still team up with friends."
+    },
+    {
+      "type": "p",
+      "text": "The concern is progression. IGN lists several currencies, including Zenny, Rutacoins and Research Points, plus extra materials for upgrading characters, sidekicks and weapons. Almost all currency can be earned through play, or bought with real money, but the reviewer says the usual Monster Hunter loop feels slower here and the opening hours were more of a slog than World or Rise. IGN also expects repeat pulls could become frustrating."
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "IGN's overall mood is surprise: the timing-based combat, visuals and world design feel uncompromised, but mobile-style systems are creeping in at the edges. The real test, per the reviewer, is whether resource walls appear in tougher, more complex hunts. IGN says more playtime is coming and a full review will follow, so keep an eye out for the final score and how the gacha and grind hold up over time."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Monster Hunter Outlanders Review So Far",
+      "url": "https://www.ign.com/articles/monster-hunter-outlanders-review",
+      "publisher": "IGN"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

@@ -1,3 +1,5 @@
+import { getAllPosts } from "@/lib/blog";
+import { TOURNAMENT_GAMES } from "@/lib/games";
 import { SITE_URL } from "@/lib/site";
 
 const routes = [
@@ -12,6 +14,11 @@ const routes = [
     priority: 0.9,
   },
   {
+    url: "/tournaments",
+    changeFrequency: "daily",
+    priority: 0.9,
+  },
+  {
     url: "/book",
     changeFrequency: "daily",
     priority: 0.9,
@@ -22,9 +29,64 @@ const routes = [
     priority: 0.8,
   },
   {
+    url: "/blog",
+    changeFrequency: "daily",
+    priority: 0.8,
+  },
+  {
+    url: "/rewards",
+    changeFrequency: "weekly",
+    priority: 0.7,
+  },
+  {
+    url: "/gaming-cafe-cost-calculator",
+    changeFrequency: "monthly",
+    priority: 0.9,
+  },
+  {
     url: "/list-cafe",
     changeFrequency: "monthly",
     priority: 0.8,
+  },
+  {
+    url: "/mumbai-surfer",
+    changeFrequency: "monthly",
+    priority: 0.8,
+  },
+  ...TOURNAMENT_GAMES.map((g) => ({
+    url: `/tournaments/${g.slug}`,
+    changeFrequency: "weekly",
+    priority: 0.8,
+  })),
+  {
+    url: "/gaming-cafe-software",
+    changeFrequency: "monthly",
+    priority: 0.8,
+  },
+  {
+    url: "/gaming-cafe-billing-software",
+    changeFrequency: "monthly",
+    priority: 0.8,
+  },
+  {
+    url: "/gaming-cafe-customer-management",
+    changeFrequency: "monthly",
+    priority: 0.8,
+  },
+  {
+    url: "/gaming-cafe-franchise",
+    changeFrequency: "monthly",
+    priority: 0.8,
+  },
+  {
+    url: "/about",
+    changeFrequency: "monthly",
+    priority: 0.6,
+  },
+  {
+    url: "/terms",
+    changeFrequency: "yearly",
+    priority: 0.3,
   },
   {
     url: "/privacy-policy",
@@ -39,12 +101,16 @@ const routes = [
 ];
 
 export default function sitemap() {
-  const lastModified = new Date();
-
-  return routes.map((route) => ({
+  const pages = routes.map((route) => ({
     url: `${SITE_URL}${route.url}`,
-    lastModified,
     changeFrequency: route.changeFrequency,
     priority: route.priority,
   }));
+  const posts = getAllPosts().map((post) => ({
+    url: `${SITE_URL}/blog/${post.slug}`,
+    lastModified: new Date(post.date),
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+  return [...pages, ...posts];
 }

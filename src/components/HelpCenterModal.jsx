@@ -15,7 +15,7 @@ export default function HelpCenterModal({ isOpen, onClose }) {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('/contact-us.png')",
+            backgroundImage: "url('/contact-us.webp')",
           }}
         />
 

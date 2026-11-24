@@ -1,0 +1,105 @@
+{
+  "slug": "2026-11-14-ps5-qssr-update-spider-man-2-arc-raiders-support",
+  "title": "PS5 QSSR Update: Spider-Man 2, Arc Raiders Get Support",
+  "description": "PS5 QSSR support is coming to Spider-Man 2, Arc Raiders, The Finals and more, according to IGN. Here's what's live now and what's coming next.",
+  "date": "2026-11-14T04:02:10+00:00",
+  "category": "games",
+  "tags": [
+    "PS5 QSSR",
+    "QSSR PS5 games list",
+    "Spider-Man 2 QSSR update",
+    "Arc Raiders PS5 update",
+    "PS5 AI upscaling",
+    "QSSR release date"
+  ],
+  "body": [
+    {
+      "type": "p",
+      "text": "PS5 QSSR support is expanding. Sony has confirmed that Marvel's Spider-Man 2, Arc Raiders and four other games will get the AI upscaling tech on base PS5 consoles, according to IGN. For anyone playing on a standard PS5 rather than a Pro, it signals that sharper, steadier visuals may reach more of your library in the coming months."
+    },
+    {
+      "type": "h2",
+      "text": "Which games get PS5 QSSR support"
+    },
+    {
+      "type": "p",
+      "text": "IGN reports that Sony announced the six newcomers in a PlayStation.Blog post. QSSR stands for Quick Spectral Super Resolution. Sony revealed it in October, when Marvel's Wolverine and Ghost of Yōtei were confirmed to have it already."
+    },
+    {
+      "type": "p",
+      "text": "The new additions are:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Marvel's Spider-Man 2 from Insomniac",
+        "Control Resonant from Remedy Entertainment",
+        "Arc Raiders from Embark Studios",
+        "The Finals, also from Embark Studios",
+        "No Man's Sky from Hello Games",
+        "Hell Let Loose: Vietnam from Expression Games"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "What's live now and what's still coming"
+    },
+    {
+      "type": "p",
+      "text": "Spider-Man 2 is the only one of the six playable with QSSR today. IGN says the support arrives in a new update that is out now. Insomniac's head of technology, Mike Fitzgerald, said the team saw good results with QSSR in Marvel's Wolverine and chose to bring it to the 2023 game too. He pointed to better image stability and sharpness in both Fidelity and Performance modes."
+    },
+    {
+      "type": "p",
+      "text": "Remedy says its QSSR update will land in December, promising noticeable gains in image stability and fine detail. Hello Games founder Sean Murray said No Man's Sky should look \"sharper, cleaner, and more beautiful\" at the \"best possible framerate\" within the next few weeks."
+    },
+    {
+      "type": "p",
+      "text": "There are no dates yet for The Finals, Arc Raiders or Hell Let Loose: Vietnam."
+    },
+    {
+      "type": "h2",
+      "text": "What developers are saying"
+    },
+    {
+      "type": "p",
+      "text": "Embark said QSSR will bring increased sharpness, better environmental clarity and overall visual improvements to its two shooters. The studio also welcomed what it called Sony's continued investment in PlayStation technology."
+    },
+    {
+      "type": "p",
+      "text": "The post included testimonials from each studio, so these are developer claims about the benefits. Results will vary by game, and the real test will be how each title looks and runs on a base PS5 once its update ships."
+    },
+    {
+      "type": "h2",
+      "text": "What to watch next"
+    },
+    {
+      "type": "p",
+      "text": "Sony teased that developers interested in QSSR are \"just getting started,\" and more PS5 games are set to get similar updates in the coming months. Which titles will join the list hasn't been announced. Keep an eye out for the No Man's Sky patch in the next few weeks and Control Resonant's December update. Dates for Arc Raiders, The Finals and Hell Let Loose: Vietnam are still pending. If you play any of them on a base PS5, check your patch notes soon."
+    }
+  ],
+  "faqs": [
+    {
+      "q": "What is QSSR on PS5?",
+      "a": "QSSR stands for Quick Spectral Super Resolution, an AI upscaling tech from Sony that is coming to base PS5 games, according to IGN. Developers say it improves image stability and sharpness."
+    },
+    {
+      "q": "Which PS5 games are getting QSSR support?",
+      "a": "Marvel's Spider-Man 2, Control Resonant, Arc Raiders, The Finals, No Man's Sky and Hell Let Loose: Vietnam are the six new additions, per IGN. Marvel's Wolverine and Ghost of Yōtei already had it when Sony revealed QSSR in October."
+    },
+    {
+      "q": "Is the QSSR update for Spider-Man 2 out yet?",
+      "a": "Yes. IGN reports the QSSR update for Marvel's Spider-Man 2 is live now. Control Resonant is due in December, while No Man's Sky should follow in the next few weeks."
+    }
+  ],
+  "sources": [
+    {
+      "title": "PS5 QSSR Updates Revealed for Marvel's Spider-Man 2, Arc Raiders, and More",
+      "url": "https://www.ign.com/articles/ps5-qssr-updates-revealed-for-marvels-spider-man-2-arc-raiders-and-more",
+      "publisher": "IGN"
+    }
+  ],
+  "generated": {
+    "by": "blog-bot",
+    "model": "claude-sonnet-5-5"
+  }
+}

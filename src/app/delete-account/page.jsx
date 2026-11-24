@@ -1,3 +1,5 @@
+import AppShell from "@/components/AppShell";
+import NavBar from "@/components/landing/NavBar";
 import DeleteAccountPage from "@/components/DeleteAccountPage";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 
@@ -27,5 +29,10 @@ export default async function DeleteAccount({ searchParams }) {
       ? resolvedSearchParams.token
       : "";
 
-  return <DeleteAccountPage initialToken={initialToken} />;
+  return (
+    <AppShell>
+      <NavBar />
+      <DeleteAccountPage initialToken={initialToken} />
+    </AppShell>
+  );
 }
