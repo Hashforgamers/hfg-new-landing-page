@@ -39,7 +39,7 @@ function decodePart(part) {
 export class TokenError extends Error {}
 
 export async function verifyFirebaseIdToken(idToken, { maxAuthAgeSeconds = 15 * 60 } = {}) {
-  const projectId = process.env.FIREBASE_PROJECT_ID || process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+  const projectId = process.env.FIREBASE_PROJECT_ID || process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "hash-ee6fc";
   if (!projectId) throw new TokenError("Firebase project is not configured");
   if (typeof idToken !== "string" || idToken.length > 4096) throw new TokenError("Malformed token");
   const parts = idToken.split(".");

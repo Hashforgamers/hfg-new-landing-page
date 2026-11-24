@@ -69,6 +69,19 @@ export default function GamingCafesPage() {
         body="Find gaming cafes near you, see which PCs and consoles they have, and lock your slot before you leave home."
         image="/gta6-miami-sunset.jpg"
         placement="gaming_cafes_hero"
+        actions={
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <Link
+              href="/book"
+              data-track="book_click"
+              data-track-placement="gaming_cafes_hero"
+              className="rounded-full bg-white px-8 py-3.5 font-display text-xl uppercase tracking-wide text-black transition hover:bg-[#ff3d8b] hover:text-white"
+            >
+              Book a cafe online
+            </Link>
+            <StoreButtons placement="gaming_cafes_hero" />
+          </div>
+        }
         aside={
           <div className="mx-auto w-full max-w-[340px] rotate-3">
             <Image

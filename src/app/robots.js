@@ -6,10 +6,10 @@ export default function robots() {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/games/"],
+        disallow: ["/api/", "/games/", "/account", "/login", "/marketplace/cart"],
       },
     ],
-    sitemap: `${SITE_URL}/sitemap.xml`,
+    sitemap: [`${SITE_URL}/sitemap.xml`, `${SITE_URL}/book/sitemap.xml`, `${SITE_URL}/marketplace/sitemap.xml`],
     host: SITE_URL,
   };
 }

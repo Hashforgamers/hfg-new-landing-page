@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    // The "coming soon" shop page is now the live Hash Marketplace.
+    return [{ source: '/shop', destination: '/marketplace', permanent: true }];
+  },
   images: {
     localPatterns: [
       {
