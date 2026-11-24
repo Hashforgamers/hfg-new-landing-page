@@ -19,6 +19,9 @@ const Footer = ({
       title: 'Product',
       links: [
         { label: 'Gaming Cafes', href: '/gaming-cafes' },
+        { label: 'Book a Cafe', href: '/book' },
+        { label: 'Marketplace', href: '/marketplace' },
+        { label: 'Login / My Account', href: '/account' },
         { label: 'Rewards', href: '/rewards' },
         { label: 'Shop', href: '/shop' },
         { label: 'Download App', href: SITE_DOWNLOAD_URL }

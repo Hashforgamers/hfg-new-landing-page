@@ -1,0 +1,501 @@
+import "server-only";
+import { upstream, UpstreamError } from "@/lib/server/upstream";
+import { peekJwt } from "@/lib/server/jwt-peek";
+import { clean, v } from "@/lib/server/validate";
+import { hit } from "@/lib/secure/store";
+
+/*
+ * Hash Marketplace (Medusa 2) storefront, following
+ * medusa-marketplace-demo/docs/HFG-STORE-API.md, HFG-DELIVERY-CHECKOUT.md and
+ * HFG-RAZORPAY-CHECKOUT.md. The browser never sees the Medusa customer token
+ * or the cart id; both live in the sealed session cookie.
+ */
+
+let configCache = null;
+async function storeConfig(requestId) {
+  if (configCache && configCache.exp > Date.now()) return configCache.value;
+  const { data } = await upstream("medusa", "/hash-store/config", { requestId, headers: { "X-Client-Source": "app" } });
+  if (data?.version !== 1 || !String(data.publishable_api_key || "").startsWith("pk_") || !data.region_id || !data.sales_channel_id) {
+    throw new UpstreamError(503, "The marketplace is temporarily unavailable. Please try again.");
+  }
+  configCache = { value: data, exp: Date.now() + 5 * 60_000 };
+  return data;
+}
+
+async function medusa(ctx, path, { method = "GET", body, auth = false, retryOnKey = true } = {}) {
+  const config = await storeConfig(ctx.requestId);
+  try {
+    const { data } = await upstream("medusa", path, {
+      method,
+      body,
+      requestId: ctx.requestId,
+      token: auth ? await customerToken(ctx) : undefined,
+      headers: { "x-publishable-api-key": config.publishable_api_key },
+      timeoutMs: 30000,
+    });
+    return data;
+  } catch (error) {
+    // Key rotated: refetch config once (reads only - writes are never replayed).
+    if (retryOnKey && method === "GET" && error instanceof UpstreamError && error.status === 400 && /publishable/i.test(error.message)) {
+      configCache = null;
+      return medusa(ctx, path, { method, body, auth, retryOnKey: false });
+    }
+    if (auth && error instanceof UpstreamError && error.status === 401) {
+      ctx.updateSession({ medusa: undefined, medusaExp: undefined });
+    }
+    throw error;
+  }
+}
+
+async function exchange(ctx) {
+  const { data } = await upstream("medusa", "/auth/customer/hfg", {
+    method: "POST",
+    body: { token: ctx.session.hfg },
+    requestId: ctx.requestId,
+  });
+  if (!data?.token) throw new UpstreamError(502, "Store sign-in failed. Please try again.");
+  return data.token;
+}
+
+/** HFG token -> Medusa customer token, registering the commerce profile on first use. */
+async function customerToken(ctx) {
+  const now = Math.floor(Date.now() / 1000);
+  if (ctx.session.medusa && ctx.session.medusaExp > now + 60) return ctx.session.medusa;
+  const config = await storeConfig(ctx.requestId);
+  let token = await exchange(ctx);
+  if (!peekJwt(token).actor_id) {
+    const profile = {};
+    if (ctx.session.name) profile.first_name = clean(ctx.session.name).slice(0, 60);
+    if (ctx.session.email) profile.email = ctx.session.email;
+    if (/^\+?\d{8,15}$/.test(ctx.session.phone || "")) profile.phone = ctx.session.phone;
+    try {
+      await upstream("medusa", "/store/customers", {
+        method: "POST",
+        body: profile,
+        token,
+        requestId: ctx.requestId,
+        headers: { "x-publishable-api-key": config.publishable_api_key },
+      });
+    } catch (error) {
+      // A concurrent first-use may have created it already; re-exchange decides.
+      if (!(error instanceof UpstreamError && [400, 409, 422].includes(error.status))) throw error;
+    }
+    token = await exchange(ctx);
+    if (!peekJwt(token).actor_id) throw new UpstreamError(502, "Store account setup is still finishing. Please retry.");
+    ctx.track("Store Account Created", {});
+  }
+  const exp = Number(peekJwt(token).exp) || now + 3600;
+  ctx.updateSession({ medusa: token, medusaExp: Math.min(exp, ctx.session.exp) });
+  return token;
+}
+
+/* -------------------------------------------------------- shaping */
+function productCard(p) {
+  return {
+    id: p.product_id,
+    variantId: p.variant_id,
+    title: p.title,
+    description: (p.description || "").slice(0, 400),
+    kind: p.kind,
+    vendorId: p.vendor_id,
+    vendorName: p.vendor_name,
+    price: Number(p.price_inr || 0),
+    available: Number(p.available || 0),
+    thumbnail: typeof p.thumbnail === "string" && p.thumbnail.startsWith("https://") ? p.thumbnail : "",
+    rating: p.rating_summary ? { average: Number(p.rating_summary.average || 0), count: Number(p.rating_summary.count || 0) } : null,
+    offer: p.offer || p.card_offer || null,
+  };
+}
+
+function cartView(cart) {
+  if (!cart) return null;
+  return {
+    id: undefined, // never exposed
+    email: cart.email || "",
+    currency: cart.currency_code,
+    items: (cart.items || []).map((i) => ({
+      id: i.id,
+      title: i.product_title || i.title,
+      variantTitle: i.variant_title,
+      thumbnail: i.thumbnail || "",
+      quantity: i.quantity,
+      unitPrice: Number(i.unit_price || 0),
+      total: Number(i.total ?? i.subtotal ?? 0),
+      productId: i.product_id,
+    })),
+    subtotal: Number(cart.item_subtotal ?? cart.subtotal ?? 0),
+    shipping: Number(cart.shipping_total || 0),
+    tax: Number(cart.tax_total || 0),
+    discount: Number(cart.discount_total || 0),
+    total: Number(cart.total || 0),
+    shippingAddress: cart.shipping_address
+      ? {
+          first_name: cart.shipping_address.first_name || "",
+          last_name: cart.shipping_address.last_name || "",
+          address_1: cart.shipping_address.address_1 || "",
+          address_2: cart.shipping_address.address_2 || "",
+          city: cart.shipping_address.city || "",
+          province: cart.shipping_address.province || "",
+          postal_code: cart.shipping_address.postal_code || "",
+          phone: cart.shipping_address.phone || "",
+        }
+      : null,
+    hasShippingMethod: Boolean(cart.shipping_methods?.length),
+  };
+}
+
+function requireCart(ctx) {
+  if (!ctx.session.cartId) {
+    const e = new Error("Your cart is empty.");
+    e.status = 404;
+    throw e;
+  }
+  return ctx.session.cartId;
+}
+
+function parseAddress(raw) {
+  const a = v.object(raw, "address");
+  return {
+    first_name: clean(v.str(a.first_name, "first name", { max: 60 })),
+    last_name: clean(v.optStr(a.last_name, "last name", { max: 60 })),
+    address_1: clean(v.str(a.address_1, "address", { min: 4, max: 160 })),
+    address_2: clean(v.optStr(a.address_2, "address line 2", { max: 160 })),
+    city: clean(v.str(a.city, "city", { max: 60 })),
+    province: clean(v.str(a.province, "state", { max: 60 })),
+    postal_code: v.str(a.postal_code, "PIN code", { pattern: /^[1-9][0-9]{5}$/ }),
+    country_code: "in",
+    phone: v.phone(a.phone),
+  };
+}
+
+async function loadCart(ctx) {
+  const cartId = ctx.session.cartId;
+  if (!cartId) return null;
+  try {
+    const data = await medusa(ctx, `/store/carts/${encodeURIComponent(cartId)}`, { auth: true });
+    if (data?.cart?.completed_at) {
+      ctx.updateSession({ cartId: undefined });
+      return null;
+    }
+    return data?.cart || null;
+  } catch (error) {
+    if (error instanceof UpstreamError && error.status === 404) {
+      ctx.updateSession({ cartId: undefined });
+      return null;
+    }
+    throw error;
+  }
+}
+
+/* ------------------------------------------------------------- ops */
+export const storeOps = {
+  "store.products": {
+    auth: "none",
+    limit: { perIp: 90 },
+    async run(ctx, args) {
+      const limit = args.limit ? v.int(args.limit, "limit", { max: 48 }) : 24;
+      const offset = args.offset ? v.int(args.offset, "offset", { min: 0, max: 10000 }) : 0;
+      const qs = new URLSearchParams({ limit: String(limit), offset: String(offset) });
+      if (args.vendorId) qs.set("vendor_id", v.str(args.vendorId, "vendorId", { max: 60, pattern: /^hv_[A-Za-z0-9_]+$/ }));
+      const data = await medusa(ctx, `/store/hash/products?${qs}`);
+      return { products: (data?.products || []).map(productCard), count: Number(data?.count || 0), limit, offset };
+    },
+  },
+
+  "store.product": {
+    auth: "none",
+    limit: { perIp: 120 },
+    async run(ctx, args) {
+      const productId = v.str(args.productId, "productId", { max: 60, pattern: /^prod_[A-Za-z0-9]+$/ });
+      const config = await storeConfig(ctx.requestId);
+      const [detail, list] = await Promise.all([
+        medusa(ctx, `/store/products/${productId}?region_id=${encodeURIComponent(config.region_id)}`),
+        medusa(ctx, `/store/hash/products?limit=100&offset=0`),
+      ]);
+      const card = (list?.products || []).map(productCard).find((p) => p.id === productId);
+      if (!card) {
+        const e = new Error("This product is not available right now.");
+        e.status = 404;
+        throw e;
+      }
+      const p = detail?.product || {};
+      ctx.track("Product Viewed", { product_id: productId, vendor_id: card.vendorId, price: card.price });
+      return {
+        product: {
+          ...card,
+          description: p.description || card.description,
+          images: (p.images || []).map((i) => i.url).filter((u) => typeof u === "string" && u.startsWith("https://")).slice(0, 8),
+          subtitle: p.subtitle || "",
+        },
+      };
+    },
+  },
+
+  "store.cart.get": {
+    auth: "user",
+    limit: { perIp: 90 },
+    async run(ctx) {
+      return { cart: cartView(await loadCart(ctx)) };
+    },
+  },
+
+  "store.cart.add": {
+    auth: "user",
+    limit: { perIp: 40, perUser: 30 },
+    async run(ctx, args) {
+      const variantId = v.str(args.variantId, "variantId", { max: 60, pattern: /^variant_[A-Za-z0-9]+$/ });
+      const quantity = v.int(args.quantity ?? 1, "quantity", { max: 10 });
+      const config = await storeConfig(ctx.requestId);
+      let cart = await loadCart(ctx);
+      try {
+        if (!cart) {
+          const body = { region_id: config.region_id, sales_channel_id: config.sales_channel_id, items: [{ variant_id: variantId, quantity }] };
+          if (ctx.session.email) body.email = ctx.session.email;
+          const data = await medusa(ctx, "/store/carts", { method: "POST", body, auth: true });
+          cart = data?.cart;
+          ctx.updateSession({ cartId: cart?.id });
+        } else {
+          const data = await medusa(ctx, `/store/carts/${cart.id}/line-items`, { method: "POST", body: { variant_id: variantId, quantity }, auth: true });
+          cart = data?.cart;
+        }
+      } catch (error) {
+        if (error instanceof UpstreamError && /vendor/i.test(error.message)) {
+          error.code = "mixed_vendor";
+          error.message = "Your cart has items from another seller. Check out or clear it to add this one.";
+        }
+        throw error;
+      }
+      ctx.track("Product Added", { variant_id: variantId, quantity });
+      return { cart: cartView(cart) };
+    },
+  },
+
+  "store.cart.update": {
+    auth: "user",
+    limit: { perIp: 60 },
+    async run(ctx, args) {
+      const cartId = requireCart(ctx);
+      const itemId = v.str(args.itemId, "itemId", { max: 60, pattern: /^cali_[A-Za-z0-9]+$/ });
+      const quantity = v.int(args.quantity, "quantity", { min: 0, max: 10 });
+      if (quantity === 0) {
+        await medusa(ctx, `/store/carts/${cartId}/line-items/${itemId}`, { method: "DELETE", auth: true });
+        ctx.track("Product Removed", {});
+      } else {
+        await medusa(ctx, `/store/carts/${cartId}/line-items/${itemId}`, { method: "POST", body: { quantity }, auth: true });
+      }
+      return { cart: cartView(await loadCart(ctx)) };
+    },
+  },
+
+  "store.cart.clear": {
+    auth: "user",
+    limit: { perIp: 20 },
+    async run(ctx) {
+      ctx.updateSession({ cartId: undefined });
+      return { cart: null };
+    },
+  },
+
+  /** Saves the address, prices delivery and selects it. Returns final totals. */
+  "store.checkout.prepare": {
+    auth: "user",
+    limit: { perIp: 20, perUser: 15 },
+    async run(ctx, args) {
+      const cartId = requireCart(ctx);
+      const address = parseAddress(args.address);
+      const email = ctx.session.email || v.email(args.email);
+      await medusa(ctx, `/store/carts/${cartId}`, {
+        method: "POST",
+        body: { email, shipping_address: address, billing_address: address },
+        auth: true,
+      });
+
+      const policy = await medusa(ctx, `/store/hash/carts/${cartId}/delivery`, { auth: true });
+      if (policy?.missing_package_product_ids?.length) {
+        const e = new Error("The seller hasn't finished delivery details for an item. Please try again later.");
+        e.status = 409;
+        throw e;
+      }
+      const options = await medusa(ctx, `/store/shipping-options?cart_id=${cartId}`, { auth: true });
+      const option = (options?.shipping_options || []).find((o) => o.provider_id === (policy?.provider_id || "hash_delivery_hash_delivery"));
+      if (!option) {
+        const e = new Error("Delivery isn't available to this PIN code yet.");
+        e.status = 409;
+        throw e;
+      }
+      const calc = await medusa(ctx, `/store/shipping-options/${option.id}/calculate`, {
+        method: "POST",
+        body: { cart_id: cartId, data: {} },
+        auth: true,
+      });
+      const deliveryAmount = Number(calc?.shipping_option?.calculated_price?.calculated_amount ?? calc?.shipping_option?.amount ?? 0);
+      const selected = await medusa(ctx, `/store/carts/${cartId}/shipping-methods`, {
+        method: "POST",
+        body: { option_id: option.id, data: {} },
+        auth: true,
+      });
+      ctx.track("Checkout Started", { delivery_payer: policy?.payer || "customer" });
+      return {
+        cart: cartView(selected?.cart),
+        delivery: { payer: policy?.payer || "customer", amount: policy?.payer === "seller" ? 0 : deliveryAmount, vendorName: policy?.vendor_name || "" },
+      };
+    },
+  },
+
+  /** Creates the Razorpay session for the cart's current server total. */
+  "store.checkout.pay": {
+    auth: "user",
+    limit: { perIp: 15, perUser: 10 },
+    async run(ctx) {
+      const cartId = requireCart(ctx);
+      const cart = await loadCart(ctx);
+      if (!cart?.shipping_methods?.length) {
+        const e = new Error("Please confirm your delivery address first.");
+        e.status = 409;
+        throw e;
+      }
+      const config = await storeConfig(ctx.requestId);
+      const providers = await medusa(ctx, `/store/payment-providers?region_id=${config.region_id}`, { auth: true });
+      if (!(providers?.payment_providers || []).some((p) => p.id === "pp_razorpay_razorpay")) {
+        const e = new Error("Online payment isn't enabled for the marketplace yet.");
+        e.status = 503;
+        throw e;
+      }
+      const collection = await medusa(ctx, "/store/payment-collections", { method: "POST", body: { cart_id: cartId }, auth: true });
+      const pcId = collection?.payment_collection?.id;
+      const withSession = await medusa(ctx, `/store/payment-collections/${pcId}/payment-sessions`, {
+        method: "POST",
+        body: { provider_id: "pp_razorpay_razorpay", data: {} },
+        auth: true,
+      });
+      const session = (withSession?.payment_collection?.payment_sessions || []).find((s) => s.provider_id === "pp_razorpay_razorpay");
+      const data = session?.data || {};
+      if (!data.id || !data.amount || !data.key_id) {
+        const e = new Error("Payment could not be started. Please try again.");
+        e.status = 502;
+        throw e;
+      }
+      ctx.track("Payment Initiated", { amount: Number(data.amount) / 100, payment_method_selected: "razorpay", flow: "marketplace" });
+      return {
+        // data.amount is already paise - never multiply again.
+        checkout: {
+          key: data.key_id,
+          orderId: data.id,
+          amount: Number(data.amount),
+          currency: data.currency || "INR",
+          name: "Hash Marketplace",
+          description: `${cart.items?.length || 0} item(s)`,
+          prefill: { name: ctx.session.name || "", email: cart.email || "", contact: cart.shipping_address?.phone || "" },
+        },
+        total: Number(cart.total || 0),
+      };
+    },
+  },
+
+  "store.checkout.complete": {
+    auth: "user",
+    limit: { perIp: 30, perUser: 20 },
+    async run(ctx) {
+      const cartId = requireCart(ctx);
+      const data = await medusa(ctx, `/store/carts/${cartId}/complete`, { method: "POST", body: {}, auth: true });
+      if (data?.type === "order" && data.order?.id) {
+        ctx.updateSession({ cartId: undefined });
+        ctx.track("Order Completed", { order_id: data.order.id, total: Number(data.order.total || 0), currency: data.order.currency_code });
+        return { status: "order", orderId: data.order.id, displayId: data.order.display_id };
+      }
+      // Payment still pending capture: keep the same cart/session and retry.
+      return { status: "pending", message: data?.error?.message || "Payment is still being verified. Retrying shortly." };
+    },
+  },
+
+  "store.orders": {
+    auth: "user",
+    limit: { perIp: 60 },
+    async run(ctx) {
+      const data = await medusa(ctx, "/store/orders?limit=20&offset=0&order=-created_at", { auth: true });
+      return {
+        orders: (data?.orders || []).map((o) => ({
+          id: o.id,
+          displayId: o.display_id,
+          createdAt: o.created_at,
+          total: Number(o.total || 0),
+          currency: o.currency_code,
+          status: o.status,
+          items: (o.items || []).map((i) => ({ title: i.product_title || i.title, quantity: i.quantity, thumbnail: i.thumbnail || "" })),
+        })),
+      };
+    },
+  },
+
+  "store.order": {
+    auth: "user",
+    limit: { perIp: 120 },
+    async run(ctx, args) {
+      const orderId = v.str(args.orderId, "orderId", { max: 60, pattern: /^order_[A-Za-z0-9]+$/ });
+      const [detail, hash] = await Promise.all([
+        medusa(ctx, `/store/orders/${orderId}`, { auth: true }),
+        medusa(ctx, `/store/hash/orders/${orderId}`, { auth: true }).catch((error) => {
+          if (error instanceof UpstreamError && error.status === 404) return null; // reconciliation lag
+          throw error;
+        }),
+      ]);
+      const o = detail?.order || {};
+      const h = hash?.order || {};
+      const tracking = hash?.tracking || h.tracking || null;
+      return {
+        order: {
+          id: o.id,
+          displayId: o.display_id,
+          createdAt: o.created_at,
+          total: Number(o.total || 0),
+          currency: o.currency_code,
+          items: (o.items || []).map((i) => ({ title: i.product_title || i.title, quantity: i.quantity, total: Number(i.total || 0), thumbnail: i.thumbnail || "" })),
+          address: tracking?.delivery_address || o.shipping_address || null,
+          paid: Boolean(h.paid),
+          completedAt: h.completed_at || null,
+          completionEligible: Boolean(h.completion_eligible),
+          stage: tracking?.status || null,
+          kind: tracking?.kind || null,
+          onHold: Boolean(tracking?.on_hold),
+          courier: tracking?.courier || "",
+          trackingNumber: tracking?.tracking_number || "",
+          expectedDelivery: tracking?.expected_delivery || "",
+          cancellation: tracking?.cancellation ? { status: tracking.cancellation.status } : null,
+          timeline: (tracking?.timeline || [])
+            .map((t) => ({ id: String(t.id), status: t.status, at: t.at, note: typeof t.note === "string" ? t.note.slice(0, 300) : "" }))
+            .sort((a, b) => String(a.at).localeCompare(String(b.at))),
+          trackingUrl: typeof tracking?.tracking_url === "string" && tracking.tracking_url.startsWith("https://") ? tracking.tracking_url : "",
+        },
+      };
+    },
+  },
+
+  "store.order.cancel": {
+    auth: "user",
+    limit: { perIp: 10, perUser: 5 },
+    async run(ctx, args) {
+      const orderId = v.str(args.orderId, "orderId", { max: 60, pattern: /^order_[A-Za-z0-9]+$/ });
+      const reason = clean(v.str(args.reason, "reason", { min: 3, max: 300 }));
+      const data = await medusa(ctx, `/store/hash/orders/${orderId}/cancellation`, { method: "POST", body: { reason }, auth: true });
+      ctx.track("Order Cancellation Requested", { order_id: orderId });
+      return { cancellation: { status: data?.cancellation?.status || "requested" } };
+    },
+  },
+
+  "store.order.otp": {
+    auth: "user",
+    limit: { perIp: 10, perUser: 5 },
+    async run(ctx, args) {
+      const orderId = v.str(args.orderId, "orderId", { max: 60, pattern: /^order_[A-Za-z0-9]+$/ });
+      const perOrder = await hit(`otp:${ctx.session.uid}:${orderId}`, 2, 60);
+      if (!perOrder.allowed) {
+        const e = new Error("Please wait a minute before requesting another code.");
+        e.status = 429;
+        throw e;
+      }
+      const data = await medusa(ctx, `/store/hash/orders/${orderId}/otp`, { method: "POST", body: {}, auth: true });
+      ctx.track("Completion OTP Requested", { order_id: orderId });
+      return { code: data?.code, expiresAt: data?.expires_at, instruction: data?.instruction };
+    },
+  },
+};

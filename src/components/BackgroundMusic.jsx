@@ -21,7 +21,12 @@ const BackgroundMusic = () => {
   const isUtilityPage =
     pathname?.startsWith('/support') ||
     pathname?.startsWith('/privacy-policy') ||
-    pathname?.startsWith('/delete-account');
+    pathname?.startsWith('/delete-account') ||
+    // Booking, marketplace and account flows: no music gate over checkout.
+    pathname?.startsWith('/book') ||
+    pathname?.startsWith('/marketplace') ||
+    pathname?.startsWith('/account') ||
+    pathname?.startsWith('/login');
 
   useEffect(() => {
     if (isUtilityPage) return;

@@ -12,6 +12,16 @@ const routes = [
     priority: 0.9,
   },
   {
+    url: "/book",
+    changeFrequency: "daily",
+    priority: 0.9,
+  },
+  {
+    url: "/marketplace",
+    changeFrequency: "daily",
+    priority: 0.8,
+  },
+  {
     url: "/list-cafe",
     changeFrequency: "monthly",
     priority: 0.8,
