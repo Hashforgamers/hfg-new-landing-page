@@ -7,7 +7,7 @@ import { log } from "@/lib/secure/http";
 
 /* ---------------------------------------------------------------- cache */
 const cache = new Map();
-async function cached(key, ttlMs, loader) {
+export async function cached(key, ttlMs, loader) {
   const hitEntry = cache.get(key);
   if (hitEntry && hitEntry.exp > Date.now()) return hitEntry.value;
   const value = await loader();
@@ -19,7 +19,7 @@ async function cached(key, ttlMs, loader) {
 /* ------------------------------------------------------- sanitisers */
 // The vendor listing endpoint also returns owner names, emails and phone
 // numbers. The public website only ever receives what a player needs.
-function publicCafe(raw) {
+export function publicCafe(raw) {
   const address = raw.address || {};
   return {
     id: raw.vendor_id,
@@ -132,16 +132,55 @@ function intentFor(ctx, intent) {
 }
 
 /* ------------------------------------------------------------- ops */
+/* ------------------------------------------------------- catalogue */
+/** Public cafe list, shared by the encrypted API and the server-rendered pages. */
+export async function loadCafes(requestId) {
+  return cached("cafes", 5 * 60_000, async () => {
+    const { data } = await upstream("vendor", "/api/vendor/getAllGamingCafe", { requestId, timeoutMs: 30000 });
+    return (data?.vendors || []).filter((c) => String(c.status || "").toLowerCase() !== "inactive").map(publicCafe);
+  });
+}
+
+/** One cafe plus its bookable consoles and per-slot prices, or null. */
+export async function loadCafeDetail(vendorId, requestId) {
+  const [cafes, games] = await Promise.all([
+    loadCafes(requestId),
+    cached(`games:${vendorId}`, 60_000, async () => {
+      const { data } = await upstream("booking", `/api/games/vendor/${vendorId}`, { requestId });
+      return data || {};
+    }),
+  ]);
+  const cafe = cafes.find((c) => c.id === vendorId);
+  if (!cafe) return null;
+  const consoles = (games.console_types || [])
+    .filter((c) => c.bookable && c.available_game_id)
+    .map((c) => {
+      const game = (games.games || []).find((g) => g.id === c.available_game_id) || {};
+      return {
+        gameId: c.available_game_id,
+        name: c.console_display_name,
+        family: c.family,
+        icon: c.icon,
+        units: c.inventory_count,
+        pricePerSlot: Number(game.single_slot_price || 0),
+        multiplayer: c.supports_multiplayer,
+      };
+    });
+  // Older vendors without a console catalog still expose plain games.
+  if (!consoles.length) {
+    for (const g of games.games || []) {
+      consoles.push({ gameId: g.id, name: g.game_name, family: "other", units: g.total_slots, pricePerSlot: Number(g.single_slot_price || 0) });
+    }
+  }
+  return { cafe, consoles, openToday: games.shop_open !== false };
+}
+
 export const bookingOps = {
   "cafes.list": {
     auth: "none",
     limit: { perIp: 60 },
     async run(ctx) {
-      const cafes = await cached("cafes", 60_000, async () => {
-        const { data } = await upstream("vendor", "/api/vendor/getAllGamingCafe", { requestId: ctx.requestId, timeoutMs: 30000 });
-        return (data?.vendors || []).filter((c) => String(c.status || "").toLowerCase() !== "inactive").map(publicCafe);
-      });
-      return { cafes };
+      return { cafes: await loadCafes(ctx.requestId) };
     },
   },
 
@@ -150,41 +189,14 @@ export const bookingOps = {
     limit: { perIp: 90 },
     async run(ctx, args) {
       const vendorId = v.int(args.vendorId, "vendorId");
-      const [list, games] = await Promise.all([
-        bookingOps["cafes.list"].run(ctx),
-        cached(`games:${vendorId}`, 30_000, async () => {
-          const { data } = await upstream("booking", `/api/games/vendor/${vendorId}`, { requestId: ctx.requestId });
-          return data || {};
-        }),
-      ]);
-      const cafe = list.cafes.find((c) => c.id === vendorId);
-      if (!cafe) {
+      const detail = await loadCafeDetail(vendorId, ctx.requestId);
+      if (!detail) {
         const e = new Error("This cafe is not taking web bookings right now.");
         e.status = 404;
         throw e;
       }
-      const consoles = (games.console_types || [])
-        .filter((c) => c.bookable && c.available_game_id)
-        .map((c) => {
-          const game = (games.games || []).find((g) => g.id === c.available_game_id) || {};
-          return {
-            gameId: c.available_game_id,
-            name: c.console_display_name,
-            family: c.family,
-            icon: c.icon,
-            units: c.inventory_count,
-            pricePerSlot: Number(game.single_slot_price || 0),
-            multiplayer: c.supports_multiplayer,
-          };
-        });
-      // Older vendors without a console catalog still expose plain games.
-      if (!consoles.length) {
-        for (const g of games.games || []) {
-          consoles.push({ gameId: g.id, name: g.game_name, family: "other", units: g.total_slots, pricePerSlot: Number(g.single_slot_price || 0) });
-        }
-      }
       ctx.track("Gaming Cafe Viewed", { cafe_id: vendorId });
-      return { cafe, consoles, openToday: games.shop_open !== false };
+      return detail;
     },
   },
 

@@ -163,6 +163,7 @@ export function createMockBackends() {
             images: [{ url: "https://res.cloudinary.com/x/neon.jpg" }],
             accepted_payment_methods: { pay_in_cafe: true },
           },
+          ...(process.env.MOCK_RICH ? RICH_CAFES : []),
         ],
       });
     }
@@ -274,8 +275,9 @@ export function createMockBackends() {
         products: [
           { product_id: "prod_1", vendor_id: "hv_a", vendor_name: "Gear Co", title: "Pro Headset", kind: "product", variant_id: "variant_1", price_inr: 2499, available: 5, thumbnail: "https://res.cloudinary.com/x/h.jpg" },
           { product_id: "prod_2", vendor_id: "hv_b", vendor_name: "Other Co", title: "Mouse", kind: "product", variant_id: "variant_2", price_inr: 999, available: 2, thumbnail: "" },
+          ...(process.env.MOCK_RICH ? RICH_PRODUCTS : []),
         ],
-        count: 2,
+        count: process.env.MOCK_RICH ? 2 + RICH_PRODUCTS.length : 2,
       });
     }
     if ((match = m(/^\/store\/products\/(prod_\w+)$/))) return send(200, { product: { id: match[1], description: "Great", images: [{ url: "https://res.cloudinary.com/x/h2.jpg" }] } });
@@ -363,3 +365,42 @@ export function createMockBackends() {
 
   return { server, calls, state };
 }
+
+// Extra catalogue for visual checks only (MOCK_RICH=1); the e2e assertions use the two-item set above.
+const img = (n) => `https://res.cloudinary.com/x/${n}.jpg`;
+const RICH_CAFES = [
+  ["Pixel Den", "Andheri West", "Maharashtra", "11:00:00", "02:00:00"],
+  ["Respawn Lounge", "Koramangala", "Karnataka", "10:00:00", "23:30:00"],
+  ["Level Up Arena", "Powai", "Maharashtra", "09:00:00", "23:00:00"],
+  ["Headshot Hub", "Indiranagar", "Karnataka", "12:00:00", "00:00:00"],
+  ["Lag Free Zone", "Connaught Place", "Delhi", "10:00:00", "22:00:00"],
+].map(([name, area, state, open, close], i) => ({
+  vendor_id: 20 + i,
+  cafe_name: name,
+  status: "active",
+  address: { addressLine1: `${10 + i} Main Road`, addressLine2: area, pincode: `4000${60 + i}`, state, latitude: 19.1, longitude: 72.9 },
+  opening_time: open,
+  closing_time: close,
+  amenities: [{ name: "AC", available: true }, { name: "Snacks", available: true }, { name: "Parking", available: i % 2 === 0 }],
+  images: [{ url: img(`cafe${i}`) }],
+  accepted_payment_methods: { pay_in_cafe: i % 2 === 0 },
+}));
+const RICH_PRODUCTS = [
+  ["Wireless Gaming Controller", 3499, "Gear Co"],
+  ["Mechanical Keyboard RGB", 5299, "Keys Lab"],
+  ["Gaming Mouse Pad XL", 899, "Gear Co"],
+  ["7.1 Surround Headset", 4199, "Sound Arena"],
+  ["PC Tune-up Service", 1499, "Fix My Rig", "service"],
+  ["Streaming Webcam 1080p", 2799, "Gear Co"],
+].map(([title, price, vendor, kind = "product"], i) => ({
+  product_id: `prod_r${i}`,
+  vendor_id: `hv_r${i}`,
+  vendor_name: vendor,
+  title,
+  kind,
+  variant_id: `variant_r${i}`,
+  price_inr: price,
+  available: i === 2 ? 0 : 8,
+  thumbnail: img(`prod${i}`),
+  rating_summary: i % 2 ? { average: 4.6, count: 23 } : null,
+}));

@@ -1,4 +1,5 @@
 import { secureCall } from "@/lib/secure/client";
+import { track as siteTrack } from "@/lib/analytics";
 
 /*
  * Funnel analytics for the new web flows. Events are batched and sent through
@@ -47,8 +48,12 @@ function flush(keepalive = false) {
   if (queue.length) flush(keepalive);
 }
 
+const snake = (name) => name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "_").slice(0, 40);
+
 export function track(name, props = {}) {
   if (typeof window === "undefined") return;
+  // Also into the site's own GA4 / Meta setup, in its snake_case naming.
+  if (name !== "Page Viewed") siteTrack(snake(name), { ...props, platform: "web" });
   queue.push({ name, props, path: window.location.pathname, ts: Date.now() });
   if (queue.length >= 10) flush();
   else if (!timer) timer = setTimeout(() => flush(), 2500);

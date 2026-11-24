@@ -2,17 +2,12 @@
  * Firebase Auth on the web - same identity provider the HFG app uses
  * (project hash-ee6fc). Loaded lazily so the landing pages don't pay for it.
  *
- * Firebase talks directly to Google over TLS (OTP SMS, Google sign-in); that
+ * Firebase talks directly to Google over TLS (Google and Apple sign-in); that
  * traffic is Google's protocol and cannot be wrapped by our gateway layer.
  * Only the resulting short-lived ID token reaches our gateway, encrypted.
  */
 
-const config = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "hash-ee6fc.firebaseapp.com",
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "hash-ee6fc",
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-};
+import { FIREBASE_CONFIG as config } from "@/lib/site";
 
 let authPromise = null;
 
@@ -38,35 +33,33 @@ function loadAuth() {
   return authPromise;
 }
 
-let verifier = null;
-
-export async function sendOtp(phoneE164, containerId) {
+async function popupSignIn(provider) {
   const { auth, authMod } = await loadAuth();
-  if (!verifier) {
-    verifier = new authMod.RecaptchaVerifier(auth, containerId, { size: "invisible" });
-  }
-  try {
-    return await authMod.signInWithPhoneNumber(auth, phoneE164, verifier);
-  } catch (error) {
-    try {
-      verifier.clear();
-    } catch {}
-    verifier = null;
-    throw error;
-  }
+  const cred = await authMod.signInWithPopup(auth, provider);
+  const user = cred.user;
+  return {
+    idToken: await user.getIdToken(true),
+    // Prefill for first-time signup only; the server trusts the verified token, not these.
+    profile: { name: user.displayName || "", email: user.email || "", phone: user.phoneNumber || "" },
+  };
 }
 
-export async function confirmOtp(confirmation, code) {
-  const cred = await confirmation.confirm(code);
-  return cred.user.getIdToken(true);
-}
-
+/** Google sign-in, as in the app (login_controller.googleSignIn). */
 export async function signInWithGoogle() {
-  const { auth, authMod } = await loadAuth();
+  const { authMod } = await loadAuth();
   const provider = new authMod.GoogleAuthProvider();
   provider.setCustomParameters({ prompt: "select_account" });
-  const cred = await authMod.signInWithPopup(auth, provider);
-  return cred.user.getIdToken(true);
+  return popupSignIn(provider);
+}
+
+/** Sign in with Apple, as in the app (login_controller.appleSignIn): email + name scopes. */
+export async function signInWithApple() {
+  const { authMod } = await loadAuth();
+  const provider = new authMod.OAuthProvider("apple.com");
+  provider.addScope("email");
+  provider.addScope("name");
+  provider.setCustomParameters({ locale: "en_IN" });
+  return popupSignIn(provider);
 }
 
 /** Fresh ID token for the currently signed-in Firebase user (signup step). */
@@ -85,16 +78,14 @@ export async function signOutFirebase() {
 export function friendlyFirebaseError(error) {
   const code = error?.code || "";
   const map = {
-    "auth/invalid-phone-number": "That phone number doesn't look right.",
     "auth/too-many-requests": "Too many attempts. Please wait a few minutes and try again.",
-    "auth/invalid-verification-code": "That code is incorrect.",
-    "auth/code-expired": "That code expired. Request a new one.",
+    "auth/cancelled-popup-request": "Sign-in was cancelled.",
+    "auth/account-exists-with-different-credential": "This email already uses a different sign-in method. Try the other button.",
+    "auth/operation-not-allowed": "This sign-in method isn't switched on yet.",
     "auth/popup-closed-by-user": "Sign-in was cancelled.",
     "auth/popup-blocked": "Your browser blocked the sign-in window. Allow pop-ups and try again.",
     "auth/network-request-failed": "Network problem. Check your connection and try again.",
     "auth/unauthorized-domain": "This site isn't authorised for login yet.",
-    "auth/captcha-check-failed": "Verification failed. Please refresh and try again.",
-    "auth/quota-exceeded": "OTP service is busy. Please try again later.",
   };
   return map[code] || error?.message || "Something went wrong. Please try again.";
 }

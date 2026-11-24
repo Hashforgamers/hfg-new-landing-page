@@ -7,7 +7,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { useReportWebVitals } from "next/web-vitals";
 import { Menu, ShoppingBag, User, X } from "lucide-react";
 import AppShell from "@/components/AppShell";
-import { SITE_LOGO } from "@/lib/site";
+import { SITE_DOWNLOAD_URL, SITE_LOGO } from "@/lib/site";
+import { BOOK, STORE } from "@/lib/verticals";
 import { secureCall } from "@/lib/secure/client";
 import { track } from "@/lib/analytics-client";
 import { cx } from "./ui";
@@ -23,94 +24,152 @@ export function useRequireLogin() {
   const router = useRouter();
   const pathname = usePathname();
   return useCallback(() => {
-    router.push(`/login?next=${encodeURIComponent(pathname || "/book")}`);
+    router.push(`/login?next=${encodeURIComponent(pathname || BOOK.root)}`);
   }, [router, pathname]);
 }
 
-const NAV = [
-  { href: "/book", label: "Book a Cafe" },
-  { href: "/marketplace", label: "Marketplace" },
+const GLOBAL_NAV = [
+  { href: BOOK.root, label: "Book a cafe" },
+  { href: STORE.root, label: "Marketplace" },
+  { href: "/#tournaments", label: "Tournaments" },
+  { href: "/blog", label: "News" },
 ];
+
+const LOCAL_NAV = {
+  book: [
+    { href: BOOK.root, label: "Cafes", exact: true },
+    { href: "/account#bookings", label: "My bookings" },
+  ],
+  store: [
+    { href: STORE.root, label: "Shop", exact: true },
+    { href: "/account#orders", label: "Orders" },
+  ],
+};
+
+function verticalFor(pathname = "") {
+  if (pathname.startsWith(BOOK.root)) return BOOK;
+  if (pathname.startsWith(STORE.root)) return STORE;
+  return null;
+}
 
 function TopBar() {
   const { user, ready, logout } = useAuth();
-  const pathname = usePathname();
+  const pathname = usePathname() || "";
   const [open, setOpen] = useState(false);
+  const vertical = verticalFor(pathname);
 
   useEffect(() => setOpen(false), [pathname]);
 
-  return (
-    <header className="sticky top-0 z-40 border-b border-white/10 bg-black/75 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 md:px-8">
-        <Link href="/" className="flex items-center gap-3" aria-label="Hash For Gamers home">
-          <Image src={SITE_LOGO} alt="" width={36} height={36} className="h-9 w-9 rounded-lg" />
-          <span className="hidden text-sm font-black uppercase tracking-[0.22em] text-white sm:inline">Hash</span>
-        </Link>
+  const accountLabel = user ? user.handle || user.name?.split(" ")[0] || "Account" : "Sign in";
+  const accountHref = user ? "/account" : `/login?next=${encodeURIComponent(pathname || BOOK.root)}`;
 
-        <nav className="hidden items-center gap-2 md:flex" aria-label="Primary">
-          {NAV.map((item) => (
+  return (
+    <header className="sticky top-0 z-40">
+      <div className="border-b border-white/[0.06] bg-black/80 backdrop-blur-xl">
+        <nav className="mx-auto flex h-16 max-w-[1280px] items-center justify-between gap-4 px-4 sm:px-8" aria-label="Main">
+          <Link href="/" className="flex items-center gap-2" aria-label="Hash For Gamers home">
+            <Image src={SITE_LOGO} alt="" width={36} height={36} className="h-9 w-9" />
+            <span className="font-display text-2xl uppercase tracking-wide text-white">Hash</span>
+          </Link>
+
+          <ul className="font-tech hidden items-center gap-7 md:flex">
+            {GLOBAL_NAV.map((item) => {
+              const active = item.href.startsWith("/") && !item.href.startsWith("/#") && pathname.startsWith(item.href);
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    aria-current={active ? "page" : undefined}
+                    className={cx("text-[11px] uppercase tracking-[0.2em] transition", active ? "text-white" : "text-white/60 hover:text-white")}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <Link
-              key={item.href}
-              href={item.href}
-              className={cx(
-                "rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] transition",
-                pathname?.startsWith(item.href) ? "bg-[#16FF00] text-black" : "text-white/70 hover:text-[#16FF00]",
-              )}
+              href="/marketplace/cart"
+              aria-label="Cart"
+              className="flex h-10 w-10 items-center justify-center rounded-full text-white/75 transition hover:bg-white/10 hover:text-white"
             >
-              {item.label}
+              <ShoppingBag className="h-[18px] w-[18px]" />
             </Link>
-          ))}
+            {ready && (
+              <Link
+                href={accountHref}
+                className="font-body hidden items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white sm:inline-flex"
+              >
+                <User className="h-[18px] w-[18px]" />
+                {accountLabel}
+              </Link>
+            )}
+            <a
+              href={SITE_DOWNLOAD_URL}
+              data-track="app_download_click"
+              data-track-placement="play_nav"
+              className="hidden rounded-full bg-white px-4 py-1.5 font-display text-base uppercase tracking-wide text-black transition hover:bg-[#ff3d8b] hover:text-white sm:inline-flex"
+            >
+              Get the app
+            </a>
+            <button
+              type="button"
+              className="flex h-10 w-10 items-center justify-center rounded-full text-white md:hidden"
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+              onClick={() => setOpen((o) => !o)}
+            >
+              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
         </nav>
 
-        <div className="flex items-center gap-2">
-          <Link
-            href="/marketplace/cart"
-            aria-label="Cart"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/80 transition hover:border-[#16FF00]/60 hover:text-[#16FF00]"
-          >
-            <ShoppingBag className="h-4 w-4" />
-          </Link>
-          {ready && user ? (
-            <Link
-              href="/account"
-              className="hidden items-center gap-2 rounded-full border border-[#16FF00]/40 bg-[#16FF00]/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-[#16FF00] transition hover:bg-[#16FF00] hover:text-black sm:inline-flex"
-            >
-              <User className="h-4 w-4" />
-              {user.handle || user.name?.split(" ")[0] || "Account"}
-            </Link>
-          ) : (
-            <Link
-              href={`/login?next=${encodeURIComponent(pathname || "/book")}`}
-              className="hidden rounded-full border border-[#16FF00]/40 bg-[#16FF00]/10 px-5 py-2 text-xs font-bold uppercase tracking-[0.22em] text-[#16FF00] transition hover:bg-[#16FF00] hover:text-black sm:inline-flex"
-            >
-              Login
-            </Link>
-          )}
-          <button
-            type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white md:hidden"
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            onClick={() => setOpen((o) => !o)}
-          >
-            {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-          </button>
-        </div>
+        {open && (
+          <nav className="border-t border-white/[0.06] px-4 pb-6 pt-2 md:hidden" aria-label="Mobile">
+            {[...GLOBAL_NAV, { href: accountHref, label: user ? "My account" : "Sign in" }].map((item) => (
+              <Link key={item.href} href={item.href} className="block py-3 font-display text-3xl uppercase text-white">
+                {item.label}
+              </Link>
+            ))}
+            {user && (
+              <button type="button" onClick={logout} className="font-body mt-2 block py-2 text-sm text-white/50">
+                Sign out
+              </button>
+            )}
+          </nav>
+        )}
       </div>
 
-      {open && (
-        <nav className="border-t border-white/10 bg-black/95 px-4 py-4 md:hidden" aria-label="Mobile">
-          {[...NAV, user ? { href: "/account", label: "My Account" } : { href: "/login", label: "Login" }].map((item) => (
-            <Link key={item.href} href={item.href} className="block py-3 text-sm font-bold uppercase tracking-[0.22em] text-white/80 hover:text-[#16FF00]">
-              {item.label}
+      {vertical && (
+        <div className="border-b border-white/[0.06] bg-[#0a0a0c]/85 backdrop-blur-xl">
+          <div className="font-body mx-auto flex h-12 max-w-[1280px] items-center justify-between gap-4 px-4 sm:px-8">
+            <Link href={vertical.root} className="text-[17px] font-semibold tracking-tight text-white sm:text-xl">
+              {vertical.name}
             </Link>
-          ))}
-          {user && (
-            <button type="button" onClick={logout} className="block py-3 text-sm font-bold uppercase tracking-[0.22em] text-white/50">
-              Logout
-            </button>
-          )}
-        </nav>
+            <ul className="flex items-center gap-4 sm:gap-6">
+              {LOCAL_NAV[vertical.id].map((item) => {
+                const active = item.exact ? pathname === item.href : pathname.startsWith(item.href);
+                return (
+                  <li key={item.href}>
+                    <Link href={item.href} className={cx("text-[13px] transition", active ? "text-white" : "text-white/60 hover:text-white")}>
+                      {item.label}
+                    </Link>
+                  </li>
+                );
+              })}
+              <li>
+                <Link
+                  href={vertical.id === "store" ? "/marketplace/cart" : BOOK.root + "#cafes"}
+                  className="rounded-full bg-white px-3.5 py-1 text-[13px] font-semibold text-black transition hover:bg-[#ff3d8b] hover:text-white"
+                >
+                  {vertical.id === "store" ? "Cart" : "Book now"}
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
       )}
     </header>
   );
@@ -179,14 +238,10 @@ export default function PlayShell({ children }) {
   return (
     <AuthContext.Provider value={value}>
       <AppShell>
-        <div className="relative min-h-screen bg-black text-white">
-          <div
-            className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_top,rgba(22,255,0,0.10),transparent_30%),radial-gradient(circle_at_85%_20%,rgba(116,77,224,0.16),transparent_30%)]"
-            aria-hidden
-          />
+        <div className="font-body relative min-h-screen bg-black text-white">
           <TopBar />
           <Analytics />
-          <div className="relative mx-auto max-w-7xl px-4 pb-20 pt-8 md:px-8 md:pt-12">{children}</div>
+          <main id="main" className="relative">{children}</main>
         </div>
       </AppShell>
     </AuthContext.Provider>

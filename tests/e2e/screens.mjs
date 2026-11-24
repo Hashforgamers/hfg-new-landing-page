@@ -30,21 +30,26 @@ const browser = await chromium.launch();
 try {
   for (const [name, viewport] of [["desktop", { width: 1366, height: 900 }], ["mobile", { width: 390, height: 844 }]]) {
     const ctx = await browser.newContext({ viewport, deviceScaleFactor: 1 });
+    // External images are unreachable in CI: serve local artwork in their place.
+    const local = ["hero-poster.jpg", "retro-car.jpg", "og-home.jpg"];
+    let n = 0;
+    await ctx.route(/res\.cloudinary\.com/, (r) => r.fulfill({ path: path.join(root, "public/images", local[n++ % local.length]) }));
     const page = await ctx.newPage();
     const errors = [];
     page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
     page.on("pageerror", (e) => errors.push(e.message));
-    for (const route of ["/book", "/book/7", "/marketplace", "/marketplace/prod_1", "/login"]) {
+    for (const route of ["/book", "/book/7", "/marketplace", "/marketplace/prod_r0", "/login", "/"]) {
       await page.goto(`http://localhost:3100${route}`, { waitUntil: "networkidle" });
       await page.waitForTimeout(800);
       if (route === "/book/7") {
         await page.getByRole("button", { name: /PS5/ }).first().click().catch(() => {});
+        await page.evaluate(() => window.scrollTo(0, 0));
         await page.getByRole("button", { name: "Tomorrow" }).click().catch(() => {});
         await page.waitForTimeout(800);
         await page.getByRole("button", { name: /10:00 PM/ }).first().click().catch(() => {});
         await page.waitForTimeout(1200);
       }
-      await page.screenshot({ path: `${out}/${name}${route.replace(/\//g, "_")}.png`, fullPage: false });
+      await page.screenshot({ path: `${out}/${name}${route.replace(/\//g, "_") || "_home"}.png`, fullPage: route !== "/" });
     }
     console.log(name, "errors:", JSON.stringify(errors.slice(0, 8)));
     await ctx.close();

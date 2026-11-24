@@ -115,48 +115,48 @@ export default function OrderTracker({ orderId }) {
 
   return (
     <div>
-      <Link href="/account" className="text-xs uppercase tracking-[0.24em] text-white/50 hover:text-[#16FF00]">← My account</Link>
+      <Link href="/account" className="text-sm text-white/50 hover:text-white">← My account</Link>
       <div className="mt-4 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <Eyebrow>Order #{order.displayId}</Eyebrow>
           <Title className="mt-3 text-2xl md:text-3xl">{order.stage ? label(order.stage) : "Processing"}</Title>
-          {order.onHold && <p className="mt-2 font-sans text-sm text-amber-200">On hold for review</p>}
+          {order.onHold && <p className="mt-2 text-sm text-amber-200">On hold for review</p>}
         </div>
         <SecureBadge />
       </div>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
         <Panel>
-          <p className="text-xs font-bold uppercase tracking-[0.28em] text-white/60">Timeline</p>
+          <p className="text-xs font-medium uppercase tracking-[0.14em] text-white/45">Timeline</p>
           {order.timeline.length === 0 ? (
-            <p className="mt-4 font-sans text-sm text-white/50">Your order is being registered. Updates appear here automatically.</p>
+            <p className="mt-4 text-sm text-white/50">Your order is being registered. Updates appear here automatically.</p>
           ) : (
             <ol className="mt-5 space-y-5 border-l border-white/10 pl-6">
               {order.timeline.map((t) => (
                 <li key={`${t.id}-${t.at}`} className="relative">
-                  <span className="absolute -left-[29px] top-1 h-3 w-3 rounded-full border-2 border-black bg-[#16FF00]" aria-hidden />
-                  <p className="text-sm font-bold uppercase tracking-[0.1em]">{label(t.status)}</p>
-                  <p className="font-sans text-xs text-white/50">{t.at ? new Date(t.at).toLocaleString("en-IN") : ""}</p>
-                  {t.note && <p className="mt-1 font-sans text-sm text-white/70">{t.note}</p>}
+                  <span className="absolute -left-[29px] top-1 h-3 w-3 rounded-full border-2 border-black bg-[#ff9a3d]" aria-hidden />
+                  <p className="text-[15px] font-medium">{label(t.status)}</p>
+                  <p className="text-xs text-white/50">{t.at ? new Date(t.at).toLocaleString("en-IN") : ""}</p>
+                  {t.note && <p className="mt-1 text-sm text-white/70">{t.note}</p>}
                 </li>
               ))}
             </ol>
           )}
           {(order.courier || order.trackingNumber) && (
-            <p className="mt-6 font-sans text-sm text-white/70">
+            <p className="mt-6 text-sm text-white/70">
               {order.courier} {order.trackingNumber && `· ${order.trackingNumber}`}{" "}
               {order.trackingUrl && (
-                <a href={order.trackingUrl} target="_blank" rel="noopener noreferrer" className="text-[#16FF00] underline">Track parcel</a>
+                <a href={order.trackingUrl} target="_blank" rel="noopener noreferrer" className="text-white underline underline-offset-2">Track parcel</a>
               )}
             </p>
           )}
-          {order.expectedDelivery && <p className="mt-1 font-sans text-xs text-white/50">Expected by {order.expectedDelivery} (seller estimate)</p>}
+          {order.expectedDelivery && <p className="mt-1 text-xs text-white/50">Expected by {order.expectedDelivery} (seller estimate)</p>}
         </Panel>
 
         <div className="space-y-6">
           <Panel>
-            <p className="text-xs font-bold uppercase tracking-[0.28em] text-white/60">Items</p>
-            <ul className="mt-3 space-y-2 font-sans text-sm">
+            <p className="text-xs font-medium uppercase tracking-[0.14em] text-white/45">Items</p>
+            <ul className="mt-3 space-y-2 text-sm">
               {order.items.map((i, idx) => (
                 <li key={idx} className="flex justify-between gap-3"><span>{i.title} ×{i.quantity}</span><span>{inr(i.total)}</span></li>
               ))}
@@ -166,14 +166,14 @@ export default function OrderTracker({ orderId }) {
 
           {order.completionEligible && !done && !cancelPending && (
             <Panel>
-              <p className="text-xs font-bold uppercase tracking-[0.28em] text-white/60">Completion code</p>
-              <p className="mt-3 font-sans text-sm text-white/70">
+              <p className="text-xs font-medium uppercase tracking-[0.14em] text-white/45">Completion code</p>
+              <p className="mt-3 text-sm text-white/70">
                 Only share this code with the seller after you&apos;ve received your order or service. Sharing it confirms delivery.
               </p>
               {otp?.code ? (
-                <div className="mt-4 rounded-2xl border border-[#16FF00]/40 bg-[#16FF00]/10 p-4 text-center">
-                  <p className="text-3xl font-black tracking-[0.5em] text-[#16FF00]">{otp.code}</p>
-                  <p className="mt-2 font-sans text-xs text-white/60">Expires {new Date(otp.expiresAt).toLocaleTimeString("en-IN")}</p>
+                <div className="mt-4 rounded-2xl border border-white/15 bg-white/[0.04] p-4 text-center">
+                  <p className="font-display text-5xl tracking-[0.3em] text-white">{otp.code}</p>
+                  <p className="mt-2 text-xs text-white/60">Expires {new Date(otp.expiresAt).toLocaleTimeString("en-IN")}</p>
                 </div>
               ) : (
                 <Button className="mt-4 w-full" variant="ghost" loading={otpBusy} onClick={requestOtp}>Show completion code</Button>
@@ -189,7 +189,7 @@ export default function OrderTracker({ orderId }) {
               ) : (
                 <form onSubmit={requestCancel} className="space-y-3">
                   <Field label="Reason"><Input required minLength={3} maxLength={300} value={reason} onChange={(e) => setReason(e.target.value)} /></Field>
-                  <p className="font-sans text-xs text-white/50">Hash reviews refunds separately. In-transit orders may be returned to the seller.</p>
+                  <p className="text-xs text-white/50">Hash reviews refunds separately. In-transit orders may be returned to the seller.</p>
                   <Button type="submit" variant="danger" className="w-full" loading={cancelBusy}>Send request</Button>
                 </form>
               )}

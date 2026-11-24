@@ -1,153 +1,133 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Minus, Plus } from "lucide-react";
+import { Minus, Plus, Truck } from "lucide-react";
 import { secureCall } from "@/lib/secure/client";
+import { track } from "@/lib/analytics-client";
 import { useAuth, useRequireLogin } from "./PlayShell";
-import { Button, Eyebrow, Notice, Panel, SecureBadge, Spinner, Title, inr } from "./ui";
+import { Button, Notice, SecureBadge, cx } from "./ui";
 
-export default function ProductDetail({ productId }) {
+export function ProductGallery({ images, title }) {
+  const [index, setIndex] = useState(0);
+  const current = images[index];
+  return (
+    <div>
+      <div className="aspect-square overflow-hidden rounded-[32px] bg-gradient-to-br from-[#1a1a20] to-black">
+        {current ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={current} alt={title} className="h-full w-full object-cover" />
+        ) : (
+          <div className="flex h-full items-center justify-center font-display text-5xl uppercase text-white/10">Hash</div>
+        )}
+      </div>
+      {images.length > 1 && (
+        <div className="mt-3 flex gap-2 overflow-x-auto [scrollbar-width:none]">
+          {images.map((src, i) => (
+            <button
+              key={src}
+              type="button"
+              onClick={() => setIndex(i)}
+              className={cx("h-20 w-20 shrink-0 overflow-hidden rounded-2xl border-2 transition", i === index ? "border-white" : "border-transparent opacity-60 hover:opacity-100")}
+              aria-label={`Show image ${i + 1}`}
+              aria-pressed={i === index}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={src} alt="" className="h-full w-full object-cover" />
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** Quantity + Add to bag / Buy now. Product data comes from the server-rendered page. */
+export default function BuyBox({ product }) {
   const router = useRouter();
   const { user } = useAuth();
   const requireLogin = useRequireLogin();
-  const [product, setProduct] = useState(null);
-  const [error, setError] = useState("");
-  const [image, setImage] = useState(0);
   const [qty, setQty] = useState(1);
-  const [busy, setBusy] = useState(false);
+  const [busy, setBusy] = useState("");
   const [notice, setNotice] = useState(null);
-
-  const load = useCallback(async () => {
-    setError("");
-    try {
-      const data = await secureCall("store.product", { productId });
-      setProduct(data.product);
-    } catch (err) {
-      setError(err.message);
-    }
-  }, [productId]);
+  const soldOut = product.available <= 0;
+  const maxQty = Math.max(1, Math.min(10, product.available));
 
   useEffect(() => {
-    load();
-  }, [load]);
+    track("Product Viewed", { product_id: product.id, vendor_id: product.vendorId, price: product.price });
+  }, [product.id, product.vendorId, product.price]);
 
-  async function addToCart(goToCart) {
+  async function add(goToCart) {
     if (!user) {
       requireLogin();
       return;
     }
-    setBusy(true);
+    setBusy(goToCart ? "buy" : "add");
     setNotice(null);
     try {
       await secureCall("store.cart.add", { variantId: product.variantId, quantity: qty });
+      track("Product Added", { product_id: product.id, quantity: qty, price: product.price });
       if (goToCart) router.push("/marketplace/cart");
-      else setNotice({ tone: "success", text: "Added to your cart." });
+      else setNotice({ tone: "success", text: "Added to your bag." });
     } catch (err) {
-      setNotice({
-        tone: "error",
-        text: err.message,
-        mixed: err.code === "mixed_vendor",
-      });
+      setNotice({ tone: "error", text: err.message, mixed: err.code === "mixed_vendor" });
     } finally {
-      setBusy(false);
+      setBusy("");
     }
   }
 
-  if (error) return <Notice action={<Button variant="subtle" onClick={load}>Retry</Button>}>{error}</Notice>;
-  if (!product) return <Spinner label="Loading product" />;
-
-  const gallery = product.images.length ? product.images : product.thumbnail ? [product.thumbnail] : [];
-  const soldOut = product.available <= 0;
-
   return (
     <div>
-      <Link href="/marketplace" className="text-xs uppercase tracking-[0.24em] text-white/50 hover:text-[#16FF00]">← Marketplace</Link>
-      <div className="mt-6 grid gap-8 lg:grid-cols-2">
-        <div>
-          <div className="aspect-square overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-br from-purple-900/40 via-black to-[#16FF00]/10">
-            {gallery[image] && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={gallery[image]} alt={product.title} className="h-full w-full object-cover" />
-            )}
-          </div>
-          {gallery.length > 1 && (
-            <div className="mt-3 flex gap-2 overflow-x-auto">
-              {gallery.map((src, i) => (
-                <button
-                  key={src}
-                  type="button"
-                  onClick={() => setImage(i)}
-                  className={`h-16 w-16 shrink-0 overflow-hidden rounded-xl border ${i === image ? "border-[#16FF00]" : "border-white/10"}`}
-                  aria-label={`Image ${i + 1}`}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={src} alt="" className="h-full w-full object-cover" />
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+      <p className="text-sm text-white/50">{soldOut ? "Currently sold out" : product.available <= 5 ? `Only ${product.available} left` : "In stock"}</p>
 
-        <div>
-          <Eyebrow>{product.kind === "service" ? "Service" : "Product"} · {product.vendorName}</Eyebrow>
-          <Title className="mt-3 text-2xl md:text-3xl">{product.title}</Title>
-          {product.subtitle && <p className="mt-2 font-sans text-sm text-white/60">{product.subtitle}</p>}
-          <p className="mt-5 text-3xl font-black text-[#16FF00]">{inr(product.price)}</p>
-          <p className="mt-1 font-sans text-xs text-white/50">{soldOut ? "Currently sold out" : `${product.available} in stock`}</p>
-
-          <Panel className="mt-6">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-[0.24em] text-white/60">Quantity</span>
-              <div className="flex items-center gap-3">
-                <button type="button" aria-label="Decrease" className="rounded-full border border-white/15 p-2 disabled:opacity-30" disabled={qty <= 1} onClick={() => setQty((q) => q - 1)}>
-                  <Minus className="h-4 w-4" />
-                </button>
-                <span className="w-6 text-center">{qty}</span>
-                <button
-                  type="button"
-                  aria-label="Increase"
-                  className="rounded-full border border-white/15 p-2 disabled:opacity-30"
-                  disabled={qty >= Math.min(10, product.available)}
-                  onClick={() => setQty((q) => q + 1)}
-                >
-                  <Plus className="h-4 w-4" />
-                </button>
-              </div>
-            </div>
-            <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              <Button variant="ghost" disabled={soldOut} loading={busy} onClick={() => addToCart(false)}>
-                Add to cart
-              </Button>
-              <Button disabled={soldOut} loading={busy} onClick={() => addToCart(true)}>
-                Buy now
-              </Button>
-            </div>
-            {notice && (
-              <div className="mt-4">
-                <Notice
-                  tone={notice.tone}
-                  action={
-                    notice.mixed ? (
-                      <Link href="/marketplace/cart" className="text-xs uppercase tracking-[0.2em] underline">Open cart</Link>
-                    ) : notice.tone === "success" ? (
-                      <Link href="/marketplace/cart" className="text-xs uppercase tracking-[0.2em] underline">View cart</Link>
-                    ) : null
-                  }
-                >
-                  {notice.text}
-                </Notice>
-              </div>
-            )}
-            <div className="mt-4"><SecureBadge /></div>
-          </Panel>
-
-          {product.description && (
-            <div className="mt-6 whitespace-pre-line font-sans text-sm leading-7 text-white/70">{product.description}</div>
-          )}
+      <div className="mt-6 flex items-center justify-between rounded-2xl border border-white/10 px-4 py-3">
+        <span className="text-[15px] text-white/70">Quantity</span>
+        <div className="flex items-center gap-4">
+          <button type="button" aria-label="Decrease quantity" className="rounded-full p-1.5 text-white/80 hover:bg-white/10 disabled:opacity-30" disabled={qty <= 1} onClick={() => setQty((q) => q - 1)}>
+            <Minus className="h-4 w-4" />
+          </button>
+          <span className="w-5 text-center text-[17px] text-white" aria-live="polite">{qty}</span>
+          <button type="button" aria-label="Increase quantity" className="rounded-full p-1.5 text-white/80 hover:bg-white/10 disabled:opacity-30" disabled={qty >= maxQty} onClick={() => setQty((q) => q + 1)}>
+            <Plus className="h-4 w-4" />
+          </button>
         </div>
       </div>
+
+      <div className="mt-4 grid gap-3">
+        <Button size="lg" disabled={soldOut} loading={busy === "buy"} onClick={() => add(true)}>
+          Buy now
+        </Button>
+        <Button size="lg" variant="ghost" disabled={soldOut} loading={busy === "add"} onClick={() => add(false)}>
+          Add to bag
+        </Button>
+      </div>
+
+      {notice && (
+        <div className="mt-4">
+          <Notice
+            tone={notice.tone}
+            action={
+              notice.mixed || notice.tone === "success" ? (
+                <Link href="/marketplace/cart" className="text-sm font-semibold underline underline-offset-2">
+                  View bag
+                </Link>
+              ) : null
+            }
+          >
+            {notice.text}
+          </Notice>
+        </div>
+      )}
+
+      <ul className="mt-6 space-y-3 text-sm text-white/55">
+        <li className="flex items-center gap-2.5">
+          <Truck className="h-4 w-4 text-white/40" aria-hidden /> {product.kind === "service" ? "Scheduled with the seller after you order" : "Tracked delivery, with an OTP on handover"}
+        </li>
+        <li>
+          <SecureBadge />
+        </li>
+      </ul>
     </div>
   );
 }

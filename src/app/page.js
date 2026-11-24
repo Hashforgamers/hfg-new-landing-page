@@ -193,6 +193,14 @@ function Hero() {
           </FadeUp>
           <FadeUp delay={0.65}>
             <StoreButtons className="mt-8" placement="hero" />
+            <Link
+              href="/book"
+              data-track="book_click"
+              data-track-placement="hero"
+              className="mt-6 inline-flex items-center gap-2 font-display text-xl uppercase tracking-wide text-[#ff9a3d] transition hover:text-white"
+            >
+              Book a gaming cafe online →
+            </Link>
           </FadeUp>
         </div>
       </HeroScene>
@@ -401,15 +409,16 @@ function Marketplace() {
           </div>
           <Reveal delay={0.15} className="max-w-md">
             <p className="text-sm leading-7 text-white/70">
-              Gaming gear in the Hash app, from the brands gamers already trust. Spend your HashCoins at checkout.
+              Gaming gear and services from verified Hash partners, on the web and in the Hash app. Secure checkout and
+              tracked delivery.
             </p>
             <Link
-              href="/shop"
+              href="/marketplace"
               data-track="shop_click"
               data-track-placement="marketplace"
               className="mt-5 inline-block rounded-full border border-white px-7 py-2.5 font-display text-lg uppercase tracking-wide text-white transition hover:bg-white hover:text-black"
             >
-              Explore Hash Shop
+              Shop the marketplace
             </Link>
           </Reveal>
         </div>

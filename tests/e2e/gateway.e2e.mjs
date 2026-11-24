@@ -234,6 +234,48 @@ try {
     assert.ok(html.includes(`nonce="${nonce}"`), "Next scripts carry the CSP nonce");
   });
 
+  // ------------------------------------------------------------- SEO
+  await test("cafe pages are server-rendered with canonical slug, JSON-LD and no PII", async () => {
+    const short = await realFetch(`${BASE}/book/7?utm_source=qr&evil=1`, { redirect: "manual" });
+    assert.equal(short.status, 308, "short /book/<id> link redirects permanently");
+    const loc = short.headers.get("location");
+    assert.match(loc, /\/book\/neon-arena-bandra-7\?utm_source=qr$/);
+    const r = await realFetch(`${BASE}/book/neon-arena-bandra-7`);
+    assert.equal(r.status, 200);
+    const html = await r.text();
+    assert.ok(html.includes("<h1") && html.includes("Neon Arena"), "cafe name is in the server HTML");
+    assert.ok(html.includes('"@type":"EntertainmentBusiness"') && html.includes('"ReserveAction"'));
+    assert.ok(html.includes('rel="canonical" href="https://www.hashforgamers.com/book/neon-arena-bandra-7"'));
+    assert.ok(/<title>Book Neon Arena, Bandra/.test(html));
+    assert.ok(!html.includes("owner@secret.example") && !html.includes("SECRET OWNER"));
+    assert.equal((await realFetch(`${BASE}/book/does-not-exist-999`)).status, 404);
+  });
+
+  await test("product pages are server-rendered with Product/Offer JSON-LD", async () => {
+    const short = await realFetch(`${BASE}/marketplace/prod_1`, { redirect: "manual" });
+    assert.equal(short.status, 308);
+    assert.match(short.headers.get("location"), /\/marketplace\/pro-headset-prod_1$/);
+    const html = await (await realFetch(`${BASE}/marketplace/pro-headset-prod_1`)).text();
+    assert.ok(html.includes("Pro Headset") && html.includes('"@type":"Product"') && html.includes('"priceCurrency":"INR"'));
+    assert.ok(html.includes('"availability":"https://schema.org/InStock"'));
+  });
+
+  await test("vertical sitemaps list every cafe and product; robots points to them", async () => {
+    const book = await (await realFetch(`${BASE}/book/sitemap.xml`)).text();
+    assert.ok(book.includes("https://www.hashforgamers.com/book/neon-arena-bandra-7"));
+    const store = await (await realFetch(`${BASE}/marketplace/sitemap.xml`)).text();
+    assert.ok(store.includes("https://www.hashforgamers.com/marketplace/pro-headset-prod_1"));
+    const robots = await (await realFetch(`${BASE}/robots.txt`)).text();
+    assert.ok(robots.includes("/book/sitemap.xml") && robots.includes("/marketplace/sitemap.xml"));
+    const shop = await realFetch(`${BASE}/shop`, { redirect: "manual" });
+    assert.equal(shop.status, 308);
+  });
+
+  await test("IndexNow ping endpoint requires its secret", async () => {
+    const r = await realFetch(`${BASE}/api/seo/indexnow`, { method: "POST", body: "{}" });
+    assert.equal(r.status, 401);
+  });
+
   await test("existing landing page is not affected by the new proxy", async () => {
     const r = await realFetch(`${BASE}/`);
     assert.equal(r.status, 200);

@@ -10,9 +10,10 @@ import { SITE_DOWNLOAD_URL, SITE_LOGO } from '@/lib/site';
 
 const LINKS = [
   { href: '/#tournaments', label: 'Tournaments' },
+  { href: '/book', label: 'Book a cafe' },
+  { href: '/marketplace', label: 'Marketplace' },
   { href: '/#features', label: 'Features' },
   { href: '/#how-it-works', label: 'How it works' },
-  { href: '/#marketplace', label: 'Marketplace' },
   { href: '/#for-cafes', label: 'For cafes' },
   { href: '/gaming-cafe-software', label: 'Cafe software' },
   { href: '/gaming-cafe-cost-calculator', label: 'Cost calculator' },
