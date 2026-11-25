@@ -49,23 +49,9 @@ export default async function MarketplacePage() {
       />
 
       <section id="shop" className="scroll-mt-28" aria-labelledby="store-title">
-        <Container className="pb-12 pt-8 sm:pt-10">
-          <div className="flex flex-col gap-4 border-b border-white/[0.07] pb-7 lg:flex-row lg:items-end lg:justify-between">
-            <div>
-              <p className="font-tech text-[11px] uppercase tracking-[0.3em] text-[#ff9a3d]">Hash Marketplace</p>
-              <h1 id="store-title" className="mt-3 text-[clamp(1.9rem,3.6vw,3rem)] font-semibold leading-[1.08] tracking-tight text-white">
-                Gaming gear from verified partners.
-              </h1>
-            </div>
-            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/60">
-              {["Verified sellers", "Secure UPI and card checkout", "Tracked delivery across India"].map((t) => (
-                <li key={t} className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#ff9a3d]" aria-hidden /> {t}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="mt-7">
+        <Container className="pb-10 pt-6 sm:pt-8">
+          <h1 id="store-title" className="sr-only">Hash Marketplace: gaming gear from verified partners</h1>
+          <div>
             {products.length ? (
               <MarketplaceGrid products={products} />
             ) : (

@@ -419,7 +419,7 @@ const RICH_CAFES = [
   opening_time: open,
   closing_time: close,
   amenities: [{ name: "AC", available: true }, { name: "Snacks", available: true }, { name: "Parking", available: i % 2 === 0 }],
-  images: [{ url: img(`cafe${i}`) }],
+  images: i === 3 ? [] : [{ url: img(`cafe${i}`) }],
   accepted_payment_methods: { pay_in_cafe: i % 2 === 0 },
 }));
 // The headset as the Hash catalogue returns it: per-colour photos, SKUs, offer pricing and specifications.

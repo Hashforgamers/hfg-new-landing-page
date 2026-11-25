@@ -1,7 +1,7 @@
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
 import CafeDirectory from "@/components/play/CafeDirectory";
-import { Container, CrossSell, FaqList, VerticalHero, breadcrumbsLd, faqLd } from "@/components/play/parts";
+import { Container, CrossSell, FaqList, breadcrumbsLd, faqLd } from "@/components/play/parts";
 import { loadCafes } from "@/lib/server/ops/booking";
 import { SITE_URL, buildPageMetadata } from "@/lib/site";
 import { BOOK, cafeLocality, cafePath } from "@/lib/verticals";
@@ -74,14 +74,10 @@ export default async function BookPage() {
         ]}
       />
 
-      <VerticalHero
-        title="Book a gaming"
-        accent="cafe near you"
-        subtitle="Live slots and prices at Hash partner cafes. Pick a console, choose a time, play."
-      />
-
-      <section id="cafes" className="scroll-mt-28" aria-label="Gaming cafes">
-        <Container className="py-8 sm:py-10">
+      <section id="cafes" className="scroll-mt-28" aria-labelledby="book-title">
+        <Container className="pb-10 pt-6 sm:pt-8">
+          {/* Search engines and screen readers still get the page title; the page itself opens on the cafes. */}
+          <h1 id="book-title" className="sr-only">Book a gaming cafe near you</h1>
           {cafes.length ? (
             <CafeDirectory cafes={cafes} />
           ) : (

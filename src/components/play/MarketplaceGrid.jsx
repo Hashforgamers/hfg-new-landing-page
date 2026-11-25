@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { Check, Search, SlidersHorizontal, Star, X } from "lucide-react";
+import { Check, Search, ShoppingBag, SlidersHorizontal, Star, X } from "lucide-react";
 import { track } from "@/lib/analytics-client";
 import { productPath } from "@/lib/verticals";
 import { Button, Empty, cx, inr } from "./ui";
@@ -42,7 +42,10 @@ export function ProductCard({ product, priority = false }) {
             className={cx("h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]", soldOut && "opacity-50")}
           />
         ) : (
-          <div className="flex h-full items-center justify-center font-display text-3xl uppercase text-white/15">Hash</div>
+          <div className="flex h-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-[#1a1a20] to-[#0b0b0e]">
+            <ShoppingBag className="h-8 w-8 text-white/25" aria-hidden />
+            <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/30">Photo coming soon</span>
+          </div>
         )}
         <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
           {pct > 0 && !soldOut && <span className="rounded-full bg-[#ff3d5a] px-2.5 py-1 text-[11px] font-semibold text-white">{pct}% off</span>}
@@ -320,8 +323,8 @@ export default function MarketplaceGrid({ products }) {
       )}
 
       {/* Deals strip (only on the unfiltered view) */}
-      {deals.length > 0 && !active.length && !query && (
-        <section className="mt-8 rounded-[28px] border border-white/[0.07] bg-gradient-to-br from-[#1a0f14] via-[#0e0e12] to-[#0e0e12] p-5 sm:p-6" aria-labelledby="deals-title">
+      {deals.length >= 3 && !active.length && !query && (
+        <section className="mt-6" aria-labelledby="deals-title">
           <div className="flex items-baseline justify-between gap-4">
             <h2 id="deals-title" className="text-xl font-semibold tracking-tight text-white">Today&apos;s deals</h2>
             <button type="button" onClick={() => setSort("discount")} className="text-sm font-medium text-[#ff9a3d] hover:underline">
@@ -330,7 +333,7 @@ export default function MarketplaceGrid({ products }) {
           </div>
           <ul className="-mx-1 mt-4 flex gap-3 overflow-x-auto px-1 pb-1 [scrollbar-width:none]">
             {deals.map((p) => (
-              <li key={p.id} className="w-[160px] shrink-0 sm:w-[190px]">
+              <li key={p.id} className="w-[150px] shrink-0 sm:w-[170px]">
                 <Link href={productPath(p)} className="group block">
                   <div className="aspect-square overflow-hidden rounded-2xl bg-[#141418]">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
