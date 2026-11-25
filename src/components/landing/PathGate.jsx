@@ -7,7 +7,6 @@ import {
   motion,
   useMotionValue,
   useReducedMotion,
-  useSpring,
   useTransform,
 } from 'framer-motion';
 import { track } from '@/lib/analytics';
@@ -48,8 +47,6 @@ function PathCard({ card, index, onEnter, onSelect, leaving }) {
   const reduce = useReducedMotion();
   const mx = useMotionValue(0.5);
   const my = useMotionValue(0.5);
-  const rotateX = useSpring(useTransform(my, [0, 1], [6, -6]), { stiffness: 220, damping: 18 });
-  const rotateY = useSpring(useTransform(mx, [0, 1], [-7, 7]), { stiffness: 220, damping: 18 });
   const glareX = useTransform(mx, [0, 1], ['0%', '100%']);
   const glareY = useTransform(my, [0, 1], ['0%', '100%']);
   const glare = useTransform(
@@ -86,9 +83,9 @@ function PathCard({ card, index, onEnter, onSelect, leaving }) {
           : { opacity: 1, y: 0, rotateX: 0 }
       }
       transition={{ duration: leaving ? 0.45 : 0.8, delay: leaving ? 0 : 0.25 + index * 0.12, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={reduce || leaving ? undefined : { y: -6, scale: 1.015 }}
-      style={reduce ? undefined : { rotateX, rotateY, transformPerspective: 900 }}
-      className="group relative block min-h-[150px] w-full overflow-hidden rounded-2xl border border-white/15 bg-black text-left shadow-[0_20px_60px_rgba(0,0,0,0.5)] outline-none transition-shadow duration-300 hover:shadow-[0_30px_90px_rgba(255,61,139,0.35)] focus-visible:ring-2 focus-visible:ring-white md:h-[clamp(300px,calc(100svh-300px),460px)]"
+      whileHover={reduce || leaving ? undefined : { y: -4 }}
+      style={reduce ? undefined : { transformPerspective: 900 }}
+      className="group relative block min-h-[150px] w-full overflow-hidden rounded-2xl border border-white/15 bg-black text-left shadow-[0_20px_60px_rgba(0,0,0,0.5)] outline-none transition-shadow duration-300 hover:shadow-[0_30px_90px_rgba(255,61,139,0.35)] focus-visible:ring-2 focus-visible:ring-white md:h-full md:min-h-[260px]"
     >
       <Image
         src={card.image}
@@ -184,11 +181,11 @@ export default function PathGate({ cards }) {
         className="fixed inset-0 z-[70] overflow-y-auto bg-black"
       >
         <div
-          className="pointer-events-none absolute -left-40 -top-40 h-[600px] w-[600px] rounded-full bg-[#ff3d8b]/25 blur-[150px]"
+          className="pointer-events-none fixed -left-40 -top-40 h-[600px] w-[600px] rounded-full bg-[#ff3d8b]/25 blur-[150px]"
           aria-hidden="true"
         />
         <div
-          className="pointer-events-none absolute -bottom-40 -right-40 h-[600px] w-[600px] rounded-full bg-[#7c3aed]/25 blur-[150px]"
+          className="pointer-events-none fixed -bottom-40 -right-40 h-[600px] w-[600px] rounded-full bg-[#7c3aed]/25 blur-[150px]"
           aria-hidden="true"
         />
         <div key={round} className="relative mx-auto flex min-h-full max-w-[1500px] flex-col px-4 py-8 sm:px-8 md:justify-center md:py-6">
@@ -249,7 +246,7 @@ export default function PathGate({ cards }) {
             ))}
           </motion.nav>
           </div>
-          <div className="mt-8 grid gap-3 md:mt-6 md:grid-cols-3 md:gap-5 md:p-2" style={{ perspective: 1200 }}>
+          <div className="mt-8 grid gap-3 md:mt-5 md:max-h-[480px] md:min-h-[276px] md:flex-1 md:grid-cols-3 md:grid-rows-[minmax(0,1fr)] md:gap-5 md:p-2" style={{ perspective: 1200 }}>
             {cards.map((c, i) => (
               <PathCard key={c.id} card={c} index={i} onEnter={play} onSelect={select} leaving={leaving} />
             ))}
