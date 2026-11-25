@@ -103,12 +103,21 @@ function Analytics() {
     }
   });
   useEffect(() => {
-    const onError = (event) => track("Client Error", { message: String(event?.message || event?.reason?.message || "error").slice(0, 120) });
+    const onError = (event) =>
+      track("Client Error", {
+        message: String(event?.message || event?.reason?.message || "error").slice(0, 120),
+        source: String(event?.filename || "").replace(/^https?:\/\/[^/]+/, "").slice(0, 80),
+        kind: event?.type === "unhandledrejection" ? "promise" : "error",
+      });
+    // Failed API calls, by op and status, so drop-offs show their cause.
+    const onApiError = (event) => track("Request Failed", event.detail || {});
     window.addEventListener("error", onError);
     window.addEventListener("unhandledrejection", onError);
+    window.addEventListener("hfg:api-error", onApiError);
     return () => {
       window.removeEventListener("error", onError);
       window.removeEventListener("unhandledrejection", onError);
+      window.removeEventListener("hfg:api-error", onApiError);
     };
   }, []);
   return null;

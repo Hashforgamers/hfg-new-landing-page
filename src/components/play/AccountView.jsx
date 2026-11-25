@@ -2,12 +2,13 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { CalendarDays, ChevronDown, Clock, Coins, Gamepad2, LogOut, Package, Receipt, Ticket, Wallet } from "lucide-react";
+import { CalendarDays, ChevronDown, Coins, Gamepad2, LogOut, Navigation, Package, Plus, Receipt, RotateCcw, Ticket, Wallet } from "lucide-react";
 import { secureCall } from "@/lib/secure/client";
 import { openRazorpay } from "@/lib/razorpay-client";
 import { track } from "@/lib/analytics-client";
 import { useAuth, useRequireLogin } from "./PlayShell";
 import { Button, Empty, Notice, Panel, SecureBadge, Spinner, cx, formatTime, inr } from "./ui";
+import { PassCatalog } from "./PassShop";
 
 const TABS = [
   { id: "bookings", label: "Bookings", icon: CalendarDays },
@@ -51,114 +52,293 @@ function Thumb({ src, className = "" }) {
 
 /* ---------------------------------------------------------------- bookings */
 
-function BookingCard({ b }) {
-  const when = b.date ? fmtDate(b.date) : b.requestedAt ? `Requested ${fmtDate(b.requestedAt, { day: "numeric", month: "short" })}` : "";
+const mins = (t) => (t ? Number(t.slice(0, 2)) * 60 + Number(t.slice(3, 5)) : 0);
+
+/** Back-to-back slots at one cafe on one day with the same status read as one visit. */
+function mergeVisits(list) {
+  const sorted = [...list].sort((a, b) => `${a.date || ""}${a.start || ""}${a.id}`.localeCompare(`${b.date || ""}${b.start || ""}${b.id}`));
+  const out = [];
+  for (const b of sorted) {
+    const prev = out[out.length - 1];
+    if (prev && prev.cafeId === b.cafeId && prev.date === b.date && prev.console === b.console && prev.status.label === b.status.label && prev.end && b.start && mins(b.start) - mins(prev.end) <= 0 && mins(b.start) >= mins(prev.start)) {
+      prev.ids.push(b.id);
+      prev.end = mins(b.end) > mins(prev.end) ? b.end : prev.end;
+      prev.amount += b.amount;
+      continue;
+    }
+    out.push({ ...b, ids: [b.id] });
+  }
+  return out;
+}
+
+function dayHeading(iso, today) {
+  if (!iso) return "Date not set";
+  const t = new Date(`${today}T12:00:00+05:30`).getTime();
+  const diff = Math.round((new Date(`${iso}T12:00:00+05:30`).getTime() - t) / 86400000);
+  if (diff === 0) return "Today";
+  if (diff === 1) return "Tomorrow";
+  if (diff === -1) return "Yesterday";
+  const sameYear = iso.slice(0, 4) === today.slice(0, 4);
+  return fmtDate(iso, sameYear ? { weekday: "long", day: "numeric", month: "long" } : { weekday: "short", day: "numeric", month: "short", year: "numeric" });
+}
+
+function VisitCard({ b }) {
+  const [open, setOpen] = useState(false);
   const time = b.start ? `${formatTime(b.start)}${b.end ? ` – ${formatTime(b.end)}` : ""}` : "";
+  const slots = b.ids.length;
   return (
-    <li className="flex min-w-0 gap-3 rounded-[22px] border border-white/[0.08] bg-[#0e0e12] p-3 sm:gap-4 sm:p-4">
-      <Thumb src={b.cafeImage} className="h-16 w-16 sm:h-24 sm:w-32" />
-      <div className="flex min-w-0 flex-1 flex-col">
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <p className="truncate text-[16px] font-semibold text-white">{b.cafeName}</p>
-            <p className="truncate text-[13px] text-white/45">{[b.cafeArea, b.console, b.mode].filter(Boolean).join(" · ")}</p>
+    <li className="min-w-0 overflow-hidden rounded-[22px] border border-white/[0.08] bg-[#0e0e12] transition hover:border-white/15">
+      <button
+        type="button"
+        aria-expanded={open}
+        onClick={() => {
+          setOpen((x) => !x);
+          if (!open) track("Booking Details Opened", { status: b.status.key, upcoming: b.upcoming });
+        }}
+        className="flex w-full min-w-0 items-center gap-3 p-3 text-left sm:gap-4 sm:p-4"
+      >
+        <Thumb src={b.cafeImage} className="h-14 w-14 sm:h-16 sm:w-16" />
+        <div className="min-w-0 flex-1">
+          <div className="flex min-w-0 items-center gap-2">
+            <p className="truncate text-[15px] font-semibold text-white sm:text-[16px]">{b.cafeName}</p>
           </div>
-          <StatusBadge status={b.status} />
+          <p className="mt-0.5 truncate text-[13px] text-white/50">
+            {[time, b.console, slots > 1 ? `${slots} slots` : "", b.mode].filter(Boolean).join(" · ")}
+          </p>
         </div>
-        <div className="mt-auto flex flex-wrap items-end justify-between gap-x-4 gap-y-1 pt-3 text-[13px] text-white/65">
-          <span className="flex min-w-0 max-w-full flex-wrap items-center gap-x-4 gap-y-1">
-            {when && (
-              <span className="inline-flex items-center gap-1.5">
-                <CalendarDays className="h-3.5 w-3.5 text-white/35" aria-hidden /> {when}
-              </span>
+        <div className="flex shrink-0 flex-col items-end gap-1.5">
+          <StatusBadge status={b.status} />
+          {b.amount > 0 && <span className="text-[13px] font-medium text-white/80">{inr(b.amount)}</span>}
+        </div>
+        <ChevronDown className={cx("hidden h-4 w-4 shrink-0 text-white/35 transition sm:block", open && "rotate-180")} aria-hidden />
+      </button>
+      {open && (
+        <div className="border-t border-white/[0.06] px-4 pb-4 pt-3 text-[13px] sm:px-5">
+          <dl className="grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-4">
+            <div><dt className="text-white/40">Date</dt><dd className="mt-0.5 text-white">{b.date ? fmtDate(b.date, { weekday: "short", day: "numeric", month: "short", year: "numeric" }) : "—"}</dd></div>
+            <div><dt className="text-white/40">Time</dt><dd className="mt-0.5 text-white">{time || "—"}</dd></div>
+            <div><dt className="text-white/40">Console</dt><dd className="mt-0.5 text-white">{b.console || "—"}</dd></div>
+            <div><dt className="text-white/40">{slots > 1 ? "Booking IDs" : "Booking ID"}</dt><dd className="mt-0.5 break-all text-white">{b.ids.map((id) => `#${id}`).join(", ")}</dd></div>
+            {b.cafeAddress && <div className="col-span-2 sm:col-span-4"><dt className="text-white/40">Address</dt><dd className="mt-0.5 text-white/80">{b.cafeAddress}</dd></div>}
+          </dl>
+          {b.status.key === "pending_acceptance" && b.upcoming && <p className="mt-3 rounded-xl bg-amber-500/10 px-3 py-2 text-amber-100/90">The cafe still has to accept this booking. You pay at the cafe after you play.</p>}
+          {!b.dateKnown && b.date && <p className="mt-3 text-[12px] text-white/35">Date shown is when you booked; the cafe confirms the slot day.</p>}
+          <div className="mt-4 flex flex-wrap gap-2">
+            {b.directions && b.upcoming && (
+              <a href={b.directions} target="_blank" rel="noopener noreferrer" onClick={() => track("Booking Directions Clicked", {})} className="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-[13px] font-semibold text-black hover:bg-[#ff9a3d]">
+                <Navigation className="h-3.5 w-3.5" aria-hidden /> Get directions
+              </a>
             )}
-            {time && (
-              <span className="inline-flex items-center gap-1.5">
-                <Clock className="h-3.5 w-3.5 text-white/35" aria-hidden /> {time}
-              </span>
-            )}
-          </span>
-          <span className="flex items-center gap-3">
-            {b.amount > 0 && <span className="font-medium text-white">{inr(b.amount)}</span>}
-            <span className="text-white/30">#{b.id}</span>
             {b.cafeHref && (
-              <Link href={b.cafeHref} className="font-semibold text-white hover:text-[#ff9a3d]">
-                Book again
+              <Link href={b.cafeHref} onClick={() => track("Book Again Clicked", { status: b.status.key })} className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-4 py-2 text-[13px] font-semibold text-white hover:border-white/40">
+                <RotateCcw className="h-3.5 w-3.5" aria-hidden /> Book again
               </Link>
             )}
-          </span>
+            <a href="/support" className="inline-flex items-center rounded-full px-3 py-2 text-[13px] text-white/50 hover:text-white">Need help?</a>
+          </div>
         </div>
-      </div>
+      )}
     </li>
   );
 }
 
-function Bookings({ data, onRetry }) {
+const PAST_FILTERS = [
+  ["all", "All"],
+  ["done", "Played"],
+  ["cancelled", "Cancelled or declined"],
+  ["other", "Not accepted"],
+];
+function pastBucket(b) {
+  if (["completed", "confirmed", "booked", "checked_in", "in_progress"].includes(b.status.key)) return "done";
+  if (b.status.tone === "danger") return "cancelled";
+  return "other";
+}
+
+function Bookings({ data }) {
   const [view, setView] = useState("upcoming");
+  const [filter, setFilter] = useState("all");
+  const [cafe, setCafe] = useState("all");
   const [showIncomplete, setShowIncomplete] = useState(false);
+  const [limit, setLimit] = useState(20);
   const groups = useMemo(() => {
     if (!data) return null;
-    const today = data.today;
-    const complete = data.bookings.filter((b) => !b.incomplete);
-    const upcoming = complete
-      .filter((b) => (b.date ? b.date >= today : ["warn", "success"].includes(b.status.tone)) && b.status.tone !== "danger")
-      .sort((a, b) => `${a.date || ""}${a.start || ""}`.localeCompare(`${b.date || ""}${b.start || ""}`));
-    const upcomingIds = new Set(upcoming.map((b) => b.id));
-    const past = complete.filter((b) => !upcomingIds.has(b.id));
-    return { upcoming, past, incomplete: data.bookings.filter((b) => b.incomplete) };
+    const real = data.bookings.filter((b) => !b.incomplete);
+    const upcoming = mergeVisits(real.filter((b) => b.upcoming));
+    const past = mergeVisits(real.filter((b) => !b.upcoming)).reverse();
+    return { upcoming, past, incomplete: mergeVisits(data.bookings.filter((b) => b.incomplete)).reverse() };
   }, [data]);
 
   if (!groups) return <Spinner label="Loading bookings" />;
-  const list = view === "upcoming" ? groups.upcoming : groups.past;
+  const cafes = [...new Map([...groups.upcoming, ...groups.past].map((b) => [b.cafeId, b.cafeName])).entries()].filter(([id]) => id);
+  let list = view === "upcoming" ? groups.upcoming : groups.past;
+  if (view === "past" && filter !== "all") list = list.filter((b) => pastBucket(b) === filter);
+  if (cafe !== "all") list = list.filter((b) => String(b.cafeId) === cafe);
+  const shown = list.slice(0, limit);
+  const byDay = [];
+  for (const b of shown) {
+    const last = byDay[byDay.length - 1];
+    if (last && last.date === b.date) last.items.push(b);
+    else byDay.push({ date: b.date, items: [b] });
+  }
+  const next = groups.upcoming[0];
+
   return (
     <div>
-      <div className="inline-flex rounded-full bg-white/[0.05] p-1" role="tablist" aria-label="Bookings">
-        {[
-          ["upcoming", `Upcoming${groups.upcoming.length ? ` (${groups.upcoming.length})` : ""}`],
-          ["past", "Past"],
-        ].map(([id, label]) => (
-          <button key={id} type="button" role="tab" aria-selected={view === id} onClick={() => setView(id)} className={cx("rounded-full px-4 py-2 text-sm font-medium transition", view === id ? "bg-white text-black" : "text-white/60 hover:text-white")}>
-            {label}
-          </button>
-        ))}
+      {view === "upcoming" && next && (
+        <div className="mb-5 overflow-hidden rounded-[24px] border border-white/[0.08] bg-gradient-to-br from-[#2a0838]/70 via-[#0e0e12] to-[#3b1a0a]/60 p-5">
+          <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/50">Next up</p>
+          <div className="mt-3 flex items-center gap-4">
+            <Thumb src={next.cafeImage} className="h-16 w-16 sm:h-20 sm:w-20" />
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-lg font-semibold text-white">{next.cafeName}</p>
+              <p className="text-sm text-white/65">{dayHeading(next.date, data.today)} · {formatTime(next.start)}{next.end ? ` – ${formatTime(next.end)}` : ""}</p>
+              <p className="text-[13px] text-white/45">{[next.console, next.cafeArea].filter(Boolean).join(" · ")}</p>
+            </div>
+            <StatusBadge status={next.status} />
+          </div>
+        </div>
+      )}
+
+      <div className="flex flex-wrap items-center gap-3">
+        <div className="inline-flex rounded-full bg-white/[0.05] p-1" role="tablist" aria-label="Bookings">
+          {[
+            ["upcoming", `Upcoming${groups.upcoming.length ? ` (${groups.upcoming.length})` : ""}`],
+            ["past", `Past${groups.past.length ? ` (${groups.past.length})` : ""}`],
+          ].map(([id, label]) => (
+            <button key={id} type="button" role="tab" aria-selected={view === id} onClick={() => { setView(id); setLimit(20); track("Bookings View Changed", { view: id }); }} className={cx("rounded-full px-4 py-2 text-sm font-medium transition", view === id ? "bg-white text-black" : "text-white/60 hover:text-white")}>
+              {label}
+            </button>
+          ))}
+        </div>
+        {cafes.length > 1 && (
+          <select aria-label="Filter by cafe" value={cafe} onChange={(e) => setCafe(e.target.value)} className="rounded-full border border-white/10 bg-black px-4 py-2 text-sm text-white/80">
+            <option value="all">All cafes</option>
+            {cafes.map(([id, name]) => <option key={id} value={String(id)}>{name}</option>)}
+          </select>
+        )}
       </div>
+      {view === "past" && (
+        <div className="mt-3 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none]">
+          {PAST_FILTERS.map(([id, label]) => (
+            <button key={id} type="button" aria-pressed={filter === id} onClick={() => setFilter(id)} className={cx("shrink-0 rounded-full border px-3 py-1.5 text-[13px] transition", filter === id ? "border-white/60 text-white" : "border-white/10 text-white/55 hover:text-white")}>
+              {label}
+            </button>
+          ))}
+        </div>
+      )}
 
       {list.length === 0 ? (
         <div className="mt-5 rounded-[22px] border border-dashed border-white/10 p-8 text-center">
-          <p className="text-[15px] font-medium text-white">{view === "upcoming" ? "Nothing booked yet" : "No past bookings"}</p>
+          <p className="text-[15px] font-medium text-white">{view === "upcoming" ? "No upcoming bookings" : "Nothing here yet"}</p>
           <p className="mt-1 text-sm text-white/50">Find a cafe near you and lock in a slot in a few taps.</p>
           <Link href="/book" className="mt-4 inline-flex rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black hover:bg-[#ff9a3d]">Book a cafe</Link>
         </div>
       ) : (
-        <ul className="mt-5 grid gap-3">
-          {list.map((b) => <BookingCard key={b.id} b={b} />)}
-        </ul>
+        <div className="mt-5 space-y-6">
+          {byDay.map((day) => (
+            <section key={day.date || "none"}>
+              <h4 className="mb-2.5 flex items-center gap-2 text-[13px] font-medium text-white/55">
+                <CalendarDays className="h-3.5 w-3.5" aria-hidden /> {dayHeading(day.date, data.today)}
+              </h4>
+              <ul className="grid gap-2.5">
+                {day.items.map((b) => <VisitCard key={b.ids.join("-")} b={b} />)}
+              </ul>
+            </section>
+          ))}
+          {list.length > shown.length && (
+            <button type="button" onClick={() => setLimit((n) => n + 20)} className="w-full rounded-full border border-white/10 py-2.5 text-sm text-white/70 hover:border-white/30">
+              Show more ({list.length - shown.length})
+            </button>
+          )}
+        </div>
       )}
 
       {groups.incomplete.length > 0 && (
-        <div className="mt-6">
+        <div className="mt-8">
           <button type="button" onClick={() => setShowIncomplete((x) => !x)} aria-expanded={showIncomplete} className="inline-flex items-center gap-1.5 text-sm text-white/45 hover:text-white/80">
             <ChevronDown className={cx("h-4 w-4 transition", showIncomplete && "rotate-180")} aria-hidden />
-            {groups.incomplete.length} {groups.incomplete.length === 1 ? "attempt" : "attempts"} that didn&apos;t go through
+            {groups.incomplete.length} {groups.incomplete.length === 1 ? "booking" : "bookings"} that never went through
           </button>
           {showIncomplete && (
             <>
-              <p className="mt-2 text-xs text-white/40">Payment wasn&apos;t completed, so no slot was held and nothing was charged.</p>
-              <ul className="mt-3 grid gap-3 opacity-70">
-                {groups.incomplete.map((b) => <BookingCard key={b.id} b={b} />)}
+              <p className="mt-2 text-xs text-white/40">Payment wasn&apos;t finished or the cafe didn&apos;t accept in time, so no slot was held and nothing was charged.</p>
+              <ul className="mt-3 grid gap-2.5 opacity-70">
+                {groups.incomplete.slice(0, 30).map((b) => <VisitCard key={b.ids.join("-")} b={b} />)}
               </ul>
             </>
           )}
         </div>
       )}
-      {onRetry && null}
     </div>
   );
 }
 
 /* ------------------------------------------------------------------ wallet */
 
-function WalletTab({ wallet }) {
+const TOPUP_PRESETS = [100, 250, 500, 1000];
+
+function TopUp({ limits, onDone }) {
+  const [amount, setAmount] = useState(500);
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState(null);
+  const valid = Number.isInteger(amount) && amount >= limits.min && amount <= limits.max;
+
+  async function go() {
+    setMsg(null);
+    setBusy(true);
+    track("Wallet Topup Clicked", { amount });
+    try {
+      const { intent, checkout } = await secureCall("wallet.topup", { amount });
+      track("Razorpay Opened", { amount, flow: "wallet_topup" });
+      const payment = await openRazorpay(checkout);
+      if (payment.status !== "paid") {
+        track("Razorpay Dismissed", { flow: "wallet_topup" });
+        setMsg({ tone: "warn", text: "Payment was cancelled. You weren't charged." });
+        return;
+      }
+      const res = await secureCall("wallet.confirmTopup", { intent, razorpay: { paymentId: payment.paymentId, orderId: payment.orderId, signature: payment.signature } });
+      setMsg(res.status === "credited" ? { tone: "success", text: `${inr(amount)} added to your Hash Wallet.` } : { tone: "warn", text: res.message });
+      onDone();
+    } catch (err) {
+      track("Wallet Topup Failed", { amount, reason: String(err.code || err.status || "error") });
+      setMsg({ tone: "error", text: err.message });
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div className="rounded-[24px] border border-white/[0.08] bg-[#0e0e12] p-6">
+      <p className="flex items-center gap-2 text-[15px] font-semibold text-white"><Plus className="h-4 w-4 text-[#ff9a3d]" aria-hidden /> Add money</p>
+      <div className="mt-4 grid grid-cols-4 gap-2">
+        {TOPUP_PRESETS.map((n) => (
+          <button key={n} type="button" aria-pressed={amount === n} onClick={() => setAmount(n)} className={cx("rounded-full py-2 text-sm font-medium transition", amount === n ? "bg-white text-black" : "bg-white/[0.06] text-white/80 hover:bg-white/[0.12]")}>
+            ₹{n}
+          </button>
+        ))}
+      </div>
+      <label className="mt-3 flex items-center gap-2 rounded-2xl border border-white/10 px-4 py-2.5 focus-within:border-white/40">
+        <span className="text-white/50">₹</span>
+        <input
+          type="number"
+          inputMode="numeric"
+          min={limits.min}
+          max={limits.max}
+          value={Number.isFinite(amount) ? amount : ""}
+          onChange={(e) => setAmount(Math.floor(Number(e.target.value)))}
+          aria-label="Amount to add"
+          className="w-full bg-transparent text-[15px] text-white outline-none"
+        />
+      </label>
+      {!valid && <p className="mt-2 text-xs text-amber-200">Enter between ₹{limits.min} and ₹{limits.max.toLocaleString("en-IN")}.</p>}
+      {msg && <div className="mt-3"><Notice tone={msg.tone}>{msg.text}</Notice></div>}
+      <Button className="mt-4 w-full" loading={busy} disabled={!valid} onClick={go}>Add {valid ? inr(amount) : "money"}</Button>
+      <p className="mt-2 text-center text-[11px] text-white/35">UPI, card or netbanking via Razorpay</p>
+    </div>
+  );
+}
+
+function WalletTab({ wallet, onRefresh }) {
   if (!wallet) return <Spinner label="Loading wallet" />;
   return (
     <div className="grid gap-5 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)]">
@@ -166,8 +346,9 @@ function WalletTab({ wallet }) {
         <div className="relative overflow-hidden rounded-[24px] border border-white/[0.08] bg-gradient-to-br from-[#3b0f2a] via-[#141018] to-[#3b2208] p-6">
           <p className="flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.14em] text-white/55"><Wallet className="h-4 w-4" aria-hidden /> Hash Wallet</p>
           <p className="mt-3 text-4xl font-semibold tracking-tight text-white">{inr(wallet.balance)}</p>
-          <p className="mt-2 text-sm text-white/55">Pay for cafe slots and passes in one tap. Top up from the Hash app.</p>
+          <p className="mt-2 text-sm text-white/55">Pay for cafe slots and passes in one tap.{wallet.topup ? "" : " Top up from the Hash app."}</p>
         </div>
+        {wallet.topup && <TopUp limits={wallet.topup} onDone={onRefresh} />}
         <div className="rounded-[24px] border border-white/[0.08] bg-[#0e0e12] p-6">
           <p className="flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.14em] text-white/55"><Coins className="h-4 w-4 text-[#ffd23d]" aria-hidden /> Hash Coins</p>
           <p className="mt-3 text-3xl font-semibold tracking-tight text-white">{wallet.coins == null ? "—" : wallet.coins.toLocaleString("en-IN")}</p>
@@ -202,90 +383,41 @@ function WalletTab({ wallet }) {
 /* ------------------------------------------------------------------ passes */
 
 function PassesTab({ mine, available, balance, onBought }) {
-  const [busy, setBusy] = useState("");
-  const [message, setMessage] = useState(null);
-
-  async function buy(pass, method) {
-    setMessage(null);
-    setBusy(`${pass.id}:${method}`);
-    try {
-      const res = await secureCall("passes.buy", { passId: pass.id, method });
-      if (res.status === "payment_required") {
-        const payment = await openRazorpay(res.checkout);
-        if (payment.status !== "paid") {
-          setMessage({ tone: "warn", text: "Payment was cancelled. You weren't charged." });
-          return;
-        }
-        const done = await secureCall("passes.confirmPayment", { intent: res.intent, razorpay: { paymentId: payment.paymentId, orderId: payment.orderId, signature: payment.signature } });
-        if (done.status === "needs_attention") {
-          setMessage({ tone: "warn", text: done.message });
-          onBought();
-          return;
-        }
-      }
-      track("Pass Purchased", { pass_id: pass.id, payment_method: method });
-      setMessage({ tone: "success", text: `${pass.name} is active. Pick it under "Pay with" when you book.` });
-      onBought();
-    } catch (err) {
-      setMessage({ tone: "error", text: err.message });
-    } finally {
-      setBusy("");
-    }
-  }
-
   if (!mine || !available) return <Spinner label="Loading passes" />;
-  const forSale = available.filter((p) => !p.owned);
+  const groups = [
+    ["hash", "Hash passes", mine.filter((p) => p.scope === "hash")],
+    ["cafe", "Cafe passes", mine.filter((p) => p.scope !== "hash")],
+  ].filter(([, , list]) => list.length);
   return (
-    <div className="space-y-8">
-      {message && <Notice tone={message.tone}>{message.text}</Notice>}
+    <div className="space-y-10">
       <section>
         <h3 className="text-[17px] font-semibold text-white">My passes</h3>
         {mine.length === 0 ? (
           <p className="mt-2 text-sm text-white/50">No active passes. A pass covers your slots, so you book without paying each time.</p>
         ) : (
-          <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-            {mine.map((p) => (
-              <li key={p.id} className="relative overflow-hidden rounded-[22px] border border-white/[0.1] bg-gradient-to-br from-[#2a0838] via-[#111015] to-[#3b1a0a] p-5">
-                <p className="flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.14em] text-white/55"><Ticket className="h-4 w-4" aria-hidden /> {p.vendorName}</p>
-                <p className="mt-2 text-xl font-semibold text-white">{p.name}</p>
-                <p className="mt-1 text-sm text-white/60">{p.validTo ? `Valid ${fmtDate(p.validFrom, { day: "numeric", month: "short" })} – ${fmtDate(p.validTo, { day: "numeric", month: "short", year: "numeric" })}` : "Active"}</p>
-                <span className="absolute right-4 top-4 rounded-full bg-emerald-500/15 px-2.5 py-1 text-[12px] font-medium text-emerald-200">Active</span>
-              </li>
-            ))}
-          </ul>
+          groups.map(([id, label, list]) => (
+            <div key={id} className="mt-4">
+              {groups.length > 1 && <p className="mb-2.5 text-[13px] font-medium text-white/55">{label}</p>}
+              <ul className="grid gap-3 sm:grid-cols-2">
+                {list.map((p) => (
+                  <li key={p.id} className="relative overflow-hidden rounded-[22px] border border-white/[0.1] bg-gradient-to-br from-[#2a0838] via-[#111015] to-[#3b1a0a] p-5">
+                    <p className="flex items-center gap-2 pr-16 text-[12px] font-medium uppercase tracking-[0.14em] text-white/55"><Ticket className="h-4 w-4" aria-hidden /> {p.scope === "hash" ? "Any Hash cafe" : p.vendorName}</p>
+                    <p className="mt-2 text-xl font-semibold text-white">{p.name}</p>
+                    <p className="mt-1 text-sm text-white/60">{p.validTo ? `Valid ${fmtDate(p.validFrom, { day: "numeric", month: "short" })} – ${fmtDate(p.validTo, { day: "numeric", month: "short", year: "numeric" })}` : "Active"}</p>
+                    <span className="absolute right-4 top-4 rounded-full bg-emerald-500/15 px-2.5 py-1 text-[12px] font-medium text-emerald-200">Active</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
         )}
       </section>
 
       <section>
         <h3 className="text-[17px] font-semibold text-white">Get a pass</h3>
-        {forSale.length === 0 ? (
-          <p className="mt-2 text-sm text-white/50">{available.length ? "You already own every pass on sale." : "No passes on sale right now."}</p>
-        ) : (
-          <ul className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-            {forSale.map((p) => (
-              <li key={p.id} className="flex flex-col rounded-[22px] border border-white/[0.08] bg-[#0e0e12] p-5">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="truncate text-[12px] font-medium uppercase tracking-[0.14em] text-white/45">{p.vendorName}</p>
-                    <p className="mt-1 text-lg font-semibold text-white">{p.name}</p>
-                  </div>
-                  <p className="shrink-0 text-xl font-semibold text-white">{inr(p.price)}</p>
-                </div>
-                <p className="mt-2 line-clamp-3 text-sm text-white/55">
-                  {p.description || (p.mode === "hour" ? `${p.totalHours || ""} hours of play` : `Unlimited slots for ${p.daysValid} days`)}
-                </p>
-                <p className="mt-2 text-xs text-white/40">{p.mode === "hour" ? `${p.totalHours} hours` : `${p.daysValid} days`} · {p.vendorId == null ? "All Hash cafes" : "This cafe only"}</p>
-                <div className="mt-auto grid grid-cols-2 gap-2 pt-4">
-                  <Button size="sm" loading={busy === `${p.id}:online`} disabled={Boolean(busy)} onClick={() => buy(p, "online")}>Pay {inr(p.price)}</Button>
-                  <Button size="sm" variant="subtle" loading={busy === `${p.id}:wallet`} disabled={Boolean(busy) || (balance != null && balance < p.price)} onClick={() => buy(p, "wallet")}>
-                    Wallet
-                  </Button>
-                </div>
-                {balance != null && balance < p.price && <p className="mt-2 text-xs text-white/35">Wallet balance {inr(balance)}</p>}
-              </li>
-            ))}
-          </ul>
-        )}
+        <div className="mt-4">
+          <PassCatalog passes={available} balance={balance} onBought={onBought} source="account" />
+        </div>
       </section>
     </div>
   );
@@ -381,7 +513,7 @@ export default function AccountView() {
 
   if (!ready || !user) return <Spinner label="Loading account" />;
 
-  const upcomingCount = bookings ? bookings.bookings.filter((b) => !b.incomplete && b.date && b.date >= bookings.today && ["success", "warn"].includes(b.status.tone)).length : null;
+  const upcomingCount = bookings ? mergeVisits(bookings.bookings.filter((b) => !b.incomplete && b.upcoming)).length : null;
   const initial = (user.name || user.handle || "P").trim().charAt(0).toUpperCase();
   const stats = [
     { label: "Hash Wallet", value: wallet ? inr(wallet.balance) : "…", icon: Wallet, tab: "wallet" },
@@ -450,7 +582,7 @@ export default function AccountView() {
           </div>
         )}
         {tab === "bookings" && <Bookings data={bookings} />}
-        {tab === "wallet" && <WalletTab wallet={wallet} />}
+        {tab === "wallet" && <WalletTab wallet={wallet} onRefresh={() => secureCall("wallet.summary").then(setWallet).catch(() => {})} />}
         {tab === "passes" && (
           <PassesTab
             mine={passes}

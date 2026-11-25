@@ -15,6 +15,31 @@ import { sha256Hex } from "@/lib/secure/server-crypto";
 
 // Events the browser may send. Server-only events (payments, confirmations,
 // sign-ups) are emitted by the gateway itself and cannot be forged by clients.
+// Outcomes only the gateway may report (so funnels can't be inflated by clients).
+export const SERVER_ONLY_EVENTS = new Set([
+  "Booking Started",
+  "Booking Confirmed",
+  "Payment Initiated",
+  "Payment Success",
+  "Payment Failed",
+  "Order Completed",
+  "Pass Purchased",
+  "Pass Purchase Started",
+  "Wallet Topup Started",
+  "Wallet Topup Completed",
+  "Wallet Topup Failed",
+  "Signup Completed",
+  "Login Successful",
+  "Checkout Started",
+  "Store Account Created",
+  "API Error",
+]);
+
+/** Any "Title Case" event name from the browser, except the server-only ones. */
+export function isClientEvent(name) {
+  return typeof name === "string" && /^[A-Z][A-Za-z0-9 ]{2,40}$/.test(name) && !SERVER_ONLY_EVENTS.has(name);
+}
+
 export const CLIENT_EVENTS = new Set([
   "Page Viewed",
   "Cafe List Viewed",

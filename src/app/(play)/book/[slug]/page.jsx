@@ -7,6 +7,7 @@ import { OpenBadge } from "@/components/play/CafeDirectory";
 import JsonLd from "@/components/JsonLd";
 import { withQuery } from "@/lib/verticals";
 import CafeBooking from "@/components/play/CafeBooking";
+import CafePasses from "@/components/play/CafePasses";
 import { CafeCard } from "@/components/play/CafeDirectory";
 import { Breadcrumbs, Container, CrossSell, FaqList, SectionHeading, breadcrumbsLd, faqLd } from "@/components/play/parts";
 import { loadCafeDetail, loadCafes } from "@/lib/server/ops/booking";
@@ -209,7 +210,7 @@ export default async function CafePage({ params, searchParams }) {
                   [Wallet, "Slots from", range ? `${inr(range.min)}` : "See prices"],
                   [Gamepad2, "Play on", consoles.length ? `${consoles.length} ${consoles.length === 1 ? "setup" : "setups"} · ${consoles.reduce((n, c) => n + (c.units || 0), 0) || "—"} stations` : "—"],
                   [Clock, "Hours", cafe.opens && cafe.closes ? `${fmtTime(cafe.opens)} – ${fmtTime(cafe.closes)}` : "—"],
-                  [CreditCard, "Pay", cafe.payAtCafe ? "Online or at the cafe" : "Online"],
+                  [CreditCard, "Pay", [cafe.payAtCafe && "At the cafe", "Online", cafe.cafePass || cafe.hashPass ? "Passes" : ""].filter(Boolean).join(" · ")],
                 ].map(([Icon, label, value], i) => (
                   <div key={label} className={`p-4 sm:p-5 ${i % 2 ? "border-l border-white/[0.08]" : ""} ${i > 1 ? "border-t border-white/[0.08] sm:border-t-0" : ""} ${i === 2 ? "sm:border-l" : ""}`}>
                     <dt className="flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.12em] text-white/40">
@@ -220,6 +221,8 @@ export default async function CafePage({ params, searchParams }) {
                 ))}
               </dl>
             </section>
+
+            <CafePasses vendorId={cafe.id} cafeName={cafe.name} />
 
             {cafe.amenities?.length > 0 && (
               <section aria-labelledby="amenities-title">

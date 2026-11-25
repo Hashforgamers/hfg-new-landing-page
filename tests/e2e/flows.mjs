@@ -42,6 +42,7 @@ const env = {
   FIREBASE_JWKS_URL_OVERRIDE: "http://localhost:4010/jwks",
   RAZORPAY_KEY_ID: "rzp_test_key",
   HFG_SERVICE_JWT_SECRET: BACKEND_JWT_SECRET,
+  WALLET_CREDIT_INTERNAL_TOKEN: "test-credit-token",
   HFG_SERVICE_PUBLIC_KEY: BACKEND_PUBLIC_PEM,
 };
 const web = spawn(path.join(root, "node_modules/.bin/next"), ["start", "-p", "3100"], { cwd: root, env, stdio: ["ignore", "pipe", "pipe"] });

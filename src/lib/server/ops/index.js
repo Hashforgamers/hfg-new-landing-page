@@ -3,7 +3,7 @@ import { authOps } from "./auth";
 import { bookingOps } from "./booking";
 import { storeOps } from "./store";
 import { accountOps } from "./account";
-import { CLIENT_EVENTS, sanitizeProps } from "@/lib/server/analytics";
+import { isClientEvent, sanitizeProps } from "@/lib/server/analytics";
 import { v } from "@/lib/server/validate";
 
 const analyticsOps = {
@@ -13,7 +13,7 @@ const analyticsOps = {
     async run(ctx, args) {
       const events = Array.isArray(args.events) ? args.events.slice(0, 20) : [];
       for (const raw of events) {
-        if (!raw || typeof raw !== "object" || !CLIENT_EVENTS.has(raw.name)) continue;
+        if (!raw || typeof raw !== "object" || !isClientEvent(raw.name)) continue;
         const props = sanitizeProps(raw.props);
         if (typeof raw.path === "string") props.path = raw.path.slice(0, 120).replace(/[?#].*$/, "");
         ctx.track(raw.name, props, { fromClient: true });

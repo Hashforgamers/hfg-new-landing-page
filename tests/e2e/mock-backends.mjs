@@ -87,6 +87,7 @@ export function createMockBackends() {
     passes: [], // owned passes
     nextPassId: 300,
     txns: [],
+    credited: new Set(),
   };
 
   const verifyGateway = (req, raw) => {
@@ -156,6 +157,17 @@ export function createMockBackends() {
       if (!user) return send(404, { message: "User not found", needs_signup: true });
       return send(200, { user, token: hfgJwt(user.id) });
     }
+    if (req.method === "POST" && path === "/api/users/wallet") {
+      if (!userFromHfg(req.headers.authorization)) return send(401, { message: "Invalid token" });
+      if (req.headers["x-wallet-credit-token"] !== "test-credit-token") return send(403, { message: "Wallet credit authorization required" });
+      if (!Number.isInteger(body.amount) || body.amount <= 0 || !body.reference_id) return send(400, { message: "bad" });
+      if (!state.credited.has(body.reference_id)) {
+        state.credited.add(body.reference_id);
+        state.walletBalance += body.amount;
+        state.txns.unshift({ id: 98, date: "2026-11-25", time: "11:00:00", amount: body.amount, type: "top-up", mode: "wallet", status: "success" });
+      }
+      return send(200, { message: "Wallet updated", new_balance: state.walletBalance });
+    }
     if (req.method === "GET" && path === "/api/users/wallet") {
       if (!userFromHfg(req.headers.authorization)) return send(401, { message: "Invalid token" });
       return send(200, { balance: state.walletBalance });
@@ -219,7 +231,7 @@ export function createMockBackends() {
             closing_time: "23:00:00",
             amenities: [{ name: "AC", available: true }],
             images: process.env.MOCK_RICH ? [1, 2, 3, 4, 5, 6].map((i) => ({ url: `https://res.cloudinary.com/x/neon${i}.jpg` })) : [{ url: "https://res.cloudinary.com/x/neon.jpg" }],
-            accepted_payment_methods: { pay_in_cafe: true },
+            accepted_payment_methods: { pay_in_cafe: true, hash_global_pass: true, cafe_specific_pass: true },
           },
           ...(process.env.MOCK_RICH ? RICH_CAFES : []),
         ],
@@ -227,6 +239,12 @@ export function createMockBackends() {
     }
 
     // ---------- hfg-booking
+    if ((match = m(/^\/api\/vendor\/(\d+)\/payment-methods$/))) {
+      // Neon (7) takes everything; other cafes: online, wallet and Hash passes only.
+      const all = ["hash_wallet", "hash_global_pass", "cafe_specific_pass", "payment_gateway", "pay_at_cafe"];
+      const enabled = match[1] === "7" ? all : ["hash_wallet", "hash_global_pass", "payment_gateway"];
+      return send(200, { success: true, vendor_id: Number(match[1]), enabled_payment_methods: enabled });
+    }
     if ((match = m(/^\/api\/games\/vendor\/(\d+)$/))) {
       return send(200, {
         games: [{ id: 55, game_name: "ps5", total_slots: 4, single_slot_price: 150 }],
@@ -239,6 +257,16 @@ export function createMockBackends() {
         slots: [
           { slot_id: 1, start_time: "22:00:00", end_time: "23:00:00", is_available: true, available_slot: 3, single_slot_price: 150 },
           { slot_id: 2, start_time: "23:00:00", end_time: "23:59:00", is_available: true, available_slot: 1, single_slot_price: 150 },
+          ...(process.env.MOCK_RICH
+            ? [
+                { slot_id: 30, start_time: "01:30:00", end_time: "02:00:00", is_available: true, available_slot: 2, single_slot_price: 150 },
+                ...Array.from({ length: 22 }, (_, i) => {
+                  const h = 10 + Math.floor(i / 2);
+                  const mm = i % 2 ? "30" : "00";
+                  return { slot_id: 40 + i, start_time: `${String(h).padStart(2, "0")}:${mm}:00`, end_time: `${String(h + (i % 2)).padStart(2, "0")}:${i % 2 ? "00" : "30"}:00`, is_available: i % 7 !== 3, available_slot: i % 7 === 3 ? 0 : 3, single_slot_price: 150 };
+                }),
+              ]
+            : []),
         ],
       });
     }
@@ -257,7 +285,7 @@ export function createMockBackends() {
       if (!uid) return send(401, { message: "Missing Authorization Bearer token" });
       const bookings = body.slot_id.map((slotId) => {
         const id = state.nextBookingId++;
-        state.bookings.set(id, { id, uid, slotId, status: body.is_pay_at_cafe ? "pending_acceptance" : "pending" });
+        state.bookings.set(id, { id, uid, slotId, status: body.is_pay_at_cafe ? "pending_acceptance" : "pending", date: body.book_date, hasTxn: false });
         return { booking_id: id, slot_id: slotId };
       });
       return send(200, { bookings });
@@ -288,7 +316,7 @@ export function createMockBackends() {
         const b = state.bookings.get(id);
         if (!b || b.uid !== uid) return send(403, { message: "Booking does not belong to user" });
         b.status = "confirmed";
-        b.date = body.book_date;
+        b.hasTxn = true;
         b.mode = body.payment_mode;
       }
       return send(200, { message: "confirmed" });
@@ -308,7 +336,8 @@ export function createMockBackends() {
         booking_id: b.id,
         status: b.status,
         booking_mode: "regular",
-        book_date: b.date || null,
+        book_date: b.hasTxn ? b.date : null,
+        slot_date: b.date || null,
         created_at: "2026-11-25T10:00:00",
         slot: { gaming_type_id: { game_id: 55, vendor_id: 7, game_name: "ps5", single_slot_price: 150, cafe_name: null }, time: { start_time: "22:00:00", end_time: "23:00:00" } },
       }));

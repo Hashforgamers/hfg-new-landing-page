@@ -45,6 +45,20 @@ export function bookingStatus(raw) {
 }
 
 const hhmm = (t) => (typeof t === "string" && /^\d{2}:\d{2}/.test(t) ? t.slice(0, 5) : null);
+const isoDay = (v) => (typeof v === "string" && /^\d{4}-\d{2}-\d{2}/.test(v) ? v.slice(0, 10) : null);
+const istDay = (iso) => {
+  // Backend timestamps without a zone are UTC.
+  const d = new Date(/[zZ]|[+-]\d{2}:?\d{2}$/.test(iso) ? iso : `${iso}Z`);
+  return Number.isNaN(d.getTime()) ? null : new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kolkata" }).format(d);
+};
+const CONSOLE_NAMES = { pc: "PC", ps5: "PS5", ps4: "PS4", xbox: "Xbox", vr: "VR", racing: "Racing sim", nintendo: "Nintendo Switch", switch: "Nintendo Switch" };
+export function consoleName(raw) {
+  const key = String(raw || "").trim().toLowerCase();
+  if (!key) return "";
+  return CONSOLE_NAMES[key] || key.replace(/[_-]+/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()).replace(/\bPs(\d)\b/g, "PS$1");
+}
+// Still open on the cafe side: these become "Missed" or "Not accepted" once the slot is over.
+const OPEN = new Set(["confirmed", "booked", "checked_in", "in_progress", "pending_acceptance", "pending", "pending_verified", "pending_payment"]);
 
 function shapeBooking(row, cafes) {
   const game = row.slot?.gaming_type_id || {};
@@ -53,6 +67,17 @@ function shapeBooking(row, cafes) {
   const status = bookingStatus(row.status);
   const start = hhmm(row.custom_start_time) || hhmm(row.slot?.time?.start_time);
   const end = hhmm(row.custom_end_time) || hhmm(row.slot?.time?.end_time);
+  // slot_date: the booked day (hfg-booking adds it; pay-at-cafe rows have no
+  // transaction, so book_date is empty). Like the cafe dashboard, fall back
+  // to the day the booking was made.
+  const date = isoDay(row.slot_date) || isoDay(row.book_date) || (row.created_at ? istDay(row.created_at) : null);
+  const dateKnown = Boolean(isoDay(row.slot_date) || isoDay(row.book_date));
+  // Slots are calendar times on that date; an end at/after midnight rolls to the next day.
+  const endsAt = date && (end || start) ? `${date}T${end && start && end <= start ? "23:59" : end || start}:00+05:30` : null;
+  const over = endsAt ? Date.parse(endsAt) < Date.now() : true;
+  if (over && status.key === "pending_acceptance") Object.assign(status, { label: "Not accepted", tone: "muted" });
+  else if (over && ["pending", "pending_verified", "pending_payment"].includes(status.key)) Object.assign(status, { label: "Not completed", tone: "muted" });
+  const upcoming = !over && OPEN.has(status.key);
   return {
     id: Number(row.booking_id),
     cafeId: vendorId,
@@ -60,15 +85,19 @@ function shapeBooking(row, cafes) {
     cafeImage: cafe?.images?.[0] || "",
     cafeArea: cafe?.area || "",
     cafeHref: cafe ? cafePath(cafe) : "",
-    console: game.game_name || "",
-    date: row.book_date || null,
+    cafeAddress: cafe?.addressLine || "",
+    directions: cafe?.lat && cafe?.lng ? `https://www.google.com/maps/dir/?api=1&destination=${cafe.lat},${cafe.lng}` : cafe?.addressLine ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${cafe.name}, ${cafe.addressLine}`)}` : "",
+    console: consoleName(game.game_name),
+    date,
+    dateKnown,
+    upcoming,
     requestedAt: row.created_at || null,
     start,
     end,
     amount: Number(game.single_slot_price) || 0,
     mode: row.booking_mode === "private" ? "Private room" : "",
     status,
-    incomplete: INCOMPLETE.has(status.key),
+    incomplete: INCOMPLETE.has(status.key) || (over && !["confirmed", "booked", "checked_in", "in_progress", "completed"].includes(status.key) && status.tone === "muted"),
   };
 }
 
@@ -88,6 +117,9 @@ const TXN_LABEL = {
   pass_purchase: "Pass purchase",
   wallet_credit: "Added to wallet",
   wallet_debit: "Paid from wallet",
+  "top-up": "Added to wallet",
+  top_up: "Added to wallet",
+  topup: "Added to wallet",
   refund: "Refund",
   drop_crate: "Welcome reward",
 };
@@ -95,7 +127,7 @@ const TXN_LABEL = {
 function shapeTxn(t) {
   const amount = Number(t.amount) || 0;
   const type = String(t.type || "");
-  const isWallet = type.startsWith("wallet_");
+  const isWallet = type.startsWith("wallet_") || /^top.?up$/i.test(type);
   return {
     id: String(t.id || ""),
     date: t.date || "",
@@ -121,6 +153,7 @@ function shapeOwnedPass(p) {
     validFrom: p.valid_from || "",
     validTo: p.valid_to || "",
     type: p.pass_type || "",
+    scope: p.vendor_id == null ? "hash" : "cafe",
   };
 }
 
@@ -138,6 +171,7 @@ function shapeCatalogPass(p) {
     owned: Boolean(p.is_bought),
     mode: p.pass_mode === "hour_based" ? "hour" : "date",
     totalHours: p.total_hours ?? null,
+    scope: p.vendor_id == null ? "hash" : "cafe",
   };
 }
 
@@ -169,6 +203,13 @@ async function purchasePass(ctx, body) {
   return data;
 }
 
+/* --------------------------------------------------------------- top-up */
+
+const TOPUP_MIN = 10;
+const TOPUP_MAX = 10000;
+// Crediting the wallet needs user-onboard's internal credit token on this server.
+const topupEnabled = () => Boolean(process.env.WALLET_CREDIT_INTERNAL_TOKEN);
+
 /* ------------------------------------------------------------------ ops */
 
 export const accountOps = {
@@ -177,11 +218,11 @@ export const accountOps = {
     limit: { perIp: 60 },
     async run(ctx) {
       const [{ data }, cafes] = await Promise.all([
-        upstream("booking", "/api/users/bookings?compact=true&limit=60", { token: hfgToken(ctx), requestId: ctx.requestId }),
+        upstream("booking", "/api/users/bookings?compact=true&limit=120", { token: hfgToken(ctx), requestId: ctx.requestId }),
         cafeIndex(ctx),
       ]);
       const rows = Array.isArray(data) ? data : data?.bookings || [];
-      const bookings = rows.slice(0, 60).map((r) => shapeBooking(r, cafes));
+      const bookings = rows.slice(0, 120).map((r) => shapeBooking(r, cafes));
       return { bookings, today: istToday() };
     },
   },
@@ -201,6 +242,7 @@ export const accountOps = {
         balance: Number(wallet.value.data?.balance || 0),
         coins: coins.status === "fulfilled" ? Number(coins.value.data?.hash_coins || 0) : null,
         transactions: txns.status === "fulfilled" ? (txns.value.data?.transactions || []).slice(0, 40).map(shapeTxn) : [],
+        topup: topupEnabled() ? { min: TOPUP_MIN, max: TOPUP_MAX } : null,
       };
     },
   },
@@ -216,9 +258,112 @@ export const accountOps = {
   "passes.available": {
     auth: "user",
     limit: { perIp: 60 },
-    async run(ctx) {
+    async run(ctx, args = {}) {
+      const vendorId = args.vendorId == null ? null : v.int(args.vendorId, "vendorId");
       const { data } = await upstream("userOnboard", "/api/user/available_passes", { token: hfgToken(ctx), requestId: ctx.requestId });
-      return { passes: (Array.isArray(data) ? data : []).map(shapeCatalogPass) };
+      let passes = (Array.isArray(data) ? data : []).map(shapeCatalogPass);
+      if (vendorId != null) passes = passes.filter((p) => Number(p.vendorId) === vendorId);
+      return { passes };
+    },
+  },
+
+  /** Add money to Hash Wallet: Razorpay order tagged wallet_topup, like the app. */
+  "wallet.topup": {
+    auth: "user",
+    limit: { perIp: 15, perUser: 10 },
+    async run(ctx, args) {
+      if (!topupEnabled()) {
+        const e = new Error("Adding money on the website isn't available yet. Please top up in the Hash app.");
+        e.status = 503;
+        throw e;
+      }
+      const amount = v.int(args.amount, "amount");
+      if (amount < TOPUP_MIN || amount > TOPUP_MAX) {
+        const e = new Error(`Enter an amount between ₹${TOPUP_MIN} and ₹${TOPUP_MAX.toLocaleString("en-IN")}.`);
+        e.status = 400;
+        throw e;
+      }
+      ctx.track("Wallet Topup Started", { amount });
+      const { data: order } = await upstream("booking", "/api/create_order", {
+        method: "POST",
+        token: hfgToken(ctx),
+        requestId: ctx.requestId,
+        body: { amount: amount * 100, currency: "INR", receipt: `wallet_rcpt_${Date.now()}`, purpose: "wallet_topup" },
+      });
+      if (!order?.id || Number(order.amount) !== amount * 100) {
+        const e = new Error("Payment could not be started. Please try again.");
+        e.status = 502;
+        throw e;
+      }
+      const intent = sealIntent({ kind: "topup", uid: ctx.session.uid, orderId: order.id, amount, exp: Math.floor(Date.now() / 1000) + 20 * 60 });
+      return {
+        intent,
+        checkout: {
+          key: process.env.RAZORPAY_KEY_ID || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "",
+          orderId: order.id,
+          amount: order.amount,
+          currency: "INR",
+          name: "Hash For Gamers",
+          description: "Add money to Hash Wallet",
+          prefill: { name: ctx.session.name || "", email: ctx.session.email || "", contact: ctx.session.phone || "" },
+        },
+      };
+    },
+  },
+
+  "wallet.confirmTopup": {
+    auth: "user",
+    limit: { perIp: 20, perUser: 10 },
+    async run(ctx, args) {
+      const intent = openIntent(v.str(args.intent, "intent", { max: 4000 }));
+      const now = Math.floor(Date.now() / 1000);
+      if (!intent || intent.kind !== "topup" || intent.uid !== ctx.session.uid || intent.exp < now) {
+        const e = new Error("This checkout has expired. Please try again.");
+        e.status = 409;
+        throw e;
+      }
+      const rp = v.object(args.razorpay, "razorpay");
+      const paymentId = v.str(rp.paymentId, "paymentId", { max: 40, pattern: /^pay_[A-Za-z0-9]+$/ });
+      const orderId = v.str(rp.orderId, "orderId", { max: 40, pattern: /^order_[A-Za-z0-9]+$/ });
+      const signature = v.str(rp.signature, "signature", { max: 128, pattern: /^[a-f0-9]{64}$/ });
+      if (orderId !== intent.orderId) {
+        const e = new Error("Payment does not match this checkout.");
+        e.status = 400;
+        throw e;
+      }
+      // 1) hfg-booking checks the Razorpay signature, that the order is this
+      //    user's wallet_topup order, and captures it.
+      await upstream("booking", "/api/capture_payment", {
+        method: "POST",
+        token: hfgToken(ctx),
+        requestId: ctx.requestId,
+        body: { razorpay_payment_id: paymentId, razorpay_order_id: orderId, razorpay_signature: signature },
+      });
+      if (!(await claimOnce(`topup:${orderId}`, 90))) {
+        const e = new Error("We're already adding this payment to your wallet. Check again in a moment.");
+        e.status = 409;
+        throw e;
+      }
+      // 2) Credit exactly the amount of the order we created (sealed above).
+      //    reference_id makes a retry idempotent on the backend.
+      try {
+        const { data } = await upstream("userOnboard", "/api/users/wallet", {
+          method: "POST",
+          token: hfgToken(ctx),
+          requestId: ctx.requestId,
+          headers: { "X-Wallet-Credit-Token": process.env.WALLET_CREDIT_INTERNAL_TOKEN },
+          body: { amount: intent.amount, reference_id: paymentId },
+          timeoutMs: 20000,
+        });
+        ctx.track("Wallet Topup Completed", { amount: intent.amount });
+        return { status: "credited", balance: Number(data?.new_balance ?? 0) };
+      } catch (error) {
+        ctx.track("Wallet Topup Failed", { amount: intent.amount, reason: error instanceof UpstreamError ? `http_${error.status}` : "error" });
+        if (error instanceof UpstreamError && error.status >= 500) {
+          return { status: "needs_attention", message: "Payment received. Your wallet will be updated shortly. Don't pay again." };
+        }
+        throw error;
+      }
     },
   },
 
