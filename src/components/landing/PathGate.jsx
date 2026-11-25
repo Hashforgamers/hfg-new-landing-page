@@ -9,6 +9,7 @@ import {
   useReducedMotion,
   useTransform,
 } from 'framer-motion';
+import { CalendarCheck, ShoppingBag } from 'lucide-react';
 import { track } from '@/lib/analytics';
 import { PATH_EVENT, scrollToTop, setPath } from '@/lib/paths';
 import { SITE_LOGO } from '@/lib/site';
@@ -189,15 +190,43 @@ export default function PathGate({ cards }) {
           aria-hidden="true"
         />
         <div key={round} className="relative mx-auto flex min-h-full max-w-[1500px] flex-col px-4 py-8 sm:px-8 md:justify-center md:py-6">
-          <motion.div
-            className="flex items-center gap-2"
+          <motion.header
+            className="flex flex-wrap items-center justify-between gap-x-6 gap-y-4"
             initial={reduce ? false : { opacity: 0, y: -12 }}
             animate={{ opacity: leaving ? 0 : 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Image src={SITE_LOGO} alt="" width={40} height={40} priority className="h-9 w-9" />
-            <span className="font-display text-2xl uppercase tracking-wide text-white">Hash</span>
-          </motion.div>
+            <div className="flex items-center gap-2">
+              <Image src={SITE_LOGO} alt="" width={40} height={40} priority className="h-9 w-9" />
+              <span className="font-display text-2xl uppercase tracking-wide text-white">Hash</span>
+            </div>
+            <nav aria-label="Skip to" className="flex w-full flex-wrap items-center gap-2 sm:w-auto">
+              <span className="mr-1 hidden text-sm text-white/55 lg:inline">Just here to play?</span>
+              {[
+                ['/book', 'Book a gaming cafe', 'Book a cafe', 'book_click', CalendarCheck, 'border-[#ff3d8b]/35 bg-[#ff3d8b]/[0.12] hover:border-[#ff3d8b]/70 hover:bg-[#ff3d8b]/20', 'text-[#ff7bb0]'],
+                ['/marketplace', 'Shop gaming gear', 'Shop gear', 'shop_click', ShoppingBag, 'border-[#ff9a3d]/35 bg-[#ff9a3d]/[0.12] hover:border-[#ff9a3d]/70 hover:bg-[#ff9a3d]/20', 'text-[#ffb36b]'],
+              ].map(([href, label, short, event, Icon, tone, iconTone]) => (
+                <a
+                  key={href}
+                  href={href}
+                  data-track={event}
+                  data-track-placement="path_gate"
+                  onClick={() => {
+                    // They're a player: home shows the gamer view next time.
+                    try {
+                      sessionStorage.setItem('hash-path', 'gamer');
+                    } catch {}
+                  }}
+                  className={`group inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full border px-3 py-2 sm:px-4 text-sm font-medium text-white backdrop-blur-sm transition sm:flex-none ${tone}`}
+                >
+                  <Icon className={`h-4 w-4 ${iconTone}`} aria-hidden="true" />
+                  <span className="sm:hidden">{short}</span>
+                  <span className="hidden sm:inline">{label}</span>
+                  <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">→</span>
+                </a>
+              ))}
+            </nav>
+          </motion.header>
           <motion.p
             id="path-gate-title"
             className="mt-8 font-display text-[clamp(3rem,min(9vw,12svh),8rem)] uppercase leading-[0.85] text-white md:mt-5"
@@ -207,45 +236,14 @@ export default function PathGate({ cards }) {
           >
             Choose your <span className="bg-gradient-to-r from-[#ff3d8b] via-[#ff9a3d] to-[#ffd23d] bg-clip-text text-transparent">path</span>
           </motion.p>
-          <div className="md:mt-3 md:flex md:flex-wrap md:items-center md:justify-between md:gap-x-8 md:gap-y-2">
           <motion.p
-            className="mt-3 max-w-xl text-sm leading-6 text-white/65 md:mt-0 md:text-base"
+            className="mt-3 max-w-xl text-sm leading-6 text-white/65 md:text-base"
             initial={reduce ? false : { opacity: 0 }}
             animate={{ opacity: leaving ? 0 : 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             Tell us who you are and we&apos;ll show you what Hash does for you. You can switch any time.
           </motion.p>
-          <motion.nav
-            aria-label="Skip to"
-            className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-2 text-sm text-white/50 md:mt-0"
-            initial={reduce ? false : { opacity: 0 }}
-            animate={{ opacity: leaving ? 0 : 1 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <span>Just here to play?</span>
-            {[
-              ['/book', 'Book a gaming cafe', 'book_click'],
-              ['/marketplace', 'Shop gaming gear', 'shop_click'],
-            ].map(([href, label, event]) => (
-              <a
-                key={href}
-                href={href}
-                data-track={event}
-                data-track-placement="path_gate"
-                onClick={() => {
-                  // They're a player: home shows the gamer view next time.
-                  try {
-                    sessionStorage.setItem('hash-path', 'gamer');
-                  } catch {}
-                }}
-                className="inline-flex items-center gap-1 rounded-full border border-white/15 px-3 py-1 text-white/80 transition hover:border-white/40 hover:text-white"
-              >
-                {label} <span aria-hidden="true">→</span>
-              </a>
-            ))}
-          </motion.nav>
-          </div>
           <div className="mt-8 grid gap-3 md:mt-5 md:max-h-[480px] md:min-h-[276px] md:flex-1 md:grid-cols-3 md:grid-rows-[minmax(0,1fr)] md:gap-5 md:p-2" style={{ perspective: 1200 }}>
             {cards.map((c, i) => (
               <PathCard key={c.id} card={c} index={i} onEnter={play} onSelect={select} leaving={leaving} />
