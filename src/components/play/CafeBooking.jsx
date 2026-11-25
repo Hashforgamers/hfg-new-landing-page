@@ -81,6 +81,14 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
   const [booked, setBooked] = useState(null);
   const [flowError, setFlowError] = useState("");
 
+  // The confirmation replaces the long form, so bring it into view (it used to leave people at the FAQ).
+  useEffect(() => {
+    if (!result) return;
+    const card = document.getElementById("book");
+    if (card) card.scrollIntoView({ behavior: "smooth", block: "start" });
+    else window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [result]);
+
   const restoreDraft = useCallback(
     (data) => {
       // Restore a selection made before the login redirect.

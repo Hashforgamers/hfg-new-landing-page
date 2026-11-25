@@ -236,6 +236,9 @@ try {
     await click(aside.getByRole("button", { name: /Sign in to book/ }));
     await page.waitForURL(/\/login/);
     await page.waitForLoadState("networkidle");
+    // Coming from a scrolled cafe page, sign-in must open at the top.
+    const loginScroll = await page.evaluate(() => window.scrollY);
+    if (loginScroll > 0) throw new Error(`login opened scrolled to ${loginScroll}px`);
     await shot("login");
 
     // ---- Log in, come back: draft should restore
