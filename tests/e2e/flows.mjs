@@ -12,7 +12,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
-import { createMockBackends, firebaseIdToken, PROJECT_ID } from "./mock-backends.mjs";
+import { createMockBackends, firebaseIdToken, PROJECT_ID, BACKEND_JWT_SECRET, BACKEND_PUBLIC_PEM } from "./mock-backends.mjs";
 
 const { chromium } = createRequire(import.meta.url)(process.env.PLAYWRIGHT_PATH || "playwright");
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -41,6 +41,8 @@ const env = {
   HFG_ALLOW_TEST_OVERRIDES: "true",
   FIREBASE_JWKS_URL_OVERRIDE: "http://localhost:4010/jwks",
   RAZORPAY_KEY_ID: "rzp_test_key",
+  HFG_SERVICE_JWT_SECRET: BACKEND_JWT_SECRET,
+  HFG_SERVICE_PUBLIC_KEY: BACKEND_PUBLIC_PEM,
 };
 const web = spawn(path.join(root, "node_modules/.bin/next"), ["start", "-p", "3100"], { cwd: root, env, stdio: ["ignore", "pipe", "pipe"] });
 let serverLog = "";
@@ -208,6 +210,11 @@ try {
     // ---- Book: logged out
     await go("/book");
     await shot("book-landing");
+    if (process.env.MOCK_RICH) {
+      await go("/book/23");
+      await shot("cafe-no-photos", { full: false });
+      await go("/book");
+    }
     await click(page.locator("#cafes a[href^='/book/']"));
     await page.waitForLoadState("networkidle");
     await shot("cafe-page");

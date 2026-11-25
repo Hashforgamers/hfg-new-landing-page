@@ -2,6 +2,7 @@ import "server-only";
 import { TokenError, verifyFirebaseIdToken } from "@/lib/server/firebase-verify";
 import { upstream, UpstreamError } from "@/lib/server/upstream";
 import { peekJwt } from "@/lib/server/jwt-peek";
+import { canMintHfgToken, mintHfgToken } from "@/lib/server/hfg-token";
 import { clean, v } from "@/lib/server/validate";
 import { newSession, publicProfile } from "@/lib/secure/session";
 import { hit } from "@/lib/secure/store";
@@ -52,6 +53,14 @@ function sessionFromAccount(account, identity) {
     const e = new Error("Sign-in failed. Please try again.");
     e.status = 502;
     throw e;
+  }
+  if (canMintHfgToken()) {
+    // Backends need the app-format token (see hfg-token.js). It is re-minted
+    // from the user id as it nears expiry, so the website session is not cut
+    // short by the 2 hour sign-in token.
+    const session = newSession({ user, fid: identity.uid });
+    const minted = mintHfgToken(session.uid);
+    return { ...session, hfg: minted.token, hfgExp: minted.exp, hfgMinted: true };
   }
   const claims = peekJwt(token);
   return newSession({ user, hfgToken: token, hfgTokenExp: Number(claims.exp) || undefined, fid: identity.uid });
