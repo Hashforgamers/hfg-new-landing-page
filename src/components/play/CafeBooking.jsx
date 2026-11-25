@@ -386,7 +386,7 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
             {!slots && !slotError && <Spinner label="Checking availability" />}
             {slots && !visibleSlots.length && <p className="text-sm text-white/55">No slots left on this day. Try another date.</p>}
             {slots && visibleSlots.length > 0 && (
-              <div className="space-y-5">
+              <div className="space-y-4 lg:-mr-2 lg:max-h-[264px] lg:overflow-y-auto lg:overscroll-contain lg:pr-2 [scrollbar-width:thin]">
                 {DAY_PARTS.map((part) => {
                   const list = visibleSlots.filter((x) => dayPart(x.start) === part.id);
                   if (!list.length) return null;
@@ -396,7 +396,7 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
                       <p className="mb-2 flex items-center gap-1.5 text-xs text-white/45">
                         <PartIcon className="h-3.5 w-3.5" aria-hidden /> {part.label}
                       </p>
-                      <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-3">
+                      <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
                         {list.map((x) => (
                           <Chip
                             key={x.id}
@@ -404,7 +404,7 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
                             disabled={!x.available}
                             onClick={() => toggleSlot(x)}
                             aria-label={`${formatTime(x.start)}${x.available ? "" : ", full"}`}
-                            className="flex min-h-[50px] w-full flex-col items-center justify-center whitespace-nowrap rounded-2xl px-1 text-[13px] leading-tight"
+                            className="flex min-h-[46px] w-full flex-col items-center justify-center whitespace-nowrap rounded-2xl px-1 text-[13px] leading-tight"
                           >
                             {formatTime(x.start)}
                             {x.available && x.left <= 2 && !picked.includes(x.id) && <span className="mt-0.5 text-[10px] font-normal text-amber-300">{x.left} left</span>}
