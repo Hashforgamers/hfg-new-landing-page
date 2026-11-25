@@ -194,6 +194,9 @@ export async function secureCall(op, args = {}, opts = {}) {
   if (!plain.ok) {
     // The server cleared the login (expired or rejected by a backend): let the UI show signed-out state.
     if (plain.error?.code === "auth_required" && typeof window !== "undefined") window.dispatchEvent(new Event("hfg:signed-out"));
+    if (typeof window !== "undefined" && op !== "analytics.track") {
+      window.dispatchEvent(new CustomEvent("hfg:api-error", { detail: { op, status: plain.status || 0, code: String(plain.error?.code || "error").slice(0, 40) } }));
+    }
     throw new SecureError(plain.error?.message || "Something went wrong", { status: plain.status, code: plain.error?.code });
   }
   return plain.data;

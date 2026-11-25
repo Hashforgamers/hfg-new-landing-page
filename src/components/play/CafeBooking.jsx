@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { Car, CheckCircle2, Gamepad2, Glasses, Monitor, Moon, Sun, Sunrise, Sunset } from "lucide-react";
+import { Car, CheckCircle2, ChevronLeft, ChevronRight, Gamepad2, Glasses, Monitor, Moon, MoonStar, Sun, Sunrise, Sunset } from "lucide-react";
 import { secureCall } from "@/lib/secure/client";
 import { track } from "@/lib/analytics-client";
 import { openRazorpay } from "@/lib/razorpay-client";
@@ -25,15 +25,17 @@ function consoleIcon(c) {
   return Gamepad2;
 }
 
+// Slots are calendar times on the chosen date (the cafe dashboard reads them
+// the same way), so 1:30 AM is the early hours of that date and comes first.
 const DAY_PARTS = [
+  { id: "early", label: "Early hours", icon: MoonStar, from: 0, to: 5 },
   { id: "morning", label: "Morning", icon: Sunrise, from: 5, to: 12 },
   { id: "afternoon", label: "Afternoon", icon: Sun, from: 12, to: 17 },
   { id: "evening", label: "Evening", icon: Sunset, from: 17, to: 21 },
-  { id: "night", label: "Night", icon: Moon, from: 21, to: 29 },
+  { id: "night", label: "Night", icon: Moon, from: 21, to: 24 },
 ];
 function dayPart(start) {
-  let h = Number(String(start).slice(0, 2));
-  if (h < 5) h += 24;
+  const h = Number(String(start).slice(0, 2));
   return DAY_PARTS.find((p) => h >= p.from && h < p.to)?.id || "night";
 }
 
@@ -164,17 +166,50 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
     };
   }, [vendorId, consoleSel, date, picked]);
 
+  // What this cafe accepts, as set in its dashboard (same rules as the app's checkout).
+  const [payments, setPayments] = useState(null);
+  useEffect(() => {
+    secureCall("cafes.payments", { vendorId })
+      .then((d) => setPayments(d.methods))
+      .catch(() => setPayments({ online: true, wallet: true, payAtCafe: Boolean(detail?.cafe?.payAtCafe), hashPass: false, cafePass: false }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [vendorId]);
+
   // Passes the player owns (same list as the app's "My passes").
   const [passes, setPasses] = useState(null);
+  useEffect(() => {
+    // A pass bought on this page shows up under "Pay with" straight away.
+    const refresh = () => setPasses(null);
+    window.addEventListener("hfg:passes-changed", refresh);
+    return () => window.removeEventListener("hfg:passes-changed", refresh);
+  }, []);
   useEffect(() => {
     if (user && passes === null) secureCall("passes.mine").then((d) => setPasses(d.passes)).catch(() => setPasses([]));
   }, [user, passes]);
   const usablePasses = (passes || []).filter(
-    (p) => (p.vendorId == null || Number(p.vendorId) === Number(vendorId)) && (!p.validFrom || p.validFrom <= date) && (!p.validTo || p.validTo >= date),
+    (p) =>
+      (p.vendorId == null ? payments?.hashPass : Number(p.vendorId) === Number(vendorId) && payments?.cafePass) &&
+      (!p.validFrom || p.validFrom <= date) &&
+      (!p.validTo || p.validTo >= date),
   );
+  const methodOptions = [
+    { id: "online", label: "UPI, card or netbanking", show: payments ? payments.online : true },
+    { id: "wallet", label: wallet !== null ? `Hash Wallet (${inr(wallet)})` : "Hash Wallet", show: Boolean(user) && (payments ? payments.wallet : true) },
+    { id: "pay_at_cafe", label: "Pay at the cafe", show: payments ? payments.payAtCafe : Boolean(detail?.cafe?.payAtCafe) },
+    ...usablePasses.map((p) => ({
+      id: `pass:${p.id}`,
+      label: `${p.name} · ${p.vendorId == null ? "Hash pass" : "cafe pass"}${p.validTo ? `, valid till ${new Date(`${p.validTo}T12:00:00+05:30`).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}` : ""}`,
+      show: true,
+    })),
+  ].filter((m) => m.show);
+  useEffect(() => {
+    // Default to the first method the cafe accepts.
+    if (payments && !methodOptions.some((m) => m.id === method) && methodOptions[0]) setMethod(methodOptions[0].id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [payments, methodOptions.map((m) => m.id).join(","), method]);
   useEffect(() => {
     // A pass chosen for another date no longer applies.
-    if (method.startsWith("pass:") && !usablePasses.some((p) => `pass:${p.id}` === method)) setMethod("online");
+    if (method.startsWith("pass:") && !usablePasses.some((p) => `pass:${p.id}` === method)) setMethod(payments?.online === false ? "pay_at_cafe" : "online");
   }, [method, usablePasses]);
 
   useEffect(() => {
@@ -252,6 +287,7 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
       setBooked(summary);
       setResult(confirmed);
     } catch (err) {
+      track("Booking Failed", { cafe_id: vendorId, method: method.startsWith("pass:") ? "pass" : method, code: String(err.code || err.status || "error").slice(0, 40), slots: picked.length });
       setFlowError(err.message);
       if (err.status === 409) {
         // Refresh availability after a conflict.
@@ -323,7 +359,7 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
   const { cafe, consoles } = detail;
   const pickedSlots = (slots || []).filter((s) => picked.includes(s.id));
   const walletShort = method === "wallet" && quote && wallet !== null && wallet < quote.total;
-  const visibleSlots = (slots || []).filter((s) => !isPast(date, s.start));
+  const visibleSlots = (slots || []).filter((s) => !isPast(date, s.start)).sort((a, b) => String(a.start).localeCompare(String(b.start)));
 
   return (
     <Panel padded={false} className="overflow-hidden">
@@ -407,38 +443,7 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
             {slotError && <Notice>{slotError}</Notice>}
             {!slots && !slotError && <Spinner label="Checking availability" />}
             {slots && !visibleSlots.length && <p className="text-sm text-white/55">No slots left on this day. Try another date.</p>}
-            {slots && visibleSlots.length > 0 && (
-              <div className="space-y-4">
-                {DAY_PARTS.map((part) => {
-                  const list = visibleSlots.filter((x) => dayPart(x.start) === part.id);
-                  if (!list.length) return null;
-                  const PartIcon = part.icon;
-                  return (
-                    <div key={part.id}>
-                      <p className="mb-2 flex items-center gap-1.5 text-xs text-white/45">
-                        <PartIcon className="h-3.5 w-3.5" aria-hidden /> {part.label}
-                      </p>
-                      <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
-                        {list.map((x) => (
-                          <Chip
-                            key={x.id}
-                            active={picked.includes(x.id)}
-                            disabled={!x.available}
-                            onClick={() => toggleSlot(x)}
-                            aria-label={`${formatTime(x.start)}${x.available ? "" : ", full"}`}
-                            className="flex min-h-[46px] w-full flex-col items-center justify-center whitespace-nowrap rounded-2xl px-1 text-[13px] leading-tight"
-                          >
-                            {formatTime(x.start)}
-                            {x.available && x.left <= 2 && !picked.includes(x.id) && <span className="mt-0.5 text-[10px] font-normal text-amber-300">{x.left} left</span>}
-                            {!x.available && <span className="mt-0.5 text-[10px] font-normal">Full</span>}
-                          </Chip>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
+            {slots && visibleSlots.length > 0 && <SlotScroller slots={visibleSlots} picked={picked} onToggle={toggleSlot} />}
             {picked.length >= MAX_SLOTS && <p className="mt-3 text-xs text-white/50">You can book up to {MAX_SLOTS} slots at once.</p>}
           </div>
         </section>
@@ -471,13 +476,7 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
 
             <Label className="mt-6">Pay with</Label>
             <div className="mt-3 grid gap-2" role="radiogroup" aria-label="Payment method">
-              {[
-                { id: "online", label: "UPI, card or netbanking", show: true },
-                { id: "wallet", label: wallet !== null ? `Hash Wallet (${inr(wallet)})` : "Hash Wallet", show: Boolean(user) },
-                { id: "pay_at_cafe", label: "Pay at the cafe", show: cafe.payAtCafe },
-                ...usablePasses.map((p) => ({ id: `pass:${p.id}`, label: `${p.name} · pass${p.validTo ? `, valid till ${new Date(`${p.validTo}T12:00:00+05:30`).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}` : ""}`, show: true })),
-              ]
-                .filter((m) => m.show)
+              {methodOptions
                 .map((m) => (
                   <button
                     key={m.id}
@@ -498,13 +497,14 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
                   </button>
                 ))}
             </div>
+            {payments && !methodOptions.length && <p className="mt-2 text-xs text-amber-200">This cafe isn&apos;t taking online bookings right now. Book in the Hash app or at the cafe.</p>}
             {walletShort && <p className="mt-2 text-xs text-amber-200">Not enough wallet balance. Choose another method.</p>}
             {flowError && <div className="mt-4"><Notice>{flowError}</Notice></div>}
             <Button
               size="lg"
               className="mt-5 w-full"
               loading={busy}
-              disabled={!quote || quoting || !quote.allBookable || walletShort || !ready}
+              disabled={!quote || quoting || !quote.allBookable || walletShort || !ready || (payments && !methodOptions.length)}
               onClick={onBook}
             >
               {!user ? `Sign in to book${quote ? ` · ${inr(quote.total)}` : ""}` : method === "online" ? `Pay ${quote ? inr(quote.total) : ""}` : method.startsWith("pass:") ? "Book with my pass" : "Confirm booking"}
@@ -514,5 +514,110 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
         )}
       </section>
     </Panel>
+  );
+}
+
+/**
+ * Day-part tabs over a sideways scroller of slots, in time order from now.
+ * Two rows on wide cards keep many slots compact without a long grid.
+ */
+function SlotScroller({ slots, picked, onToggle }) {
+  const parts = DAY_PARTS.map((p) => ({ ...p, list: slots.filter((x) => dayPart(x.start) === p.id) })).filter((p) => p.list.length);
+  const firstOpen = parts.find((p) => p.list.some((x) => x.available)) || parts[0];
+  const [partId, setPartId] = useState(firstOpen?.id);
+  const scroller = useRef(null);
+  const [edges, setEdges] = useState({ left: false, right: false });
+  const part = parts.find((p) => p.id === partId) || firstOpen;
+
+  const measure = useCallback(() => {
+    const el = scroller.current;
+    if (!el) return;
+    setEdges({ left: el.scrollLeft > 4, right: el.scrollLeft + el.clientWidth < el.scrollWidth - 4 });
+  }, []);
+  useEffect(() => {
+    if (!parts.some((p) => p.id === partId)) setPartId(firstOpen?.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slots]);
+  useEffect(() => {
+    scroller.current?.scrollTo({ left: 0 });
+    measure();
+  }, [part?.id, measure]);
+  useEffect(() => {
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [measure]);
+
+  if (!part) return null;
+  const nudge = (dir) => scroller.current?.scrollBy({ left: dir * scroller.current.clientWidth * 0.8, behavior: "smooth" });
+  const pickedHere = (p) => p.list.filter((x) => picked.includes(x.id)).length;
+
+  return (
+    <div>
+      <div className="flex flex-wrap gap-1.5" role="tablist" aria-label="Time of day">
+        {parts.map((p) => {
+          const Icon = p.icon;
+          const open = p.list.filter((x) => x.available).length;
+          const active = p.id === part.id;
+          return (
+            <button
+              key={p.id}
+              type="button"
+              role="tab"
+              aria-selected={active}
+              onClick={() => {
+                setPartId(p.id);
+                track("Slot Day Part Selected", { part: p.id, open_slots: open });
+              }}
+              className={cx(
+                "inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-[13px] font-medium transition",
+                active ? "border-white bg-white text-black" : "border-white/10 text-white/70 hover:border-white/30",
+              )}
+            >
+              <Icon className="h-3.5 w-3.5" aria-hidden />
+              {p.label}
+              <span className={cx("text-[11px]", active ? "text-black/50" : "text-white/40")}>{pickedHere(p) ? `${pickedHere(p)} picked` : open}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="relative mt-3">
+        <div
+          ref={scroller}
+          onScroll={measure}
+          className={cx(
+            "grid snap-x snap-mandatory auto-cols-[92px] grid-flow-col gap-2 overflow-x-auto pb-2 [scrollbar-width:thin]",
+            part.list.length > 8 ? "grid-rows-2" : "grid-rows-1",
+          )}
+          aria-label={`${part.label} slots`}
+        >
+          {part.list.map((x) => (
+            <Chip
+              key={x.id}
+              active={picked.includes(x.id)}
+              disabled={!x.available}
+              onClick={() => onToggle(x)}
+              aria-label={`${formatTime(x.start)}${x.available ? "" : ", full"}`}
+              className="flex min-h-[52px] w-full snap-start flex-col items-center justify-center whitespace-nowrap rounded-2xl px-1 text-[13px] leading-tight"
+            >
+              {formatTime(x.start)}
+              {x.available && x.left <= 2 && !picked.includes(x.id) && <span className="mt-0.5 text-[10px] font-normal text-amber-300">{x.left} left</span>}
+              {!x.available && <span className="mt-0.5 text-[10px] font-normal">Full</span>}
+            </Chip>
+          ))}
+        </div>
+        {edges.left && (
+          <button type="button" aria-label="Earlier slots" onClick={() => nudge(-1)} className="absolute -left-2 top-1/2 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/80 text-white backdrop-blur sm:flex">
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+        )}
+        {edges.right && (
+          <button type="button" aria-label="Later slots" onClick={() => nudge(1)} className="absolute -right-2 top-1/2 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/80 text-white backdrop-blur sm:flex">
+            <ChevronRight className="h-4 w-4" />
+          </button>
+        )}
+      </div>
+      <p className="mt-1 text-[11px] text-white/35">{part.list.length} {part.list.length === 1 ? "slot" : "slots"} · {formatTime(part.list[0].start)} to {formatTime(part.list[part.list.length - 1].end || part.list[part.list.length - 1].start)}</p>
+    </div>
   );
 }

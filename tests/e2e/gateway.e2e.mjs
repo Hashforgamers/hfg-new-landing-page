@@ -44,6 +44,7 @@ const env = {
   FIREBASE_JWKS_URL_OVERRIDE: `http://localhost:${MOCK_PORT}/jwks`,
   RAZORPAY_KEY_ID: "rzp_test_key",
   HFG_SERVICE_JWT_SECRET: BACKEND_JWT_SECRET,
+  WALLET_CREDIT_INTERNAL_TOKEN: "test-credit-token",
   HFG_SERVICE_PUBLIC_KEY: BACKEND_PUBLIC_PEM,
   HFG_GATEWAY_HMAC_SECRET: process.env.TEST_AUTH_MODE === "legacy" ? "" : GATEWAY_SECRET,
 };
@@ -527,6 +528,42 @@ try {
     assert.equal(order.timeline[0].status, "placed");
     const otp = await secureCall("store.order.otp", { orderId });
     assert.equal(otp.code, "123456");
+  });
+
+  await test("payment options follow the cafe's dashboard settings", async () => {
+    const neon = await secureCall("cafes.payments", { vendorId: 7 });
+    assert.deepEqual(neon.methods, { online: true, wallet: true, payAtCafe: true, hashPass: true, cafePass: true });
+    assert.equal(neon.source, "dashboard");
+  });
+
+  await test("wallet top-up: server-priced order, verified capture, idempotent credit", async () => {
+    const before = (await secureCall("wallet.summary")).balance;
+    await assert.rejects(() => secureCall("wallet.topup", { amount: 5 }));
+    const { intent, checkout } = await secureCall("wallet.topup", { amount: 250 });
+    assert.equal(checkout.amount, 25000);
+    const order = mock.calls.filter((c) => c.path === "/api/create_order").pop();
+    assert.equal(order.body.purpose, "wallet_topup");
+    await assert.rejects(() => secureCall("wallet.confirmTopup", { intent, razorpay: { paymentId: "pay_t1", orderId: checkout.orderId, signature: "0".repeat(64) } }));
+    const res = await secureCall("wallet.confirmTopup", { intent, razorpay: { paymentId: "pay_t2", orderId: checkout.orderId, signature: rzpSignature(checkout.orderId, "pay_t2") } });
+    assert.equal(res.status, "credited");
+    const credit = mock.calls.filter((c) => c.path === "/api/users/wallet" && c.method === "POST").pop();
+    assert.deepEqual(credit.body, { amount: 250, reference_id: "pay_t2" });
+    assert.equal((await secureCall("wallet.summary")).balance, before + 250);
+  });
+
+  await test("pay-at-cafe bookings use the booked day, not the request day", async () => {
+    const { bookings } = await secureCall("bookings.mine");
+    const p = bookings.find((b) => b.status.key === "pending_acceptance");
+    assert.ok(p);
+    assert.equal(p.date, tomorrow);
+    assert.equal(p.upcoming, true);
+    assert.equal(p.console, "PS5");
+  });
+
+  await test("analytics: server-only events can't come from the browser", async () => {
+    const before = mock.calls.length;
+    await secureCall("analytics.track", { events: [{ name: "Booking Confirmed", props: {} }, { name: "Slot Day Part Selected", props: { part: "night" } }] });
+    assert.ok(mock.calls.length >= before);
   });
 
   await test("analytics: unknown client events and PII props are dropped", async () => {

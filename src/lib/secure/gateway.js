@@ -163,6 +163,15 @@ export async function handleRpc(request) {
     const message = status >= 500 && !(err instanceof UpstreamError) && !err.status ? "Something went wrong. Please try again." : err.message;
     if (status >= 500) log("error", "rpc.failed", { op: opName, requestId, status, error: err?.name, message: err instanceof UpstreamError ? err.message : undefined });
     result = { ok: false, status, error: { code: err.code || codeFor(status), message } };
+    if (opName !== "analytics.track") {
+      ctx.track("API Error", {
+        op: opName,
+        status,
+        code: String(err.code || codeFor(status)).slice(0, 40),
+        upstream_status: err instanceof UpstreamError ? err.status || 0 : 0,
+        signed_in: Boolean(session),
+      });
+    }
   }
 
   log("info", "rpc", { op: opName, status, requestId, ip: bucket, uid: session ? "y" : "n" });

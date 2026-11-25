@@ -64,7 +64,51 @@ export function publicCafe(raw) {
     amenities: [...new Set((raw.amenities || []).filter((a) => a.available).map((a) => amenityLabel(a.name)).filter(Boolean))].slice(0, 12),
     images: (raw.images || []).map((img) => img.url).filter((u) => typeof u === "string" && u.startsWith("https://")).slice(0, 8),
     payAtCafe: Boolean(raw.accepted_payment_methods?.pay_in_cafe),
+    hashPass: Boolean(raw.accepted_payment_methods?.hash_global_pass),
+    cafePass: Boolean(raw.accepted_payment_methods?.cafe_specific_pass),
   };
+}
+
+/**
+ * What this cafe accepts, as set in the cafe dashboard. Reads hfg-booking's
+ * /api/vendor/:id/payment-methods (the shared contract the dashboard writes);
+ * falls back to the vendor listing's flags when that is unavailable or empty.
+ */
+export async function cafePayments(vendorId, requestId, cafe) {
+  const fallback = {
+    online: true,
+    wallet: true,
+    payAtCafe: Boolean(cafe?.payAtCafe),
+    hashPass: Boolean(cafe?.hashPass),
+    cafePass: Boolean(cafe?.cafePass),
+    source: "listing",
+  };
+  try {
+    const data = await cached(`paymethods:${vendorId}`, 60_000, async () => {
+      const { data } = await upstream("booking", `/api/vendor/${vendorId}/payment-methods`, { requestId, timeoutMs: 6000 });
+      return data || {};
+    });
+    const on = new Set(Array.isArray(data.enabled_payment_methods) ? data.enabled_payment_methods : []);
+    if (!on.size) return fallback;
+    return {
+      online: on.has("payment_gateway"),
+      wallet: on.has("hash_wallet"),
+      payAtCafe: on.has("pay_at_cafe"),
+      hashPass: on.has("hash_global_pass"),
+      cafePass: on.has("cafe_specific_pass"),
+      source: "dashboard",
+    };
+  } catch {
+    return fallback;
+  }
+}
+
+function methodAllowed(payments, method, pass) {
+  if (method === "online") return payments.online;
+  if (method === "wallet") return payments.wallet;
+  if (method === "pay_at_cafe") return payments.payAtCafe;
+  if (method === "pass") return pass?.vendor_id == null ? payments.hashPass : payments.cafePass;
+  return false;
 }
 
 function toCompactDate(isoDate) {
@@ -230,6 +274,17 @@ export const bookingOps = {
     },
   },
 
+  "cafes.payments": {
+    auth: "none",
+    limit: { perIp: 90 },
+    async run(ctx, args) {
+      const vendorId = v.int(args.vendorId, "vendorId");
+      const cafe = (await loadCafes(ctx.requestId)).find((c) => c.id === vendorId);
+      const { source, ...methods } = await cafePayments(vendorId, ctx.requestId, cafe);
+      return { methods, source };
+    },
+  },
+
   "slots.list": {
     auth: "none",
     limit: { perIp: 120 },
@@ -285,13 +340,12 @@ export const bookingOps = {
         e.status = 409;
         throw e;
       }
-      if (method === "pay_at_cafe") {
-        const cafe = (await bookingOps["cafes.list"].run(ctx)).cafes.find((c) => c.id === parsed.vendorId);
-        if (!cafe?.payAtCafe) {
-          const e = new Error("This cafe does not accept pay at cafe bookings.");
-          e.status = 400;
-          throw e;
-        }
+      const cafe = (await loadCafes(ctx.requestId)).find((c) => c.id === parsed.vendorId);
+      const payments = await cafePayments(parsed.vendorId, ctx.requestId, cafe);
+      if (method !== "pass" && !methodAllowed(payments, method)) {
+        const e = new Error(method === "pay_at_cafe" ? "This cafe does not accept pay at cafe bookings." : "This cafe doesn't accept that payment method. Please pick another.");
+        e.status = 400;
+        throw e;
       }
 
       if (method === "pass") {
@@ -301,6 +355,11 @@ export const bookingOps = {
         const fits = pass && (pass.vendor_id == null || Number(pass.vendor_id) === parsed.vendorId) && (!pass.valid_from || pass.valid_from <= parsed.date) && (!pass.valid_to || pass.valid_to >= parsed.date);
         if (!fits) {
           const e = new Error("That pass can't be used for this cafe or date.");
+          e.status = 400;
+          throw e;
+        }
+        if (!methodAllowed(payments, "pass", pass)) {
+          const e = new Error(pass.vendor_id == null ? "This cafe doesn't accept Hash passes." : "This cafe isn't accepting its passes right now.");
           e.status = 400;
           throw e;
         }
@@ -373,7 +432,8 @@ export const bookingOps = {
           method: "POST",
           token: hfgToken(ctx),
           requestId: ctx.requestId,
-          body: { amount: amountPaise, currency: "INR", receipt: `web_${Date.now()}` },
+          // vendor_id + booking_id let hfg-booking check the cafe accepts online payment.
+          body: { amount: amountPaise, currency: "INR", receipt: `web_${Date.now()}`, vendor_id: parsed.vendorId, booking_id: bookingIds },
         }));
       } catch (error) {
         await releaseBookings(bookingMap, parsed.date, ctx.requestId);
@@ -441,7 +501,8 @@ export const bookingOps = {
           method: "POST",
           token: hfgToken(ctx),
           requestId: ctx.requestId,
-          body: { razorpay_payment_id: paymentId, razorpay_order_id: orderId, razorpay_signature: signature },
+          // booking_id lets the backend's cafe payment policy find the cafe.
+          body: { razorpay_payment_id: paymentId, razorpay_order_id: orderId, razorpay_signature: signature, booking_id: Object.keys(intent.bookingMap).map(Number) },
         });
       } catch (error) {
         if (error instanceof UpstreamError && error.status >= 400 && error.status < 500) {
