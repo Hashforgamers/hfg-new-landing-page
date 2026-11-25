@@ -4,6 +4,8 @@
 
 export const PATH_IDS = ['gamer', 'cafe', 'franchise'];
 export const PATH_STORAGE_KEY = 'hash-path';
+// Set (in localStorage) by the booking/marketplace pages, so returning players skip the gate.
+export const PLAY_VISIT_KEY = 'hash-play-visit';
 export const PATH_EVENT = 'hash:path';
 
 export const PATH_NAV = {
@@ -50,7 +52,7 @@ export const HASH_TO_PATH = {
 // Runs inline before the page paints, so a known path never flashes the entry screen.
 export const PATH_BOOT_SCRIPT = `(function(){try{var d=document.documentElement;d.classList.add('has-gate');var ids=${JSON.stringify(
   PATH_IDS
-)};var map=${JSON.stringify(HASH_TO_PATH)};var q=new URLSearchParams(location.search).get('for');var h=location.hash.slice(1);var p=ids.indexOf(q)>-1?q:map[h]||sessionStorage.getItem('${PATH_STORAGE_KEY}');if(ids.indexOf(p)>-1)d.dataset.path=p;}catch(e){}})();`;
+)};var map=${JSON.stringify(HASH_TO_PATH)};var q=new URLSearchParams(location.search).get('for');var h=location.hash.slice(1);var p=ids.indexOf(q)>-1?q:map[h]||sessionStorage.getItem('${PATH_STORAGE_KEY}');var why='';if(ids.indexOf(p)<0){var r='';try{var u=new URL(document.referrer);if(u.host===location.host)r=u.pathname;}catch(e){}if(/^\\/(book|marketplace|account|cart|login)(\\/|$)/.test(r)){p='gamer';why='from_play_page';}else if(localStorage.getItem('${PLAY_VISIT_KEY}')){p='gamer';why='returning_player';}}if(ids.indexOf(p)>-1){d.dataset.path=p;if(why)d.dataset.pathReason=why;}}catch(e){}})();`;
 
 export function getPath() {
   if (typeof document === 'undefined') return null;

@@ -94,6 +94,10 @@ function Analytics() {
   const pathname = usePathname();
   useEffect(() => {
     if (pathname) track("Page Viewed", { path: pathname });
+    // Lets the home page skip "Choose your path" for people who already book or shop.
+    try {
+      localStorage.setItem("hash-play-visit", pathname.startsWith("/marketplace") || pathname.startsWith("/cart") ? "shop" : "book");
+    } catch {}
   }, [pathname]);
   useReportWebVitals((metric) => {
     if (reported.has(metric.id)) return;
