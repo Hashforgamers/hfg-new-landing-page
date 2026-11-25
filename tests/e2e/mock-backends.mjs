@@ -414,7 +414,7 @@ export function createMockBackends() {
 // Extra catalogue for visual checks only (MOCK_RICH=1); the e2e assertions use the two-item set above.
 const img = (n) => `https://res.cloudinary.com/x/${n}.jpg`;
 const RICH_CAFES = [
-  ["Pixel Den", "Andheri West", "Maharashtra", "11:00:00", "02:00:00"],
+  ["Pixel Den", "off Link Road, Lokhandwala Complex, Andheri West", "Maharashtra", "11:00:00", "02:00:00"],
   ["Respawn Lounge", "Koramangala", "Karnataka", "10:00:00", "23:30:00"],
   ["Level Up Arena", "Powai", "Maharashtra", "09:00:00", "23:00:00"],
   ["Headshot Hub", "Indiranagar", "Karnataka", "12:00:00", "00:00:00"],

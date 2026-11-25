@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Images } from "lucide-react";
+import { Gamepad2, Images } from "lucide-react";
 import { Lightbox } from "./ProductDetail";
 import { cx } from "./ui";
 
@@ -12,7 +12,7 @@ import { cx } from "./ui";
  */
 export default function CafeGallery({ images, name }) {
   const [open, setOpen] = useState(-1);
-  if (!images?.length) return null;
+  if (!images?.length) return <CafePhotoPlaceholder />;
   const side = images.slice(1, 3);
   const alt = (i) => (i === 0 ? `${name} gaming cafe` : `${name} photo ${i + 1}`);
 
@@ -53,6 +53,22 @@ export default function CafeGallery({ images, name }) {
       )}
 
       {open >= 0 && <Lightbox images={images} index={open} setIndex={(f) => setOpen((i) => (typeof f === "function" ? f(i) : f))} title={name} onClose={() => setOpen(-1)} />}
+    </div>
+  );
+}
+
+/** Same branded artwork as the cafe card, at the gallery's size, for cafes without photos yet. */
+function CafePhotoPlaceholder() {
+  return (
+    <div className="relative flex aspect-[16/10] flex-col items-center justify-center gap-3 overflow-hidden rounded-[20px] border border-white/[0.08] bg-gradient-to-br from-[#2a0838] via-black to-[#3b1a0a] sm:rounded-[24px] lg:aspect-auto lg:h-[320px] xl:h-[360px]">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/images/hero-poster.jpg" alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover opacity-35 blur-[2px]" />
+      <span className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/40" aria-hidden />
+      <span className="relative flex h-14 w-14 items-center justify-center rounded-2xl border border-white/15 bg-black/50 backdrop-blur-md">
+        <Gamepad2 className="h-7 w-7 text-white/85" aria-hidden />
+      </span>
+      <span className="relative text-[12px] font-medium uppercase tracking-[0.16em] text-white/55">Hash partner cafe</span>
+      <span className="relative text-sm text-white/45">Photos coming soon</span>
     </div>
   );
 }

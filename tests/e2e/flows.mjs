@@ -210,6 +210,11 @@ try {
     // ---- Book: logged out
     await go("/book");
     await shot("book-landing");
+    if (process.env.MOCK_RICH) {
+      await go("/book/23");
+      await shot("cafe-no-photos", { full: false });
+      await go("/book");
+    }
     await click(page.locator("#cafes a[href^='/book/']"));
     await page.waitForLoadState("networkidle");
     await shot("cafe-page");

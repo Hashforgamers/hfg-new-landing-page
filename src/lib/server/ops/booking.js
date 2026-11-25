@@ -36,12 +36,24 @@ function amenityLabel(name) {
   return words.charAt(0).toUpperCase() + words.slice(1);
 }
 
+/**
+ * "Borivali, Maharashtra" rather than the whole street address: the locality is
+ * the last part of addressLine2 ("off Lokmanya Tilak Road, Sundar Nagar, Borivali"),
+ * followed by the city when the vendor saved one, else the state.
+ */
+function shortArea(address) {
+  const parts = String(address.addressLine2 || "").split(",").map((x) => x.trim()).filter(Boolean);
+  const locality = parts[parts.length - 1] || "";
+  const region = String(address.city || address.state || "").trim();
+  return [locality, region.toLowerCase() === locality.toLowerCase() ? "" : region].filter(Boolean).join(", ");
+}
+
 export function publicCafe(raw) {
   const address = raw.address || {};
   return {
     id: raw.vendor_id,
     name: raw.cafe_name || raw.display_name || "Gaming cafe",
-    area: [address.addressLine2, address.state].filter(Boolean).join(", "),
+    area: shortArea(address),
     addressLine: [address.addressLine1, address.addressLine2].filter(Boolean).join(", "),
     pincode: address.pincode || "",
     state: address.state || "",

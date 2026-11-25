@@ -35,7 +35,7 @@ export function CafeCard({ cafe, priority = false }) {
   return (
     <Link
       href={cafePath(cafe)}
-      className="group flex flex-col overflow-hidden rounded-[28px] border border-white/[0.08] bg-[#0e0e12] transition duration-300 hover:-translate-y-0.5 hover:border-white/20"
+      className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-white/[0.08] bg-[#0e0e12] transition duration-300 hover:-translate-y-0.5 hover:border-white/20"
     >
       <div className="relative aspect-[16/9] overflow-hidden sm:aspect-[16/10] bg-gradient-to-br from-[#2a0838] via-black to-[#3b1a0a]">
         {cafe.images?.[0] ? (
@@ -70,12 +70,15 @@ export function CafeCard({ cafe, priority = false }) {
         )}
       </div>
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="text-[19px] font-semibold leading-snug tracking-tight text-white">{cafe.name}</h3>
-        {locality && (
-          <p className="mt-1.5 flex items-center gap-1.5 text-sm text-white/50">
-            <MapPin className="h-3.5 w-3.5" aria-hidden /> {cafe.area}
-          </p>
-        )}
+        <h3 className="truncate text-[19px] font-semibold leading-snug tracking-tight text-white" title={cafe.name}>{cafe.name}</h3>
+        {/* Always one line, so every card in a row has the same height. */}
+        <p className="mt-1.5 flex min-h-5 min-w-0 items-center gap-1.5 text-sm text-white/50">
+          {cafe.area && (
+            <>
+              <MapPin className="h-3.5 w-3.5 shrink-0" aria-hidden /> <span className="truncate">{cafe.area}</span>
+            </>
+          )}
+        </p>
         <div className="mt-auto flex items-center justify-between pt-5 text-sm">
           <span className="text-white/45">{cafe.opens && cafe.closes ? `${formatTime(cafe.opens)} – ${formatTime(cafe.closes)}` : ""}</span>
           <span className="font-semibold text-white transition group-hover:text-[#ff9a3d]">Book →</span>
