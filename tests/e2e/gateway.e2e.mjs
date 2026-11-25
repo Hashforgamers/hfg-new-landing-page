@@ -389,7 +389,8 @@ try {
     assert.equal(confirm.body.payment_mode, "gateway");
     assert.equal(confirm.body.payment_id, paymentId);
     assert.equal(confirm.body.razorpay_order_id, checkout.orderId);
-    assert.equal(confirm.body.book_date, today);
+    assert.equal(confirm.body.book_date, tomorrow); // the booked day, as the app sends it
+    assert.equal(confirm.body.use_pass, false);
     assert.deepEqual(Object.keys(confirm.body).sort(), ["book_date", "booking_id", "payment_id", "payment_mode", "razorpay_order_id", "use_pass", "user_pass_id"]);
   });
 
@@ -424,7 +425,56 @@ try {
 
   await test("my bookings lists the user's bookings", async () => {
     const { bookings } = await secureCall("bookings.mine");
-    assert.ok(bookings.some((b) => b.status === "confirmed"));
+    const b = bookings.find((x) => x.status.key === "confirmed");
+    assert.ok(b);
+    assert.equal(b.cafeName, "Neon Arena");
+    assert.equal(b.status.label, "Confirmed");
+    assert.equal(b.start, "22:00");
+  });
+
+  await test("wallet summary: balance, Hash Coins and transactions", async () => {
+    const w = await secureCall("wallet.summary");
+    assert.equal(typeof w.balance, "number");
+    assert.equal(w.coins, 1250);
+    assert.ok(w.transactions.some((t) => t.label === "Added to wallet" && t.direction === "in"));
+  });
+
+  await test("buy a pass with wallet, then book with it", async () => {
+    const before = (await secureCall("wallet.summary")).balance;
+    const { passes } = await secureCall("passes.available");
+    const neon = passes.find((p) => p.vendorId === 7);
+    assert.equal((await secureCall("passes.buy", { passId: neon.id, method: "wallet" })).status, "owned");
+    const buy = mock.calls.filter((c) => c.path === "/api/user/purchase_pass").pop();
+    assert.equal(buy.body.payment_mode, "wallet");
+    assert.ok(buy.body.idempotency_key.length >= 8);
+    assert.equal((await secureCall("wallet.summary")).balance, before - neon.price);
+    const mine = (await secureCall("passes.mine")).passes;
+    assert.equal(mine.length, 1);
+    const r = await secureCall("booking.create", { vendorId: 7, gameId: 55, date: tomorrow, slotIds: [1], paymentMethod: "pass", userPassId: mine[0].id });
+    assert.equal(r.status, "confirmed");
+    const confirm = mock.calls.filter((c) => c.path === "/api/bookings/confirm").pop();
+    assert.equal(confirm.body.payment_mode, "date_pass");
+    assert.equal(confirm.body.use_pass, true);
+    assert.equal(confirm.body.user_pass_id, mine[0].id);
+    assert.equal(confirm.body.book_date, tomorrow);
+  });
+
+  await test("a pass for another cafe cannot be used", async () => {
+    const { passes } = await secureCall("passes.mine");
+    await assert.rejects(() => secureCall("booking.create", { vendorId: 21, gameId: 55, date: tomorrow, slotIds: [1], paymentMethod: "pass", userPassId: passes[0].id }));
+  });
+
+  await test("online pass purchase is priced by the backend and bound to the order", async () => {
+    const { passes } = await secureCall("passes.available");
+    const global = passes.find((p) => p.vendorId === null);
+    const r = await secureCall("passes.buy", { passId: global.id, method: "online" });
+    assert.equal(r.status, "payment_required");
+    assert.equal(r.checkout.amount, global.price * 100);
+    await assert.rejects(() => secureCall("passes.confirmPayment", { intent: r.intent, razorpay: { paymentId: "pay_x1", orderId: "order_other" } }));
+    const ok = await secureCall("passes.confirmPayment", { intent: r.intent, razorpay: { paymentId: "pay_x1", orderId: r.checkout.orderId } });
+    assert.equal(ok.status, "owned");
+    const buy = mock.calls.filter((c) => c.path === "/api/user/purchase_pass").pop();
+    assert.deepEqual(buy.body, { cafe_pass_id: global.id, payment_mode: "payment_gateway", payment_id: "pay_x1" });
   });
 
   // ------------------------------------------------------ marketplace

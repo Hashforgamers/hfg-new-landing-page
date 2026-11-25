@@ -2,6 +2,7 @@ import "server-only";
 import { authOps } from "./auth";
 import { bookingOps } from "./booking";
 import { storeOps } from "./store";
+import { accountOps } from "./account";
 import { CLIENT_EVENTS, sanitizeProps } from "@/lib/server/analytics";
 import { v } from "@/lib/server/validate";
 
@@ -25,7 +26,7 @@ const analyticsOps = {
   },
 };
 
-export const OPS = { ...authOps, ...bookingOps, ...storeOps, ...analyticsOps };
+export const OPS = { ...authOps, ...bookingOps, ...storeOps, ...accountOps, ...analyticsOps };
 
 export function resolveOp(name) {
   const op = v.str(name, "op", { max: 40, pattern: /^[a-z]+(\.[a-zA-Z]+)+$/ });

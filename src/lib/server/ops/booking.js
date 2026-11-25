@@ -127,16 +127,17 @@ async function releaseBookings(bookingMap, date, requestId) {
   }
 }
 
-async function confirm(ctx, { bookingIds, paymentMode, paymentId, orderId }, requestId) {
+async function confirm(ctx, { bookingIds, paymentMode, paymentId, orderId, date, userPassId }, requestId) {
   // Same body as HFG-frontend remote_repo.confirmBooking (+ razorpay_order_id,
   // which the backend accepts and uses to bind the payment to this order).
+  // book_date is the booked day, as the app sends it (the pass validity check uses it).
   const body = {
     booking_id: bookingIds,
     payment_id: paymentId,
-    book_date: istToday(),
+    book_date: date || istToday(),
     payment_mode: paymentMode,
-    use_pass: false,
-    user_pass_id: null,
+    use_pass: Boolean(userPassId),
+    user_pass_id: userPassId || null,
   };
   if (orderId) body.razorpay_order_id = orderId;
   const { data } = await upstream("booking", "/api/bookings/confirm", {
@@ -276,7 +277,8 @@ export const bookingOps = {
     limit: { perIp: 15, perUser: 10 },
     async run(ctx, args) {
       const parsed = parseBookingArgs(args);
-      const method = v.oneOf(args.paymentMethod, "paymentMethod", ["online", "pay_at_cafe", "wallet"]);
+      const method = v.oneOf(args.paymentMethod, "paymentMethod", ["online", "pay_at_cafe", "wallet", "pass"]);
+      const userPassId = method === "pass" ? v.int(args.userPassId, "userPassId") : null;
       const q = await quote(parsed, ctx.requestId);
       if (!q.allBookable) {
         const e = new Error("Some of those slots were just taken. Please pick again.");
@@ -287,6 +289,18 @@ export const bookingOps = {
         const cafe = (await bookingOps["cafes.list"].run(ctx)).cafes.find((c) => c.id === parsed.vendorId);
         if (!cafe?.payAtCafe) {
           const e = new Error("This cafe does not accept pay at cafe bookings.");
+          e.status = 400;
+          throw e;
+        }
+      }
+
+      if (method === "pass") {
+        // Same checks the backend applies, so a wrong pass fails before slots are held.
+        const { data: owned } = await upstream("userOnboard", "/api/user/passes", { token: hfgToken(ctx), requestId: ctx.requestId });
+        const pass = (Array.isArray(owned) ? owned : []).find((p) => Number(p.id) === userPassId);
+        const fits = pass && (pass.vendor_id == null || Number(pass.vendor_id) === parsed.vendorId) && (!pass.valid_from || pass.valid_from <= parsed.date) && (!pass.valid_to || pass.valid_to >= parsed.date);
+        if (!fits) {
+          const e = new Error("That pass can't be used for this cafe or date.");
           e.status = 400;
           throw e;
         }
@@ -321,9 +335,21 @@ export const bookingOps = {
         return { status: "pending_acceptance", bookingIds, total: q.total };
       }
 
+      if (method === "pass") {
+        try {
+          await confirm(ctx, { bookingIds, paymentMode: "date_pass", paymentId: `PASS_${Date.now()}`, date: parsed.date, userPassId }, ctx.requestId);
+        } catch (error) {
+          await releaseBookings(bookingMap, parsed.date, ctx.requestId);
+          ctx.track("Payment Failed", { reason: "pass", payment_gateway: "pass" });
+          throw error;
+        }
+        ctx.track("Booking Confirmed", { booking_id: bookingIds[0], payment_method: "pass", amount: 0 });
+        return { status: "confirmed", bookingIds, total: 0, paidWithPass: true };
+      }
+
       if (method === "wallet") {
         try {
-          await confirm(ctx, { bookingIds, paymentMode: "wallet", paymentId: `WALLET_${Date.now()}` }, ctx.requestId);
+          await confirm(ctx, { bookingIds, paymentMode: "wallet", paymentId: `WALLET_${Date.now()}`, date: parsed.date }, ctx.requestId);
         } catch (error) {
           await releaseBookings(bookingMap, parsed.date, ctx.requestId);
           ctx.track("Payment Failed", { reason: "wallet", payment_gateway: "wallet" });
@@ -428,7 +454,7 @@ export const bookingOps = {
 
       // 2) Confirm the bookings against the captured payment.
       try {
-        await confirm(ctx, { bookingIds, paymentMode: "gateway", paymentId, orderId }, ctx.requestId);
+        await confirm(ctx, { bookingIds, paymentMode: "gateway", paymentId, orderId, date: intent.date }, ctx.requestId);
       } catch (error) {
         // Money was captured. Releasing slots here would charge the player
         // for nothing, so ambiguous failures are left for reconciliation.
@@ -455,16 +481,4 @@ export const bookingOps = {
     },
   },
 
-  "bookings.mine": {
-    auth: "user",
-    limit: { perIp: 60 },
-    async run(ctx) {
-      const { data } = await upstream("booking", "/api/users/bookings?compact=true&limit=50", {
-        token: hfgToken(ctx),
-        requestId: ctx.requestId,
-      });
-      const rows = Array.isArray(data) ? data : data?.bookings || [];
-      return { bookings: rows.slice(0, 50) };
-    },
-  },
 };
