@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
-import { Car, Check, Clock, Coffee, Gamepad2, Glasses, MapPin, Monitor, Navigation, ParkingCircle, Snowflake, Tv, Wallet, Wifi } from "lucide-react";
+import { Armchair, Bath, Check, Clock, Coffee, CreditCard, Gamepad2, MapPin, Navigation, ParkingCircle, Snowflake, Volume2, Wallet, Wifi } from "lucide-react";
 import CafeGallery from "@/components/play/CafeGallery";
 import { ShareMenu } from "@/components/play/ProductDetail";
 import { OpenBadge } from "@/components/play/CafeDirectory";
@@ -20,21 +20,16 @@ const fmtTime = (t) => {
 };
 const inr = (n) => `₹${Math.round(Number(n || 0)).toLocaleString("en-IN")}`;
 
-function consoleIcon(c) {
-  const k = `${c.family || ""} ${c.name || ""}`.toLowerCase();
-  if (/vr|virtual/.test(k)) return Glasses;
-  if (/rac|sim|wheel/.test(k)) return Car;
-  if (/pc|computer|desktop/.test(k)) return Monitor;
-  if (/tv|screen/.test(k)) return Tv;
-  return Gamepad2;
-}
-
 function amenityIcon(name) {
   const k = String(name).toLowerCase();
   if (/\bac\b|air ?con/.test(k)) return Snowflake;
   if (/wi-?fi|internet/.test(k)) return Wifi;
   if (/park/.test(k)) return ParkingCircle;
   if (/snack|food|drink|cafe|coffee|bever/.test(k)) return Coffee;
+  if (/sound|speaker|audio/.test(k)) return Volume2;
+  if (/wash|toilet|rest ?room/.test(k)) return Bath;
+  if (/seat|lounge|chair|sofa/.test(k)) return Armchair;
+  if (/24/.test(k)) return Clock;
   return Check;
 }
 
@@ -85,7 +80,7 @@ export default async function CafePage({ params, searchParams }) {
   const range = priceRange(consoles);
   let nearby = [];
   try {
-    nearby = (await loadCafes()).filter((c) => c.id !== cafe.id && c.state && c.state === cafe.state).slice(0, 3);
+    nearby = (await loadCafes()).filter((c) => c.id !== cafe.id && c.state && c.state === cafe.state).slice(0, 4);
   } catch {}
   const mapsUrl =
     cafe.lat && cafe.lng
@@ -170,14 +165,11 @@ export default async function CafePage({ params, searchParams }) {
     <>
       <JsonLd data={[business, breadcrumbsLd(crumbs, SITE_URL), faqLd(faqs)]} />
 
-      <Container className="pt-8">
+      <Container className="pt-6 sm:pt-8">
         <Breadcrumbs items={crumbs} />
-      </Container>
-
-      <Container className="pt-6">
-        <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+        <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="min-w-0">
-            <h1 className="font-display text-[clamp(2.4rem,5vw,4.5rem)] uppercase leading-[0.92] text-white">{cafe.name}</h1>
+            <h1 className="font-display text-[clamp(2.2rem,4.4vw,3.75rem)] uppercase leading-[0.92] text-white">{cafe.name}</h1>
             <p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-[15px] text-white/60">
               {cafe.area && (
                 <span className="inline-flex items-center gap-1.5">
@@ -187,11 +179,6 @@ export default async function CafePage({ params, searchParams }) {
               {cafe.opens && cafe.closes && (
                 <span className="inline-flex items-center gap-1.5">
                   <Clock className="h-4 w-4 text-white/40" aria-hidden /> {fmtTime(cafe.opens)} – {fmtTime(cafe.closes)}
-                </span>
-              )}
-              {range && (
-                <span className="inline-flex items-center gap-1.5">
-                  <Wallet className="h-4 w-4 text-white/40" aria-hidden /> From {inr(range.min)} / slot
                 </span>
               )}
               <OpenBadge opens={cafe.opens} closes={cafe.closes} />
@@ -204,58 +191,50 @@ export default async function CafePage({ params, searchParams }) {
             </a>
           </div>
         </div>
-
-        <div className="mt-6">
-          <CafeGallery images={cafe.images || []} name={cafe.name} />
-        </div>
       </Container>
 
-      <Container className="pb-12 pt-10">
-        {/* Phone/tablet: booking first, then details. Desktop: details left, booking sticky right. */}
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_440px] lg:gap-14">
-          <aside className="min-w-0 scroll-mt-28 lg:sticky lg:top-28 lg:order-2 lg:self-start" id="book">
+      <Container className="pb-12 pt-6">
+        {/* Phone/tablet: photos, booking, then details. Desktop: photos and details left, booking sticky right. */}
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_420px] lg:gap-10 xl:grid-cols-[minmax(0,1fr)_440px] xl:gap-12">
+          <div className="min-w-0 lg:col-start-1 lg:row-start-1">
+            <CafeGallery images={cafe.images || []} name={cafe.name} />
+          </div>
+
+          <aside className="min-w-0 scroll-mt-28 lg:sticky lg:top-28 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start" id="book">
             <CafeBooking vendorId={cafe.id} initial={data} cafeUrl={canonical} />
           </aside>
 
-          <div className="min-w-0 space-y-14 lg:order-1">
-            {consoles.length > 0 && (
-              <section aria-labelledby="consoles-title">
-                <h2 id="consoles-title" className="text-2xl font-semibold tracking-tight text-white">Consoles and prices</h2>
-                <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-                  {consoles.map((c) => {
-                    const Icon = consoleIcon(c);
-                    return (
-                      <li key={c.gameId} className="flex items-center gap-4 rounded-2xl border border-white/[0.08] bg-[#0e0e12] p-4">
-                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/[0.06] text-white/80">
-                          <Icon className="h-5 w-5" aria-hidden />
-                        </span>
-                        <div className="min-w-0 flex-1">
-                          <p className="truncate text-[16px] font-medium text-white">{c.name}</p>
-                          <p className="text-sm text-white/45">
-                            {c.units ? `${c.units} ${c.units === 1 ? "station" : "stations"}` : "Bookable"}
-                            {c.multiplayer ? " · multiplayer" : ""}
-                          </p>
-                        </div>
-                        <p className="shrink-0 text-right text-[16px] font-semibold text-white">
-                          {c.pricePerSlot > 0 ? inr(c.pricePerSlot) : "—"}
-                          <span className="block text-xs font-normal text-white/40">per slot</span>
-                        </p>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </section>
-            )}
+          <div className="min-w-0 space-y-10 lg:col-start-1 lg:row-start-2">
+            <section aria-label="At a glance">
+              <dl className="grid grid-cols-2 overflow-hidden rounded-[24px] border border-white/[0.08] bg-[#0e0e12] sm:grid-cols-4">
+                {[
+                  [Wallet, "Slots from", range ? `${inr(range.min)}` : "See prices"],
+                  [Gamepad2, "Play on", consoles.length ? `${consoles.length} ${consoles.length === 1 ? "setup" : "setups"} · ${consoles.reduce((n, c) => n + (c.units || 0), 0) || "—"} stations` : "—"],
+                  [Clock, "Hours", cafe.opens && cafe.closes ? `${fmtTime(cafe.opens)} – ${fmtTime(cafe.closes)}` : "—"],
+                  [CreditCard, "Pay", cafe.payAtCafe ? "Online or at the cafe" : "Online"],
+                ].map(([Icon, label, value], i) => (
+                  <div key={label} className={`p-4 sm:p-5 ${i % 2 ? "border-l border-white/[0.08]" : ""} ${i > 1 ? "border-t border-white/[0.08] sm:border-t-0" : ""} ${i === 2 ? "sm:border-l" : ""}`}>
+                    <dt className="flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.12em] text-white/40">
+                      <Icon className="h-3.5 w-3.5" aria-hidden /> {label}
+                    </dt>
+                    <dd className="mt-1.5 text-[15px] font-medium text-white">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
 
             {cafe.amenities?.length > 0 && (
               <section aria-labelledby="amenities-title">
-                <h2 id="amenities-title" className="text-2xl font-semibold tracking-tight text-white">Amenities</h2>
-                <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                <h2 id="amenities-title" className="text-xl font-semibold tracking-tight text-white">What this cafe offers</h2>
+                <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-3">
                   {cafe.amenities.map((a) => {
                     const Icon = amenityIcon(a);
                     return (
-                      <li key={a} className="flex items-center gap-3 rounded-2xl border border-white/[0.08] px-4 py-3 text-[15px] text-white/80">
-                        <Icon className="h-4 w-4 shrink-0 text-[#ff9a3d]" aria-hidden /> <span className="truncate">{a}</span>
+                      <li key={a} className="flex items-center gap-3 text-[15px] text-white/80">
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/[0.06]">
+                          <Icon className="h-4 w-4 text-[#ff9a3d]" aria-hidden />
+                        </span>
+                        <span className="truncate">{a}</span>
                       </li>
                     );
                   })}
@@ -264,24 +243,24 @@ export default async function CafePage({ params, searchParams }) {
             )}
 
             <section aria-labelledby="location-title">
-              <h2 id="location-title" className="text-2xl font-semibold tracking-tight text-white">Location</h2>
-              <div className="mt-5 overflow-hidden rounded-[24px] border border-white/[0.08]">
+              <h2 id="location-title" className="text-xl font-semibold tracking-tight text-white">Location</h2>
+              <div className="mt-4 grid overflow-hidden rounded-[24px] border border-white/[0.08] bg-[#0e0e12] md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
                 {cafe.lat && cafe.lng ? (
                   <iframe
                     title={`Map showing ${cafe.name}`}
                     src={`https://www.google.com/maps?q=${cafe.lat},${cafe.lng}&z=15&output=embed`}
-                    className="h-[260px] w-full border-0 grayscale-[30%] invert-[90%] hue-rotate-180"
+                    className="h-[220px] w-full border-0 grayscale-[30%] invert-[90%] hue-rotate-180 md:h-full md:min-h-[220px]"
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                   />
                 ) : null}
-                <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex flex-col justify-between gap-4 p-5">
                   <address className="not-italic text-[15px] leading-7 text-white/70">
                     <span className="block font-medium text-white">{cafe.name}</span>
                     {cafe.addressLine || cafe.area}
                     {cafe.pincode ? `, ${cafe.pincode}` : ""}
                   </address>
-                  <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-[#ff3d8b] hover:text-white">
+                  <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex w-fit items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-[#ff3d8b] hover:text-white">
                     <Navigation className="h-4 w-4" aria-hidden /> Get directions
                   </a>
                 </div>
@@ -289,8 +268,8 @@ export default async function CafePage({ params, searchParams }) {
             </section>
 
             <section aria-labelledby="faq-title">
-              <h2 id="faq-title" className="text-2xl font-semibold tracking-tight text-white">Good to know</h2>
-              <div className="mt-4">
+              <h2 id="faq-title" className="text-xl font-semibold tracking-tight text-white">Good to know</h2>
+              <div className="mt-3">
                 <FaqList items={faqs} />
               </div>
             </section>
@@ -300,9 +279,9 @@ export default async function CafePage({ params, searchParams }) {
 
       {nearby.length > 0 && (
         <section className="border-t border-white/[0.06]">
-          <Container className="py-16">
+          <Container className="py-12">
             <SectionHeading title={`More gaming cafes${cafe.state ? ` in ${cafe.state}` : ""}.`} action={<Link href={BOOK.root} className="text-[15px] font-semibold text-white hover:text-[#ff9a3d]">All cafes →</Link>} />
-            <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {nearby.map((c) => (
                 <li key={c.id}><CafeCard cafe={c} /></li>
               ))}

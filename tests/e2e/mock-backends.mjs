@@ -273,12 +273,15 @@ export function createMockBackends() {
     if (path === "/store/hash/products") {
       return send(200, {
         products: [
-          { product_id: "prod_1", vendor_id: "hv_a", vendor_name: "Gear Co", title: "Pro Headset", kind: "product", variant_id: "variant_1", price_inr: 2499, available: 5, thumbnail: "https://res.cloudinary.com/x/h.jpg" },
+          { product_id: "prod_1", vendor_id: "hv_a", vendor_name: "Gear Co", title: "Pro Headset", kind: "product", variant_id: "variant_1", price_inr: 2499, available: 5, thumbnail: "https://res.cloudinary.com/x/h.jpg", ...(process.env.MOCK_RICH ? RICH_HEADSET : {}) },
           { product_id: "prod_2", vendor_id: "hv_b", vendor_name: "Other Co", title: "Mouse", kind: "product", variant_id: "variant_2", price_inr: 999, available: 2, thumbnail: "" },
           ...(process.env.MOCK_RICH ? RICH_PRODUCTS : []),
         ],
         count: process.env.MOCK_RICH ? 2 + RICH_PRODUCTS.length : 2,
       });
+    }
+    if (path === "/store/hash/categories") {
+      return send(200, { categories: process.env.MOCK_RICH ? RICH_CATEGORIES : [] });
     }
     if ((match = m(/^\/store\/products\/(prod_\w+)$/))) {
       if (!process.env.MOCK_RICH || match[1] !== "prod_1") return send(200, { product: { id: match[1], description: "Great", images: [{ url: "https://res.cloudinary.com/x/h2.jpg" }] } });
@@ -322,7 +325,10 @@ export function createMockBackends() {
       const subtotal = c.items.reduce((s, i) => s + i.unit_price * i.quantity, 0);
       return { cart: { id: c.id, email: c.email, currency_code: "inr", items: c.items, item_subtotal: subtotal, shipping_total: c.shipping, tax_total: 0, total: subtotal + c.shipping, shipping_address: c.address, shipping_methods: c.shipping_methods, completed_at: c.completed_at } };
     };
-    const prices = { variant_1: { price: 2499, vendor: "hv_a", title: "Pro Headset" }, variant_2: { price: 999, vendor: "hv_b", title: "Mouse" } };
+    const prices = new Proxy({ variant_1: { price: 2499, vendor: "hv_a", title: "Pro Headset" }, variant_2: { price: 999, vendor: "hv_b", title: "Mouse" } }, {
+      // Rich-mode colour SKUs of the headset share its seller and price.
+      get: (t, k) => t[k] || (String(k).startsWith("variant_1") ? t.variant_1 : String(k).startsWith("variant_r") ? { price: 1999, vendor: `hv_r${String(k).slice(9)}`, title: "Gear" } : undefined),
+    });
     if (req.method === "POST" && path === "/store/carts") {
       const id = `cart_${crypto.randomBytes(4).toString("hex")}`;
       const c = { id, owner: actor(), email: body.email, items: [], shipping: 0, address: null, shipping_methods: [] };
@@ -416,6 +422,47 @@ const RICH_CAFES = [
   images: [{ url: img(`cafe${i}`) }],
   accepted_payment_methods: { pay_in_cafe: i % 2 === 0 },
 }));
+// The headset as the Hash catalogue returns it: per-colour photos, SKUs, offer pricing and specifications.
+const COLOURS = ["Black", "Blue", "Pink", "White"];
+const RICH_HEADSET = {
+  description: "56g ultra-light symmetrical design. Engineered for long sessions, with 7.1 surround sound, up to 40 hours of battery and a detachable boom mic.\nTri-mode connection: wired, Bluetooth and 2.4GHz wireless.",
+  thumbnail: img("fx-headset-black-1"),
+  gallery: [
+    ...COLOURS.flatMap((c) => [1, 2, 3].map((n) => ({ url: img(`fx-headset-${c.toLowerCase()}-${n}`), color: c }))),
+    { url: img("fx-headset-box"), color: null },
+  ],
+  categories: [{ id: "pcat_audio", name: "Headsets", handle: "headsets" }],
+  specifications: {
+    brand: "Gear Co", model: "Pro Headset X2", weight: 280, connectivity: ["Wired", "Bluetooth", "2.4GHz Wireless"], driver_size: 50,
+    backlighting: "RGB", battery_capacity: 800, compatibility: ["Windows", "macOS", "Linux", "Android"], noise_cancelling: true, warranty: "1 Year",
+  },
+  pricing: { calculated_amount: 2499, original_amount: 2999, discount_amount: 500 },
+  variants: COLOURS.map((c, i) => ({
+    id: i === 0 ? "variant_1" : `variant_1${i}`,
+    sku: `PH-${c.toUpperCase()}`,
+    title: c,
+    options: { color: c },
+    images: [1, 2, 3].map((n) => img(`fx-headset-${c.toLowerCase()}-${n}`)).concat(img("fx-headset-box")),
+    prices: [{ currency_code: "inr", amount: 2999 }],
+    pricing: { calculated_amount: 2499, original_amount: 2999, discount_amount: 500 },
+    available: i === 2 ? 0 : i === 1 ? 3 : 5,
+  })),
+  rating_summary: { average: 4.4, count: 128 },
+};
+const RICH_CATEGORIES = [
+  {
+    id: "pcat_audio", name: "Headsets", handle: "headsets",
+    specifications: [
+      ["brand", "Brand", "text"], ["model", "Model", "text"], ["weight", "Weight", "number", "g"], ["driver_size", "Driver size", "number", "mm"],
+      ["connectivity", "Connectivity", "multi"], ["backlighting", "Backlighting", "select"], ["battery_capacity", "Battery Capacity", "number", "mAh"],
+      ["compatibility", "Compatibility", "multi"], ["noise_cancelling", "Noise cancelling", "boolean"], ["warranty", "Warranty", "select"], ["color", "Color", "multi"],
+    ].map(([key, label, type, unit = ""]) => ({ key, label, type, unit, choices: [], required: false, filterable: false, variant: key === "color" })),
+  },
+  { id: "pcat_input", name: "Controllers", handle: "controllers", specifications: [] },
+  { id: "pcat_keys", name: "Keyboards", handle: "keyboards", specifications: [] },
+  { id: "pcat_acc", name: "Accessories", handle: "accessories", specifications: [] },
+  { id: "pcat_svc", name: "Services", handle: "services", specifications: [] },
+];
 const RICH_PRODUCTS = [
   ["Wireless Gaming Controller", 3499, "Gear Co"],
   ["Mechanical Keyboard RGB", 5299, "Keys Lab"],
@@ -433,5 +480,8 @@ const RICH_PRODUCTS = [
   price_inr: price,
   available: i === 2 ? 0 : 8,
   thumbnail: img(`prod${i}`),
-  rating_summary: i % 2 ? { average: 4.6, count: 23 } : null,
+  rating_summary: i % 2 ? { average: 4.6, count: 23 } : { average: 4.1, count: 9 + i },
+  categories: [[{ id: "pcat_input", name: "Controllers", handle: "controllers" }], [{ id: "pcat_keys", name: "Keyboards", handle: "keyboards" }], [{ id: "pcat_acc", name: "Accessories", handle: "accessories" }], [{ id: "pcat_audio", name: "Headsets", handle: "headsets" }], [{ id: "pcat_svc", name: "Services", handle: "services" }], [{ id: "pcat_acc", name: "Accessories", handle: "accessories" }]][i],
+  pricing: i % 3 === 0 ? { calculated_amount: price, original_amount: Math.round(price * 1.25), discount_amount: Math.round(price * 0.25) } : { calculated_amount: price, original_amount: price, discount_amount: 0 },
+  variants: (i === 0 ? ["Black", "White", "Red"] : i === 1 ? ["Black", "White"] : [null]).map((c, n) => ({ id: n ? `variant_r${i}${n}` : `variant_r${i}`, options: c ? { color: c } : {}, images: [], available: 8 })),
 }));

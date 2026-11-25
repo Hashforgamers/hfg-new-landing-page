@@ -90,7 +90,24 @@ async function customerToken(ctx) {
 }
 
 /* -------------------------------------------------------- shaping */
+const https = (u) => typeof u === "string" && u.startsWith("https://");
+const money = (n) => (Number.isFinite(Number(n)) && Number(n) > 0 ? Number(n) : 0);
+
+/** Card price: the live offer price when Hash computed one, else the list price. */
+function cardPricing(pricing, fallback) {
+  const now = money(pricing?.calculated_amount) || money(fallback);
+  const was = money(pricing?.original_amount);
+  return { price: now, mrp: was > now ? was : 0 };
+}
+
 export function productCard(p) {
+  const { price, mrp } = cardPricing(p.pricing, p.price_inr);
+  const colors = [];
+  for (const variant of p.variants || []) {
+    const c = variant?.options?.color;
+    if (typeof c === "string" && c && !colors.includes(c)) colors.push(c);
+  }
+  const category = (p.categories || [])[0];
   return {
     id: p.product_id,
     variantId: p.variant_id,
@@ -99,11 +116,16 @@ export function productCard(p) {
     kind: p.kind,
     vendorId: p.vendor_id,
     vendorName: p.vendor_name,
-    price: Number(p.price_inr || 0),
+    price,
+    mrp,
     available: Number(p.available || 0),
-    thumbnail: typeof p.thumbnail === "string" && p.thumbnail.startsWith("https://") ? p.thumbnail : "",
+    thumbnail: https(p.thumbnail) ? p.thumbnail : https(p.gallery?.[0]?.url) ? p.gallery[0].url : "",
     rating: p.rating_summary ? { average: Number(p.rating_summary.average || 0), count: Number(p.rating_summary.count || 0) } : null,
     offer: p.offer || p.card_offer || null,
+    category: category?.name || "",
+    categoryId: category?.id || "",
+    colors: colors.slice(0, 8),
+    variantCount: (p.variants || []).length || 1,
   };
 }
 
@@ -199,19 +221,49 @@ async function cachedCatalog(key, ttlMs, loader) {
   return value;
 }
 
-/** Every listed product (public), for the server-rendered store pages and the sitemap. */
-export async function loadProducts(requestId) {
-  return cachedCatalog("products", 5 * 60_000, async () => {
+/** Raw Hash catalogue rows (gallery, specifications, variants), cached. */
+async function loadCatalog(requestId) {
+  return cachedCatalog("catalog", 5 * 60_000, async () => {
     const ctx = { requestId };
     const all = [];
     for (let offset = 0; offset < 1000; offset += 100) {
       const data = await medusa(ctx, `/store/hash/products?limit=100&offset=${offset}`);
-      const page = (data?.products || []).map(productCard);
+      const page = data?.products || [];
       all.push(...page);
       if (page.length < 100 || all.length >= Number(data?.count || 0)) break;
     }
     return all;
   });
+}
+
+/** Every listed product (public), for the server-rendered store pages and the sitemap. */
+export async function loadProducts(requestId) {
+  return (await loadCatalog(requestId)).map(productCard);
+}
+
+/** Category specification definitions ({key, label, unit, type}) by key, as the app uses them. */
+async function loadSpecDefinitions(requestId) {
+  return cachedCatalog("categories", 10 * 60_000, async () => {
+    try {
+      const data = await medusa({ requestId }, "/store/hash/categories");
+      return (data?.categories || []).map((c) => ({ id: c.id, name: c.name, handle: c.handle, specifications: Array.isArray(c.specifications) ? c.specifications : [] }));
+    } catch {
+      return [];
+    }
+  });
+}
+
+/** Public categories for the store filters. */
+export async function loadCategories(requestId) {
+  return (await loadSpecDefinitions(requestId)).map(({ id, name, handle }) => ({ id, name, handle }));
+}
+
+function specText(value, def) {
+  if (typeof value === "boolean") return value ? "Yes" : "No";
+  if (Array.isArray(value)) return value.filter((x) => x !== "" && x != null).join(", ");
+  if (typeof value === "number") return def?.unit ? `${value} ${def.unit}` : String(value);
+  if (typeof value === "string") return value.trim();
+  return "";
 }
 
 /** One product with its gallery and full description, or null. */
@@ -282,7 +334,63 @@ function variantView(variant, card) {
     price: Number.isFinite(price) && price > 0 ? price : card.price,
     // The listing's own variant uses the Hash listing stock; others use Medusa inventory.
     available: variant.id === card.variantId ? card.available : stock ?? (variant.allow_backorder ? 10 : card.available),
-    image: typeof variant.metadata?.image === "string" && variant.metadata.image.startsWith("https://") ? variant.metadata.image : "",
+    mrp: 0,
+    images: https(variant.metadata?.image) ? [variant.metadata.image] : [],
+  };
+}
+
+/** Product detail from the Hash catalogue: per-colour photos, SKU options and specifications. */
+function hashDetail(raw, card, categories) {
+  const defs = new Map();
+  for (const c of categories) {
+    if (!(raw.categories || []).some((x) => x.id === c.id)) continue;
+    for (const d of c.specifications) if (d?.key && !defs.has(d.key)) defs.set(d.key, d);
+  }
+  const label = (key) => defs.get(key)?.label || titleCase(key);
+  const variants = (raw.variants || [])
+    .filter((v) => v?.id)
+    .map((v) => {
+      const { price, mrp } = cardPricing(v.pricing, (v.prices || []).find((x) => x.currency_code === "inr")?.amount);
+      return {
+        id: v.id,
+        title: v.title || "",
+        sku: v.sku || "",
+        options: v.options && typeof v.options === "object" ? v.options : {},
+        price: price || card.price,
+        mrp,
+        available: Math.max(0, Number(v.available ?? 0)),
+        images: (v.images || []).filter(https),
+      };
+    });
+  const axes = Object.keys(variants[0]?.options || {});
+  const options = axes
+    .map((key) => ({ key, title: label(key), values: [...new Set(variants.map((v) => v.options[key]).filter((x) => typeof x === "string" && x))] }))
+    .filter((o) => o.values.length > 1 || variants.length > 1);
+  // Specifications in the category's own order (as the app shows them), then any extras.
+  const values = raw.specifications && typeof raw.specifications === "object" ? raw.specifications : {};
+  const keys = [...[...defs.keys()].filter((k) => k in values), ...Object.keys(values).filter((k) => !defs.has(k))];
+  const specs = [];
+  for (const key of keys) {
+    if (options.some((o) => o.key === key)) continue;
+    const text = specText(values[key], defs.get(key));
+    if (text && text.length <= 300) specs.push({ label: label(key), value: text });
+  }
+  const gallery = (raw.gallery || []).map((g) => g?.url).filter(https);
+  const images = [...gallery, raw.thumbnail].filter((u, i, all) => https(u) && all.indexOf(u) === i);
+  const first = variants.find((v) => v.id === card.variantId) || variants[0];
+  return {
+    ...card,
+    price: first?.price || card.price,
+    mrp: first?.mrp || card.mrp,
+    description: raw.description || card.description,
+    images: images.slice(0, 20),
+    subtitle: "",
+    category: card.category,
+    brand: typeof values.brand === "string" ? values.brand : "",
+    model: typeof values.model === "string" ? values.model : "",
+    options: variants.length > 1 ? options : [],
+    variants: variants.length > 1 ? variants : variants.map((v) => ({ ...v })),
+    specs,
   };
 }
 
@@ -290,34 +398,33 @@ export async function loadProduct(productId, requestId) {
   if (!/^prod_[A-Za-z0-9]+$/.test(productId)) return null;
   return cachedCatalog(`product:${productId}`, 2 * 60_000, async () => {
     const ctx = { requestId };
+    const catalog = await loadCatalog(requestId);
+    const raw = catalog.find((p) => p.product_id === productId);
+    if (!raw) return null;
+    const card = productCard(raw);
+    if (Array.isArray(raw.variants) && raw.variants.length) return hashDetail(raw, card, await loadSpecDefinitions(requestId));
+
+    // Older catalogue rows without SKU data: read the Medusa product itself.
     const config = await storeConfig(requestId);
     const base = `/store/products/${productId}?region_id=${encodeURIComponent(config.region_id)}`;
-    const [detail, list] = await Promise.all([
-      medusa(ctx, `${base}&fields=${encodeURIComponent(DETAIL_FIELDS)}`)
-        // Older Medusa builds reject some fields: fall back to the default shape.
-        .catch(() => medusa(ctx, base))
-        .catch(() => null),
-      loadProducts(requestId),
-    ]);
-    const card = list.find((p) => p.id === productId);
-    if (!card) return null;
+    const detail = await medusa(ctx, `${base}&fields=${encodeURIComponent(DETAIL_FIELDS)}`)
+      .catch(() => medusa(ctx, base))
+      .catch(() => null);
     const p = detail?.product || {};
-    const images = [...(p.images || []).map((i) => i.url), p.thumbnail, card.thumbnail].filter(
-      (u, i, all) => typeof u === "string" && u.startsWith("https://") && all.indexOf(u) === i,
-    );
+    const images = [...(p.images || []).map((i) => i.url), p.thumbnail, card.thumbnail].filter((u, i, all) => https(u) && all.indexOf(u) === i);
     const variants = (p.variants || []).map((v) => variantView(v, card)).filter((v) => v.id);
     const options = (p.options || [])
-      .map((o) => ({ title: o.title, values: [...new Set((o.values || []).map((x) => x.value).filter(Boolean))] }))
+      .map((o) => ({ key: o.title, title: o.title, values: [...new Set((o.values || []).map((x) => x.value).filter(Boolean))] }))
       .filter((o) => o.title && o.values.length > 1);
     return {
       ...card,
       description: p.description || card.description,
       images: images.slice(0, 12),
       subtitle: p.subtitle || "",
-      category: p.categories?.[0]?.name || p.type?.value || "",
+      category: card.category || p.categories?.[0]?.name || p.type?.value || "",
       brand: p.metadata?.brand || "",
+      model: "",
       handle: p.handle || "",
-      // Only offer a picker when there is a real choice.
       options: variants.length > 1 ? options : [],
       variants: variants.length > 1 ? variants : [],
       specs: specRows(p),

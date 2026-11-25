@@ -112,7 +112,7 @@ export function breadcrumbsLd(items, siteUrl) {
 export function CrossSell({ to }) {
   const book = to === "book";
   return (
-    <Container className="py-10 sm:py-14">
+    <Container className="py-8 sm:py-10">
       <Link
         href={book ? "/book" : "/marketplace"}
         className="group flex flex-col gap-4 rounded-[28px] border border-white/[0.08] bg-[#0e0e12] px-6 py-6 transition hover:border-white/20 sm:flex-row sm:items-center sm:justify-between sm:px-8"
