@@ -138,6 +138,13 @@ export default function PathGate({ cards }) {
   const [round, setRound] = useState(0);
 
   useEffect(() => {
+    // The boot script skipped the gate (came from /book, /marketplace, or a returning player).
+    const reason = document.documentElement.dataset.pathReason;
+    if (reason) track('journey_auto', { journey: document.documentElement.dataset.path, reason });
+    else if (!document.documentElement.dataset.path) track('journey_gate_shown', {});
+  }, []);
+
+  useEffect(() => {
     const on = (e) => {
       if (e.detail == null) {
         setLeaving(null);
@@ -211,6 +218,35 @@ export default function PathGate({ cards }) {
           >
             Tell us who you are and we&apos;ll show you what Hash does for you. You can switch any time.
           </motion.p>
+          <motion.nav
+            aria-label="Skip to"
+            className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-2 text-sm text-white/50"
+            initial={reduce ? false : { opacity: 0 }}
+            animate={{ opacity: leaving ? 0 : 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <span>Just here to play?</span>
+            {[
+              ['/book', 'Book a gaming cafe', 'book_click'],
+              ['/marketplace', 'Shop gaming gear', 'shop_click'],
+            ].map(([href, label, event]) => (
+              <a
+                key={href}
+                href={href}
+                data-track={event}
+                data-track-placement="path_gate"
+                onClick={() => {
+                  // They're a player: home shows the gamer view next time.
+                  try {
+                    sessionStorage.setItem('hash-path', 'gamer');
+                  } catch {}
+                }}
+                className="inline-flex items-center gap-1 rounded-full border border-white/15 px-3 py-1 text-white/80 transition hover:border-white/40 hover:text-white"
+              >
+                {label} <span aria-hidden="true">→</span>
+              </a>
+            ))}
+          </motion.nav>
           <div className="mt-8 grid gap-3 md:mt-12 md:grid-cols-3 md:gap-5" style={{ perspective: 1200 }}>
             {cards.map((c, i) => (
               <PathCard key={c.id} card={c} index={i} onEnter={play} onSelect={select} leaving={leaving} />

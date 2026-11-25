@@ -169,13 +169,13 @@ function Hero() {
           </>
         }
       >
-        <div className="relative z-10 mx-auto w-full max-w-[1600px] px-4 pb-16 pt-32 sm:px-8 sm:pb-24">
+        <div className="relative z-10 mx-auto w-full max-w-[1600px] px-4 pb-16 pt-32 sm:px-8 sm:pb-20">
           <FadeUp>
             <Eyebrow>Free on Android &amp; iOS · Made in India</Eyebrow>
           </FadeUp>
           <h1
             id="hero-title"
-            className="font-display text-[clamp(3.5rem,13vw,13rem)] uppercase leading-[0.85] text-white"
+            className="font-display text-[clamp(3.5rem,min(13vw,17svh),13rem)] uppercase leading-[0.85] text-white"
           >
             <RevealLine delay={0.1}>Compete.</RevealLine>
             <RevealLine
@@ -193,14 +193,24 @@ function Hero() {
           </FadeUp>
           <FadeUp delay={0.65}>
             <StoreButtons className="mt-8" placement="hero" />
-            <Link
-              href="/book"
-              data-track="book_click"
-              data-track-placement="hero"
-              className="mt-6 inline-flex items-center gap-2 font-display text-xl uppercase tracking-wide text-[#ff9a3d] transition hover:text-white"
-            >
-              Book a gaming cafe online →
-            </Link>
+            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+              <Link
+                href="/book"
+                data-track="book_click"
+                data-track-placement="hero"
+                className="inline-flex items-center gap-2 font-display text-xl uppercase tracking-wide text-[#ff9a3d] transition hover:text-white"
+              >
+                Book a gaming cafe online →
+              </Link>
+              <Link
+                href="/marketplace"
+                data-track="shop_click"
+                data-track-placement="hero"
+                className="inline-flex items-center gap-2 text-sm font-medium text-white/65 underline-offset-4 transition hover:text-white hover:underline"
+              >
+                or shop gaming gear →
+              </Link>
+            </div>
           </FadeUp>
         </div>
       </HeroScene>
