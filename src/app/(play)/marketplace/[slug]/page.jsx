@@ -95,13 +95,6 @@ export default async function ProductPage({ params, searchParams }) {
       : {}),
   };
 
-  const service = product.kind === "service";
-  const extra = [
-    ["Sold by", product.vendorName],
-    ["Category", service ? "Service" : product.category],
-    product.variants?.length > 1 ? ["Options", `${product.variants.length} (${(product.options || []).map((o) => o.title).join(", ")})`] : null,
-    ["Product ID", product.id],
-  ].filter((r) => r && r[1]);
 
   return (
     <>
@@ -111,53 +104,27 @@ export default async function ProductPage({ params, searchParams }) {
         <ProductView product={product} crumbs={<div className="mb-5 hidden lg:block"><Breadcrumbs items={crumbs} /></div>} />
       </Container>
 
-      <section className="border-t border-white/[0.06]" id="specifications" aria-labelledby="specs-title">
-        <Container className="py-12 sm:py-16">
-          <h2 id="specs-title" className="text-2xl font-semibold tracking-tight text-white">Product information</h2>
-          <div className="mt-6 grid gap-6 lg:grid-cols-2 lg:gap-10">
-            {product.specs?.length > 0 && (
-              <div>
-                <h3 className="text-[15px] font-medium text-white/60">Technical details</h3>
-                <SpecTable rows={product.specs.map((r) => [r.label, r.value])} />
+      <section className="border-t border-white/[0.06]">
+        <Container className="py-10 sm:py-12">
+          <div id="ratings" className="scroll-mt-28" aria-labelledby="ratings-title">
+            <h2 id="ratings-title" className="text-2xl font-semibold tracking-tight text-white">Customer ratings</h2>
+            {product.rating?.count > 0 ? (
+              <div className="mt-5 max-w-xl rounded-[28px] border border-white/[0.08] bg-[#0e0e12] p-6">
+                <p className="flex items-center gap-3">
+                  <span className="text-4xl font-semibold text-white">{product.rating.average.toFixed(1)}</span>
+                  <span>
+                    <Stars value={product.rating.average} className="h-5 w-5" />
+                    <span className="mt-1 block text-sm text-white/50">{product.rating.count.toLocaleString("en-IN")} verified ratings</span>
+                  </span>
+                </p>
+                <p className="mt-4 text-sm text-white/50">Ratings come from players who bought through Hash. Rate your order from the Hash app after delivery.</p>
               </div>
+            ) : (
+              <p className="mt-4 text-[15px] text-white/50">No ratings yet. Buyers can rate it from the Hash app after delivery.</p>
             )}
-            <div>
-              <h3 className="text-[15px] font-medium text-white/60">Additional information</h3>
-              <SpecTable rows={extra} />
-            </div>
           </div>
         </Container>
       </section>
-
-      {(product.description || product.rating?.count > 0) && (
-        <section className="border-t border-white/[0.06]">
-          <Container className="grid gap-12 py-12 sm:py-16 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:gap-20">
-            {product.description && (
-              <div aria-labelledby="about-title">
-                <h2 id="about-title" className="text-2xl font-semibold tracking-tight text-white">Product description</h2>
-                <div className="mt-5 max-w-3xl whitespace-pre-line text-[15px] leading-7 text-white/65">{plain(product.description, 5000)}</div>
-              </div>
-            )}
-            <div id="ratings" className="scroll-mt-28" aria-labelledby="ratings-title">
-              <h2 id="ratings-title" className="text-2xl font-semibold tracking-tight text-white">Customer ratings</h2>
-              {product.rating?.count > 0 ? (
-                <div className="mt-5 rounded-[28px] border border-white/[0.08] bg-[#0e0e12] p-6">
-                  <p className="flex items-center gap-3">
-                    <span className="text-4xl font-semibold text-white">{product.rating.average.toFixed(1)}</span>
-                    <span>
-                      <Stars value={product.rating.average} className="h-5 w-5" />
-                      <span className="mt-1 block text-sm text-white/50">{product.rating.count.toLocaleString("en-IN")} verified ratings</span>
-                    </span>
-                  </p>
-                  <p className="mt-4 text-sm text-white/50">Ratings come from players who bought through Hash. Rate your order from the Hash app after delivery.</p>
-                </div>
-              ) : (
-                <p className="mt-5 text-[15px] text-white/50">No ratings yet. Buyers can rate it from the Hash app after delivery.</p>
-              )}
-            </div>
-          </Container>
-        </section>
-      )}
 
       {related.length > 0 && (
         <section className="border-t border-white/[0.06]">
@@ -174,20 +141,5 @@ export default async function ProductPage({ params, searchParams }) {
 
       <CrossSell to="book" />
     </>
-  );
-}
-
-function SpecTable({ rows }) {
-  return (
-    <table className="mt-3 w-full overflow-hidden rounded-2xl text-[15px]">
-      <tbody className="divide-y divide-white/[0.06]">
-        {rows.map(([label, value]) => (
-          <tr key={label} className="odd:bg-white/[0.03]">
-            <th scope="row" className="w-[42%] px-5 py-3.5 text-left align-top font-normal text-white/50">{label}</th>
-            <td className="px-5 py-3.5 align-top text-white/90">{value}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
   );
 }

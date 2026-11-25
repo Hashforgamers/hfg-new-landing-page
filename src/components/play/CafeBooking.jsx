@@ -386,7 +386,7 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
             {!slots && !slotError && <Spinner label="Checking availability" />}
             {slots && !visibleSlots.length && <p className="text-sm text-white/55">No slots left on this day. Try another date.</p>}
             {slots && visibleSlots.length > 0 && (
-              <div className="space-y-4 lg:-mr-2 lg:max-h-[264px] lg:overflow-y-auto lg:overscroll-contain lg:pr-2 [scrollbar-width:thin]">
+              <div className="space-y-4">
                 {DAY_PARTS.map((part) => {
                   const list = visibleSlots.filter((x) => dayPart(x.start) === part.id);
                   if (!list.length) return null;

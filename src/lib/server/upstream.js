@@ -123,6 +123,8 @@ const SAFE_MESSAGES = {
 
 /** Business messages from our own backends are safe to show; stack traces are not. */
 function safeMessage(data, status) {
+  // Auth failures carry internal detail (e.g. "cannot decrypt subject"); the player only needs to sign in again.
+  if (status === 401) return SAFE_MESSAGES[401];
   const candidate = data && (data.message || data.error?.message || data.error || data.details);
   if (typeof candidate === "string" && candidate.length <= 200 && !/traceback|exception|sql|psycopg|stack/i.test(candidate)) {
     return candidate;

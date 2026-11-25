@@ -384,7 +384,7 @@ function bullets(text) {
   if (!s) return [];
   let parts = s.split(/\n+/).map((x) => x.trim()).filter(Boolean);
   if (parts.length < 2) parts = s.split(/(?<=[.!?])\s+(?=[A-Z0-9])/).map((x) => x.trim()).filter(Boolean);
-  return parts.filter((x) => x.length > 2).slice(0, 6);
+  return parts.filter((x) => x.length > 2);
 }
 
 /* ------------------------------------------------------------- product view */
@@ -488,8 +488,11 @@ export function ProductView({ product, crumbs = null }) {
   const mrp = current?.mrp ?? product.mrp ?? 0;
   const stockText = !current ? "This combination isn't available" : soldOut ? "Currently unavailable" : current.available <= 5 ? `Only ${current.available} left in stock` : "In stock";
   const stockTone = soldOut ? "text-[#ff6b6b]" : current.available <= 5 ? "text-[#ff9a3d]" : "text-emerald-300";
-  const points = bullets(product.description);
-  const keySpecs = (product.specs || []).slice(0, 6);
+  const [allSpecs, setAllSpecs] = useState(false);
+  const [allPoints, setAllPoints] = useState(false);
+  const allBullets = bullets(product.description);
+  const points = allPoints ? allBullets : allBullets.slice(0, 6);
+  const keySpecs = allSpecs ? product.specs || [] : (product.specs || []).slice(0, 6);
   const service = product.kind === "service";
 
   const buyBox = (
@@ -614,10 +617,10 @@ export function ProductView({ product, crumbs = null }) {
                 </div>
               ))}
             </dl>
-            {product.specs.length > keySpecs.length && (
-              <a href="#specifications" className="mt-3 inline-block text-sm font-medium text-[#ff9a3d] hover:underline">
-                See all {product.specs.length} specifications
-              </a>
+            {product.specs.length > 6 && (
+              <button type="button" aria-expanded={allSpecs} onClick={() => setAllSpecs((x) => !x)} className="mt-3 inline-block text-sm font-medium text-[#ff9a3d] hover:underline">
+                {allSpecs ? "Show fewer specifications" : `See all ${product.specs.length} specifications`}
+              </button>
             )}
           </div>
         )}
@@ -633,6 +636,11 @@ export function ProductView({ product, crumbs = null }) {
                 </li>
               ))}
             </ul>
+            {allBullets.length > 6 && (
+              <button type="button" aria-expanded={allPoints} onClick={() => setAllPoints((x) => !x)} className="mt-3 inline-block text-sm font-medium text-[#ff9a3d] hover:underline">
+                {allPoints ? "Show less" : "Read more"}
+              </button>
+            )}
           </div>
         )}
       </div>
