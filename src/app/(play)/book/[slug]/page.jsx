@@ -194,7 +194,7 @@ export default async function CafePage({ params, searchParams }) {
       </Container>
 
       <Container className="pb-12 pt-6">
-        {/* Phone/tablet: photos, booking, then details. Desktop: photos and details left, booking sticky right. */}
+        {/* Phone/tablet: photos, booking, then details. Desktop: photos and details left, booking card right (no inner scroll, so the page scroll always reaches Pay). */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_420px] lg:gap-10 xl:grid-cols-[minmax(0,1fr)_440px] xl:gap-12">
           {/* One left column on desktop, so a tall booking card never stretches the photo row and leaves a gap. */}
           <div className="contents lg:col-start-1 lg:row-start-1 lg:block lg:min-w-0 lg:space-y-10">
@@ -274,7 +274,7 @@ export default async function CafePage({ params, searchParams }) {
           </div>
           </div>
 
-          <aside className="order-2 min-w-0 scroll-mt-28 lg:sticky lg:top-28 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto lg:overscroll-contain lg:rounded-[28px] [scrollbar-width:thin] lg:order-none lg:col-start-2 lg:row-start-1 lg:self-start" id="book">
+          <aside className="order-2 min-w-0 scroll-mt-28 lg:order-none lg:col-start-2 lg:row-start-1 lg:self-start" id="book">
             <CafeBooking vendorId={cafe.id} initial={data} cafeUrl={canonical} />
           </aside>
         </div>
