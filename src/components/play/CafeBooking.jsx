@@ -81,6 +81,14 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
   const [booked, setBooked] = useState(null);
   const [flowError, setFlowError] = useState("");
 
+  // The confirmation replaces the long form, so bring it into view (it used to leave people at the FAQ).
+  useEffect(() => {
+    if (!result) return;
+    const card = document.getElementById("book");
+    if (card) card.scrollIntoView({ behavior: "smooth", block: "start" });
+    else window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [result]);
+
   const restoreDraft = useCallback(
     (data) => {
       // Restore a selection made before the login redirect.
@@ -156,6 +164,19 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
     };
   }, [vendorId, consoleSel, date, picked]);
 
+  // Passes the player owns (same list as the app's "My passes").
+  const [passes, setPasses] = useState(null);
+  useEffect(() => {
+    if (user && passes === null) secureCall("passes.mine").then((d) => setPasses(d.passes)).catch(() => setPasses([]));
+  }, [user, passes]);
+  const usablePasses = (passes || []).filter(
+    (p) => (p.vendorId == null || Number(p.vendorId) === Number(vendorId)) && (!p.validFrom || p.validFrom <= date) && (!p.validTo || p.validTo >= date),
+  );
+  useEffect(() => {
+    // A pass chosen for another date no longer applies.
+    if (method.startsWith("pass:") && !usablePasses.some((p) => `pass:${p.id}` === method)) setMethod("online");
+  }, [method, usablePasses]);
+
   useEffect(() => {
     if (user && method === "wallet" && wallet === null) {
       secureCall("wallet.balance").then((d) => setWallet(d.balance)).catch(() => setWallet(0));
@@ -208,7 +229,8 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
         gameId: consoleSel.gameId,
         date,
         slotIds: picked,
-        paymentMethod: method,
+        paymentMethod: method.startsWith("pass:") ? "pass" : method,
+        ...(method.startsWith("pass:") ? { userPassId: Number(method.slice(5)) } : {}),
       });
       if (created.status !== "payment_required") {
         setBooked(summary);
@@ -271,7 +293,7 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
               ["Console", booked.console],
               ["Date", booked.dateText],
               ["Time", booked.times.join(", ")],
-              ["Total", booked.total != null ? `${inr(result.total ?? booked.total)}${booked.method === "pay_at_cafe" ? " at the cafe" : " paid"}` : ""],
+              ["Total", result.paidWithPass ? "Covered by your pass" : booked.total != null ? `${inr(result.total ?? booked.total)}${booked.method === "pay_at_cafe" ? " at the cafe" : " paid"}` : ""],
               ids.length ? [ids.length > 1 ? "Booking IDs" : "Booking ID", ids.map((id) => `#${id}`).join(", ")] : null,
             ]
               .filter((row) => row && row[1])
@@ -453,6 +475,7 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
                 { id: "online", label: "UPI, card or netbanking", show: true },
                 { id: "wallet", label: wallet !== null ? `Hash Wallet (${inr(wallet)})` : "Hash Wallet", show: Boolean(user) },
                 { id: "pay_at_cafe", label: "Pay at the cafe", show: cafe.payAtCafe },
+                ...usablePasses.map((p) => ({ id: `pass:${p.id}`, label: `${p.name} · pass${p.validTo ? `, valid till ${new Date(`${p.validTo}T12:00:00+05:30`).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}` : ""}`, show: true })),
               ]
                 .filter((m) => m.show)
                 .map((m) => (
@@ -484,7 +507,7 @@ export default function CafeBooking({ vendorId, initial = null, cafeUrl = "/book
               disabled={!quote || quoting || !quote.allBookable || walletShort || !ready}
               onClick={onBook}
             >
-              {!user ? `Sign in to book${quote ? ` · ${inr(quote.total)}` : ""}` : method === "online" ? `Pay ${quote ? inr(quote.total) : ""}` : "Confirm booking"}
+              {!user ? `Sign in to book${quote ? ` · ${inr(quote.total)}` : ""}` : method === "online" ? `Pay ${quote ? inr(quote.total) : ""}` : method.startsWith("pass:") ? "Book with my pass" : "Confirm booking"}
             </Button>
             {quote && !quote.allBookable && <p className="mt-2 text-xs text-amber-200">One of these slots just filled up. Pick another.</p>}
           </>

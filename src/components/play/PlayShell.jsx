@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useReportWebVitals } from "next/web-vitals";
@@ -54,6 +54,38 @@ function HeaderActions() {
       </Link>
     </>
   );
+}
+
+/**
+ * New pages open at the top. Next keeps the old scroll offset when the next page
+ * starts short (e.g. /login while its form loads), which left people looking at
+ * the footer. Back/forward keeps the browser's own scroll restoration.
+ */
+function ScrollReset() {
+  const pathname = usePathname();
+  const fromHistory = useRef(false);
+  const first = useRef(true);
+  useEffect(() => {
+    const onPop = () => {
+      fromHistory.current = true;
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+  useEffect(() => {
+    if (first.current) {
+      // Hard loads and reloads keep the browser's own position.
+      first.current = false;
+      return;
+    }
+    if (fromHistory.current) {
+      fromHistory.current = false;
+      return;
+    }
+    if (window.location.hash) return;
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [pathname]);
+  return null;
 }
 
 const reported = new Set();
@@ -127,6 +159,7 @@ export default function PlayShell({ children }) {
       <AppShell compactFooter>
         <div className="font-body relative min-h-screen bg-black text-white">
           <NavBar actions={<HeaderActions />} />
+          <ScrollReset />
           <Analytics />
           {/* The site header is fixed; keep content clear of it. */}
           <div className="relative pt-16 sm:pt-20">{children}</div>

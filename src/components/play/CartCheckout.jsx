@@ -40,6 +40,11 @@ export default function CartCheckout() {
     if (ready && user) load();
   }, [ready, user, load]);
 
+  // Order placed: the confirmation renders at the top of a now-short page.
+  useEffect(() => {
+    if (order) window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [order]);
+
   // Start the address from the Hash profile.
   useEffect(() => {
     if (!user) return;

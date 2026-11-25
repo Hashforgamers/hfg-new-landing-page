@@ -12,10 +12,11 @@ export const metadata = buildPageMetadata({
 
 export default function LoginPage() {
   return (
-    <Suspense>
-      <Container className="py-10">
+    <Container className="min-h-[70vh] py-10">
+      {/* The fallback keeps the page tall while the form loads, so it never opens scrolled to the footer. */}
+      <Suspense fallback={<div className="mx-auto min-h-[420px] max-w-md" aria-hidden />}>
         <LoginView />
-      </Container>
-    </Suspense>
+      </Suspense>
+    </Container>
   );
 }

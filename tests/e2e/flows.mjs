@@ -236,6 +236,9 @@ try {
     await click(aside.getByRole("button", { name: /Sign in to book/ }));
     await page.waitForURL(/\/login/);
     await page.waitForLoadState("networkidle");
+    // Coming from a scrolled cafe page, sign-in must open at the top.
+    const loginScroll = await page.evaluate(() => window.scrollY);
+    if (loginScroll > 0) throw new Error(`login opened scrolled to ${loginScroll}px`);
     await shot("login");
 
     // ---- Log in, come back: draft should restore
@@ -264,6 +267,25 @@ try {
     await go("/account");
     await page.waitForTimeout(800);
     await shot("account-bookings");
+    await go("/account#passes");
+    await page.waitForTimeout(900);
+    await shot("account-passes-catalog");
+    await click(page.getByRole("button", { name: /^Wallet/ }).first());
+    await page.waitForTimeout(1200);
+    await shot("account-passes-owned");
+    await go("/account#wallet");
+    await page.waitForTimeout(800);
+    await shot("account-wallet");
+    // With a Neon Arena pass, booking there offers "Pay with" the pass.
+    await go("/book/neon-arena-bandra-7");
+    await page.waitForTimeout(1200);
+    await click(aside.getByRole("button", { name: /PS5|PC|Xbox/ }));
+    await click(aside.getByRole("button", { name: tomorrowLabel }));
+    await page.waitForTimeout(800);
+    await click(aside.locator("section[aria-label='Date and time'] .grid button:not([disabled])"));
+    await page.waitForTimeout(900);
+    await aside.scrollIntoViewIfNeeded();
+    await shot("cafe-pay-with-pass");
     await go("/account#orders");
     await page.waitForTimeout(800);
     await shot("account-orders-via-link");

@@ -66,6 +66,11 @@ function medusaJwt(actorId) {
   return `${b64u(JSON.stringify({ alg: "HS256" }))}.${b64u(JSON.stringify({ actor_id: actorId, exp: now + 3600 }))}.sig`;
 }
 
+const MOCK_PASSES = [
+  { id: 41, name: "Neon Monthly", price: 249, days_valid: 30, description: "Unlimited play at Neon Arena for 30 days.", pass_type: "cafe", vendor_id: 7, vendor_name: "Neon Arena", vendor_images: [{ url: "https://res.cloudinary.com/x/neon1.jpg" }], pass_mode: "date_based", total_hours: null },
+  { id: 42, name: "Hash Weekender", price: 699, days_valid: 7, description: "Play at any Hash cafe for a week.", pass_type: "global", vendor_id: null, vendor_name: null, vendor_images: [], pass_mode: "date_based", total_hours: null },
+];
+
 export function createMockBackends() {
   const calls = [];
   const state = {
@@ -77,8 +82,11 @@ export function createMockBackends() {
     customers: new Map(), // hfg id -> customer id
     carts: new Map(),
     nonces: new Set(),
-    walletBalance: 500,
+    walletBalance: process.env.MOCK_RICH ? 2000 : 500,
     medusaOrders: new Map(),
+    passes: [], // owned passes
+    nextPassId: 300,
+    txns: [],
   };
 
   const verifyGateway = (req, raw) => {
@@ -152,6 +160,48 @@ export function createMockBackends() {
       if (!userFromHfg(req.headers.authorization)) return send(401, { message: "Invalid token" });
       return send(200, { balance: state.walletBalance });
     }
+    if (req.method === "GET" && path === "/api/users/hash-coins") {
+      if (!userFromHfg(req.headers.authorization)) return send(401, { message: "Invalid token" });
+      return send(200, { hash_coins: 1250 });
+    }
+    if (req.method === "GET" && path === "/api/users/transactions") {
+      if (!userFromHfg(req.headers.authorization)) return send(401, { message: "Invalid token" });
+      return send(200, {
+        transactions: [
+          ...state.txns,
+          { id: 11, date: "2026-11-20", time: "18:05:00", amount: 300, type: "booking", mode: "payment_gateway", status: "success", reference_id: "pay_x" },
+          { id: 10, date: "2026-11-18", time: "12:00:00", amount: 500, type: "wallet_credit", mode: "wallet", status: "success", reference_id: "w1" },
+        ],
+      });
+    }
+    if (req.method === "GET" && path === "/api/user/available_passes") {
+      if (!userFromHfg(req.headers.authorization)) return send(401, { message: "Invalid token" });
+      const owned = new Set(state.passes.map((p) => p.cafe_pass_id));
+      return send(200, MOCK_PASSES.map((p) => ({ ...p, is_bought: owned.has(p.id) })));
+    }
+    if (req.method === "GET" && path === "/api/user/passes") {
+      const uid = userFromHfg(req.headers.authorization);
+      if (!uid) return send(401, { message: "Invalid token" });
+      return send(200, state.passes.filter((p) => p.uid === uid).map(({ uid: _u, ...p }) => p));
+    }
+    if (req.method === "POST" && path === "/api/user/purchase_pass") {
+      const uid = userFromHfg(req.headers.authorization);
+      if (!uid) return send(401, { message: "Invalid token" });
+      const pass = MOCK_PASSES.find((p) => p.id === body.cafe_pass_id);
+      if (!pass) return send(404, { message: "Pass not found" });
+      if (body.payment_mode === "wallet") {
+        if (!body.idempotency_key || body.idempotency_key.length < 8) return send(400, { message: "idempotency_key required" });
+        if (state.walletBalance < pass.price) return send(400, { message: "Insufficient wallet balance" });
+        state.walletBalance -= pass.price;
+        state.txns.unshift({ id: 99, date: "2026-11-25", time: "10:00:00", amount: -pass.price, type: "wallet_debit", mode: "wallet", status: "success" });
+      } else if (body.payment_mode === "payment_gateway") {
+        if (!/^pay_/.test(String(body.payment_id || ""))) return send(400, { message: "payment_id required" });
+      } else return send(400, { message: "Invalid payment_mode" });
+      const today = new Date().toISOString().slice(0, 10);
+      const to = new Date(Date.now() + pass.days_valid * 864e5).toISOString().slice(0, 10);
+      state.passes.push({ uid, id: state.nextPassId++, cafe_pass_id: pass.id, cafe_pass_name: pass.name, vendor_id: pass.vendor_id, vendor_name: pass.vendor_name, vendor_images: pass.vendor_images, valid_from: today, valid_to: to, pass_type: pass.pass_type });
+      return send(200, { message: "Pass purchased" });
+    }
 
     // ---------- hfg-onboard (vendor)
     if (path === "/api/vendor/getAllGamingCafe") {
@@ -216,8 +266,10 @@ export function createMockBackends() {
       const uid = userFromHfg(req.headers.authorization);
       if (!uid) return send(401, { message: "Missing token" });
       const id = `order_${crypto.randomBytes(6).toString("hex")}`;
-      state.orders.set(id, { id, amount: body.amount, uid });
-      return send(200, { id, amount: body.amount, currency: "INR", status: "created" });
+      const pass = body.cafe_pass_id ? MOCK_PASSES.find((p) => p.id === body.cafe_pass_id) : null;
+      const amount = pass ? pass.price * 100 : body.amount;
+      state.orders.set(id, { id, amount, uid });
+      return send(200, { id, amount, currency: "INR", status: "created" });
     }
     if (path === "/api/capture_payment") {
       const { razorpay_payment_id: pid, razorpay_order_id: oid, razorpay_signature: sig } = body;
@@ -236,6 +288,8 @@ export function createMockBackends() {
         const b = state.bookings.get(id);
         if (!b || b.uid !== uid) return send(403, { message: "Booking does not belong to user" });
         b.status = "confirmed";
+        b.date = body.book_date;
+        b.mode = body.payment_mode;
       }
       return send(200, { message: "confirmed" });
     }
@@ -249,7 +303,23 @@ export function createMockBackends() {
     if (path === "/api/users/bookings") {
       const uid = userFromHfg(req.headers.authorization);
       if (!uid) return send(401, { message: "Invalid token" });
-      return send(200, [...state.bookings.values()].filter((b) => b.uid === uid).map((b) => ({ booking_id: b.id, status: b.status, cafe_name: "Neon Arena" })));
+      // Compact rows, like GET /api/users/bookings?compact=true.
+      const mine = [...state.bookings.values()].filter((b) => b.uid === uid).map((b) => ({
+        booking_id: b.id,
+        status: b.status,
+        booking_mode: "regular",
+        book_date: b.date || null,
+        created_at: "2026-11-25T10:00:00",
+        slot: { gaming_type_id: { game_id: 55, vendor_id: 7, game_name: "ps5", single_slot_price: 150, cafe_name: null }, time: { start_time: "22:00:00", end_time: "23:00:00" } },
+      }));
+      if (process.env.MOCK_RICH) {
+        mine.push(
+          { booking_id: 8801, status: "completed", booking_mode: "regular", book_date: "2026-11-12", created_at: "2026-11-11T09:00:00", slot: { gaming_type_id: { game_id: 56, vendor_id: 21, game_name: "pc", single_slot_price: 120, cafe_name: null }, time: { start_time: "18:00:00", end_time: "19:00:00" } } },
+          { booking_id: 8800, status: "rejected", booking_mode: "regular", book_date: "2026-11-08", created_at: "2026-11-07T09:00:00", slot: { gaming_type_id: { game_id: 55, vendor_id: 7, game_name: "ps5", single_slot_price: 150, cafe_name: null }, time: { start_time: "20:00:00", end_time: "21:00:00" } } },
+          { booking_id: 8799, status: "verification_failed", booking_mode: "regular", book_date: null, created_at: "2026-11-06T09:00:00", slot: { gaming_type_id: { game_id: 55, vendor_id: 7, game_name: "ps5", single_slot_price: 150, cafe_name: null }, time: { start_time: "20:00:00", end_time: "21:00:00" } } },
+        );
+      }
+      return send(200, mine);
     }
 
     // ---------- Medusa
