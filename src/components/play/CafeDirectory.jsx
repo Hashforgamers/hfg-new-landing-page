@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { MapPin, Search } from "lucide-react";
+import { Gamepad2, MapPin, Search } from "lucide-react";
 import { track } from "@/lib/analytics-client";
 import { cafeLocality, cafePath } from "@/lib/verticals";
 import { Chip, Empty, cx, formatTime } from "./ui";
@@ -47,7 +47,16 @@ export function CafeCard({ cafe, priority = false }) {
             className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
           />
         ) : (
-          <div className="flex h-full items-center justify-center font-display text-4xl uppercase text-white/15">{cafe.name.slice(0, 2)}</div>
+          // No photos yet: branded artwork instead of bare initials.
+          <div className="relative flex h-full flex-col items-center justify-center gap-3">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/hero-poster.jpg" alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover opacity-35 blur-[2px]" />
+            <span className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/40" aria-hidden />
+            <span className="relative flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-black/50 backdrop-blur-md">
+              <Gamepad2 className="h-6 w-6 text-white/85" aria-hidden />
+            </span>
+            <span className="relative text-[12px] font-medium uppercase tracking-[0.16em] text-white/55">Hash partner cafe</span>
+          </div>
         )}
         {open !== null && (
           <span
