@@ -42,13 +42,21 @@ function hfgJwt(userId) {
   const s = b64u(crypto.createHmac("sha256", "server-secret").update(`${h}.${p}`).digest());
   return `${h}.${p}.${s}`;
 }
+// Like production: user-onboard's sign-in token carries the id encrypted for
+// the app key pair ("enc-<id>" here), while booking/medusa only accept the
+// app-format token whose uuid is RSA-OAEP encrypted with the backend key.
+const { privateKey: backendPriv, publicKey: backendPub } = crypto.generateKeyPairSync("rsa", { modulusLength: 2048 });
+export const BACKEND_PUBLIC_PEM = backendPub.export({ type: "spki", format: "pem" });
+export const BACKEND_JWT_SECRET = "server-secret";
 function userFromHfg(auth) {
   const token = (auth || "").replace(/^Bearer /, "");
   try {
     const p = JSON.parse(Buffer.from(token.split(".")[1], "base64url").toString());
-    const s = b64u(crypto.createHmac("sha256", "server-secret").update(token.split(".").slice(0, 2).join(".")).digest());
+    const s = b64u(crypto.createHmac("sha256", BACKEND_JWT_SECRET).update(token.split(".").slice(0, 2).join(".")).digest());
     if (s !== token.split(".")[2]) return null;
-    return Number(String(p.uuid).replace("enc-", ""));
+    if (!(p.exp > Date.now() / 1000)) return null;
+    const id = crypto.privateDecrypt({ key: backendPriv, padding: crypto.constants.RSA_PKCS1_OAEP_PADDING, oaepHash: "sha256" }, Buffer.from(String(p.uuid), "base64"));
+    return Number(id.toString());
   } catch {
     return null;
   }

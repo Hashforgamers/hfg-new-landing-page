@@ -3,6 +3,7 @@ import { upstream, UpstreamError } from "@/lib/server/upstream";
 import { peekJwt } from "@/lib/server/jwt-peek";
 import { clean, v } from "@/lib/server/validate";
 import { hit } from "@/lib/secure/store";
+import { hfgToken } from "@/lib/server/hfg-token";
 
 /*
  * Hash Marketplace (Medusa 2) storefront, following
@@ -50,7 +51,7 @@ async function medusa(ctx, path, { method = "GET", body, auth = false, retryOnKe
 async function exchange(ctx) {
   const { data } = await upstream("medusa", "/auth/customer/hfg", {
     method: "POST",
-    body: { token: ctx.session.hfg },
+    body: { token: hfgToken(ctx) },
     requestId: ctx.requestId,
   });
   if (!data?.token) throw new UpstreamError(502, "Store sign-in failed. Please try again.");

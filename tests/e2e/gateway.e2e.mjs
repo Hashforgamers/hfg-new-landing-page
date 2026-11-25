@@ -15,7 +15,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
-import { createMockBackends, firebaseIdToken, GATEWAY_SECRET, PROJECT_ID } from "./mock-backends.mjs";
+import { createMockBackends, firebaseIdToken, GATEWAY_SECRET, PROJECT_ID, BACKEND_JWT_SECRET, BACKEND_PUBLIC_PEM } from "./mock-backends.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, "../..");
@@ -43,6 +43,8 @@ const env = {
   HFG_ALLOW_TEST_OVERRIDES: "true",
   FIREBASE_JWKS_URL_OVERRIDE: `http://localhost:${MOCK_PORT}/jwks`,
   RAZORPAY_KEY_ID: "rzp_test_key",
+  HFG_SERVICE_JWT_SECRET: BACKEND_JWT_SECRET,
+  HFG_SERVICE_PUBLIC_KEY: BACKEND_PUBLIC_PEM,
   HFG_GATEWAY_HMAC_SECRET: process.env.TEST_AUTH_MODE === "legacy" ? "" : GATEWAY_SECRET,
 };
 

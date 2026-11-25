@@ -4,6 +4,7 @@ import { istToday, v } from "@/lib/server/validate";
 import { openIntent, sealIntent } from "@/lib/secure/server-crypto";
 import { claimOnce } from "@/lib/secure/store";
 import { log } from "@/lib/secure/http";
+import { hfgToken } from "@/lib/server/hfg-token";
 
 /* ---------------------------------------------------------------- cache */
 const cache = new Map();
@@ -114,7 +115,7 @@ async function releaseBookings(bookingMap, date, requestId) {
   }
 }
 
-async function confirm(session, { bookingIds, paymentMode, paymentId, orderId }, requestId) {
+async function confirm(ctx, { bookingIds, paymentMode, paymentId, orderId }, requestId) {
   // Same body as HFG-frontend remote_repo.confirmBooking (+ razorpay_order_id,
   // which the backend accepts and uses to bind the payment to this order).
   const body = {
@@ -129,7 +130,7 @@ async function confirm(session, { bookingIds, paymentMode, paymentId, orderId },
   const { data } = await upstream("booking", "/api/bookings/confirm", {
     method: "POST",
     body,
-    token: session.hfg,
+    token: hfgToken(ctx),
     requestId,
     timeoutMs: 30000,
   });
@@ -253,7 +254,7 @@ export const bookingOps = {
     auth: "user",
     limit: { perIp: 60 },
     async run(ctx) {
-      const { data } = await upstream("userOnboard", "/api/users/wallet", { token: ctx.session.hfg, requestId: ctx.requestId });
+      const { data } = await upstream("userOnboard", "/api/users/wallet", { token: hfgToken(ctx), requestId: ctx.requestId });
       return { balance: Number(data?.balance || 0) };
     },
   },
@@ -284,7 +285,7 @@ export const bookingOps = {
       // Same payload as HFG-frontend booking_summary_screen.createBookingWithSlotMap.
       const { data } = await upstream("booking", "/api/bookings", {
         method: "POST",
-        token: ctx.session.hfg,
+        token: hfgToken(ctx),
         requestId: ctx.requestId,
         body: { slot_id: parsed.slotIds, game_id: parsed.gameId, book_date: parsed.date, is_pay_at_cafe: method === "pay_at_cafe" },
       });
@@ -310,7 +311,7 @@ export const bookingOps = {
 
       if (method === "wallet") {
         try {
-          await confirm(ctx.session, { bookingIds, paymentMode: "wallet", paymentId: `WALLET_${Date.now()}` }, ctx.requestId);
+          await confirm(ctx, { bookingIds, paymentMode: "wallet", paymentId: `WALLET_${Date.now()}` }, ctx.requestId);
         } catch (error) {
           await releaseBookings(bookingMap, parsed.date, ctx.requestId);
           ctx.track("Payment Failed", { reason: "wallet", payment_gateway: "wallet" });
@@ -332,7 +333,7 @@ export const bookingOps = {
       try {
         ({ data: order } = await upstream("booking", "/api/create_order", {
           method: "POST",
-          token: ctx.session.hfg,
+          token: hfgToken(ctx),
           requestId: ctx.requestId,
           body: { amount: amountPaise, currency: "INR", receipt: `web_${Date.now()}` },
         }));
@@ -400,7 +401,7 @@ export const bookingOps = {
       try {
         await upstream("booking", "/api/capture_payment", {
           method: "POST",
-          token: ctx.session.hfg,
+          token: hfgToken(ctx),
           requestId: ctx.requestId,
           body: { razorpay_payment_id: paymentId, razorpay_order_id: orderId, razorpay_signature: signature },
         });
@@ -415,7 +416,7 @@ export const bookingOps = {
 
       // 2) Confirm the bookings against the captured payment.
       try {
-        await confirm(ctx.session, { bookingIds, paymentMode: "gateway", paymentId, orderId }, ctx.requestId);
+        await confirm(ctx, { bookingIds, paymentMode: "gateway", paymentId, orderId }, ctx.requestId);
       } catch (error) {
         // Money was captured. Releasing slots here would charge the player
         // for nothing, so ambiguous failures are left for reconciliation.
@@ -447,7 +448,7 @@ export const bookingOps = {
     limit: { perIp: 60 },
     async run(ctx) {
       const { data } = await upstream("booking", "/api/users/bookings?compact=true&limit=50", {
-        token: ctx.session.hfg,
+        token: hfgToken(ctx),
         requestId: ctx.requestId,
       });
       const rows = Array.isArray(data) ? data : data?.bookings || [];

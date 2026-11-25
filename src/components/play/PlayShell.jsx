@@ -114,6 +114,12 @@ export default function PlayShell({ children }) {
     refresh();
   }, [refresh]);
 
+  useEffect(() => {
+    const onSignedOut = () => setUser(null);
+    window.addEventListener("hfg:signed-out", onSignedOut);
+    return () => window.removeEventListener("hfg:signed-out", onSignedOut);
+  }, []);
+
   const value = useMemo(() => ({ user, ready, refresh, logout, setUser }), [user, ready, refresh, logout]);
 
   return (
