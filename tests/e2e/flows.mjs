@@ -217,10 +217,15 @@ try {
     await click(aside.getByRole("button", { name: /PS5|PC|Xbox/ }));
     await click(aside.getByRole("button", { name: tomorrowLabel }));
     await page.waitForTimeout(800);
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await shot("cafe-booking-started", { full: false });
+    await page.evaluate(() => window.scrollTo(0, 700));
+    await shot("cafe-booking-scrolled", { full: false });
     await click(aside.locator("[aria-label='Time'] button:not([disabled]), section[aria-label='Date and time'] .grid button:not([disabled])"));
     await page.waitForTimeout(900);
     await aside.scrollIntoViewIfNeeded();
     await shot("cafe-slot-picked-logged-out", { full: false });
+    await shot("cafe-slot-picked-full");
     await click(aside.getByRole("button", { name: /Sign in to book/ }));
     await page.waitForURL(/\/login/);
     await page.waitForLoadState("networkidle");

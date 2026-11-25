@@ -196,15 +196,13 @@ export default async function CafePage({ params, searchParams }) {
       <Container className="pb-12 pt-6">
         {/* Phone/tablet: photos, booking, then details. Desktop: photos and details left, booking sticky right. */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_420px] lg:gap-10 xl:grid-cols-[minmax(0,1fr)_440px] xl:gap-12">
-          <div className="min-w-0 lg:col-start-1 lg:row-start-1">
-            <CafeGallery images={cafe.images || []} name={cafe.name} />
-          </div>
+          {/* One left column on desktop, so a tall booking card never stretches the photo row and leaves a gap. */}
+          <div className="contents lg:col-start-1 lg:row-start-1 lg:block lg:min-w-0 lg:space-y-10">
+            <div className="order-1 min-w-0">
+              <CafeGallery images={cafe.images || []} name={cafe.name} />
+            </div>
 
-          <aside className="min-w-0 scroll-mt-28 lg:sticky lg:top-28 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start" id="book">
-            <CafeBooking vendorId={cafe.id} initial={data} cafeUrl={canonical} />
-          </aside>
-
-          <div className="min-w-0 space-y-10 lg:col-start-1 lg:row-start-2">
+          <div className="order-3 min-w-0 space-y-10">
             <section aria-label="At a glance">
               <dl className="grid grid-cols-2 overflow-hidden rounded-[24px] border border-white/[0.08] bg-[#0e0e12] sm:grid-cols-4">
                 {[
@@ -274,6 +272,11 @@ export default async function CafePage({ params, searchParams }) {
               </div>
             </section>
           </div>
+          </div>
+
+          <aside className="order-2 min-w-0 scroll-mt-28 lg:sticky lg:top-28 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto lg:overscroll-contain lg:rounded-[28px] [scrollbar-width:thin] lg:order-none lg:col-start-2 lg:row-start-1 lg:self-start" id="book">
+            <CafeBooking vendorId={cafe.id} initial={data} cafeUrl={canonical} />
+          </aside>
         </div>
       </Container>
 
