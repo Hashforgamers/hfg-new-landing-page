@@ -7,7 +7,6 @@ import {
   motion,
   useMotionValue,
   useReducedMotion,
-  useSpring,
   useTransform,
 } from 'framer-motion';
 import { track } from '@/lib/analytics';
@@ -48,8 +47,6 @@ function PathCard({ card, index, onEnter, onSelect, leaving }) {
   const reduce = useReducedMotion();
   const mx = useMotionValue(0.5);
   const my = useMotionValue(0.5);
-  const rotateX = useSpring(useTransform(my, [0, 1], [12, -12]), { stiffness: 220, damping: 18 });
-  const rotateY = useSpring(useTransform(mx, [0, 1], [-14, 14]), { stiffness: 220, damping: 18 });
   const glareX = useTransform(mx, [0, 1], ['0%', '100%']);
   const glareY = useTransform(my, [0, 1], ['0%', '100%']);
   const glare = useTransform(
@@ -86,9 +83,9 @@ function PathCard({ card, index, onEnter, onSelect, leaving }) {
           : { opacity: 1, y: 0, rotateX: 0 }
       }
       transition={{ duration: leaving ? 0.45 : 0.8, delay: leaving ? 0 : 0.25 + index * 0.12, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={reduce || leaving ? undefined : { y: -10, scale: 1.03 }}
-      style={reduce ? undefined : { rotateX, rotateY, transformPerspective: 900 }}
-      className="group relative block min-h-[150px] w-full overflow-hidden rounded-2xl border border-white/15 bg-black text-left shadow-[0_20px_60px_rgba(0,0,0,0.5)] outline-none transition-shadow duration-300 hover:shadow-[0_30px_90px_rgba(255,61,139,0.35)] focus-visible:ring-2 focus-visible:ring-white md:min-h-[440px]"
+      whileHover={reduce || leaving ? undefined : { y: -4 }}
+      style={reduce ? undefined : { transformPerspective: 900 }}
+      className="group relative block min-h-[150px] w-full overflow-hidden rounded-2xl border border-white/15 bg-black text-left shadow-[0_20px_60px_rgba(0,0,0,0.5)] outline-none transition-shadow duration-300 hover:shadow-[0_30px_90px_rgba(255,61,139,0.35)] focus-visible:ring-2 focus-visible:ring-white md:h-full md:min-h-[260px]"
     >
       <Image
         src={card.image}
@@ -104,7 +101,7 @@ function PathCard({ card, index, onEnter, onSelect, leaving }) {
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{ background: glare }}
       />
-      <div className="relative flex h-full min-h-[150px] flex-col justify-between p-5 md:min-h-[440px] md:p-8">
+      <div className="relative flex h-full min-h-[150px] flex-col justify-between p-5 md:min-h-0 md:p-7">
         <span className="font-tech whitespace-nowrap text-[10px] font-semibold uppercase tracking-[0.18em] text-white/70 md:text-[11px]">
           {String(index + 1).padStart(2, '0')} · {card.kicker}
         </span>
@@ -119,7 +116,7 @@ function PathCard({ card, index, onEnter, onSelect, leaving }) {
             </span>
           </h2>
           <p className="mt-2 hidden max-w-xs text-sm leading-6 text-white/80 md:block">{card.body}</p>
-          <span className="mt-3 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 font-display text-base uppercase tracking-wide text-black transition group-hover:bg-[#ff3d8b] group-hover:text-white md:mt-6 md:px-5 md:py-2.5 md:text-lg">
+          <span className="mt-3 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 font-display text-base uppercase tracking-wide text-black transition group-hover:bg-[#ff3d8b] group-hover:text-white md:mt-5 md:px-5 md:py-2.5 md:text-lg">
             {card.cta} <span aria-hidden="true">→</span>
           </span>
         </div>
@@ -184,14 +181,14 @@ export default function PathGate({ cards }) {
         className="fixed inset-0 z-[70] overflow-y-auto bg-black"
       >
         <div
-          className="pointer-events-none absolute -left-40 -top-40 h-[600px] w-[600px] rounded-full bg-[#ff3d8b]/25 blur-[150px]"
+          className="pointer-events-none fixed -left-40 -top-40 h-[600px] w-[600px] rounded-full bg-[#ff3d8b]/25 blur-[150px]"
           aria-hidden="true"
         />
         <div
-          className="pointer-events-none absolute -bottom-40 -right-40 h-[600px] w-[600px] rounded-full bg-[#7c3aed]/25 blur-[150px]"
+          className="pointer-events-none fixed -bottom-40 -right-40 h-[600px] w-[600px] rounded-full bg-[#7c3aed]/25 blur-[150px]"
           aria-hidden="true"
         />
-        <div key={round} className="relative mx-auto flex min-h-full max-w-[1500px] flex-col px-4 py-8 sm:px-8 md:justify-center md:py-12">
+        <div key={round} className="relative mx-auto flex min-h-full max-w-[1500px] flex-col px-4 py-8 sm:px-8 md:justify-center md:py-6">
           <motion.div
             className="flex items-center gap-2"
             initial={reduce ? false : { opacity: 0, y: -12 }}
@@ -203,15 +200,16 @@ export default function PathGate({ cards }) {
           </motion.div>
           <motion.p
             id="path-gate-title"
-            className="mt-8 font-display text-[clamp(3rem,9vw,8rem)] uppercase leading-[0.85] text-white md:mt-10"
+            className="mt-8 font-display text-[clamp(3rem,min(9vw,12svh),8rem)] uppercase leading-[0.85] text-white md:mt-5"
             initial={reduce ? false : { opacity: 0, y: 30 }}
             animate={{ opacity: leaving ? 0 : 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           >
             Choose your <span className="bg-gradient-to-r from-[#ff3d8b] via-[#ff9a3d] to-[#ffd23d] bg-clip-text text-transparent">path</span>
           </motion.p>
+          <div className="md:mt-3 md:flex md:flex-wrap md:items-center md:justify-between md:gap-x-8 md:gap-y-2">
           <motion.p
-            className="mt-3 max-w-xl text-sm leading-6 text-white/65 md:text-base"
+            className="mt-3 max-w-xl text-sm leading-6 text-white/65 md:mt-0 md:text-base"
             initial={reduce ? false : { opacity: 0 }}
             animate={{ opacity: leaving ? 0 : 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -220,7 +218,7 @@ export default function PathGate({ cards }) {
           </motion.p>
           <motion.nav
             aria-label="Skip to"
-            className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-2 text-sm text-white/50"
+            className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-2 text-sm text-white/50 md:mt-0"
             initial={reduce ? false : { opacity: 0 }}
             animate={{ opacity: leaving ? 0 : 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
@@ -247,7 +245,8 @@ export default function PathGate({ cards }) {
               </a>
             ))}
           </motion.nav>
-          <div className="mt-8 grid gap-3 md:mt-12 md:grid-cols-3 md:gap-5" style={{ perspective: 1200 }}>
+          </div>
+          <div className="mt-8 grid gap-3 md:mt-5 md:max-h-[480px] md:min-h-[276px] md:flex-1 md:grid-cols-3 md:grid-rows-[minmax(0,1fr)] md:gap-5 md:p-2" style={{ perspective: 1200 }}>
             {cards.map((c, i) => (
               <PathCard key={c.id} card={c} index={i} onEnter={play} onSelect={select} leaving={leaving} />
             ))}
