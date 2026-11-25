@@ -19,6 +19,22 @@ export async function cached(key, ttlMs, loader) {
 /* ------------------------------------------------------- sanitisers */
 // The vendor listing endpoint also returns owner names, emails and phone
 // numbers. The public website only ever receives what a player needs.
+// Vendor apps store amenity keys ("air_conditioner", "seating_area"): show them as words.
+const AMENITY_NAMES = {
+  ac: "Air conditioning", air_conditioner: "Air conditioning", air_conditioning: "Air conditioning", wifi: "Wi-Fi", wi_fi: "Wi-Fi",
+  "24/7": "Open 24/7", "24x7": "Open 24/7", seating_area: "Lounge seating", sound_system: "Sound system", washroom: "Washroom",
+  parking: "Parking", snacks: "Snacks", food: "Food", beverages: "Drinks", drinks: "Drinks", cctv: "CCTV", power_backup: "Power backup",
+};
+function amenityLabel(name) {
+  const raw = String(name || "").trim();
+  if (!raw) return "";
+  const key = raw.toLowerCase().replace(/[\s-]+/g, "_");
+  if (AMENITY_NAMES[key]) return AMENITY_NAMES[key];
+  if (/^[A-Z0-9\s]+$/.test(raw) && raw.length <= 4) return raw;
+  const words = raw.replace(/[_-]+/g, " ").replace(/\s+/g, " ").trim().toLowerCase();
+  return words.charAt(0).toUpperCase() + words.slice(1);
+}
+
 export function publicCafe(raw) {
   const address = raw.address || {};
   return {
@@ -32,7 +48,7 @@ export function publicCafe(raw) {
     lng: Number(address.longitude) || null,
     opens: raw.opening_time || null,
     closes: raw.closing_time || null,
-    amenities: (raw.amenities || []).filter((a) => a.available).map((a) => a.name).slice(0, 12),
+    amenities: [...new Set((raw.amenities || []).filter((a) => a.available).map((a) => amenityLabel(a.name)).filter(Boolean))].slice(0, 12),
     images: (raw.images || []).map((img) => img.url).filter((u) => typeof u === "string" && u.startsWith("https://")).slice(0, 8),
     payAtCafe: Boolean(raw.accepted_payment_methods?.pay_in_cafe),
   };

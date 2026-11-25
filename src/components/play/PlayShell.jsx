@@ -118,7 +118,7 @@ export default function PlayShell({ children }) {
 
   return (
     <AuthContext.Provider value={value}>
-      <AppShell>
+      <AppShell compactFooter>
         <div className="font-body relative min-h-screen bg-black text-white">
           <NavBar actions={<HeaderActions />} />
           <Analytics />

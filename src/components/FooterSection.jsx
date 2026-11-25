@@ -6,6 +6,7 @@ import { Instagram, Twitter, Linkedin, Youtube } from 'lucide-react';
 import { SITE_DOWNLOAD_URL, SITE_ONBOARD_URL } from '@/lib/site';
 
 const Footer = ({
+  compact = false,
   openContact,
   openPrivacy,
   openHelp,
@@ -86,16 +87,19 @@ const Footer = ({
     'text-sm text-white/60 transition hover:text-white focus-visible:text-white';
 
   return (
-    <footer className="bg-black px-4 pb-10 pt-20 text-white sm:px-8">
+    <footer className={`bg-black px-4 pb-10 text-white sm:px-8 ${compact ? 'pt-4' : 'pt-20'}`}>
       <div className="mx-auto max-w-[1600px]">
-        <p
-          className="select-none font-display text-[clamp(5rem,22vw,22rem)] uppercase leading-[0.8] text-white/[0.06]"
-          aria-hidden="true"
-        >
-          Hash
-        </p>
+        {/* Store and booking pages keep the footer tight: no giant wordmark. */}
+        {!compact && (
+          <p
+            className="select-none font-display text-[clamp(5rem,22vw,22rem)] uppercase leading-[0.8] text-white/[0.06]"
+            aria-hidden="true"
+          >
+            Hash
+          </p>
+        )}
 
-        <div className="mt-10 grid grid-cols-2 gap-10 border-t border-white/15 pt-10 md:grid-cols-4">
+        <div className={`${compact ? '' : 'mt-10 '}grid grid-cols-2 gap-10 border-t border-white/15 pt-10 md:grid-cols-4`}>
           {footerSections.map((section) => (
             <nav key={section.title} aria-label={section.title}>
               <p className="font-tech mb-5 text-[11px] font-semibold uppercase tracking-[0.35em] text-[#ff9a3d]">

@@ -9,7 +9,7 @@ import ContactUsModal from '@/components/ContactUsModal';
 import PartnerWithUsModal from '@/components/PartnerWithUsModal';
 import HelpCenterModal from '@/components/HelpCenterModal';
 
-export default function AppShell({ children }) {
+export default function AppShell({ children, compactFooter = false }) {
   const [contactOpen, setContactOpen] = useState(false);
   
   const [partnerOpen, setPartnerOpen] = useState(false);
@@ -49,6 +49,7 @@ export default function AppShell({ children }) {
 
       {/* Footer */}
       <Footer
+        compact={compactFooter}
         openContact={() => setContactOpen(true)}
         
         openPartner={() => setPartnerOpen(true)}

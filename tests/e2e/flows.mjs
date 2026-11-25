@@ -155,7 +155,12 @@ async function newContext(browser, viewport) {
   const ctx = await browser.newContext({ viewport, deviceScaleFactor: 1 });
   const local = ["hero-poster.jpg", "retro-car.jpg", "og-home.jpg"];
   let n = 0;
-  await ctx.route(/res\.cloudinary\.com/, (r) => r.fulfill({ path: path.join(root, "public/images", local[n++ % local.length]) }));
+  await ctx.route(/res\.cloudinary\.com/, (r) => {
+    // Optional per-photo fixtures (e.g. one set per colour) by file name; else cycle the site artwork.
+    const own = process.env.FIXTURES && path.join(process.env.FIXTURES, path.basename(new URL(r.request().url()).pathname));
+    if (own && fs.existsSync(own)) return r.fulfill({ path: own });
+    return r.fulfill({ path: path.join(root, "public/images", local[n++ % local.length]) });
+  });
   // Fake Razorpay: "pays" instantly with a valid test signature.
   await ctx.exposeBinding("__rzpSign", (_src, orderId) => {
     const paymentId = `pay_${crypto.randomBytes(5).toString("hex")}`;
@@ -254,9 +259,17 @@ try {
     // ---- Marketplace
     await go("/marketplace");
     await shot("marketplace");
-    await click(page.locator("#shop a[href*='prod_']"));
+    await click(page.locator("#shop a[href$='prod_1']"));
     await page.waitForLoadState("networkidle");
     await shot("product");
+    // Colour pick switches the photos to that colour's set.
+    const blue = page.getByRole("button", { name: /^Color Blue/ });
+    if (await blue.count()) {
+      await click(blue);
+      await page.waitForTimeout(600);
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await shot("product-blue", { full: false });
+    }
     await click(page.getByRole("button", { name: "Add to cart" }));
     await page.waitForTimeout(1000);
     await shot("product-added", { full: false });
