@@ -48,6 +48,23 @@ function shortArea(address) {
   return [locality, region.toLowerCase() === locality.toLowerCase() ? "" : region].filter(Boolean).join(", ");
 }
 
+// Older gallery rows can point at one shared Cloudinary file under different
+// version URLs, so the same photo would show twice. Keep one URL per file.
+function galleryUrls(images) {
+  const seen = new Set();
+  const out = [];
+  for (const img of images || []) {
+    const url = img?.url;
+    if (typeof url !== "string" || !url.startsWith("https://")) continue;
+    const key = img.public_id || url.replace(/\/v\d+\//, "/").replace(/\.[a-z0-9]+$/i, "");
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(url);
+    if (out.length === 8) break;
+  }
+  return out;
+}
+
 export function publicCafe(raw) {
   const address = raw.address || {};
   return {
@@ -62,7 +79,7 @@ export function publicCafe(raw) {
     opens: raw.opening_time || null,
     closes: raw.closing_time || null,
     amenities: [...new Set((raw.amenities || []).filter((a) => a.available).map((a) => amenityLabel(a.name)).filter(Boolean))].slice(0, 12),
-    images: (raw.images || []).map((img) => img.url).filter((u) => typeof u === "string" && u.startsWith("https://")).slice(0, 8),
+    images: galleryUrls(raw.images),
     payAtCafe: Boolean(raw.accepted_payment_methods?.pay_in_cafe),
     hashPass: Boolean(raw.accepted_payment_methods?.hash_global_pass),
     cafePass: Boolean(raw.accepted_payment_methods?.cafe_specific_pass),
