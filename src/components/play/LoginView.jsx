@@ -7,6 +7,16 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { secureCall } from "@/lib/secure/client";
 import { track } from "@/lib/analytics-client";
 import { SITE_LOGO } from "@/lib/site";
+import {
+  completeRedirectSignIn,
+  currentIdToken,
+  friendlyFirebaseError,
+  inAppBrowserName,
+  isAndroid,
+  preloadAuth,
+  signIn as firebaseSignIn,
+  signOutFirebase,
+} from "@/lib/firebase-client";
 import { useAuth } from "./PlayShell";
 import { Button, Field, Input, Notice, SecureBadge, cx } from "./ui";
 
@@ -63,35 +73,65 @@ export default function LoginView() {
   const [identity, setIdentity] = useState({ name: "", email: "", method: "" });
   const [form, setForm] = useState({ name: "", gameUserName: "", mobile: "", referralCode: "" });
   const idTokenRef = useRef(null);
+  const [inApp, setInApp] = useState("");
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     if (ready && user && step === "start") router.replace(next);
   }, [ready, user, next, router, step]);
 
+  // Load Firebase as soon as the page opens, so the first tap can open the
+  // sign-in pop-up straight away (Safari blocks it if we load on tap). This
+  // also finishes a sign-in that fell back to a full-page redirect.
+  useEffect(() => {
+    setInApp(inAppBrowserName());
+    let cancelled = false;
+    completeRedirectSignIn()
+      .then((res) => {
+        if (!cancelled && res) {
+          setBusy(res.method || "google");
+          return finishLogin(res, res.method || "google").finally(() => setBusy(""));
+        }
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        if (err?.code) setError(friendlyFirebaseError(err));
+        track("Login Failed", { method: "redirect", code: err?.code || "unknown" });
+      });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const destination = useMemo(() => (next.startsWith("/marketplace") ? "the Hash Marketplace" : "Hash"), [next]);
 
+  async function finishLogin({ idToken, profile }, method) {
+    idTokenRef.current = idToken;
+    const result = await secureCall("auth.login", { idToken });
+    if (result.status === "signed_in") {
+      setUser(result.user);
+      track("Login Successful", { method });
+      router.replace(next);
+      return;
+    }
+    const name = result.prefill?.name || profile.name || "";
+    setIdentity({ name, email: result.prefill?.email || profile.email || "", method });
+    setForm((f) => ({ ...f, name, gameUserName: gamerTag(name) }));
+    setStep("signup");
+    track("Signup Started", { method });
+  }
+
   async function signIn(method) {
+    // Start Firebase first, before any await: the pop-up must open while the
+    // browser still counts it as part of the tap.
+    const pending = firebaseSignIn(method);
     setError("");
     setBusy(method);
     track("Login Started", { method });
     try {
-      const fb = await import("@/lib/firebase-client");
-      const { idToken, profile } = method === "apple" ? await fb.signInWithApple() : await fb.signInWithGoogle();
-      idTokenRef.current = idToken;
-      const result = await secureCall("auth.login", { idToken });
-      if (result.status === "signed_in") {
-        setUser(result.user);
-        track("Login Successful", { method });
-        router.replace(next);
-        return;
-      }
-      const name = result.prefill?.name || profile.name || "";
-      setIdentity({ name, email: result.prefill?.email || profile.email || "", method });
-      setForm((f) => ({ ...f, name, gameUserName: gamerTag(name) }));
-      setStep("signup");
-      track("Signup Started", { method });
+      await finishLogin(await pending, method);
     } catch (err) {
-      const { friendlyFirebaseError } = await import("@/lib/firebase-client");
       if (err?.code !== "auth/popup-closed-by-user" && err?.code !== "auth/cancelled-popup-request") {
         setError(err?.code ? friendlyFirebaseError(err) : err.message);
       }
@@ -101,12 +141,26 @@ export default function LoginView() {
     }
   }
 
+  async function copyLink() {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    } catch {
+      window.prompt("Copy this link and open it in your browser:", window.location.href);
+    }
+  }
+
+  function chromeIntentUrl() {
+    const { host, pathname, search } = window.location;
+    return `intent://${host}${pathname}${search}#Intent;scheme=https;package=com.android.chrome;end`;
+  }
+
   async function onSignup(e) {
     e.preventDefault();
     setError("");
     setBusy("signup");
     try {
-      const { currentIdToken } = await import("@/lib/firebase-client");
       const idToken = (await currentIdToken()) || idTokenRef.current;
       const result = await secureCall("auth.signup", {
         idToken,
@@ -148,8 +202,31 @@ export default function LoginView() {
           </div>
         )}
 
+        {step === "start" && inApp && (
+          <div className="mb-4">
+            <Notice
+              tone="warn"
+              action={
+                <span className="flex gap-2">
+                  {isAndroid() ? (
+                    <a href={chromeIntentUrl()} className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-black">
+                      Open in Chrome
+                    </a>
+                  ) : null}
+                  <button type="button" onClick={copyLink} className="rounded-full border border-white/30 px-3 py-1.5 text-xs font-semibold text-white">
+                    {copied ? "Copied" : "Copy link"}
+                  </button>
+                </span>
+              }
+            >
+              {inApp === "in-app" ? "You're in an in-app browser." : `You're in the ${inApp} browser.`} Google sign-in doesn&apos;t work here.
+              For the smoothest sign-in, open this page in {isAndroid() ? "Chrome" : "Safari"}.
+            </Notice>
+          </div>
+        )}
+
         {step === "start" && (
-          <div className="space-y-3">
+          <div className="space-y-3" onPointerEnter={preloadAuth} onTouchStart={preloadAuth}>
             <button
               type="button"
               onClick={() => signIn("apple")}
@@ -238,7 +315,6 @@ export default function LoginView() {
               type="button"
               className="w-full text-center text-sm text-white/45 hover:text-white"
               onClick={async () => {
-                const { signOutFirebase } = await import("@/lib/firebase-client");
                 await signOutFirebase().catch(() => {});
                 setStep("start");
               }}
