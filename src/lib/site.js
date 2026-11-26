@@ -29,6 +29,9 @@ export const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || "321023703
 // env vars override them per environment.
 export const FIREBASE_CONFIG = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyDn7PK85lkDCRZcxEQngQ52Q_vV-DgSpVQ",
+  // Set NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN to "www.hashforgamers.com" once
+  // https://www.hashforgamers.com/__/auth/handler is an allowed redirect URI for
+  // Google and Apple sign-in; next.config.mjs proxies /__/auth to Firebase.
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "hash-ee6fc.firebaseapp.com",
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "hash-ee6fc",
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:376797794992:web:cb520a9732e34cdbd82175",
