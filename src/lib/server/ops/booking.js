@@ -7,14 +7,30 @@ import { log } from "@/lib/secure/http";
 import { hfgToken } from "@/lib/server/hfg-token";
 
 /* ---------------------------------------------------------------- cache */
+// Per server instance. Each instance keeps its own copy, so a short TTL keeps
+// instances from disagreeing for long (one showing old photos, the next new ones).
 const cache = new Map();
+const inflight = new Map();
 export async function cached(key, ttlMs, loader) {
   const hitEntry = cache.get(key);
   if (hitEntry && hitEntry.exp > Date.now()) return hitEntry.value;
-  const value = await loader();
-  cache.set(key, { value, exp: Date.now() + ttlMs });
-  if (cache.size > 500) cache.delete(cache.keys().next().value);
-  return value;
+  if (inflight.has(key)) return inflight.get(key);
+  const pending = (async () => {
+    try {
+      const value = await loader();
+      cache.set(key, { value, exp: Date.now() + ttlMs });
+      if (cache.size > 500) cache.delete(cache.keys().next().value);
+      return value;
+    } catch (error) {
+      // Upstream hiccup: keep serving the last good copy rather than an empty page.
+      if (hitEntry) return hitEntry.value;
+      throw error;
+    } finally {
+      inflight.delete(key);
+    }
+  })();
+  inflight.set(key, pending);
+  return pending;
 }
 
 /* ------------------------------------------------------- sanitisers */
@@ -226,7 +242,7 @@ function intentFor(ctx, intent) {
 /* ------------------------------------------------------- catalogue */
 /** Public cafe list, shared by the encrypted API and the server-rendered pages. */
 export async function loadCafes(requestId) {
-  return cached("cafes", 5 * 60_000, async () => {
+  return cached("cafes", 60_000, async () => {
     const { data } = await upstream("vendor", "/api/vendor/getAllGamingCafe", { requestId, timeoutMs: 30000 });
     return (data?.vendors || []).filter((c) => String(c.status || "").toLowerCase() !== "inactive").map(publicCafe);
   });
